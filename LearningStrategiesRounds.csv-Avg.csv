@@ -1,0 +1,722 @@
+Inertia,0.5,Rationality,0.5,AlzCop,24578.40109999998,AlzCop,24597.998899999973,Error1,20.29591825200169,Error2,19.903774937162265
+Inertia,0.5,Rationality,0.5,AlzCop,11254.100299999984,AlzDft,22089.013104750702,Error1,15.361890330647803,Error2,11.844511396789951
+Inertia,0.5,Rationality,0.5,AlzCop,15977.326049999969,Rand,26001.499355887776,Error1,298.83538629772414,Error2,94.75467460536882
+Inertia,0.5,Rationality,0.5,AlzDft,15141.333844503544,AlzDft,15157.680450540083,Error1,12.118243939391595,Error2,12.118243939391693
+Inertia,0.5,Rationality,0.5,AlzDft,18687.047190081874,Rand,14695.092546685233,Error1,167.06586093657643,Error2,107.22365171842088
+Inertia,0.5,Rationality,0.5,Rand,19874.163589929634,Rand,19581.867095683716,Error1,283.9609367900805,Error2,274.4220674919419
+Actual Payoff Matrix
+95.0,95.0  43.0,85.0  61.0,100.0  AlzCop , 199.0,
+85.0,43.0  58.0,58.0  72.0,57.0  AlzDft , 215.0,
+100.0,61.0  57.0,72.0  76.0,76.0  Rand , 233.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlzCop"  "AlzDft"  "Rand" }
+{ "AlzCop"  "AlzDft"  "Rand" }
+}
+""
+
+{
+{ "" 95.0, 95.0 }
+{ "" 85.0, 43.0 }
+{ "" 100.0, 61.0 }
+{ "" 43.0, 85.0 }
+{ "" 58.0, 58.0 }
+{ "" 57.0, 72.0 }
+{ "" 61.0, 100.0 }
+{ "" 72.0, 57.0 }
+{ "" 76.0, 76.0 }
+}
+1 2 3 4 5 6 7 8 9 </nfgfile>
+</game>
+</gambit:document>
+Count	AlzCop			AlzDft			Rand			
+NE-1			0			1			0			
+NE-2			0			0			1			
+NE-3			0			4/5			1/5			
+Inertia,0.5,Rationality,0.5,AlzCop,24592.53699999998,AlzCop,24583.862999999976,Error1,21.76429443892452,Error2,22.029259641526686
+Inertia,0.5,Rationality,0.5,AlzCop,11260.950249999983,AlzDft,22085.75451851894,Error1,16.20329497683301,Error2,12.07808339056376
+Inertia,0.5,Rationality,0.5,AlzCop,16031.766999999969,Rand,26014.54504382191,Error1,306.4853018339651,Error2,97.25557580197871
+Inertia,0.5,Rationality,0.5,AlzDft,15153.307464592577,AlzDft,15145.706830451056,Error1,12.122739934154705,Error2,12.122739934154636
+Inertia,0.5,Rationality,0.5,AlzDft,18673.241806323145,Rand,14706.784579216628,Error1,172.88514323659425,Error2,110.91475870622422
+Inertia,0.5,Rationality,0.5,Rand,19761.192097917312,Rand,19621.957592229544,Error1,296.3883221192652,Error2,320.55790772206615
+Actual Payoff Matrix
+95.0,95.0  43.0,85.0  62.0,100.0  AlzCop , 200.0,
+85.0,43.0  58.0,58.0  72.0,57.0  AlzDft , 215.0,
+100.0,62.0  57.0,72.0  76.0,76.0  Rand , 233.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlzCop"  "AlzDft"  "Rand" }
+{ "AlzCop"  "AlzDft"  "Rand" }
+}
+""
+
+{
+{ "" 95.0, 95.0 }
+{ "" 85.0, 43.0 }
+{ "" 100.0, 62.0 }
+{ "" 43.0, 85.0 }
+{ "" 58.0, 58.0 }
+{ "" 57.0, 72.0 }
+{ "" 62.0, 100.0 }
+{ "" 72.0, 57.0 }
+{ "" 76.0, 76.0 }
+}
+1 2 3 4 5 6 7 8 9 </nfgfile>
+</game>
+</gambit:document>
+Count	AlzCop			AlzDft			Rand			
+NE-1			0			1			0			
+NE-2			0			0			1			
+NE-3			0			4/5			1/5			
+Inertia,0.5,Rationality,0.5,AlzCop,24592.983549999957,AlzCop,24583.416449999982,Error1,21.9156681396263,Error2,21.680816371835835
+Inertia,0.5,Rationality,0.5,AlzCop,11251.472399999984,AlzDft,22095.77210145465,Error1,16.032619463024083,Error2,12.044506139059248
+Inertia,0.5,Rationality,0.5,AlzCop,15938.537299999965,Rand,25930.543045953338,Error1,299.560658608229,Error2,98.26794436807592
+Inertia,0.5,Rationality,0.5,AlzDft,15161.266601213509,AlzDft,15137.74769383011,Error1,10.654233744257773,Error2,10.65423374425764
+Inertia,0.5,Rationality,0.5,AlzDft,18669.25588290604,Rand,14701.722397915168,Error1,176.9065351382449,Error2,111.74904149227207
+Inertia,0.5,Rationality,0.5,Rand,19515.895313896424,Rand,19801.658799427067,Error1,293.5991946017846,Error2,318.6419672922807
+Actual Payoff Matrix
+95.0,95.0  43.0,85.0  61.0,100.0  AlzCop , 199.0,
+85.0,43.0  58.0,58.0  72.0,57.0  AlzDft , 215.0,
+100.0,61.0  57.0,72.0  76.0,76.0  Rand , 233.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlzCop"  "AlzDft"  "Rand" }
+{ "AlzCop"  "AlzDft"  "Rand" }
+}
+""
+
+{
+{ "" 95.0, 95.0 }
+{ "" 85.0, 43.0 }
+{ "" 100.0, 61.0 }
+{ "" 43.0, 85.0 }
+{ "" 58.0, 58.0 }
+{ "" 57.0, 72.0 }
+{ "" 61.0, 100.0 }
+{ "" 72.0, 57.0 }
+{ "" 76.0, 76.0 }
+}
+1 2 3 4 5 6 7 8 9 </nfgfile>
+</game>
+</gambit:document>
+Count	AlzCop			AlzDft			Rand			
+NE-1			0			1			0			
+NE-2			0			0			1			
+NE-3			0			4/5			1/5			
+Inertia,0.5,Rationality,0.5,AlzCop,24594.970049999974,AlzCop,24581.429949999972,Error1,20.300950193188886,Error2,20.173465261788554
+Inertia,0.5,Rationality,0.5,AlzCop,11245.162449999982,AlzDft,22092.949375904293,Error1,16.57602167924881,Error2,12.596762606815021
+Inertia,0.5,Rationality,0.5,AlzCop,16220.247249999971,Rand,26047.137114655314,Error1,269.807928443199,Error2,82.64662405187535
+Inertia,0.5,Rationality,0.5,AlzCop,16131.320999999969,L1,26002.967955568092,Error1,314.7200927330603,Error2,92.20944309727732
+Inertia,0.5,Rationality,0.5,AlzDft,15160.04842466279,AlzDft,15138.96587038084,Error1,11.94015186053912,Error2,11.940151860539068
+Inertia,0.5,Rationality,0.5,AlzDft,18588.492910476525,Rand,14746.06483852745,Error1,187.29200980626607,Error2,115.37713478646621
+Inertia,0.5,Rationality,0.5,AlzDft,18669.47847354277,L1,14700.724392070624,Error1,176.30781739213904,Error2,109.59459150657521
+Inertia,0.5,Rationality,0.5,Rand,19792.105415292757,Rand,19420.09209490981,Error1,270.99534981673366,Error2,276.0171543034343
+Inertia,0.5,Rationality,0.5,Rand,19660.624429323994,L1,19682.03129097482,Error1,307.2078873443941,Error2,260.4099593235245
+Inertia,0.5,Rationality,0.5,L1,19486.375190857205,L1,19683.217456504553,Error1,264.79643250367883,Error2,311.25380308555197
+Actual Payoff Matrix
+94.0,94.0  43.0,85.0  62.0,100.0  62.0,100.0  AlzCop , 261.0,
+85.0,43.0  58.0,58.0  71.0,57.0  72.0,56.0  AlzDft , 286.0,
+100.0,62.0  57.0,71.0  75.0,75.0  75.0,76.0  Rand , 307.0,
+100.0,62.0  56.0,72.0  76.0,75.0  75.0,75.0  L1 , 307.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlzCop"  "AlzDft"  "Rand"  "L1" }
+{ "AlzCop"  "AlzDft"  "Rand"  "L1" }
+}
+""
+
+{
+{ "" 94.0, 94.0 }
+{ "" 85.0, 43.0 }
+{ "" 100.0, 62.0 }
+{ "" 100.0, 62.0 }
+{ "" 43.0, 85.0 }
+{ "" 58.0, 58.0 }
+{ "" 57.0, 71.0 }
+{ "" 56.0, 72.0 }
+{ "" 62.0, 100.0 }
+{ "" 71.0, 57.0 }
+{ "" 75.0, 75.0 }
+{ "" 76.0, 75.0 }
+{ "" 62.0, 100.0 }
+{ "" 72.0, 56.0 }
+{ "" 75.0, 76.0 }
+{ "" 75.0, 75.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Count	AlzCop			AlzDft			Rand			L1			
+NE-1			0			1			0			0			
+NE-2			0			0			1			0			
+NE-3			0			4/5			1/5			0			
+NE-4			0			0			0			1			
+NE-5			0			0			0			1			
+Inertia,0.5,Rationality,0.5,AlzCop,24594.280149999955,AlzCop,24582.119849999985,Error1,22.130064515769746,Error2,22.227692872964703
+Inertia,0.5,Rationality,0.5,AlzCop,11257.377249999987,AlzDft,22090.21836511907,Error1,15.09006651329483,Error2,11.231375156943871
+Inertia,0.5,Rationality,0.5,AlzCop,16021.25789999996,Rand,25997.43345285441,Error1,292.29450708293115,Error2,93.82587012262631
+Inertia,0.5,Rationality,0.5,AlzCop,15882.314549999961,L1,26012.900304946666,Error1,242.42510040507128,Error2,96.55561621344292
+Inertia,0.5,Rationality,0.5,AlzDft,15158.889675128587,AlzDft,15140.124619915036,Error1,11.015258455381034,Error2,11.01525845538086
+Inertia,0.5,Rationality,0.5,AlzDft,18750.89736321556,Rand,14644.164024034648,Error1,183.5283757103606,Error2,116.76229978682379
+Inertia,0.5,Rationality,0.5,AlzDft,18687.326310566565,L1,14679.701368416145,Error1,170.22102778639564,Error2,102.24887884529133
+Inertia,0.5,Rationality,0.5,Rand,19633.42520943241,Rand,19477.979642395254,Error1,313.1623149871997,Error2,326.4517419149432
+Inertia,0.5,Rationality,0.5,Rand,19435.939982134234,L1,19788.509734291467,Error1,276.16113022247043,Error2,258.0994472870165
+Inertia,0.5,Rationality,0.5,L1,19747.622026040022,L1,19784.329441046182,Error1,298.68324368175905,Error2,275.37222979274213
+Actual Payoff Matrix
+95.0,95.0  43.0,85.0  62.0,100.0  61.0,100.0  AlzCop , 261.0,
+85.0,43.0  58.0,58.0  72.0,56.0  72.0,56.0  AlzDft , 287.0,
+100.0,62.0  56.0,72.0  75.0,75.0  75.0,76.0  Rand , 306.0,
+100.0,61.0  56.0,72.0  76.0,75.0  76.0,76.0  L1 , 308.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlzCop"  "AlzDft"  "Rand"  "L1" }
+{ "AlzCop"  "AlzDft"  "Rand"  "L1" }
+}
+""
+
+{
+{ "" 95.0, 95.0 }
+{ "" 85.0, 43.0 }
+{ "" 100.0, 62.0 }
+{ "" 100.0, 61.0 }
+{ "" 43.0, 85.0 }
+{ "" 58.0, 58.0 }
+{ "" 56.0, 72.0 }
+{ "" 56.0, 72.0 }
+{ "" 62.0, 100.0 }
+{ "" 72.0, 56.0 }
+{ "" 75.0, 75.0 }
+{ "" 76.0, 75.0 }
+{ "" 61.0, 100.0 }
+{ "" 72.0, 56.0 }
+{ "" 75.0, 76.0 }
+{ "" 76.0, 76.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Count	AlzCop			AlzDft			Rand			L1			
+NE-1			0			1			0			0			
+NE-2			0			0			0			1			
+NE-3			0			2/3			0			1/3			
+Inertia,0.5,Rationality,0.5,AlzCop,24576.867849999973,AlzCop,24599.532149999966,Error1,22.295115089720667,Error2,21.92106976804631
+Inertia,0.5,Rationality,0.5,AlzCop,11251.667499999983,AlzDft,22094.262295948873,Error1,15.488791322548192,Error2,11.545429077321302
+Inertia,0.5,Rationality,0.5,AlzCop,15772.321199999973,Rand,25928.43331397235,Error1,305.83571344400036,Error2,94.52876451363818
+Inertia,0.5,Rationality,0.5,AlzCop,16016.158249999971,L1,25980.907648305474,Error1,357.1916835660931,Error2,90.38027159153519
+Inertia,0.5,Rationality,0.5,AlzDft,15155.406834265857,AlzDft,15143.607460777768,Error1,11.611547517742174,Error2,11.611547517741998
+Inertia,0.5,Rationality,0.5,AlzDft,18732.19888211722,Rand,14656.463303942142,Error1,183.52647219099123,Error2,118.72160762814454
+Inertia,0.5,Rationality,0.5,AlzDft,18684.815676754537,L1,14683.599971042213,Error1,179.58798161477563,Error2,111.93883424645968
+Inertia,0.5,Rationality,0.5,Rand,19770.89629104547,Rand,19652.242267262332,Error1,285.86104319414494,Error2,279.7602622521108
+Inertia,0.5,Rationality,0.5,Rand,19865.84127352986,L1,19592.35736275656,Error1,305.8931634522599,Error2,286.0109881093351
+Inertia,0.5,Rationality,0.5,L1,19545.465546063868,L1,19619.97667753127,Error1,272.41227270463673,Error2,284.90540637860204
+Actual Payoff Matrix
+95.0,95.0  43.0,85.0  61.0,100.0  62.0,100.0  AlzCop , 261.0,
+85.0,43.0  58.0,58.0  72.0,56.0  72.0,57.0  AlzDft , 287.0,
+100.0,61.0  56.0,72.0  76.0,76.0  76.0,75.0  Rand , 308.0,
+100.0,62.0  57.0,72.0  75.0,76.0  75.0,75.0  L1 , 307.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlzCop"  "AlzDft"  "Rand"  "L1" }
+{ "AlzCop"  "AlzDft"  "Rand"  "L1" }
+}
+""
+
+{
+{ "" 95.0, 95.0 }
+{ "" 85.0, 43.0 }
+{ "" 100.0, 61.0 }
+{ "" 100.0, 62.0 }
+{ "" 43.0, 85.0 }
+{ "" 58.0, 58.0 }
+{ "" 56.0, 72.0 }
+{ "" 57.0, 72.0 }
+{ "" 61.0, 100.0 }
+{ "" 72.0, 56.0 }
+{ "" 76.0, 76.0 }
+{ "" 75.0, 76.0 }
+{ "" 62.0, 100.0 }
+{ "" 72.0, 57.0 }
+{ "" 76.0, 75.0 }
+{ "" 75.0, 75.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Count	AlzCop			AlzDft			Rand			L1			
+NE-1			0			1			0			0			
+NE-2			0			0			1			0			
+NE-3			0			3/4			0			1/4			
+Inertia,0.5,Rationality,0.5,AlzCop,24593.532549999974,AlzCop,24582.867449999976,Error1,21.62929709535659,Error2,21.644317002886236
+Inertia,0.5,Rationality,0.5,AlzCop,11262.578649999981,AlzDft,22082.365052816644,Error1,15.316213114360599,Error2,11.620098385062626
+Inertia,0.5,Rationality,0.5,AlzCop,16062.147499999963,Rand,26027.877818152425,Error1,322.2832627571657,Error2,85.65052366206307
+Inertia,0.5,Rationality,0.5,AlzCop,16114.799449999966,L1,25976.62738948937,Error1,334.0035166492633,Error2,106.533845788506
+Inertia,0.5,Rationality,0.5,AlzDft,15148.559673620772,AlzDft,15150.454621422852,Error1,12.219904539707045,Error2,12.219904539707038
+Inertia,0.5,Rationality,0.5,AlzDft,18637.432546116368,Rand,14703.07891412155,Error1,203.66841559145877,Error2,126.68606102369861
+Inertia,0.5,Rationality,0.5,AlzDft,18761.82905734539,L1,14638.245958365393,Error1,192.37908568902944,Error2,121.73571403301865
+Inertia,0.5,Rationality,0.5,Rand,19590.824300574848,Rand,19700.152188495744,Error1,301.2720872266091,Error2,280.5410287767947
+Inertia,0.5,Rationality,0.5,Rand,19649.469119462443,L1,19826.73948445311,Error1,339.4355668471555,Error2,302.2604080996795
+Inertia,0.5,Rationality,0.5,L1,19541.837546632876,L1,19681.296797689705,Error1,260.70684987697047,Error2,297.4304661515287
+Actual Payoff Matrix
+94.0,94.0  43.0,85.0  62.0,100.0  62.0,100.0  AlzCop , 261.0,
+85.0,43.0  58.0,58.0  72.0,56.0  72.0,56.0  AlzDft , 287.0,
+100.0,62.0  56.0,72.0  75.0,75.0  75.0,76.0  Rand , 306.0,
+100.0,62.0  56.0,72.0  76.0,75.0  75.0,75.0  L1 , 307.0,
+
+Count	AlzCop			AlzDft			Rand			L1			
+NE-1			0			1			0			0			
+NE-2			0			0			1			0			
+NE-3			0			2/3			1/3			0			
+NE-4			0			0			0			1			
+NE-5			0			0			0			1			
+NE-6			0			3/5			0			2/5			
+NE-7			0			3/5			0			2/5	
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlzCop"  "AlzDft"  "Rand"  "L1" }
+{ "AlzCop"  "AlzDft"  "Rand"  "L1" }
+}
+""
+
+{
+{ "" 94.0, 94.0 }
+{ "" 85.0, 43.0 }
+{ "" 100.0, 62.0 }
+{ "" 100.0, 62.0 }
+{ "" 43.0, 85.0 }
+{ "" 58.0, 58.0 }
+{ "" 56.0, 72.0 }
+{ "" 56.0, 72.0 }
+{ "" 62.0, 100.0 }
+{ "" 72.0, 56.0 }
+{ "" 75.0, 75.0 }
+{ "" 76.0, 75.0 }
+{ "" 62.0, 100.0 }
+{ "" 72.0, 56.0 }
+{ "" 75.0, 76.0 }
+{ "" 75.0, 75.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Count	AlzCop			AlzDft			Rand			L1			
+NE-1			0			1			0			0			
+NE-2			0			0			1			0			
+NE-3			0			2/3			1/3			0			
+NE-4			0			0			0			1			
+NE-5			0			0			0			1			
+NE-6			0			3/5			0			2/5			
+NE-7			0			3/5			0			2/5			
+Inertia,0.5,Rationality,0.5,AlzCop,24604.78434999997,AlzCop,24571.61564999998,Error1,20.457465412733296,Error2,19.992891557052353
+Inertia,0.5,Rationality,0.5,AlzCop,11246.782699999987,AlzDft,22098.293140100537,Error1,16.393412779563388,Error2,12.30674586058769
+Inertia,0.5,Rationality,0.5,AlzCop,16241.098349999962,Rand,26058.729274012883,Error1,290.2389576751481,Error2,81.12192319050371
+Inertia,0.5,Rationality,0.5,AlzCop,16323.227749999967,L2,26014.91268101207,Error1,287.83042720572143,Error2,93.74034716710663
+Inertia,0.5,Rationality,0.5,AlzDft,15142.017500810776,AlzDft,15156.996794232851,Error1,12.520013675178975,Error2,12.520013675178857
+Inertia,0.5,Rationality,0.5,AlzDft,18565.75640019233,Rand,14759.861903537698,Error1,180.22799093049716,Error2,111.18387565782766
+Inertia,0.5,Rationality,0.5,AlzDft,18727.60121775612,L2,14648.77740524376,Error1,191.87748379558244,Error2,121.73814107034079
+Inertia,0.5,Rationality,0.5,Rand,19752.80402033,Rand,19590.190872377618,Error1,323.3898767946768,Error2,287.2124036178845
+Inertia,0.5,Rationality,0.5,Rand,19713.87909032196,L2,19799.285600743122,Error1,308.99780377723323,Error2,306.45220402405226
+Inertia,0.5,Rationality,0.5,L2,19669.757011864738,L2,19623.009207518557,Error1,317.43532078430087,Error2,308.92307113436783
+Actual Payoff Matrix
+94.0,94.0  43.0,85.0  62.0,100.0  63.0,100.0  AlzCop , 262.0,
+85.0,43.0  58.0,58.0  71.0,57.0  72.0,56.0  AlzDft , 286.0,
+100.0,62.0  57.0,71.0  75.0,75.0  76.0,76.0  Rand , 308.0,
+100.0,63.0  56.0,72.0  76.0,76.0  75.0,75.0  L2 , 307.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlzCop"  "AlzDft"  "Rand"  "L2" }
+{ "AlzCop"  "AlzDft"  "Rand"  "L2" }
+}
+""
+
+{
+{ "" 94.0, 94.0 }
+{ "" 85.0, 43.0 }
+{ "" 100.0, 62.0 }
+{ "" 100.0, 63.0 }
+{ "" 43.0, 85.0 }
+{ "" 58.0, 58.0 }
+{ "" 57.0, 71.0 }
+{ "" 56.0, 72.0 }
+{ "" 62.0, 100.0 }
+{ "" 71.0, 57.0 }
+{ "" 75.0, 75.0 }
+{ "" 76.0, 76.0 }
+{ "" 63.0, 100.0 }
+{ "" 72.0, 56.0 }
+{ "" 76.0, 76.0 }
+{ "" 75.0, 75.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Count	AlzCop			AlzDft			Rand			L2			
+NE-1			0			1			0			0			
+NE-2			0			0			1			0			
+NE-3			0			4/5			1/5			0			
+NE-4			0			0			0			1			
+NE-5			0			0			1/2			1/2			
+Inertia,0.5,Rationality,0.5,AlzCop,24572.365399999973,AlzCop,24604.034599999977,Error1,17.9016032748683,Error2,18.059313301360334
+Inertia,0.5,Rationality,0.5,AlzCop,11259.852349999983,AlzDft,22085.860031917626,Error1,15.608000843190508,Error2,11.183906058817067
+Inertia,0.5,Rationality,0.5,AlzCop,16102.09294999996,Rand,25932.16070703044,Error1,294.2726730686533,Error2,96.37973337553345
+Inertia,0.5,Rationality,0.5,AlzCop,16230.29974999997,L2,26003.433849311616,Error1,284.9831030470626,Error2,100.19622469087102
+Inertia,0.5,Rationality,0.5,AlzDft,15142.105143230941,AlzDft,15156.90915181269,Error1,13.384006395551047,Error2,13.384006395550863
+Inertia,0.5,Rationality,0.5,AlzDft,18912.386244662164,Rand,14524.762132671347,Error1,197.37282526632566,Error2,132.92133235946778
+Inertia,0.5,Rationality,0.5,AlzDft,18796.456505796374,L2,14613.679676008136,Error1,199.57372737107437,Error2,130.54016746305086
+Inertia,0.5,Rationality,0.5,Rand,19620.515440414856,Rand,19604.610831937018,Error1,257.115312261419,Error2,282.73589597577677
+Inertia,0.5,Rationality,0.5,Rand,19578.019253118346,L2,19463.847162283568,Error1,298.8040503455134,Error2,294.6456625156868
+Inertia,0.5,Rationality,0.5,L2,19634.76018121853,L2,19672.97073230918,Error1,271.24043605865126,Error2,293.8888150332491
+Actual Payoff Matrix
+95.0,95.0  43.0,85.0  62.0,100.0  62.0,100.0  AlzCop , 262.0,
+85.0,43.0  58.0,58.0  73.0,56.0  72.0,56.0  AlzDft , 288.0,
+100.0,62.0  56.0,73.0  75.0,75.0  75.0,75.0  Rand , 306.0,
+100.0,62.0  56.0,72.0  75.0,75.0  76.0,76.0  L2 , 307.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlzCop"  "AlzDft"  "Rand"  "L2" }
+{ "AlzCop"  "AlzDft"  "Rand"  "L2" }
+}
+""
+
+{
+{ "" 95.0, 95.0 }
+{ "" 85.0, 43.0 }
+{ "" 100.0, 62.0 }
+{ "" 100.0, 62.0 }
+{ "" 43.0, 85.0 }
+{ "" 58.0, 58.0 }
+{ "" 56.0, 73.0 }
+{ "" 56.0, 72.0 }
+{ "" 62.0, 100.0 }
+{ "" 73.0, 56.0 }
+{ "" 75.0, 75.0 }
+{ "" 75.0, 75.0 }
+{ "" 62.0, 100.0 }
+{ "" 72.0, 56.0 }
+{ "" 75.0, 75.0 }
+{ "" 76.0, 76.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Count	AlzCop			AlzDft			Rand			L2			
+NE-1			0			1			0			0			
+NE-2			0			0			1			0			
+NE-3			0			1/2			1/2			0			
+NE-4			0			0			0			1			
+NE-5			0			2/3			0			1/3			
+Inertia,0.5,Rationality,0.5,AlzCop,24571.687899999975,AlzCop,24604.712099999975,Error1,22.01144113588782,Error2,21.781979050962708
+Inertia,0.5,Rationality,0.5,AlzCop,11257.605099999986,AlzDft,22091.971012201786,Error1,13.474110952431646,Error2,10.386287859014807
+Inertia,0.5,Rationality,0.5,AlzCop,16082.886449999958,Rand,26004.167616056566,Error1,313.7385080771224,Error2,100.16955050012054
+Inertia,0.5,Rationality,0.5,AlzCop,16130.727849999972,L2,26021.125088828463,Error1,293.20218069595995,Error2,100.6681214489413
+Inertia,0.5,Rationality,0.5,AlzDft,15144.835885819084,AlzDft,15154.17840922454,Error1,11.359262070969846,Error2,11.359262070969562
+Inertia,0.5,Rationality,0.5,AlzDft,18685.93115679398,Rand,14685.101656066348,Error1,176.2629385118789,Error2,108.07486730957555
+Inertia,0.5,Rationality,0.5,AlzDft,18656.251368184683,L2,14705.060403807618,Error1,195.16712798767915,Error2,125.01886590867629
+Inertia,0.5,Rationality,0.5,Rand,19489.21215737061,Rand,19594.42121935237,Error1,306.8558049847142,Error2,320.2315474639229
+Inertia,0.5,Rationality,0.5,Rand,19442.3734702826,L2,19892.47974370477,Error1,315.94714954238725,Error2,296.190781627249
+Inertia,0.5,Rationality,0.5,L2,19483.78623475397,L2,19779.487167247476,Error1,277.93243919792866,Error2,285.06596687163795
+Actual Payoff Matrix
+94.0,94.0  43.0,85.0  62.0,100.0  62.0,100.0  AlzCop , 261.0,
+85.0,43.0  58.0,58.0  72.0,56.0  72.0,57.0  AlzDft , 287.0,
+100.0,62.0  56.0,72.0  75.0,75.0  75.0,76.0  Rand , 306.0,
+100.0,62.0  57.0,72.0  76.0,75.0  75.0,75.0  L2 , 308.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlzCop"  "AlzDft"  "Rand"  "L2" }
+{ "AlzCop"  "AlzDft"  "Rand"  "L2" }
+}
+""
+
+{
+{ "" 94.0, 94.0 }
+{ "" 85.0, 43.0 }
+{ "" 100.0, 62.0 }
+{ "" 100.0, 62.0 }
+{ "" 43.0, 85.0 }
+{ "" 58.0, 58.0 }
+{ "" 56.0, 72.0 }
+{ "" 57.0, 72.0 }
+{ "" 62.0, 100.0 }
+{ "" 72.0, 56.0 }
+{ "" 75.0, 75.0 }
+{ "" 76.0, 75.0 }
+{ "" 62.0, 100.0 }
+{ "" 72.0, 57.0 }
+{ "" 75.0, 76.0 }
+{ "" 75.0, 75.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Count	AlzCop			AlzDft			Rand			L2			
+NE-1			0			1			0			0			
+NE-2			0			0			1			0			
+NE-3			0			0			0			1			
+NE-4			0			0			0			1			
+NE-5			0			3/4			0			1/4			
+Inertia,0.5,Rationality,0.5,Grim,24594.542549999984,Grim,24581.857449999967,Error1,21.93761556232514,Error2,22.141663930305533
+Inertia,0.5,Rationality,0.5,Grim,15062.275039815931,AlzDft,15828.180886024018,Error1,13.674512358358735,Error2,13.185370322791076
+Inertia,0.5,Rationality,0.5,Grim,18900.48200435098,Rand,16175.92080327998,Error1,236.21155124289865,Error2,184.14654907718207
+Inertia,0.5,Rationality,0.5,Grim,18684.223139730097,L2,16323.944413010331,Error1,210.80916010734194,Error2,159.24598738083077
+Inertia,0.5,Rationality,0.5,AlzDft,15148.24836890395,AlzDft,15150.76592613967,Error1,11.35446602380123,Error2,11.354466023801388
+Inertia,0.5,Rationality,0.5,AlzDft,18655.743217467087,Rand,14697.303297177295,Error1,175.60757724764986,Error2,104.93190247642704
+Inertia,0.5,Rationality,0.5,AlzDft,18551.87413761635,L2,14775.463545192742,Error1,183.33632366630073,Error2,111.70095954433114
+Inertia,0.5,Rationality,0.5,Rand,19793.910171443156,Rand,19607.18850199325,Error1,286.8320683611253,Error2,269.66344124869784
+Inertia,0.5,Rationality,0.5,Rand,19842.24101847915,L2,19571.19333587668,Error1,291.4425222036729,Error2,304.29908060527424
+Inertia,0.5,Rationality,0.5,L2,19494.374803571623,L2,19737.837258357013,Error1,330.2188347483402,Error2,312.69896962662756
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  77.0,66.0  76.0,66.0  Grim , 314.0,
+64.0,61.0  62.0,62.0  76.0,60.0  75.0,60.0  AlzDft , 277.0,
+66.0,77.0  60.0,76.0  80.0,80.0  81.0,80.0  Rand , 287.0,
+66.0,76.0  60.0,75.0  80.0,81.0  80.0,80.0  L2 , 286.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlzDft"  "Rand"  "L2" }
+{ "Grim"  "AlzDft"  "Rand"  "L2" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 66.0, 77.0 }
+{ "" 66.0, 76.0 }
+{ "" 61.0, 64.0 }
+{ "" 62.0, 62.0 }
+{ "" 60.0, 76.0 }
+{ "" 60.0, 75.0 }
+{ "" 77.0, 66.0 }
+{ "" 76.0, 60.0 }
+{ "" 80.0, 80.0 }
+{ "" 80.0, 81.0 }
+{ "" 76.0, 66.0 }
+{ "" 75.0, 60.0 }
+{ "" 81.0, 80.0 }
+{ "" 80.0, 80.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Count	Grim			AlzDft			Rand			L2			
+NE-1			1			0			0			0			
+NE-2			1/37			36/37			0			0			
+NE-3			3/37			0			34/37			0			
+NE-4			3/37			0			34/37			0			
+NE-5			1/107			71/107			35/107			0			
+NE-6			1/107			71/107			35/107			0			
+NE-7			5/39			0			0			34/39			
+NE-8			1/72			107/144			0			35/144			
+NE-9			0			1			0			0			
+NE-10			0			0			1			0			
+NE-11			0			0			1			0			
+NE-12			0			2/3			1/3			0			
+NE-13			0			2/3			1/3			0			
+NE-14			0			0			0			1			
+NE-15			0			3/4			0			1/4			
+Inertia,0.5,Rationality,0.5,Grim,24604.219799999966,Grim,24572.180199999988,Error1,20.963742241481427,Error2,21.002713873171523
+Inertia,0.5,Rationality,0.5,Grim,15062.152785788983,AlzDft,15828.337648970415,Error1,11.35055564535567,Error2,10.96554741555263
+Inertia,0.5,Rationality,0.5,Grim,18736.021760655163,Rand,16377.955891699423,Error1,198.4091933521032,Error2,168.39456272921424
+Inertia,0.5,Rationality,0.5,Grim,18858.608369456197,L2,16216.848761607824,Error1,196.70893749083535,Error2,172.21490649427415
+Inertia,0.5,Rationality,0.5,AlzDft,15148.158675743938,AlzDft,15150.85561929969,Error1,11.874921056160202,Error2,11.874921056160053
+Inertia,0.5,Rationality,0.5,AlzDft,18742.467556145264,Rand,14650.717063015374,Error1,186.83738584959696,Error2,117.24876676608153
+Inertia,0.5,Rationality,0.5,AlzDft,18760.940714189794,L2,14636.421986993693,Error1,183.21621163288532,Error2,112.69572519410723
+Inertia,0.5,Rationality,0.5,Rand,19693.718266002423,Rand,19698.2784909456,Error1,303.66169817080413,Error2,256.5005321037362
+Inertia,0.5,Rationality,0.5,Rand,19788.605444140736,L2,19520.815839215335,Error1,306.14579773378586,Error2,279.6290650073054
+Inertia,0.5,Rationality,0.5,L2,19769.224095235157,L2,19691.022540804344,Error1,276.21867647111793,Error2,285.5468989338804
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  76.0,67.0  77.0,66.0  Grim , 314.0,
+64.0,61.0  62.0,62.0  76.0,60.0  76.0,59.0  AlzDft , 278.0,
+67.0,76.0  60.0,76.0  80.0,80.0  80.0,79.0  Rand , 287.0,
+66.0,77.0  59.0,76.0  79.0,80.0  80.0,80.0  L2 , 284.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlzDft"  "Rand"  "L2" }
+{ "Grim"  "AlzDft"  "Rand"  "L2" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 67.0, 76.0 }
+{ "" 66.0, 77.0 }
+{ "" 61.0, 64.0 }
+{ "" 62.0, 62.0 }
+{ "" 60.0, 76.0 }
+{ "" 59.0, 76.0 }
+{ "" 76.0, 67.0 }
+{ "" 76.0, 60.0 }
+{ "" 80.0, 80.0 }
+{ "" 79.0, 80.0 }
+{ "" 77.0, 66.0 }
+{ "" 76.0, 59.0 }
+{ "" 80.0, 79.0 }
+{ "" 80.0, 80.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Count	Grim			AlzDft			Rand			L2			
+NE-1			1			0			0			0			
+NE-2			1/37			36/37			0			0			
+NE-3			4/37			0			33/37			0			
+NE-4			4/217			144/217			69/217			0			
+NE-5			0			1			0			0			
+NE-6			0			0			1			0			
+NE-7			0			2/3			1/3			0			
+NE-8			0			0			0			1			

@@ -1,0 +1,1462 @@
+Inertia,0.5,Rationality,0.5,AlwaysCoop,24582.253399999972,AlwaysCoop,24594.14659999996,Error1,20.98365776791959,Error2,21.585879130244024
+Inertia,0.5,Rationality,0.5,AlwaysCoop,11248.187949999985,AlwaysDefect,22096.704217092116,Error1,14.368402495465944,Error2,11.141629930099382
+Inertia,0.5,Rationality,0.5,AlwaysCoop,16019.746099999958,Random,26030.306616110942,Error1,289.05883704212334,Error2,104.46808088089102
+Inertia,0.5,Rationality,0.5,AlwaysDefect,15145.808933630962,AlwaysDefect,15153.205361412663,Error1,11.344955959177701,Error2,11.344955959177854
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18766.392184750115,Random,14650.440867347945,Error1,175.03272197540397,Error2,110.17100648071975
+Inertia,0.5,Rationality,0.5,Random,19396.78910830781,Random,19711.707552101307,Error1,318.29799635465434,Error2,302.5466659597181
+Actual Payoff Matrix
+94.0,94.0  43.0,85.0  62.0,100.0  AlwaysCoop , 199.0,
+85.0,43.0  58.0,58.0  72.0,56.0  AlwaysDefect , 215.0,
+100.0,62.0  56.0,72.0  75.0,75.0  Random , 231.0,
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlwaysCoop"  "AlwaysDefect"  "Random" }
+{ "AlwaysCoop"  "AlwaysDefect"  "Random" }
+}
+""
+
+{
+{ "" 94.0, 94.0 }
+{ "" 85.0, 43.0 }
+{ "" 100.0, 62.0 }
+{ "" 43.0, 85.0 }
+{ "" 58.0, 58.0 }
+{ "" 56.0, 72.0 }
+{ "" 62.0, 100.0 }
+{ "" 72.0, 56.0 }
+{ "" 75.0, 75.0 }
+}
+1 2 3 4 5 6 7 8 9 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,AlwaysCoop,24584.34909999997,AlwaysCoop,24592.050899999966,Error1,21.83847711536231,Error2,21.80933360169181
+Inertia,0.5,Rationality,0.5,AlwaysCoop,11260.02704999998,AlwaysDefect,22087.374812848793,Error1,15.291688317863695,Error2,11.35882846612547
+Inertia,0.5,Rationality,0.5,AlwaysCoop,16300.013199999965,Random,25949.128433721227,Error1,320.91757111210757,Error2,79.32714861197807
+Inertia,0.5,Rationality,0.5,AlwaysCoop,16004.637349999959,L1,25989.436468747142,Error1,300.09454032083346,Error2,104.67220227971947
+Inertia,0.5,Rationality,0.5,AlwaysDefect,15150.585820424298,AlwaysDefect,15148.428474619328,Error1,12.493458660079527,Error2,12.493458660079668
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18625.232088132012,Random,14719.250562216423,Error1,184.58751216068427,Error2,117.29911596485104
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18618.022239111193,L1,14728.488304780158,Error1,176.0895465557147,Error2,108.84091015203545
+Inertia,0.5,Rationality,0.5,Random,19682.484802243664,Random,19685.256417116536,Error1,267.2975696395593,Error2,276.4472774393022
+Inertia,0.5,Rationality,0.5,Random,19920.145908500002,L1,19595.990959014547,Error1,305.9431439352983,Error2,318.65384252846
+Inertia,0.5,Rationality,0.5,L1,19816.650490315056,L1,19441.08271137297,Error1,266.5116946457765,Error2,319.94377734033145
+Actual Payoff Matrix
+95.0,95.0  43.0,85.0  63.0,100.0  62.0,100.0  AlwaysCoop , 263.0,
+85.0,43.0  58.0,58.0  72.0,57.0  72.0,57.0  AlwaysDefect , 287.0,
+100.0,63.0  57.0,72.0  76.0,76.0  77.0,75.0  Random , 310.0,
+100.0,62.0  57.0,72.0  75.0,77.0  76.0,76.0  L1 , 308.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlwaysCoop"  "AlwaysDefect"  "Random"  "L1" }
+{ "AlwaysCoop"  "AlwaysDefect"  "Random"  "L1" }
+}
+""
+
+{
+{ "" 95.0, 95.0 }
+{ "" 85.0, 43.0 }
+{ "" 100.0, 63.0 }
+{ "" 100.0, 62.0 }
+{ "" 43.0, 85.0 }
+{ "" 58.0, 58.0 }
+{ "" 57.0, 72.0 }
+{ "" 57.0, 72.0 }
+{ "" 63.0, 100.0 }
+{ "" 72.0, 57.0 }
+{ "" 76.0, 76.0 }
+{ "" 75.0, 77.0 }
+{ "" 62.0, 100.0 }
+{ "" 72.0, 57.0 }
+{ "" 77.0, 75.0 }
+{ "" 76.0, 76.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,AlwaysCoop,24589.96274999998,AlwaysCoop,24586.437249999977,Error1,21.16063561208126,Error2,21.065141607843305
+Inertia,0.5,Rationality,0.5,AlwaysCoop,11261.281599999982,AlwaysDefect,22087.96325367347,Error1,14.992074022501907,Error2,11.752562710244565
+Inertia,0.5,Rationality,0.5,AlwaysCoop,16067.398799999966,Random,25997.720063091467,Error1,307.79375090489395,Error2,92.03663239334126
+Inertia,0.5,Rationality,0.5,AlwaysCoop,16126.334199999976,L2,26039.622748384598,Error1,301.22358873008267,Error2,97.97493562463079
+Inertia,0.5,Rationality,0.5,AlwaysDefect,15159.430464712183,AlwaysDefect,15139.583830331445,Error1,11.72488068483533,Error2,11.724880684835355
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18612.455717304223,Random,14731.289941044932,Error1,185.49848933943812,Error2,115.72172719466076
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18550.92186686357,L2,14779.58056317574,Error1,163.092610780611,Error2,103.2601807192801
+Inertia,0.5,Rationality,0.5,Random,19820.720715705906,Random,19810.53885510872,Error1,268.559667704745,Error2,330.80473862866774
+Inertia,0.5,Rationality,0.5,Random,19723.02961995764,L2,19682.89331496495,Error1,268.1127193236144,Error2,228.02912597578978
+Inertia,0.5,Rationality,0.5,L2,19629.93825463256,L2,19785.206647875282,Error1,290.8402049464581,Error2,312.1441896282298
+Actual Payoff Matrix
+94.0,94.0  43.0,85.0  62.0,100.0  62.0,100.0  AlwaysCoop , 261.0,
+85.0,43.0  58.0,58.0  71.0,57.0  71.0,57.0  AlwaysDefect , 285.0,
+100.0,62.0  57.0,71.0  76.0,76.0  76.0,76.0  Random , 309.0,
+100.0,62.0  57.0,71.0  76.0,76.0  76.0,76.0  L2 , 309.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlwaysCoop"  "AlwaysDefect"  "Random"  "L2" }
+{ "AlwaysCoop"  "AlwaysDefect"  "Random"  "L2" }
+}
+""
+
+{
+{ "" 94.0, 94.0 }
+{ "" 85.0, 43.0 }
+{ "" 100.0, 62.0 }
+{ "" 100.0, 62.0 }
+{ "" 43.0, 85.0 }
+{ "" 58.0, 58.0 }
+{ "" 57.0, 71.0 }
+{ "" 57.0, 71.0 }
+{ "" 62.0, 100.0 }
+{ "" 71.0, 57.0 }
+{ "" 76.0, 76.0 }
+{ "" 76.0, 76.0 }
+{ "" 62.0, 100.0 }
+{ "" 71.0, 57.0 }
+{ "" 76.0, 76.0 }
+{ "" 76.0, 76.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,AlwaysCoop,24604.714549999982,AlwaysCoop,24571.685449999968,Error1,22.290160789256927,Error2,22.25764721561475
+Inertia,0.5,Rationality,0.5,AlwaysCoop,11260.58949999998,AlwaysDefect,22088.51708093855,Error1,14.575826563007082,Error2,10.984294001860153
+Inertia,0.5,Rationality,0.5,AlwaysCoop,16120.833199999963,Random,25967.99467590174,Error1,291.3889262101971,Error2,89.89705660805376
+Inertia,0.5,Rationality,0.5,AlwaysCoop,16103.050849999965,L3a,25959.27868651274,Error1,308.7697562328904,Error2,99.35731849306848
+Inertia,0.5,Rationality,0.5,AlwaysDefect,15147.13981805428,AlwaysDefect,15151.874476989342,Error1,12.435364012436342,Error2,12.435364012436398
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18670.6496101282,Random,14705.520756381364,Error1,184.67989594691585,Error2,119.99263198783582
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18593.41244670502,L3a,14761.33780956461,Error1,159.32213767058886,Error2,98.45970044351776
+Inertia,0.5,Rationality,0.5,Random,19546.83131335158,Random,19594.128475329468,Error1,301.21127157428776,Error2,305.5476673528984
+Inertia,0.5,Rationality,0.5,Random,19852.295448461293,L3a,19765.891652211078,Error1,279.6257749989893,Error2,296.48157710302013
+Inertia,0.5,Rationality,0.5,L3a,19572.30465557796,L3a,19657.91076591757,Error1,333.4505248925185,Error2,310.1827218924713
+Actual Payoff Matrix
+95.0,95.0  43.0,85.0  62.0,100.0  62.0,100.0  AlwaysCoop , 262.0,
+85.0,43.0  58.0,58.0  72.0,57.0  72.0,57.0  AlwaysDefect , 287.0,
+100.0,62.0  57.0,72.0  75.0,75.0  76.0,76.0  Random , 308.0,
+100.0,62.0  57.0,72.0  76.0,76.0  76.0,76.0  L3a , 309.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlwaysCoop"  "AlwaysDefect"  "Random"  "L3a" }
+{ "AlwaysCoop"  "AlwaysDefect"  "Random"  "L3a" }
+}
+""
+
+{
+{ "" 95.0, 95.0 }
+{ "" 85.0, 43.0 }
+{ "" 100.0, 62.0 }
+{ "" 100.0, 62.0 }
+{ "" 43.0, 85.0 }
+{ "" 58.0, 58.0 }
+{ "" 57.0, 72.0 }
+{ "" 57.0, 72.0 }
+{ "" 62.0, 100.0 }
+{ "" 72.0, 57.0 }
+{ "" 75.0, 75.0 }
+{ "" 76.0, 76.0 }
+{ "" 62.0, 100.0 }
+{ "" 72.0, 57.0 }
+{ "" 76.0, 76.0 }
+{ "" 76.0, 76.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,AlwaysCoop,24588.466449999967,AlwaysCoop,24587.933549999976,Error1,24.229705903310887,Error2,23.738654688122235
+Inertia,0.5,Rationality,0.5,AlwaysCoop,11258.70574999998,AlwaysDefect,22088.278048389377,Error1,17.040723098757802,Error2,12.491096416336559
+Inertia,0.5,Rationality,0.5,AlwaysCoop,16138.861949999959,Random,25978.62169845717,Error1,306.7891892847226,Error2,97.95126105129286
+Inertia,0.5,Rationality,0.5,AlwaysCoop,15962.736299999966,L4_3a,25941.999227858432,Error1,279.25638285448116,Error2,93.73916591254638
+Inertia,0.5,Rationality,0.5,AlwaysDefect,15147.424205354393,AlwaysDefect,15151.590089689233,Error1,12.794878861779038,Error2,12.794878861779265
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18591.885905062503,Random,14726.402578824818,Error1,207.67517667810347,Error2,122.15973151147296
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18755.114296862506,L4_3a,14635.516227585547,Error1,187.34274085643992,Error2,119.5118195669622
+Inertia,0.5,Rationality,0.5,Random,19952.799149675506,Random,19776.714963085327,Error1,312.79109353239494,Error2,285.8605320146227
+Inertia,0.5,Rationality,0.5,Random,19630.0716947006,L4_3a,19524.915118611072,Error1,259.4323214786323,Error2,270.84879946064143
+Inertia,0.5,Rationality,0.5,L4_3a,19757.72710024934,L4_3a,19818.848366342096,Error1,287.802404429419,Error2,302.5703144042738
+Actual Payoff Matrix
+95.0,95.0  43.0,85.0  62.0,100.0  61.0,100.0  AlwaysCoop , 261.0,
+85.0,43.0  58.0,58.0  72.0,57.0  72.0,56.0  AlwaysDefect , 287.0,
+100.0,62.0  57.0,72.0  76.0,76.0  76.0,75.0  Random , 309.0,
+100.0,61.0  56.0,72.0  75.0,76.0  76.0,76.0  L4_3a , 307.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlwaysCoop"  "AlwaysDefect"  "Random"  "L4_3a" }
+{ "AlwaysCoop"  "AlwaysDefect"  "Random"  "L4_3a" }
+}
+""
+
+{
+{ "" 95.0, 95.0 }
+{ "" 85.0, 43.0 }
+{ "" 100.0, 62.0 }
+{ "" 100.0, 61.0 }
+{ "" 43.0, 85.0 }
+{ "" 58.0, 58.0 }
+{ "" 57.0, 72.0 }
+{ "" 56.0, 72.0 }
+{ "" 62.0, 100.0 }
+{ "" 72.0, 57.0 }
+{ "" 76.0, 76.0 }
+{ "" 75.0, 76.0 }
+{ "" 61.0, 100.0 }
+{ "" 72.0, 56.0 }
+{ "" 76.0, 75.0 }
+{ "" 76.0, 76.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,AlwaysCoop,24589.10749999997,AlwaysCoop,24587.29249999998,Error1,21.90605763541559,Error2,21.843035649610087
+Inertia,0.5,Rationality,0.5,AlwaysCoop,11262.836999999976,AlwaysDefect,22083.08518077754,Error1,15.089874418678363,Error2,11.091374550329506
+Inertia,0.5,Rationality,0.5,AlwaysCoop,15796.88519999997,Random,25971.449716094165,Error1,264.04898586206275,Error2,83.86589320389798
+Inertia,0.5,Rationality,0.5,AlwaysCoop,15819.613199999963,L3b,25905.221241927968,Error1,304.518905483898,Error2,99.14331734197224
+Inertia,0.5,Rationality,0.5,AlwaysDefect,15150.877755073212,AlwaysDefect,15148.13653997043,Error1,12.721865504248175,Error2,12.721865504248218
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18598.306810180322,Random,14743.712159985327,Error1,188.0011231292655,Error2,114.71320080800898
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18616.231396321604,L3b,14740.659150907562,Error1,174.0558004782287,Error2,107.95806227979867
+Inertia,0.5,Rationality,0.5,Random,19771.53276771567,Random,19325.855941879,Error1,308.04387983439426,Error2,262.52069958341986
+Inertia,0.5,Rationality,0.5,Random,19482.248226461197,L3b,19641.419440469195,Error1,279.3080480626885,Error2,263.94741532592934
+Inertia,0.5,Rationality,0.5,L3b,19834.988667543486,L3b,19558.133833146778,Error1,288.90520224119854,Error2,277.84379544129996
+Actual Payoff Matrix
+95.0,95.0  43.0,85.0  61.0,100.0  61.0,100.0  AlwaysCoop , 260.0,
+85.0,43.0  58.0,58.0  72.0,57.0  72.0,57.0  AlwaysDefect , 287.0,
+100.0,61.0  57.0,72.0  75.0,75.0  75.0,76.0  Random , 307.0,
+100.0,61.0  57.0,72.0  76.0,75.0  76.0,76.0  L3b , 309.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlwaysCoop"  "AlwaysDefect"  "Random"  "L3b" }
+{ "AlwaysCoop"  "AlwaysDefect"  "Random"  "L3b" }
+}
+""
+
+{
+{ "" 95.0, 95.0 }
+{ "" 85.0, 43.0 }
+{ "" 100.0, 61.0 }
+{ "" 100.0, 61.0 }
+{ "" 43.0, 85.0 }
+{ "" 58.0, 58.0 }
+{ "" 57.0, 72.0 }
+{ "" 57.0, 72.0 }
+{ "" 61.0, 100.0 }
+{ "" 72.0, 57.0 }
+{ "" 75.0, 75.0 }
+{ "" 76.0, 75.0 }
+{ "" 61.0, 100.0 }
+{ "" 72.0, 57.0 }
+{ "" 75.0, 76.0 }
+{ "" 76.0, 76.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,AlwaysCoop,24586.63884999997,AlwaysCoop,24589.761149999966,Error1,23.06877614146655,Error2,22.916414983970892
+Inertia,0.5,Rationality,0.5,AlwaysCoop,11250.755949999979,AlwaysDefect,22094.31506090212,Error1,16.00638554248169,Error2,12.6228068357395
+Inertia,0.5,Rationality,0.5,AlwaysCoop,16127.223399999966,Random,25983.170212820904,Error1,308.76291275138175,Error2,102.19257363890425
+Inertia,0.5,Rationality,0.5,AlwaysCoop,16129.308249999971,L4_3a,26062.58929096758,Error1,295.54665254371065,Error2,90.60965134324306
+Inertia,0.5,Rationality,0.5,AlwaysDefect,15156.114301781612,AlwaysDefect,15142.899993262015,Error1,13.180153551828749,Error2,13.180153551829068
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18617.474298789424,Random,14726.00618626483,Error1,182.97197846856383,Error2,113.24182509035955
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18681.158478450176,L4_3a,14700.105417490413,Error1,160.62247500070626,Error2,101.88891323888873
+Inertia,0.5,Rationality,0.5,Random,19769.05809268503,Random,19618.272074122786,Error1,272.19578076933243,Error2,269.74754719737604
+Inertia,0.5,Rationality,0.5,Random,19769.1185772454,L4_3a,19473.419824520304,Error1,281.07609846785897,Error2,298.18199962655655
+Inertia,0.5,Rationality,0.5,L4_3a,19725.300850934425,L4_3a,19491.446020601838,Error1,305.19097565945043,Error2,280.4750687889255
+Actual Payoff Matrix
+94.0,94.0  43.0,85.0  62.0,100.0  62.0,100.0  AlwaysCoop , 261.0,
+85.0,43.0  58.0,58.0  71.0,57.0  72.0,56.0  AlwaysDefect , 286.0,
+100.0,62.0  57.0,71.0  76.0,76.0  76.0,75.0  Random , 309.0,
+100.0,62.0  56.0,72.0  75.0,76.0  75.0,75.0  L4_3b , 306.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlwaysCoop"  "AlwaysDefect"  "Random"  "L4_3b" }
+{ "AlwaysCoop"  "AlwaysDefect"  "Random"  "L4_3b" }
+}
+""
+
+{
+{ "" 94.0, 94.0 }
+{ "" 85.0, 43.0 }
+{ "" 100.0, 62.0 }
+{ "" 100.0, 62.0 }
+{ "" 43.0, 85.0 }
+{ "" 58.0, 58.0 }
+{ "" 57.0, 71.0 }
+{ "" 56.0, 72.0 }
+{ "" 62.0, 100.0 }
+{ "" 71.0, 57.0 }
+{ "" 76.0, 76.0 }
+{ "" 75.0, 76.0 }
+{ "" 62.0, 100.0 }
+{ "" 72.0, 56.0 }
+{ "" 76.0, 75.0 }
+{ "" 75.0, 75.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,AlwaysCoop,24574.973699999962,AlwaysCoop,24601.42629999997,Error1,20.80040350757697,Error2,21.274491781938917
+Inertia,0.5,Rationality,0.5,AlwaysCoop,11252.61949999998,AlwaysDefect,22090.487454989114,Error1,15.127530335043206,Error2,11.21455660150043
+Inertia,0.5,Rationality,0.5,AlwaysCoop,15865.968699999963,Random,25902.234034821373,Error1,308.57927529322626,Error2,101.28295945382436
+Inertia,0.5,Rationality,0.5,AlwaysCoop,15744.714249999966,L3b,25932.29250901771,Error1,287.5130947593794,Error2,98.35032844789293
+Inertia,0.5,Rationality,0.5,AlwaysDefect,15149.920229174271,AlwaysDefect,15149.094065869358,Error1,12.126223891625395,Error2,12.126223891625349
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18650.6165016906,Random,14712.274064230834,Error1,171.28474793354061,Error2,107.85810382986828
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18636.85157699579,L3b,14719.642242424095,Error1,171.1451104461813,Error2,109.96261834594824
+Inertia,0.5,Rationality,0.5,Random,19908.88495601512,Random,19579.320172398337,Error1,296.74729660106084,Error2,330.23735618473967
+Inertia,0.5,Rationality,0.5,Random,19832.903882823153,L3b,19598.474194047492,Error1,288.5015427183966,Error2,281.3400861653014
+Inertia,0.5,Rationality,0.5,L3b,19842.964162865705,L3b,19948.158099375927,Error1,286.1483238502729,Error2,282.3371542488066
+Actual Payoff Matrix
+95.0,95.0  43.0,85.0  61.0,100.0  61.0,100.0  AlwaysCoop , 260.0,
+85.0,43.0  58.0,58.0  72.0,57.0  72.0,57.0  AlwaysDefect , 287.0,
+100.0,61.0  57.0,72.0  76.0,76.0  76.0,76.0  Random , 309.0,
+100.0,61.0  57.0,72.0  76.0,76.0  77.0,77.0  L3b , 310.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlwaysCoop"  "AlwaysDefect"  "Random"  "L3b" }
+{ "AlwaysCoop"  "AlwaysDefect"  "Random"  "L3b" }
+}
+""
+
+{
+{ "" 95.0, 95.0 }
+{ "" 85.0, 43.0 }
+{ "" 100.0, 61.0 }
+{ "" 100.0, 61.0 }
+{ "" 43.0, 85.0 }
+{ "" 58.0, 58.0 }
+{ "" 57.0, 72.0 }
+{ "" 57.0, 72.0 }
+{ "" 61.0, 100.0 }
+{ "" 72.0, 57.0 }
+{ "" 76.0, 76.0 }
+{ "" 76.0, 76.0 }
+{ "" 61.0, 100.0 }
+{ "" 72.0, 57.0 }
+{ "" 76.0, 76.0 }
+{ "" 77.0, 77.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,Grim,24585.26739999998,Grim,24591.132599999968,Error1,20.02424435347925,Error2,19.940356698598812
+Inertia,0.5,Rationality,0.5,Grim,15062.303589435485,AlwaysDefect,15828.136338396838,Error1,12.1454027551921,Error2,11.721188559003648
+Inertia,0.5,Rationality,0.5,Grim,18862.422726847384,Random,16336.943917481725,Error1,231.38850725426346,Error2,192.90316956750485
+Inertia,0.5,Rationality,0.5,Grim,18757.28265504128,L3b,16346.545831931764,Error1,224.01082087972105,Error2,183.93535350797265
+Inertia,0.5,Rationality,0.5,AlwaysDefect,15149.17228035228,AlwaysDefect,15149.842014691341,Error1,11.957965652596293,Error2,11.957965652596398
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18571.111530313272,Random,14747.978241575032,Error1,194.90660234697,Error2,117.3367375244337
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18764.98372868306,L3b,14628.100870797867,Error1,191.47093335452013,Error2,118.30384481608299
+Inertia,0.5,Rationality,0.5,Random,19416.39018544874,Random,20123.978800745637,Error1,294.55699782612754,Error2,306.5481979378501
+Inertia,0.5,Rationality,0.5,Random,19705.81144490277,L3b,19830.912319704228,Error1,300.7346403468176,Error2,300.2043365086431
+Inertia,0.5,Rationality,0.5,L3b,19691.554857031453,L3b,19566.10448057756,Error1,307.10787454529645,Error2,288.65931643068876
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  77.0,66.0  76.0,66.0  Grim , 314.0,
+64.0,61.0  62.0,62.0  76.0,60.0  76.0,59.0  AlwaysDefect , 278.0,
+66.0,77.0  60.0,76.0  80.0,80.0  80.0,81.0  Random , 286.0,
+66.0,76.0  59.0,76.0  81.0,80.0  80.0,80.0  L3b , 286.0,
+
+NE:
+   grim    ad     random    l3b
+L4aL3b1
+1. 1/37   36/37  					bad
+2. 2/19            17/19			good
+3. 1/107   71/107   35/107			bad
+4. 2/29                     17/19	good
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlwaysDefect"  "Random"  "L3b" }
+{ "Grim"  "AlwaysDefect"  "Random"  "L3b" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 66.0, 77.0 }
+{ "" 66.0, 76.0 }
+{ "" 61.0, 64.0 }
+{ "" 62.0, 62.0 }
+{ "" 60.0, 76.0 }
+{ "" 59.0, 76.0 }
+{ "" 77.0, 66.0 }
+{ "" 76.0, 60.0 }
+{ "" 80.0, 80.0 }
+{ "" 81.0, 80.0 }
+{ "" 76.0, 66.0 }
+{ "" 76.0, 59.0 }
+{ "" 80.0, 81.0 }
+{ "" 80.0, 80.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,Grim,24579.103949999986,Grim,24597.296049999975,Error1,21.37380370984357,Error2,21.1199869694061
+Inertia,0.5,Rationality,0.5,Grim,15058.554902385687,AlwaysDefect,15831.99889870565,Error1,12.705896322750789,Error2,12.272439418249531
+Inertia,0.5,Rationality,0.5,Grim,18756.95761912914,Random,16275.883676600595,Error1,202.7345305147738,Error2,161.44350873811217
+Inertia,0.5,Rationality,0.5,Grim,18861.818489663143,L4a_3b,16235.967451243509,Error1,220.1084155401005,Error2,158.21755813884712
+Inertia,0.5,Rationality,0.5,AlwaysDefect,15143.884748680179,AlwaysDefect,15155.129546363452,Error1,12.15580102146799,Error2,12.155801021468186
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18652.051390864308,Random,14713.784335696115,Error1,184.70264541293582,Error2,116.21721548429117
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18667.61880588015,L4a_3b,14693.41432092713,Error1,183.7884713118906,Error2,111.18775395870348
+Inertia,0.5,Rationality,0.5,Random,19370.43960554627,Random,19660.15161028055,Error1,323.3805007500215,Error2,289.9844618971736
+Inertia,0.5,Rationality,0.5,Random,19808.392398582433,L4a_3b,19755.08933110443,Error1,287.37447804032473,Error2,278.2244184379511
+Inertia,0.5,Rationality,0.5,L4a_3b,19802.747282019944,L4a_3b,19516.796304650445,Error1,299.56571763061737,Error2,264.2261535554522
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  76.0,66.0  77.0,66.0  Grim , 314.0,
+64.0,61.0  62.0,62.0  76.0,60.0  76.0,60.0  AlwaysDefect , 278.0,
+66.0,76.0  60.0,76.0  79.0,79.0  81.0,80.0  Random , 286.0,
+66.0,77.0  60.0,76.0  80.0,81.0  80.0,80.0  L4a_3b , 286.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlwaysDefect"  "Random"  "L4a_3b" }
+{ "Grim"  "AlwaysDefect"  "Random"  "L4a_3b" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 66.0, 76.0 }
+{ "" 66.0, 77.0 }
+{ "" 61.0, 64.0 }
+{ "" 62.0, 62.0 }
+{ "" 60.0, 76.0 }
+{ "" 60.0, 76.0 }
+{ "" 76.0, 66.0 }
+{ "" 76.0, 60.0 }
+{ "" 79.0, 79.0 }
+{ "" 80.0, 81.0 }
+{ "" 77.0, 66.0 }
+{ "" 76.0, 60.0 }
+{ "" 81.0, 80.0 }
+{ "" 80.0, 80.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,Grim,24577.55449999998,Grim,24611.44549999998,Error1,72.3172867873663,Error2,59.828236340762956
+Inertia,0.5,Rationality,0.5,Grim,15057.223161687338,AlwaysDefect,15833.187786590022,Error1,42.18100156591764,Error2,40.769159774589504
+Inertia,0.5,Rationality,0.5,Grim,18641.787317990274,Random,16216.464841087301,Error1,809.545134082198,Error2,452.9164794700481
+Inertia,0.5,Rationality,0.5,Grim,18859.00134173173,L4a_3b,16322.76644863713,Error1,427.1471799234879,Error2,504.7068941802713
+Inertia,0.5,Rationality,0.5,AlwaysDefect,15100.823587092415,AlwaysDefect,15198.190707951217,Error1,33.287695176693454,Error2,33.287695176693546
+Inertia,0.5,Rationality,0.5,AlwaysDefect,19204.59836926891,Random,14357.783832344905,Error1,638.8951593456792,Error2,399.9676065024301
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18569.976462864754,L4a_3b,14722.789333778932,Error1,563.0695597501054,Error2,327.83362316547795
+Inertia,0.5,Rationality,0.5,Random,19670.441993636938,Random,19455.01312450067,Error1,951.5050100907129,Error2,1048.238705925956
+Inertia,0.5,Rationality,0.5,Random,19914.47904244375,L4a_3b,18814.60944196394,Error1,1056.869233081411,Error2,1222.0459124808551
+Inertia,0.5,Rationality,0.5,L4a_3b,19769.340612308464,L4a_3b,19689.42965811787,Error1,989.5672158939395,Error2,784.3234193955574
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  76.0,66.0  77.0,66.0  Grim , 314.0,
+64.0,61.0  62.0,62.0  78.0,58.0  75.0,60.0  AlwaysDefect , 279.0,
+66.0,76.0  58.0,78.0  79.0,79.0  81.0,76.0  Random , 284.0,
+66.0,77.0  60.0,75.0  76.0,81.0  80.0,80.0  L4a_3b , 282.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlwaysDefect"  "Random"  "L4a_3b" }
+{ "Grim"  "AlwaysDefect"  "Random"  "L4a_3b" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 66.0, 76.0 }
+{ "" 66.0, 77.0 }
+{ "" 61.0, 64.0 }
+{ "" 62.0, 62.0 }
+{ "" 58.0, 78.0 }
+{ "" 60.0, 75.0 }
+{ "" 76.0, 66.0 }
+{ "" 78.0, 58.0 }
+{ "" 79.0, 79.0 }
+{ "" 76.0, 81.0 }
+{ "" 77.0, 66.0 }
+{ "" 75.0, 60.0 }
+{ "" 81.0, 76.0 }
+{ "" 80.0, 80.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,Grim,24596.80799999997,Grim,24592.191999999977,Error1,85.54344716493237,Error2,74.12482891919392
+Inertia,0.5,Rationality,0.5,Grim,15047.8164386753,AlwaysDefect,15841.943045141816,Error1,39.95516735568246,Error2,38.754153190760505
+Inertia,0.5,Rationality,0.5,Grim,18973.093912645134,Random,16985.48736324191,Error1,743.9741374130056,Error2,457.5650693465616
+Inertia,0.5,Rationality,0.5,Grim,19278.242734774136,L4a_3b,16219.261603560773,Error1,511.90649836748844,Error2,664.3710920339632
+Inertia,0.5,Rationality,0.5,AlwaysDefect,15124.220591519912,AlwaysDefect,15174.793703523712,Error1,33.870727104889916,Error2,33.870727104888736
+Inertia,0.5,Rationality,0.5,AlwaysDefect,19312.816300097984,Random,14275.709982570534,Error1,580.7788441465632,Error2,386.9896269960609
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18456.879856418534,L4a_3b,14797.449014293848,Error1,618.5645085125528,Error2,338.85949869247173
+Inertia,0.5,Rationality,0.5,Random,19425.473692881453,Random,18920.51952151766,Error1,1110.4763546050153,Error2,1032.7426305175836
+Inertia,0.5,Rationality,0.5,Random,19561.701380704173,L4a_3b,19889.71516916083,Error1,1043.6632037730683,Error2,1245.7412596573852
+Inertia,0.5,Rationality,0.5,L4a_3b,19465.856550103657,L4a_3b,19801.191080536853,Error1,784.9500011955923,Error2,748.2857128092141
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  77.0,69.0  78.0,66.0  Grim , 316.0,
+64.0,61.0  62.0,62.0  79.0,58.0  75.0,60.0  AlwaysDefect , 280.0,
+69.0,77.0  58.0,79.0  78.0,78.0  80.0,81.0  Random , 285.0,
+66.0,78.0  60.0,75.0  81.0,80.0  80.0,80.0  L4a_3b , 287.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlwaysDefect"  "Random"  "L4a_3b" }
+{ "Grim"  "AlwaysDefect"  "Random"  "L4a_3b" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 69.0, 77.0 }
+{ "" 66.0, 78.0 }
+{ "" 61.0, 64.0 }
+{ "" 62.0, 62.0 }
+{ "" 58.0, 79.0 }
+{ "" 60.0, 75.0 }
+{ "" 77.0, 69.0 }
+{ "" 79.0, 58.0 }
+{ "" 78.0, 78.0 }
+{ "" 81.0, 80.0 }
+{ "" 78.0, 66.0 }
+{ "" 75.0, 60.0 }
+{ "" 80.0, 81.0 }
+{ "" 80.0, 80.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,Grim,24535.58699999997,Grim,24653.412999999975,Error1,77.41143094167568,Error2,81.73914954168434
+Inertia,0.5,Rationality,0.5,Grim,15088.495139680843,AlwaysDefect,15803.390758156393,Error1,38.54069876289935,Error2,37.23557878613378
+Inertia,0.5,Rationality,0.5,Grim,17989.59454803796,Random,16080.008626251652,Error1,387.4503010183612,Error2,236.72254833503334
+Inertia,0.5,Rationality,0.5,Grim,19024.484400188936,L4a_3b,16179.458443323489,Error1,479.66325788227886,Error2,415.9951037723929
+Inertia,0.5,Rationality,0.5,AlwaysDefect,15187.222358029641,AlwaysDefect,15111.791937013986,Error1,34.186595725361435,Error2,34.18659572536212
+Inertia,0.5,Rationality,0.5,AlwaysDefect,19332.094194178848,Random,14253.530485643196,Error1,569.8278378752526,Error2,420.261233302138
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18459.450122465067,L4a_3b,14780.438316861433,Error1,679.4860042465926,Error2,357.26150861072233
+Inertia,0.5,Rationality,0.5,Random,20489.314752921233,Random,19117.94331498504,Error1,1094.466225224885,Error2,851.8961834321984
+Inertia,0.5,Rationality,0.5,Random,19361.377191708336,L4a_3b,19902.323929330232,Error1,991.3409432973563,Error2,621.2776215844461
+Inertia,0.5,Rationality,0.5,L4a_3b,19019.971953743596,L4a_3b,19235.55746338145,Error1,706.4922848234972,Error2,1029.810610158221
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  73.0,65.0  77.0,66.0  Grim , 311.0,
+64.0,61.0  61.0,61.0  78.0,58.0  75.0,60.0  AlwaysDefect , 278.0,
+65.0,73.0  58.0,78.0  80.0,80.0  79.0,81.0  Random , 282.0,
+66.0,77.0  60.0,75.0  81.0,79.0  78.0,78.0  L4a_3b , 285.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlwaysDefect"  "Random"  "L4a_3b" }
+{ "Grim"  "AlwaysDefect"  "Random"  "L4a_3b" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 65.0, 73.0 }
+{ "" 66.0, 77.0 }
+{ "" 61.0, 64.0 }
+{ "" 61.0, 61.0 }
+{ "" 58.0, 78.0 }
+{ "" 60.0, 75.0 }
+{ "" 73.0, 65.0 }
+{ "" 78.0, 58.0 }
+{ "" 80.0, 80.0 }
+{ "" 81.0, 79.0 }
+{ "" 77.0, 66.0 }
+{ "" 75.0, 60.0 }
+{ "" 79.0, 81.0 }
+{ "" 78.0, 78.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,Grim,24528.911999999968,Grim,24660.08799999998,Error1,80.85703723647583,Error2,89.33718535761507
+Inertia,0.5,Rationality,0.5,Grim,15070.84009901525,AlwaysDefect,15819.733508008669,Error1,40.094586288268786,Error2,38.7026614828799
+Inertia,0.5,Rationality,0.5,Grim,18754.768413754668,Random,16355.591066747138,Error1,751.522092698001,Error2,689.5566745393974
+Inertia,0.5,Rationality,0.5,Grim,18909.243302718376,L4a_3b,15750.744660259816,Error1,590.6542673397696,Error2,312.2301091844265
+Inertia,0.5,Rationality,0.5,AlwaysDefect,15179.555683458724,AlwaysDefect,15119.4586115849,Error1,29.103830580601763,Error2,29.10383058060393
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18841.215156264218,Random,14615.779467466176,Error1,447.68531509111637,Error2,270.4281748130446
+Inertia,0.5,Rationality,0.5,AlwaysDefect,19056.202713475337,L4a_3b,14432.906520616962,Error1,566.5940936481078,Error2,388.6396486987142
+Inertia,0.5,Rationality,0.5,Random,20317.77928792002,Random,19595.79102872301,Error1,993.5273962888765,Error2,667.5746945253873
+Inertia,0.5,Rationality,0.5,Random,20044.005740107084,L4a_3b,20068.626398113895,Error1,853.333865455937,Error2,848.7477953542123
+Inertia,0.5,Rationality,0.5,L4a_3b,19316.77715648393,L4a_3b,19575.195377979966,Error1,809.1647739224538,Error2,667.5446738971252
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  76.0,66.0  77.0,64.0  Grim , 314.0,
+64.0,61.0  61.0,61.0  76.0,59.0  77.0,59.0  AlwaysDefect , 278.0,
+66.0,76.0  59.0,76.0  81.0,81.0  81.0,81.0  Random , 287.0,
+64.0,77.0  59.0,77.0  81.0,81.0  79.0,79.0  L4a_3b , 283.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlwaysDefect"  "Random"  "L4a_3b" }
+{ "Grim"  "AlwaysDefect"  "Random"  "L4a_3b" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 66.0, 76.0 }
+{ "" 64.0, 77.0 }
+{ "" 61.0, 64.0 }
+{ "" 61.0, 61.0 }
+{ "" 59.0, 76.0 }
+{ "" 59.0, 77.0 }
+{ "" 76.0, 66.0 }
+{ "" 76.0, 59.0 }
+{ "" 81.0, 81.0 }
+{ "" 81.0, 81.0 }
+{ "" 77.0, 64.0 }
+{ "" 77.0, 59.0 }
+{ "" 81.0, 81.0 }
+{ "" 79.0, 79.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,Grim,24570.611999999976,Grim,24618.38799999998,Error1,80.20585850770155,Error2,86.85053946589733
+Inertia,0.5,Rationality,0.5,Grim,15043.907975778633,AlwaysDefect,15845.871318780559,Error1,25.394986612742144,Error2,24.073460253356583
+Inertia,0.5,Rationality,0.5,Grim,18750.122058434084,Random,16662.89988686111,Error1,660.8047155012358,Error2,538.3026044722765
+Inertia,0.5,Rationality,0.5,Grim,18686.12545220053,L4a_3b,16138.003796007455,Error1,664.0652465816394,Error2,410.791217726778
+Inertia,0.5,Rationality,0.5,AlwaysDefect,15143.475696350788,AlwaysDefect,15155.53859869284,Error1,38.57814038524809,Error2,38.57814038524819
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18609.301289497922,Random,14782.810371519925,Error1,333.6707800836974,Error2,193.4001366043206
+Inertia,0.5,Rationality,0.5,AlwaysDefect,18174.855171937554,L4a_3b,15028.44446095163,Error1,340.8362536016647,Error2,164.60482004765612
+Inertia,0.5,Rationality,0.5,Random,20276.193783437448,Random,18951.359308829087,Error1,839.8528472660305,Error2,779.2239447337239
+Inertia,0.5,Rationality,0.5,Random,19607.16890049898,L4a_3b,19423.327619356078,Error1,810.8407265943597,Error2,767.5843231869807
+Inertia,0.5,Rationality,0.5,L4a_3b,19430.225895198215,L4a_3b,19339.14559022875,Error1,770.0378041336979,Error2,1159.1653696819033
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  76.0,68.0  76.0,66.0  Grim , 313.0,
+64.0,61.0  62.0,62.0  76.0,60.0  74.0,61.0  AlwaysDefect , 276.0,
+68.0,76.0  60.0,76.0  80.0,80.0  80.0,79.0  Random , 288.0,
+66.0,76.0  61.0,74.0  79.0,80.0  79.0,79.0  L4a_3b , 285.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlwaysDefect"  "Random"  "L4a_3b" }
+{ "Grim"  "AlwaysDefect"  "Random"  "L4a_3b" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 68.0, 76.0 }
+{ "" 66.0, 76.0 }
+{ "" 61.0, 64.0 }
+{ "" 62.0, 62.0 }
+{ "" 60.0, 76.0 }
+{ "" 61.0, 74.0 }
+{ "" 76.0, 68.0 }
+{ "" 76.0, 60.0 }
+{ "" 80.0, 80.0 }
+{ "" 79.0, 80.0 }
+{ "" 76.0, 66.0 }
+{ "" 74.0, 61.0 }
+{ "" 80.0, 79.0 }
+{ "" 79.0, 79.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,Grim,24553.373499999976,Grim,24635.626499999977,Error1,52.52504741196374,Error2,48.72810149912526
+Inertia,0.5,Rationality,0.5,Grim,15073.866783012203,AlwzDeft,15817.090327691654,Error1,31.382861351034048,Error2,30.16685600996382
+Inertia,0.5,Rationality,0.5,Grim,19508.729154061675,Random,16030.22738826596,Error1,470.07047051574995,Error2,682.717293594966
+Inertia,0.5,Rationality,0.5,Grim,18794.063498213938,L4a_3b,16284.201116805856,Error1,1069.278862665166,Error2,549.2084013045296
+Inertia,0.5,Rationality,0.5,AlwzDeft,15111.217765010262,AlwzDeft,15187.796530033364,Error1,23.686583376811804,Error2,23.68658337681092
+Inertia,0.5,Rationality,0.5,AlwzDeft,19292.17855616203,Random,14277.75046137231,Error1,557.5556240421217,Error2,431.963591574724
+Inertia,0.5,Rationality,0.5,AlwzDeft,18500.416728132233,L4a_3b,14813.266826006997,Error1,412.4368624294145,Error2,216.25876759480235
+Inertia,0.5,Rationality,0.5,Random,19291.8916805338,Random,19674.26285378434,Error1,965.1427044569509,Error2,988.7841701225107
+Inertia,0.5,Rationality,0.5,Random,20105.23308588286,L4a_3b,19346.183741655557,Error1,1005.9535190868712,Error2,931.7524632844396
+Inertia,0.5,Rationality,0.5,L4a_3b,19067.24116839255,L4a_3b,19159.72286271921,Error1,1108.3446447282397,Error2,1024.247980045547
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  79.0,65.0  76.0,66.0  Grim , 316.0,
+64.0,61.0  61.0,61.0  78.0,58.0  75.0,60.0  AlwzDeft , 278.0,
+65.0,79.0  58.0,78.0  79.0,79.0  82.0,79.0  Random , 284.0,
+66.0,76.0  60.0,75.0  79.0,82.0  78.0,78.0  L4a_3b , 283.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlwzDeft"  "Random"  "L4a_3b" }
+{ "Grim"  "AlwzDeft"  "Random"  "L4a_3b" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 65.0, 79.0 }
+{ "" 66.0, 76.0 }
+{ "" 61.0, 64.0 }
+{ "" 61.0, 61.0 }
+{ "" 58.0, 78.0 }
+{ "" 60.0, 75.0 }
+{ "" 79.0, 65.0 }
+{ "" 78.0, 58.0 }
+{ "" 79.0, 79.0 }
+{ "" 79.0, 82.0 }
+{ "" 76.0, 66.0 }
+{ "" 75.0, 60.0 }
+{ "" 82.0, 79.0 }
+{ "" 78.0, 78.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,Grim,24612.847999999984,Grim,24576.151999999976,Error1,89.44469413664143,Error2,87.25646178156438
+Inertia,0.5,Rationality,0.5,Grim,15055.21720859518,AlzDft,15834.70675062034,Error1,15.802140127256887,Error2,15.033924164034135
+Inertia,0.5,Rationality,0.5,Grim,19257.49394410127,Rand,16152.437370452219,Error1,584.9908234686894,Error2,532.8556442446558
+Inertia,0.5,Rationality,0.5,Grim,19259.864259410253,L4a_3b,16498.997323673382,Error1,869.4812092102352,Error2,796.6463423124578
+Inertia,0.5,Rationality,0.5,AlzDft,15184.203661910453,AlzDft,15114.81063313317,Error1,49.08652263928305,Error2,49.0865226392813
+Inertia,0.5,Rationality,0.5,AlzDft,18870.491170778543,Rand,14550.429439346733,Error1,622.6343259877033,Error2,413.4422110687292
+Inertia,0.5,Rationality,0.5,AlzDft,18589.452133238552,L4a_3b,14730.910626965338,Error1,555.1317313119833,Error2,335.2462631147348
+Inertia,0.5,Rationality,0.5,Rand,20264.848607347925,Rand,19538.732669445362,Error1,1041.2576595341345,Error2,489.46563820738146
+Inertia,0.5,Rationality,0.5,Rand,19799.76683583581,L4a_3b,19411.078477895284,Error1,1146.0524570025848,Error2,1386.8875785693974
+Inertia,0.5,Rationality,0.5,L4a_3b,20113.108535991774,L4a_3b,19195.023765704587,Error1,692.8373522956513,Error2,696.192433456847
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  78.0,66.0  78.0,67.0  Grim , 317.0,
+64.0,61.0  62.0,62.0  77.0,59.0  76.0,60.0  AlzDft , 279.0,
+66.0,78.0  59.0,77.0  81.0,81.0  80.0,79.0  Rand , 286.0,
+67.0,78.0  60.0,76.0  79.0,80.0  80.0,80.0  L4a_3b , 286.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlzDft"  "Rand"  "L4a_3b" }
+{ "Grim"  "AlzDft"  "Rand"  "L4a_3b" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 66.0, 78.0 }
+{ "" 67.0, 78.0 }
+{ "" 61.0, 64.0 }
+{ "" 62.0, 62.0 }
+{ "" 59.0, 77.0 }
+{ "" 60.0, 76.0 }
+{ "" 78.0, 66.0 }
+{ "" 77.0, 59.0 }
+{ "" 81.0, 81.0 }
+{ "" 79.0, 80.0 }
+{ "" 78.0, 67.0 }
+{ "" 76.0, 60.0 }
+{ "" 80.0, 79.0 }
+{ "" 80.0, 80.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,Grim,24595.746499999976,Grim,24593.25349999997,Error1,54.97255795398984,Error2,39.072831936329514
+Inertia,0.5,Rationality,0.5,Grim,15041.867005562828,AlzDft,15847.860019592039,Error1,33.57394773763468,Error2,32.52107691407122
+Inertia,0.5,Rationality,0.5,Grim,18579.840520980964,Rand,15969.934264898588,Error1,580.6084738269717,Error2,367.97958417387747
+Inertia,0.5,Rationality,0.5,Grim,18104.126604405046,L4a_3b,16168.451946411256,Error1,763.2661161058511,Error2,406.93044323204475
+Inertia,0.5,Rationality,0.5,AlzDft,15176.314603367078,AlzDft,15122.69969167655,Error1,36.74371900030768,Error2,36.743719000307216
+Inertia,0.5,Rationality,0.5,AlzDft,19414.47100877337,Rand,14187.804981413356,Error1,568.9471041316887,Error2,451.06670668828906
+Inertia,0.5,Rationality,0.5,AlzDft,18603.35313828789,L4a_3b,14710.57939316992,Error1,756.4823355598986,Error2,466.45570783322347
+Inertia,0.5,Rationality,0.5,Rand,20645.5596734866,Rand,19019.152014349143,Error1,784.6741939795455,Error2,924.6039932544103
+Inertia,0.5,Rationality,0.5,Rand,20243.601294893262,L4a_3b,19666.562368288956,Error1,1104.368177343448,Error2,1035.9025403252458
+Inertia,0.5,Rationality,0.5,L4a_3b,19617.072923151765,L4a_3b,20316.306288527227,Error1,809.0934560190001,Error2,826.9252512948141
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  76.0,65.0  74.0,66.0  Grim , 311.0,
+64.0,61.0  62.0,62.0  79.0,58.0  76.0,60.0  AlzDft , 281.0,
+65.0,76.0  58.0,79.0  81.0,81.0  82.0,80.0  Rand , 286.0,
+66.0,74.0  60.0,76.0  80.0,82.0  81.0,81.0  L4a_3b , 287.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlzDft"  "Rand"  "L4a_3b" }
+{ "Grim"  "AlzDft"  "Rand"  "L4a_3b" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 65.0, 76.0 }
+{ "" 66.0, 74.0 }
+{ "" 61.0, 64.0 }
+{ "" 62.0, 62.0 }
+{ "" 58.0, 79.0 }
+{ "" 60.0, 76.0 }
+{ "" 76.0, 65.0 }
+{ "" 79.0, 58.0 }
+{ "" 81.0, 81.0 }
+{ "" 80.0, 82.0 }
+{ "" 74.0, 66.0 }
+{ "" 76.0, 60.0 }
+{ "" 82.0, 80.0 }
+{ "" 81.0, 81.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,Grim,24603.69249999997,Grim,24585.30749999998,Error1,72.32203738725792,Error2,62.67677637405798
+Inertia,0.5,Rationality,0.5,Grim,15077.732990132126,AlzDft,15813.57472471413,Error1,44.01648059886386,Error2,42.29953569459405
+Inertia,0.5,Rationality,0.5,Grim,18910.28045302358,Rand,16498.687857078363,Error1,835.6069054943503,Error2,693.9459097911251
+Inertia,0.5,Rationality,0.5,Grim,18877.181727365485,L4a_3b,16519.14014183703,Error1,828.2074895853543,Error2,436.0269979024605
+Inertia,0.5,Rationality,0.5,AlzDft,15166.655002012087,AlzDft,15132.359293031539,Error1,51.02096615213797,Error2,51.020966152137625
+Inertia,0.5,Rationality,0.5,AlzDft,18696.28706596083,Rand,14603.627724053276,Error1,878.7579903959463,Error2,478.13084014423447
+Inertia,0.5,Rationality,0.5,AlzDft,18501.565142848798,L4a_3b,14835.180074168868,Error1,408.0654692235017,Error2,262.6577632749312
+Inertia,0.5,Rationality,0.5,Rand,19623.360199520124,Rand,20206.878683079303,Error1,616.3265613628363,Error2,832.1579660296787
+Inertia,0.5,Rationality,0.5,Rand,18319.643474316726,L4a_3b,20864.049901705897,Error1,996.6342163165448,Error2,950.6288974276038
+Inertia,0.5,Rationality,0.5,L4a_3b,20034.25256624187,L4a_3b,18749.402327344964,Error1,767.3113756839226,Error2,568.2250022443225
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  77.0,67.0  77.0,67.0  Grim , 315.0,
+64.0,61.0  62.0,62.0  76.0,59.0  75.0,60.0  AlzDft , 277.0,
+67.0,77.0  59.0,76.0  81.0,81.0  74.0,85.0  Rand , 281.0,
+67.0,77.0  60.0,75.0  85.0,74.0  79.0,79.0  L4a_3b , 291.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlzDft"  "Rand"  "L4a_3b" }
+{ "Grim"  "AlzDft"  "Rand"  "L4a_3b" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 67.0, 77.0 }
+{ "" 67.0, 77.0 }
+{ "" 61.0, 64.0 }
+{ "" 62.0, 62.0 }
+{ "" 59.0, 76.0 }
+{ "" 60.0, 75.0 }
+{ "" 77.0, 67.0 }
+{ "" 76.0, 59.0 }
+{ "" 81.0, 81.0 }
+{ "" 85.0, 74.0 }
+{ "" 77.0, 67.0 }
+{ "" 75.0, 60.0 }
+{ "" 74.0, 85.0 }
+{ "" 79.0, 79.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,Grim,24603.268499999976,Grim,24585.73149999998,Error1,85.425126795016,Error2,97.75961508733846
+Inertia,0.5,Rationality,0.5,Grim,15035.191274257226,AlzDft,15854.424806271529,Error1,29.2462768764004,Error2,27.795702300303557
+Inertia,0.5,Rationality,0.5,Grim,19092.844051528744,Rand,16248.055926545956,Error1,693.6459862695413,Error2,635.1510362120739
+Inertia,0.5,Rationality,0.5,Grim,19005.451242630188,L4a_3b,16177.831565540477,Error1,788.4881662344632,Error2,800.1069279892334
+Inertia,0.5,Rationality,0.5,AlzDft,15154.118318277766,AlzDft,15144.895976765862,Error1,41.61169912744841,Error2,41.611699127448254
+Inertia,0.5,Rationality,0.5,AlzDft,18878.16965643468,Rand,14533.763953314567,Error1,631.3231672753423,Error2,374.3593091462996
+Inertia,0.5,Rationality,0.5,AlzDft,18358.46451010175,L4a_3b,14904.748501668506,Error1,441.0274642168324,Error2,300.3886752141898
+Inertia,0.5,Rationality,0.5,Rand,19504.234254520285,Rand,19774.42992131609,Error1,500.03545822679894,Error2,1130.9346623624322
+Inertia,0.5,Rationality,0.5,Rand,19537.70748606187,L4a_3b,19774.575824506028,Error1,882.113221608937,Error2,643.6881496035243
+Inertia,0.5,Rationality,0.5,L4a_3b,19670.456544496665,L4a_3b,19840.608822115384,Error1,1159.8167044333413,Error2,765.6599908109276
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  78.0,66.0  77.0,66.0  Grim , 316.0,
+64.0,61.0  62.0,62.0  77.0,59.0  75.0,61.0  AlzDft , 278.0,
+66.0,78.0  59.0,77.0  80.0,80.0  79.0,80.0  Rand , 284.0,
+66.0,77.0  61.0,75.0  80.0,79.0  80.0,80.0  L4a_3b , 287.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlzDft"  "Rand"  "L4a_3b" }
+{ "Grim"  "AlzDft"  "Rand"  "L4a_3b" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 66.0, 78.0 }
+{ "" 66.0, 77.0 }
+{ "" 61.0, 64.0 }
+{ "" 62.0, 62.0 }
+{ "" 59.0, 77.0 }
+{ "" 61.0, 75.0 }
+{ "" 78.0, 66.0 }
+{ "" 77.0, 59.0 }
+{ "" 80.0, 80.0 }
+{ "" 80.0, 79.0 }
+{ "" 77.0, 66.0 }
+{ "" 75.0, 61.0 }
+{ "" 79.0, 80.0 }
+{ "" 80.0, 80.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Count	Grim	AlzDft	Rand	L4a_3b	
+NE-1	1	0	0	0	
+NE-2	1/37	36/37	0	0	
+NE-3	1/18	0	17/18	0	
+NE-4	3/37	0	0	34/37	
+NE-5	1/71	176/213	0	34/213	
+NE-6	0	1	0	0	
+NE-7	0	0	1	0	
+NE-8	0	0	0	1	
+NE-9	0	5/6	0	1/6	
+
+Count	Grim	AlzDft	Rand	L4a_3b	
+NE-1	1	0	0	0	
+NE-2	5/38	0	33/38	0	
+NE-3	5/37	0	0	32/37	
+NE-4	19/181	0	101/181	61/181	
+NE-5	0	1	0	0	
+NE-6	0	0	1	0	
+NE-7	0	0	0	1	
+NE-8	0	0	3/5	2/5	
+
+
+Inertia,0.5,Rationality,0.5,Grim,24642.644499999977,Grim,24546.35549999997,Error1,59.8484086926848,Error2,62.24081345232422
+Inertia,0.5,Rationality,0.5,Grim,15071.138443031034,AlzDft,15820.106650873207,Error1,36.93472034563415,Error2,35.729108599044665
+Inertia,0.5,Rationality,0.5,Grim,18721.937927688537,Rand,16857.13470853158,Error1,508.40164374292846,Error2,421.92579822543945
+Inertia,0.5,Rationality,0.5,Grim,18800.14465676589,L4a_3b,16559.678154373578,Error1,599.1536325515948,Error2,664.9371256479353
+Inertia,0.5,Rationality,0.5,AlzDft,15133.176615557237,AlzDft,15165.83767948639,Error1,19.637183779191272,Error2,19.637183779189968
+Inertia,0.5,Rationality,0.5,AlzDft,18401.638402832596,Rand,14872.421865461214,Error1,591.2677300960555,Error2,362.10425349620414
+Inertia,0.5,Rationality,0.5,AlzDft,19006.339210331666,L4a_3b,14521.419808117298,Error1,326.7658257488544,Error2,232.42370857488027
+Inertia,0.5,Rationality,0.5,Rand,19694.394802309274,Rand,19249.38266425188,Error1,747.2207073724155,Error2,758.0359986041356
+Inertia,0.5,Rationality,0.5,Rand,19994.287469079973,L4a_3b,19851.260496853578,Error1,753.6005815083657,Error2,759.2283745064145
+Inertia,0.5,Rationality,0.5,L4a_3b,19427.203310924197,L4a_3b,19209.620595042936,Error1,697.9433755297074,Error2,815.0634247864264
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  76.0,68.0  76.0,67.0  Grim , 313.0,
+64.0,61.0  61.0,61.0  75.0,60.0  77.0,59.0  AlzDft , 277.0,
+68.0,76.0  60.0,75.0  79.0,79.0  81.0,81.0  Rand , 288.0,
+67.0,76.0  59.0,77.0  81.0,81.0  78.0,78.0  L4a_3b , 285.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlzDft"  "Rand"  "L4a_3b" }
+{ "Grim"  "AlzDft"  "Rand"  "L4a_3b" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 68.0, 76.0 }
+{ "" 67.0, 76.0 }
+{ "" 61.0, 64.0 }
+{ "" 61.0, 61.0 }
+{ "" 60.0, 75.0 }
+{ "" 59.0, 77.0 }
+{ "" 76.0, 68.0 }
+{ "" 75.0, 60.0 }
+{ "" 79.0, 79.0 }
+{ "" 81.0, 81.0 }
+{ "" 76.0, 67.0 }
+{ "" 77.0, 59.0 }
+{ "" 81.0, 81.0 }
+{ "" 78.0, 78.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Inertia,0.5,Rationality,0.5,Grim,24651.758499999974,Grim,24537.241499999975,Error1,69.9703692287428,Error2,74.87201010849392
+Inertia,0.5,Rationality,0.5,Grim,15075.211551581993,AlzDft,15816.034204493262,Error1,52.53237775419673,Error2,50.55384065676454
+Inertia,0.5,Rationality,0.5,Grim,18755.212096729003,Rand,16201.36397698076,Error1,572.514299388574,Error2,383.33602120892243
+Inertia,0.5,Rationality,0.5,Grim,18259.49928389292,L4a_3b,16279.785336542767,Error1,547.1787569734314,Error2,373.7866572857243
+Inertia,0.5,Rationality,0.5,AlzDft,15166.33001252745,AlzDft,15132.684282516178,Error1,34.44495414837343,Error2,34.44495414837305
+Inertia,0.5,Rationality,0.5,AlzDft,18574.94834321137,Rand,14793.432873864858,Error1,386.18480337769057,Error2,244.94059452010984
+Inertia,0.5,Rationality,0.5,AlzDft,18429.37426369483,L4a_3b,14877.447407031874,Error1,411.1497147503112,Error2,246.87771475720572
+Inertia,0.5,Rationality,0.5,Rand,20274.717581699853,Rand,19318.323314047666,Error1,882.685053926455,Error2,809.8586898072735
+Inertia,0.5,Rationality,0.5,Rand,20024.384114080443,L4a_3b,19898.61446161026,Error1,593.4316804248633,Error2,1044.8823263993665
+Inertia,0.5,Rationality,0.5,L4a_3b,19296.95398880302,L4a_3b,19775.806348103808,Error1,1013.2279781003974,Error2,1207.5564235720421
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  76.0,66.0  74.0,66.0  Grim , 311.0,
+64.0,61.0  61.0,61.0  75.0,60.0  75.0,60.0  AlzDft , 275.0,
+66.0,76.0  60.0,75.0  80.0,80.0  81.0,81.0  Rand , 287.0,
+66.0,74.0  60.0,75.0  81.0,81.0  79.0,79.0  L4a_3b , 286.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlzDft"  "Rand"  "L4a_3b" }
+{ "Grim"  "AlzDft"  "Rand"  "L4a_3b" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 66.0, 76.0 }
+{ "" 66.0, 74.0 }
+{ "" 61.0, 64.0 }
+{ "" 61.0, 61.0 }
+{ "" 60.0, 75.0 }
+{ "" 60.0, 75.0 }
+{ "" 76.0, 66.0 }
+{ "" 75.0, 60.0 }
+{ "" 80.0, 80.0 }
+{ "" 81.0, 81.0 }
+{ "" 74.0, 66.0 }
+{ "" 75.0, 60.0 }
+{ "" 81.0, 81.0 }
+{ "" 79.0, 79.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Count	Grim	AlzDft	Rand	L4a_3b	
+NE-1	1	0	0	0	
+NE-2	5/39	0	34/39	0	
+NE-3	5/39	0	68/117	34/117	
+NE-4	7/41	0	0	34/41	
+NE-5	0	1	0	0	
+NE-6	0	0	1	0	
+NE-7	0	0	0	1	
+NE-8	0	0	2/3	1/3	
+Inertia,0.5,Rationality,0.5,Grim,24615.03539999997,Grim,24561.364599999975,Error1,20.082208940486,Error2,20.32832015596123
+Inertia,0.5,Rationality,0.5,Grim,15052.156559704921,AlzDft,15837.984647532792,Error1,13.405908730300023,Error2,12.962611103261056
+Inertia,0.5,Rationality,0.5,Grim,18852.834126867856,Rand,16234.053715077916,Error1,228.67645663539088,Error2,189.67278650688493
+Inertia,0.5,Rationality,0.5,Grim,18737.59715361506,L4a_3b,16282.913000178267,Error1,191.88625880181073,Error2,159.28061912662145
+Inertia,0.5,Rationality,0.5,AlzDft,15141.65448916108,AlzDft,15157.359805882543,Error1,13.234339318461293,Error2,13.234339318461638
+Inertia,0.5,Rationality,0.5,AlzDft,18524.416867842854,Rand,14783.045613348091,Error1,185.37769736222913,Error2,108.21777444224877
+Inertia,0.5,Rationality,0.5,AlzDft,18634.800537028794,L4a_3b,14719.547635485136,Error1,186.44456189776835,Error2,121.16522748750342
+Inertia,0.5,Rationality,0.5,Rand,19742.778951614167,Rand,19561.157826109735,Error1,297.689775014139,Error2,260.58541210922283
+Inertia,0.5,Rationality,0.5,Rand,19778.51433970932,L4a_3b,19763.605843741727,Error1,279.45442848177765,Error2,293.2187771834443
+Inertia,0.5,Rationality,0.5,L4a_3b,19873.733591346674,L4a_3b,19551.455737416753,Error1,283.74567870707506,Error2,284.08080614685144
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  77.0,66.0  76.0,66.0  Grim , 314.0,
+64.0,61.0  62.0,62.0  75.0,60.0  76.0,60.0  AlzDft , 277.0,
+66.0,77.0  60.0,75.0  80.0,80.0  80.0,80.0  Rand , 286.0,
+66.0,76.0  60.0,76.0  80.0,80.0  80.0,80.0  L4a_3b , 286.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlzDft"  "Rand"  "L4a_3b" }
+{ "Grim"  "AlzDft"  "Rand"  "L4a_3b" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 66.0, 77.0 }
+{ "" 66.0, 76.0 }
+{ "" 61.0, 64.0 }
+{ "" 62.0, 62.0 }
+{ "" 60.0, 75.0 }
+{ "" 60.0, 76.0 }
+{ "" 77.0, 66.0 }
+{ "" 75.0, 60.0 }
+{ "" 80.0, 80.0 }
+{ "" 80.0, 80.0 }
+{ "" 76.0, 66.0 }
+{ "" 76.0, 60.0 }
+{ "" 80.0, 80.0 }
+{ "" 80.0, 80.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Count	Grim	AlzDft	Rand	L4a_3b	
+NE-1	1	0	0	0	
+NE-2	1/37	36/37	0	0	
+NE-3	3/37	0	34/37	0	
+NE-4	3/37	0	34/37	0	
+NE-5	1/247	176/247	70/247	0	
+NE-6	1/247	176/247	70/247	0	
+NE-7	2/19	0	0	17/19	
+NE-8	2/19	0	0	17/19	
+NE-9	2/109	72/109	0	35/109	
+NE-10	2/109	72/109	0	35/109	
+NE-11	0	1	0	0	
+NE-12	0	0	1	0	
+NE-13	0	0	1	0	
+NE-14	0	5/7	2/7	0	
+NE-15	0	5/7	2/7	0	
+NE-16	0	0	0	1	
+NE-17	0	0	0	1	
+NE-18	0	2/3	0	1/3	
+NE-19	0	2/3	0	1/3	
+Inertia,0.5,Rationality,0.5,Grim,24579.307799999966,Grim,24597.09219999997,Error1,19.89603200651654,Error2,20.52711520778698
+Inertia,0.5,Rationality,0.5,Grim,15064.21779907091,AlzDft,15826.39780895412,Error1,11.661563807929923,Error2,11.238793049264967
+Inertia,0.5,Rationality,0.5,Grim,19218.98276461837,Rand,16275.95885428429,Error1,221.2540683500215,Error2,176.14749226710447
+Inertia,0.5,Rationality,0.5,Grim,18835.374464279234,L4a_3b,16349.895038502222,Error1,203.9507380079879,Error2,178.18395779732657
+Inertia,0.5,Rationality,0.5,AlzDft,15154.24192327636,AlzDft,15144.772371767265,Error1,12.206941231648262,Error2,12.206941231648404
+Inertia,0.5,Rationality,0.5,AlzDft,18796.798635253246,Rand,14595.367849416638,Error1,200.227152154117,Error2,129.29361934945135
+Inertia,0.5,Rationality,0.5,AlzDft,18816.43096592174,L4a_3b,14603.024751865354,Error1,178.1245232328553,Error2,120.92028982088678
+Inertia,0.5,Rationality,0.5,Rand,19485.284833202535,Rand,19900.767861378103,Error1,277.56264562580026,Error2,312.0396186687404
+Inertia,0.5,Rationality,0.5,Rand,19986.97814319124,L4a_3b,19295.478725580557,Error1,298.3978953200978,Error2,282.55166630235817
+Inertia,0.5,Rationality,0.5,L4a_3b,19624.30280691078,L4a_3b,19783.207450944912,Error1,299.11649637308915,Error2,282.170557984461
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  78.0,66.0  77.0,66.0  Grim , 316.0,
+64.0,61.0  62.0,62.0  76.0,59.0  76.0,59.0  AlzDft , 278.0,
+66.0,78.0  59.0,76.0  80.0,80.0  81.0,78.0  Rand , 286.0,
+66.0,77.0  59.0,76.0  78.0,81.0  80.0,80.0  L4a_3b , 283.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlzDft"  "Rand"  "L4a_3b" }
+{ "Grim"  "AlzDft"  "Rand"  "L4a_3b" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 66.0, 78.0 }
+{ "" 66.0, 77.0 }
+{ "" 61.0, 64.0 }
+{ "" 62.0, 62.0 }
+{ "" 59.0, 76.0 }
+{ "" 59.0, 76.0 }
+{ "" 78.0, 66.0 }
+{ "" 76.0, 59.0 }
+{ "" 80.0, 80.0 }
+{ "" 78.0, 81.0 }
+{ "" 77.0, 66.0 }
+{ "" 76.0, 59.0 }
+{ "" 81.0, 78.0 }
+{ "" 80.0, 80.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Count	Grim	AlzDft	Rand	L4a_3b	
+NE-1	1	0	0	0	
+NE-2	1/37	36/37	0	0	
+NE-3	1/18	0	17/18	0	
+NE-4	0	1	0	0	
+NE-5	0	0	1	0	
+Inertia,0.5,Rationality,0.5,Grim,24577.12719999997,Grim,24599.27279999998,Error1,22.569362063082924,Error2,22.23134791705396
+Inertia,0.5,Rationality,0.5,Grim,15057.785515925007,AlzDft,15832.5595184371,Error1,12.224083434188358,Error2,11.771794157440825
+Inertia,0.5,Rationality,0.5,Grim,18815.599042490587,Rand,16185.009464565688,Error1,220.24764141157215,Error2,165.4247576139928
+Inertia,0.5,Rationality,0.5,Grim,19018.82104875305,L4a_3b,16443.711309087535,Error1,201.152305325879,Error2,180.5422571744798
+Inertia,0.5,Rationality,0.5,AlzDft,15141.501634160522,AlzDft,15157.512660883094,Error1,12.635964358358056,Error2,12.635964358358153
+Inertia,0.5,Rationality,0.5,AlzDft,18581.586586937814,Rand,14754.148408987578,Error1,177.71145649791006,Error2,107.23522268948592
+Inertia,0.5,Rationality,0.5,AlzDft,18804.179337316436,L4a_3b,14611.91666086937,Error1,189.8571128353779,Error2,116.87018015284718
+Inertia,0.5,Rationality,0.5,Rand,19468.380360933577,Rand,19987.94171550591,Error1,287.6403958047578,Error2,298.6832502043105
+Inertia,0.5,Rationality,0.5,Rand,19700.60964414655,L4a_3b,19937.42783217704,Error1,280.861471536462,Error2,295.609058093463
+Inertia,0.5,Rationality,0.5,L4a_3b,19701.433415455856,L4a_3b,19682.05563254076,Error1,317.5083005863872,Error2,288.90269479616205
+Actual Payoff Matrix
+100.0,100.0  61.0,64.0  76.0,66.0  77.0,67.0  Grim , 314.0,
+64.0,61.0  62.0,62.0  76.0,60.0  76.0,59.0  AlzDft , 278.0,
+66.0,76.0  60.0,76.0  80.0,80.0  80.0,81.0  Rand , 286.0,
+67.0,77.0  59.0,76.0  81.0,80.0  80.0,80.0  L4a_3b , 287.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "Grim"  "AlzDft"  "Rand"  "L4a_3b" }
+{ "Grim"  "AlzDft"  "Rand"  "L4a_3b" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 64.0, 61.0 }
+{ "" 66.0, 76.0 }
+{ "" 67.0, 77.0 }
+{ "" 61.0, 64.0 }
+{ "" 62.0, 62.0 }
+{ "" 60.0, 76.0 }
+{ "" 59.0, 76.0 }
+{ "" 76.0, 66.0 }
+{ "" 76.0, 60.0 }
+{ "" 80.0, 80.0 }
+{ "" 81.0, 80.0 }
+{ "" 77.0, 67.0 }
+{ "" 76.0, 59.0 }
+{ "" 80.0, 81.0 }
+{ "" 80.0, 80.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Count	Grim	AlzDft	Rand	L4a_3b	
+NE-1	1	0	0	0	
+NE-2	1/37	36/37	0	0	
+NE-3	2/109	72/109	35/109	0	
+NE-4	1/12	0	0	11/12	
+NE-5	0	1	0	0	
+NE-6	0	0	1	0	
+NE-7	0	2/3	1/3	0	
+NE-8	0	0	0	1	
+NE-9	0	0	0	1	

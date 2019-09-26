@@ -1,0 +1,611 @@
+Inertia,0.9,Rationality,0.9,rl1,2816.2011000000016,rl1,2811.7989000000007,Error1,9.590018566545352,Error2,9.590018566545348
+Inertia,0.9,Rationality,0.9,rl1,64.85850000000005,AlD,1342.6555000000017,Error1,2.892318804112024,Error2,0.7369546503794898
+Inertia,0.9,Rationality,0.9,rl1,2812.5237000000016,AlzIncz,2815.4763000000007,Error1,9.292944329748135,Error2,9.292944329748131
+Inertia,0.9,Rationality,0.9,AlD,680.1088999999998,AlD,681.8911,Error1,2.993206938139185,Error2,2.9932069381391866
+Inertia,0.9,Rationality,0.9,AlD,1356.5309999999997,AlzIncz,5.707000000000001,Error1,0.47191146754449703,Error2,0.5162621769140174
+Inertia,0.9,Rationality,0.9,AlzIncz,2811.242500000001,AlzIncz,2816.7575000000024,Error1,8.698218038721055,Error2,8.698218038721029
+Actual Payoff Matrix
+100.0,100.0  2.0,48.0  100.0,100.0  rl1 , 202.0,
+48.0,2.0  24.0,24.0  48.0,0.0  AlD , 120.0,
+100.0,100.0  0.0,48.0  100.0,100.0  AlzIncz , 200.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "rl1"  "AlD"  "AlzIncz" }
+{ "rl1"  "AlD"  "AlzIncz" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+{ "" 48.0, 2.0 }
+{ "" 100.0, 100.0 }
+{ "" 2.0, 48.0 }
+{ "" 24.0, 24.0 }
+{ "" 0.0, 48.0 }
+{ "" 100.0, 100.0 }
+{ "" 48.0, 0.0 }
+{ "" 100.0, 100.0 }
+}
+1 2 3 4 5 6 7 8 9 </nfgfile>
+</game>
+</gambit:document>
+Count	rl1			AlD			AlzIncz			
+NE-1			1			0			0			
+NE-2			1			0			0			
+NE-3			11/37			26/37			0			
+NE-4			0			1			0			
+NE-5			0			0			1			
+NE-6			0			0			1			
+Inertia,0.9,Rationality,0.9,AlD,684.1158999999996,AlD,677.8841000000003,Error1,3.0185375544384074,Error2,3.0185375544384065
+Inertia,0.9,Rationality,0.9,AlD,1356.7573999999993,AlzIncz,5.461400000000001,Error1,0.4523881787180537,Error2,0.4944153531603162
+Inertia,0.9,Rationality,0.9,AlzIncz,2805.438300000002,AlzIncz,2822.5617000000016,Error1,10.50340897806737,Error2,10.503408978067355
+Actual Payoff Matrix
+24.0,24.0  48.0,0.0  AlD , 72.0,
+0.0,48.0  100.0,100.0  AlzIncz , 100.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlD"  "AlzIncz" }
+{ "AlD"  "AlzIncz" }
+}
+""
+
+{
+{ "" 24.0, 24.0 }
+{ "" 0.0, 48.0 }
+{ "" 48.0, 0.0 }
+{ "" 100.0, 100.0 }
+}
+1 2 3 4 </nfgfile>
+</game>
+</gambit:document>
+Count	AlD			AlzIncz			
+NE-1			1			0			
+NE-2			0			1			
+NE-3			13/19			6/19			
+Inertia,0.9,Rationality,0.9,rl1,2819.5617000000016,AlzIncz,2808.438300000001,Error1,8.569248031403557,Error2,8.569248031403538
+Actual Payoff Matrix
+100.0,100.0  rl1 , 100.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "rl1" }
+{ "rl1" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+}
+1 </nfgfile>
+</game>
+</gambit:document>
+Count	rl1			
+NE-1			1			
+Inertia,0.9,Rationality,0.9,rl1,2809.434700000002,L1,2818.5653000000007,Error1,10.481486315221439,Error2,10.481486315221433
+Actual Payoff Matrix
+100.0,100.0  rl1 , 100.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "rl1" }
+{ "rl1" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+}
+1 </nfgfile>
+</game>
+</gambit:document>
+Count	rl1			
+NE-1			1			
+Inertia,0.9,Rationality,0.9,AlD,682.2260999999997,AlD,679.7739000000001,Error1,2.9577047337793183,Error2,2.9577047337793165
+Inertia,0.9,Rationality,0.9,AlD,1356.8362999999995,AlzIncz,5.3763,Error1,0.4332325099400527,Error2,0.47246210862349597
+Inertia,0.9,Rationality,0.9,AlzIncz,2815.4107000000013,AlzIncz,2812.589300000001,Error1,9.381820733624401,Error2,9.381820733624407
+Actual Payoff Matrix
+24.0,24.0  48.0,0.0  AlD , 72.0,
+0.0,48.0  100.0,100.0  AlzIncz , 100.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlD"  "AlzIncz" }
+{ "AlD"  "AlzIncz" }
+}
+""
+
+{
+{ "" 24.0, 24.0 }
+{ "" 0.0, 48.0 }
+{ "" 48.0, 0.0 }
+{ "" 100.0, 100.0 }
+}
+1 2 3 4 </nfgfile>
+</game>
+</gambit:document>
+Count	AlD			AlzIncz			
+NE-1			1			0			
+NE-2			0			1			
+NE-3			13/19			6/19			
+Inertia,0.9,Rationality,0.9,rl1,2240.3641000000007,L1,19.708700000000004,Error1,49.596619922742974,Error2,2.9058390959206535
+Actual Payoff Matrix
+50.0,50.0  rl1 , 50.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "rl1" }
+{ "rl1" }
+}
+""
+
+{
+{ "" 50.0, 50.0 }
+}
+1 </nfgfile>
+</game>
+</gambit:document>
+Count	rl1			
+NE-1			1			
+Inertia,0.9,Rationality,0.9,rl1,2816.560100000001,L1,2811.4399000000017,Error1,9.050365016139436,Error2,9.050365016139459
+Actual Payoff Matrix
+100.0,100.0  rl1 , 100.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "rl1" }
+{ "rl1" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+}
+1 </nfgfile>
+</game>
+</gambit:document>
+Count	rl1			
+NE-1			1			
+Inertia,0.9,Rationality,0.9,rl1,2814.591600000001,L1,2813.408400000002,Error1,9.534174611933642,Error2,9.534174611933626
+Actual Payoff Matrix
+100.0,100.0  rl1 , 100.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "rl1" }
+{ "rl1" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+}
+1 </nfgfile>
+</game>
+</gambit:document>
+Count	rl1			
+NE-1			1			
+Inertia,0.9,Rationality,0.9,rl1,2205.2183999999993,L1,20.9408,Error1,44.199370748611415,Error2,2.8723504183587627
+Actual Payoff Matrix
+50.0,50.0  rl1 , 50.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "rl1" }
+{ "rl1" }
+}
+""
+
+{
+{ "" 50.0, 50.0 }
+}
+1 </nfgfile>
+</game>
+</gambit:document>
+Count	rl1			
+NE-1			1			
+Inertia,0.9,Rationality,0.9,rl1,2805.978000000003,L1,2822.0220000000013,Error1,9.413808532978802,Error2,9.41380853297881
+Actual Payoff Matrix
+100.0,100.0  rl1 , 100.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "rl1" }
+{ "rl1" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+}
+1 </nfgfile>
+</game>
+</gambit:document>
+Count	rl1			
+NE-1			1			
+Inertia,0.9,Rationality,0.9,rl1,2202.6533999999992,L1,21.612999999999996,Error1,47.64662419237366,Error2,2.974905981893209
+Actual Payoff Matrix
+50.0,50.0  rl1 , 50.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "rl1" }
+{ "rl1" }
+}
+""
+
+{
+{ "" 50.0, 50.0 }
+}
+1 </nfgfile>
+</game>
+</gambit:document>
+Count	rl1			
+NE-1			1			
+Inertia,0.9,Rationality,0.9,rl1,2818.5451000000025,L1,2809.4548999999997,Error1,8.778729683098339,Error2,8.778729683098332
+Actual Payoff Matrix
+100.0,100.0  rl1 , 100.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "rl1" }
+{ "rl1" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+}
+1 </nfgfile>
+</game>
+</gambit:document>
+Count	rl1			
+NE-1			1			
+Inertia,0.9,Rationality,0.9,rl1,2208.2204999999994,L1,19.73119999999999,Error1,48.310852947246836,Error2,2.602819594696675
+Actual Payoff Matrix
+50.0,50.0  rl1 , 50.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "rl1" }
+{ "rl1" }
+}
+""
+
+{
+{ "" 50.0, 50.0 }
+}
+1 </nfgfile>
+</game>
+</gambit:document>
+Count	rl1			
+NE-1			1			
+Inertia,0.9,Rationality,0.9,rl1,2812.861100000003,L1,2815.138900000001,Error1,10.398371945502872,Error2,10.398371945502847
+Actual Payoff Matrix
+100.0,100.0  rl1 , 100.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "rl1" }
+{ "rl1" }
+}
+""
+
+{
+{ "" 100.0, 100.0 }
+}
+1 </nfgfile>
+</game>
+</gambit:document>
+Count	rl1			
+NE-1			1			
+Inertia,0.9,Rationality,0.9,rl1,3298.685100000001,L1,64.89300000000001,Error1,84.89801289496656,Error2,13.836124042673228
+Actual Payoff Matrix
+51.0,51.0  rl1 , 51.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "rl1" }
+{ "rl1" }
+}
+""
+
+{
+{ "" 51.0, 51.0 }
+}
+1 </nfgfile>
+</game>
+</gambit:document>
+Count	rl1			
+NE-1			1			
+Inertia,0.9,Rationality,0.9,rl1,3325.5060000000003,L1,35.63769999999999,Error1,1.3678548341925787,Error2,1.4704116431079286
+Actual Payoff Matrix
+51.0,51.0  rl1 , 51.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "rl1" }
+{ "rl1" }
+}
+""
+
+{
+{ "" 51.0, 51.0 }
+}
+1 </nfgfile>
+</game>
+</gambit:document>
+Count	rl1			
+NE-1			1			
+Inertia,0.9,Rationality,0.9,rl1,273.2199999999999,AlD,1233.6755000000005,Error1,3.4264813952508195,Error2,1.6966853718789687
+Actual Payoff Matrix
+61.0,61.0  rl1 , 61.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "rl1" }
+{ "rl1" }
+}
+""
+
+{
+{ "" 61.0, 61.0 }
+}
+1 </nfgfile>
+</game>
+</gambit:document>
+Count	rl1			
+NE-1			1			
+Inertia,0.9,Rationality,0.9,rl1,1682.5179999999998,rl1,1677.4820000000002,Error1,9.73932199699833,Error2,9.739321996998338
+Inertia,0.9,Rationality,0.9,rl1,274.8280000000001,AlD,1232.1274999999991,Error1,3.516364633688607,Error2,1.8061513765784327
+Inertia,0.9,Rationality,0.9,rl1,3325.728,AlzIncz,35.4229,Error1,1.186245629983942,Error2,1.2742634358127987
+Inertia,0.9,Rationality,0.9,AlD,681.8852999999998,AlD,680.1147000000002,Error1,2.8036635478913148,Error2,2.803663547891315
+Inertia,0.9,Rationality,0.9,AlD,1356.5667999999996,AlzIncz,5.678800000000001,Error1,0.5087865447868674,Error2,0.5533551948983223
+Inertia,0.9,Rationality,0.9,AlzIncz,2811.548100000002,AlzIncz,2816.451900000002,Error1,10.509703006169092,Error2,10.509703006169088
+Actual Payoff Matrix
+51.0,51.0  8.0,37.0  100.0,1.0  rl1 , 159.0,
+37.0,8.0  20.0,20.0  41.0,0.0  AlD , 98.0,
+1.0,100.0  0.0,41.0  85.0,85.0  AlzIncz , 86.0,
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "rl1"  "AlD"  "AlzIncz" }
+{ "rl1"  "AlD"  "AlzIncz" }
+}
+""
+
+{
+{ "" 51.0, 51.0 }
+{ "" 37.0, 8.0 }
+{ "" 1.0, 100.0 }
+{ "" 8.0, 37.0 }
+{ "" 20.0, 20.0 }
+{ "" 0.0, 41.0 }
+{ "" 100.0, 1.0 }
+{ "" 41.0, 0.0 }
+{ "" 85.0, 85.0 }
+}
+1 2 3 4 5 6 7 8 9 </nfgfile>
+</game>
+</gambit:document>
+Count	rl1			AlD			AlzIncz			
+NE-1			1			0			0			
+NE-2			6/13			7/13			0			
+NE-3			0			1			0			

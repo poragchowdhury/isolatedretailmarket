@@ -1,0 +1,11 @@
+bin/
+bin/*
+target/*
+log/*
+*.csv
+*.arff
+*.csv
+*.log
+*.others
+*.xlsx
+/target/
