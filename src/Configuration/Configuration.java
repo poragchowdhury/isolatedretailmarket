@@ -23,7 +23,7 @@ public class Configuration {
 	public static double LEARNING_RATE = 0.9;
 	public static double DISCOUNT_FACTOR = 1;
 	
-	public static String DB_NAME = "RL0";
+	public static String DB_NAME_TRAINING = "RL0";
 	public static double MAX_TARIFF_PRICE = 0.5;
 	public static boolean RL_TRAINING = false; 
 	public static int PPTS_DISCRTZD = 10;
@@ -44,8 +44,6 @@ public class Configuration {
 		CASE_STUDY(int id) { this.id = id; }
 	    public int getValue() { return id; }
 	}
-	
-	public static DatabaseConnection db;
 	
 	public Configuration(){
 		Properties prop = new Properties();
@@ -73,14 +71,12 @@ public class Configuration {
 			ROUND = Integer.parseInt(prop.getProperty("round"));
 			LEARNING_RATE = Double.parseDouble(prop.getProperty("learningrate"));
 			DISCOUNT_FACTOR = Double.parseDouble(prop.getProperty("discountfactor"));
-			DB_NAME = prop.getProperty("rl-strategy");
+			DB_NAME_TRAINING = prop.getProperty("db-name-training");
 			MAX_TARIFF_PRICE = Double.parseDouble(prop.getProperty("maxtariff"));
 			RL_TRAINING = Boolean.parseBoolean(prop.getProperty("rl-training"));
 			PPTS_DISCRTZD = Integer.parseInt(prop.getProperty("ppts_dscretzd"));
 			//System.out.println("TOTAL_TIME_SLOTS " + TOTAL_TIME_SLOTS);
 			//System.out.println("PUBLICATION_CYCLE " + PUBLICATION_CYCLE);
-			db = new DatabaseConnection(DB_NAME);
-			
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} finally {

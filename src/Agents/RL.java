@@ -2,14 +2,16 @@ package Agents;
 
 import java.util.Random;
 import Configuration.Configuration;
+import Configuration.DatabaseConnection;
 import Observer.Observer;
 import Tariff.TariffActions;
 
 public class RL extends Agent{
+	public DatabaseConnection db;
 	public double maxppts = (Configuration.MAX_TARIFF_PRICE * Configuration.POPULATION) / Configuration.PPTS_DISCRTZD;
 	public int mynextaction = 0;
 	public RL() {
-		this.name = Configuration.DB_NAME;
+		this.name = "NO_NAME";//Configuration.DB_NAME_TRAINING;
 	}
 	
 	public void getNextActionId() throws Exception{
@@ -21,7 +23,7 @@ public class RL extends Agent{
 			double ex_qval = 0;
 			for(long ppts = 0; ppts < maxppts; ppts++){
 				String tableName = "ppts"+ ppts + "a" + action;
-				double qval = Configuration.db.getQValue(tableName);
+				double qval = db.getQValue(tableName);
 				ex_qval += qval * pr;
 			}
 			if(ex_qval > maxqval) {
@@ -42,7 +44,7 @@ public class RL extends Agent{
 		
 		String sa_tableName = "ppts"+cur_ppts+"a"+myPrevActionId;
 		//System.out.println("current state-action : " + sa_tableName);
-		double sa_qval = Configuration.db.getQValue(sa_tableName);
+		double sa_qval = db.getQValue(sa_tableName);
 		
 		double pr = 1/((double)TariffActions.a.length);
 		
@@ -50,7 +52,7 @@ public class RL extends Agent{
 			double ex_qval = 0;
 			for(long ppts = 0; ppts <= maxppts; ppts++){
 				String spa_tableName = "ppts" + ppts + "a" + actionid;
-				double spa_qval = Configuration.db.getQValue(spa_tableName);
+				double spa_qval = db.getQValue(spa_tableName);
 				ex_qval += spa_qval * pr;
 			}
 			if(ex_qval > spa_maxqval) {
@@ -62,7 +64,7 @@ public class RL extends Agent{
 		double reward = profit-prevprofit;
 		//sa_qval = ((1-Configuration.LEARNING_RATE) * sa_qval) + (Configuration.LEARNING_RATE * (reward + Configuration.DISCOUNT_FACTOR * spa_maxqval));
 		sa_qval = (Configuration.LEARNING_RATE * (reward + Configuration.DISCOUNT_FACTOR * spa_maxqval));
-		Configuration.db.insertQValue(sa_tableName, sa_qval);
+		db.insertQValue(sa_tableName, sa_qval);
 		
 		Random r = new Random();
 		mynextaction = r.nextInt(TariffActions.a.length);

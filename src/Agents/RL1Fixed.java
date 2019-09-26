@@ -5,6 +5,7 @@ import java.util.Random;
 import com.mysql.cj.exceptions.ClosedOnExpiredPasswordException;
 
 import Configuration.Configuration;
+import Configuration.DatabaseConnection;
 import Observer.Observer;
 import Tariff.TariffActions;
 
@@ -13,6 +14,7 @@ public class RL1Fixed extends Agent{
 	public int mynextaction = 0;
 	public RL1Fixed() {
 		this.name = "rl1";
+		db = new DatabaseConnection(this.name);
 	}
 	
 	public void getNextActionId() throws Exception{

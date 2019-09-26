@@ -3,7 +3,7 @@ import java.sql.*;
 
 public class DatabaseConnection{
 	private enum DB {na, id, qVal};
-	private String databaseURL = "jdbc:mysql://localhost:";
+	private String databaseURL = "jdbc:mysql://localhost:"; 
 	private String databasePort = "3306/";
 	private String databaseName = ""; // Learning optimal policy
 	private String databaseUser = "root";
