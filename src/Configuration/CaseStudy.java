@@ -97,6 +97,9 @@ public class CaseStudy {
 			
 			pool1.add(new AlwaysSame());
 			pool2.add(new AlwaysSame());
+			
+			pool1.add(new SMNE1());
+			pool2.add(new SMNE1());
 		}
 		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RR_AlD_AlI_AS_RL1.getValue()) {
 			pool1.add(new AlwaysDefect());
@@ -111,9 +114,8 @@ public class CaseStudy {
 			pool1.add(new RL1Fixed());
 			pool2.add(new RL1Fixed());
 		}
-		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RoundRobin.getValue()) {
-			
-		}
+		//else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RoundRobin.getValue()) {
+		//}
 		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RoundRobin.getValue()){
 			
 			/*

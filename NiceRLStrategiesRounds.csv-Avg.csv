@@ -690,3 +690,183 @@ NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
 </gambit:document>
 Count,rl2,
 NE-1,1,
+
+********************Configurations**********************
+TOTAL_TIME_SLOTS : 168
+PUBLICATION_CYCLE : 6
+DEFAULT_TARIFF_PRICE : 0.25
+CASE_STUDY_NO : 12
+INERTIA : 0.9
+RATIONALITY : 0.9
+ACT_CHANGE_PERC : 0.0
+POPULATION : 100
+LOGFILENAME : NiceRLStrategiesRounds.csv
+DAYMULT : 0.0
+DMNDMULT : 0.0
+INITCOST : 0.0
+DLOGGING : false
+ROUND : 100
+LEARNING_RATE : 0.1
+DISCOUNT_FACTOR : 0.99
+DB_NAME_TRAINING : rl2
+MAX_TARIFF_PRICE : 0.5
+RL_TRAINING : false
+PPTS_DISCRTZD : 5
+
+Inertia,0.9,Rationality,0.9,AlD,993.9197999999997,AlD,998.0801999999993,Error1,3.1925368170405384,Error2,3.1925368170405295
+Inertia,0.9,Rationality,0.9,AlD,1979.156299999999,AlzIncz,13.28629999999999,Error1,0.7235234621689645,Error2,0.7787945329167121
+Inertia,0.9,Rationality,0.9,AlD,1810.3894999999998,AlzSame,321.8725,Error1,2.6707863514366057,Error2,4.172565042021513
+Inertia,0.9,Rationality,0.9,AlD,1811.7054999999998,SMNE1,318.2325,Error1,2.80105227785487,Error2,4.322895722209823
+Inertia,0.9,Rationality,0.9,AlzIncz,3200.2202,AlzIncz,3207.779800000001,Error1,11.617655193272153,Error2,11.617655193272125
+Inertia,0.9,Rationality,0.9,AlzIncz,130.30010000000001,AlzSame,4094.9225,Error1,4.360508655332745,Error2,3.0856906834451188
+Inertia,0.9,Rationality,0.9,AlzIncz,126.03199999999998,SMNE1,4097.765,Error1,4.743640372119278,Error2,3.391152753327398
+Inertia,0.9,Rationality,0.9,AlzSame,2097.7875,AlzSame,2102.2125,Error1,12.768855413368106,Error2,12.768855413368106
+Inertia,0.9,Rationality,0.9,AlzSame,2103.2425,SMNE1,2096.7575,Error1,13.238177668738999,Error2,13.238177668738999
+Inertia,0.9,Rationality,0.9,SMNE1,2099.2625,SMNE1,2100.7375,Error1,12.517497408328069,Error2,12.517497408328069
+
+Actual Payoff Matrix
+24.0,24.0,|,48.0,0.0,|,44.0,8.0,|,44.0,8.0,|,AlD , 160.0
+0.0,48.0,|,78.0,78.0,|,3.0,100.0,|,3.0,100.0,|,AlzIncz , 84.0
+8.0,44.0,|,100.0,3.0,|,51.0,51.0,|,51.0,51.0,|,AlzSame , 210.0
+8.0,44.0,|,100.0,3.0,|,51.0,51.0,|,51.0,51.0,|,SMNE1 , 210.0
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlD"  "AlzIncz"  "AlzSame"  "SMNE1" }
+{ "AlD"  "AlzIncz"  "AlzSame"  "SMNE1" }
+}
+""
+
+{
+{ "" 24.0, 24.0 }
+{ "" 0.0, 48.0 }
+{ "" 8.0, 44.0 }
+{ "" 8.0, 44.0 }
+{ "" 48.0, 0.0 }
+{ "" 78.0, 78.0 }
+{ "" 100.0, 3.0 }
+{ "" 100.0, 3.0 }
+{ "" 44.0, 8.0 }
+{ "" 3.0, 100.0 }
+{ "" 51.0, 51.0 }
+{ "" 51.0, 51.0 }
+{ "" 44.0, 8.0 }
+{ "" 3.0, 100.0 }
+{ "" 51.0, 51.0 }
+{ "" 51.0, 51.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Count,AlD,AlzIncz,AlzSame,SMNE1,
+NE-1,1,0,0,0,
+NE-2,0,0,1,0,
+NE-3,0,0,1,0,
+NE-4,7/23,0,16/23,0,
+NE-5,7/23,0,16/23,0,
+NE-6,0,0,0,1,
+NE-7,0,0,0,1,
+NE-8,7/23,0,0,16/23,
+NE-9,7/23,0,0,16/23,
+
+********************Configurations**********************
+TOTAL_TIME_SLOTS : 168
+PUBLICATION_CYCLE : 6
+DEFAULT_TARIFF_PRICE : 0.25
+CASE_STUDY_NO : 13
+INERTIA : 0.9
+RATIONALITY : 0.9
+ACT_CHANGE_PERC : 0.0
+POPULATION : 100
+LOGFILENAME : NiceRLStrategiesRounds.csv
+DAYMULT : 0.0
+DMNDMULT : 0.0
+INITCOST : 0.0
+DLOGGING : false
+ROUND : 100
+LEARNING_RATE : 0.1
+DISCOUNT_FACTOR : 0.99
+DB_NAME_TRAINING : rl2
+MAX_TARIFF_PRICE : 0.5
+RL_TRAINING : false
+PPTS_DISCRTZD : 5
+
+Inertia,0.9,Rationality,0.9,AlD,998.7942999999998,AlD,993.2056999999995,Error1,3.716049875055007,Error2,3.7160498750549924
+Inertia,0.9,Rationality,0.9,AlD,1978.3872000000006,AlzIncz,14.087200000000001,Error1,0.7186238941550425,Error2,0.7742090348029786
+Inertia,0.9,Rationality,0.9,AlD,1810.4778000000006,AlzSame,320.61,Error1,2.66530143752079,Error2,4.200385178337815
+Inertia,0.9,Rationality,0.9,AlD,997.3593999999996,rl1,994.6405999999997,Error1,3.9622275355514587,Error2,3.9622275355514684
+Inertia,0.9,Rationality,0.9,AlzIncz,3204.3923000000027,AlzIncz,3203.6076999999996,Error1,11.280574113342936,Error2,11.280574113342949
+Inertia,0.9,Rationality,0.9,AlzIncz,130.7243,AlzSame,4094.855,Error1,3.90868488932123,Error2,2.794797635536426
+Inertia,0.9,Rationality,0.9,AlzIncz,78.50779999999999,rl1,1959.2127999999993,Error1,2.5666151816434364,Error2,1.04264922686137
+Inertia,0.9,Rationality,0.9,AlzSame,2111.895,AlzSame,2088.105,Error1,12.201718606147248,Error2,12.201718606147248
+Inertia,0.9,Rationality,0.9,AlzSame,365.1275,rl1,1789.5256,Error1,4.880712365003698,Error2,3.1560575272491573
+Inertia,0.9,Rationality,0.9,rl1,995.1949999999994,rl1,996.8049999999998,Error1,3.658250908960716,Error2,3.658250908960726
+
+Actual Payoff Matrix
+24.0,24.0,|,48.0,0.0,|,44.0,8.0,|,24.0,24.0,|,AlD , 140.0
+0.0,48.0,|,78.0,78.0,|,3.0,100.0,|,2.0,48.0,|,AlzIncz , 83.0
+8.0,44.0,|,100.0,3.0,|,51.0,51.0,|,9.0,44.0,|,AlzSame , 168.0
+24.0,24.0,|,48.0,2.0,|,44.0,9.0,|,24.0,24.0,|,rl1 , 140.0
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlD"  "AlzIncz"  "AlzSame"  "rl1" }
+{ "AlD"  "AlzIncz"  "AlzSame"  "rl1" }
+}
+""
+
+{
+{ "" 24.0, 24.0 }
+{ "" 0.0, 48.0 }
+{ "" 8.0, 44.0 }
+{ "" 24.0, 24.0 }
+{ "" 48.0, 0.0 }
+{ "" 78.0, 78.0 }
+{ "" 100.0, 3.0 }
+{ "" 48.0, 2.0 }
+{ "" 44.0, 8.0 }
+{ "" 3.0, 100.0 }
+{ "" 51.0, 51.0 }
+{ "" 44.0, 9.0 }
+{ "" 24.0, 24.0 }
+{ "" 2.0, 48.0 }
+{ "" 9.0, 44.0 }
+{ "" 24.0, 24.0 }
+}
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
+</game>
+</gambit:document>
+Count,AlD,AlzIncz,AlzSame,rl1,
+NE-1,1,0,0,0,
+NE-2,1,0,0,0,
+NE-3,0,0,1,0,
+NE-4,7/23,0,16/23,0,
+NE-5,7/23,0,16/23,0,
+NE-6,0,0,15/22,7/22,
+NE-7,0,0,15/22,7/22,
+NE-8,0,0,0,1,
+NE-9,0,0,0,1,
