@@ -3,6 +3,7 @@ package Agents;
 import java.util.Random;
 
 import Configuration.Configuration;
+import Configuration.DatabaseConnection;
 import Observer.Observer;
 import Tariff.TariffActions;
 
@@ -26,6 +27,7 @@ public abstract class Agent {
 	public int agentId;
 	public int punishCounter;
 	public int myPrevActionId = 0; // 0: Defect, 1 : Coop
+	public DatabaseConnection db;
 	
 	public Agent() {
 		prevtariffPrice = Configuration.DEFAULT_TARIFF_PRICE;
@@ -34,6 +36,16 @@ public abstract class Agent {
 		rivalPrevPrevPrice = Configuration.DEFAULT_TARIFF_PRICE;
 		booDefect = false;
 	}
+	
+	public Agent(String rlagentName) {
+		prevtariffPrice = Configuration.DEFAULT_TARIFF_PRICE;
+		tariffPrice = Configuration.DEFAULT_TARIFF_PRICE;
+		rivalPrevPrice = Configuration.DEFAULT_TARIFF_PRICE;
+		rivalPrevPrevPrice = Configuration.DEFAULT_TARIFF_PRICE;
+		booDefect = false;
+		db = new DatabaseConnection(rlagentName);
+	}
+
 	
 	public void reset() {
 		prevtariffPrice = Configuration.DEFAULT_TARIFF_PRICE;
@@ -146,47 +158,16 @@ public abstract class Agent {
 		else {} 					// Coop 
 	} 
 
-	public void strategyL1(Observer ob) {
-		double prDft = (13/19)*100;
+	public void strategySMNE1(Observer ob) {
+		double prDft = (7/23)*100;
 		int prDftInt = (int) prDft;
 		Random r = new Random();
 		int coin = r.nextInt(100);
 		if(coin < prDftInt)
 			defect(ob);
-		else
-			increase(ob);
-	}
-	
-	public void strategyL2(Observer ob) {
-		double prDft = (2/3)*100;
-		int prDftInt = (int) prDft;
-		Random r = new Random();
-		int coin = r.nextInt(100);
-		if(coin < prDftInt)
-			defect(ob);
-		else
-			strategyL1(ob);
-	}
-	
-	public void strategyL3(Observer ob) {
-		double prDft = (2/3)*100;
-		int prDftInt = (int) prDft;
-		Random r = new Random();
-		int coin = r.nextInt(100);
-		if(coin < prDftInt)
-			defect(ob);
-		else
-			strategyL2(ob);
-	}
-	
-	public void strategyL4(Observer ob) {
-		double prDft = (2/19)*100;
-		int prDftInt = (int) prDft;
-		Random r = new Random();
-		int coin = r.nextInt(100);
-		if(coin < prDftInt)
-			grim(ob);
-		else
-			strategyL3(ob);
+		else {
+			nochange();
+		}
+		//increase(ob);
 	}
 }

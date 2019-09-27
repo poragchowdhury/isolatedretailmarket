@@ -119,7 +119,6 @@ class SimpleState implements Encodable {
 
     public SimpleState(DQAgent agent) {
         this.agent = agent;
-
         this.timeSlot = Observer.timeslot;
         this.ppts = (long) (agent.prevprofit / (double) Observer.timeslot - 1);
     }
@@ -200,6 +199,7 @@ class SimpleMDP implements MDP<SimpleState, Integer, DiscreteSpace> {
         // Run the market evaluation based on the previous action
         // then run the rest of the timeslots so the next call to
         // this function will be a publication cycle
+        // Run for 6 TS
         for (int i = 0; i < Configuration.PUBLICATION_CYCLE + 1; i++) {
             retailManager.customerTariffEvaluation();
             retailManager.updateAgentAccountings();

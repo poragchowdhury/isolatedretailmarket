@@ -190,6 +190,7 @@ public class RetailMarketManager {
 			PrintWriter pwOutput = new PrintWriter(new BufferedWriter(fwOutput));
 			FileWriter fwOutputAvg = new FileWriter(filename+"-Avg.csv", true);
 			PrintWriter pwOutputAvg = new PrintWriter(new BufferedWriter(fwOutputAvg));
+			
 			double rationality[] = {0.8};
 			double inertia[] = {0.8};
 			double imax = 1;
@@ -199,9 +200,12 @@ public class RetailMarketManager {
 				// Detailed logging disabled
 				rmax = rationality.length;
 				imax = inertia.length;
-				roundmax = Configuration.ROUND;	
+				roundmax = Configuration.ROUND;
 			}
-
+			
+			pwOutput.println(Configuration.print());
+			pwOutputAvg.println(Configuration.print());
+			
 			CaseStudy cs = new CaseStudy();
 			cs.configureSimulation(ob, Configuration.CASE_STUDY_NO);
 			
@@ -282,17 +286,17 @@ public class RetailMarketManager {
 	public void printGameMatrix(CaseStudy cs, PrintWriter pwOutputAvg) {
 		// Normalizing the values
 		double [] avgValues = new double[numberofagents];
-		pwOutputAvg.println("Actual Payoff Matrix");
+		pwOutputAvg.println("\nActual Payoff Matrix");
 		System.out.println("\nTotal Payoffs");
 		for(int i=0; i<numberofagents; i++) {
 			for(int k=0;k<numberofagents;k++) {
 				gameMatrix[i][k].value1 = Math.round(gameMatrix[i][k].value1/largestValue*100);
 				gameMatrix[i][k].value2 = Math.round(gameMatrix[i][k].value2/largestValue*100);
-				pwOutputAvg.print(gameMatrix[i][k].value1 + "," + gameMatrix[i][k].value2 + "  ");
+				pwOutputAvg.print(gameMatrix[i][k].value1 + "," + gameMatrix[i][k].value2 + ",|,");
 				System.out.print(gameMatrix[i][k].value1 + "," + gameMatrix[i][k].value2 + "  ");
 				avgValues[i] += gameMatrix[i][k].value1; 
 			}
-			pwOutputAvg.println(cs.pool1.get(i).name + " , " + avgValues[i] + ",");
+			pwOutputAvg.println(cs.pool1.get(i).name + " , " + avgValues[i]);
 			System.out.println(cs.pool1.get(i).name + " , " + avgValues[i]);
 		}
 		pwOutputAvg.println();
@@ -342,20 +346,20 @@ public class RetailMarketManager {
 			String line;
 			int counter = 1;
 			System.out.print("Count" + "\t\t\t");
-			pw.print("Count" + "\t");
+			pw.print("Count" + ",");
 			for(int i=0; i<numberofagents; i++) {// Up to no of strategies
 				System.out.print(cs.pool1.get(i).name + "\t\t\t");
-				pw.print(cs.pool1.get(i).name + "\t\t\t");
+				pw.print(cs.pool1.get(i).name + ",");
 			}
 			System.out.println();
 			pw.println();
 			while ((line = br.readLine()) != null) {
 				String [] arrPr = line.split(",");
 				System.out.print(arrPr[0] + "-" + counter + "\t\t\t");
-				pw.print(arrPr[0] + "-" + counter + "\t\t\t");
+				pw.print(arrPr[0] + "-" + counter + ",");
 				for(int i=1; i<=numberofagents; i++) { // Up to no of strategies
 					System.out.print(arrPr[i] + "\t\t\t");
-					pw.print(arrPr[i] + "\t\t\t");
+					pw.print(arrPr[i] + ",");
 				}
 				System.out.println();
 				pw.println();
@@ -368,12 +372,17 @@ public class RetailMarketManager {
 	}
 
 	
-	public void createGambitFile(CaseStudy cs, PrintWriter pw) {
+	public void createGambitFile(CaseStudy cs, PrintWriter tpw) {
 		try {
-			FileWriter fw = new FileWriter("Gambit.gbt");
-			if(pw == null) {
+			
+			FileWriter fw = (tpw == null) ? new FileWriter("Gambit.gbt") : null;
+			PrintWriter pw = null;
+			
+			if(tpw == null)
 				pw = new PrintWriter(new BufferedWriter(fw));
-			}
+			else
+				pw = tpw;
+				
 			pw.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
 					"<gambit:document xmlns:gambit=\"http://gambit.sourceforge.net/\" version=\"0.1\">\r\n" + 
 					"<colors>\r\n" + 
@@ -409,6 +418,9 @@ public class RetailMarketManager {
 			pw.println("</nfgfile>\r\n" + 
 					"</game>\r\n" + 
 					"</gambit:document>");
+			
+			if(tpw == null)
+				pw.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

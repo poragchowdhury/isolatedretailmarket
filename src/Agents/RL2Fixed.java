@@ -4,12 +4,12 @@ import Configuration.Configuration;
 import Configuration.DatabaseConnection;
 import Observer.Observer;
 
-public class RL1Fixed extends RL{
+public class RL2Fixed extends RL{
 	public double maxppts = (Configuration.MAX_TARIFF_PRICE * Configuration.POPULATION) / Configuration.PPTS_DISCRTZD;
 	public int mynextaction = 0;
-	public RL1Fixed() {
-		super("rl1");
-		this.name = "rl1";
+	public RL2Fixed() {
+		super("rl2");
+		this.name = "rl2";
 	}
 	
 	@Override

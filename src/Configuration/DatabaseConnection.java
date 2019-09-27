@@ -46,7 +46,7 @@ public class DatabaseConnection{
     
     public boolean tableExists(String tableName) throws Exception{
     	dbm = con.getMetaData();
-        rs = dbm.getTables(null, null, tableName, new String[] {"TABLE"});
+        rs = dbm.getTables(null, null, tableName, null); // new String[] {"TABLE"}
         return rs.next();
     }
     
@@ -66,15 +66,22 @@ public class DatabaseConnection{
     public double getQValue(String tableName) throws Exception {
     	double qValue = noQvalue;
     	String query = "SELECT * FROM " + tableName +" ORDER BY id DESC LIMIT 1;";
-    	if(tableExists(tableName)) {
-	    	prepStmt = con.prepareStatement(query);
-	    	rs = prepStmt.executeQuery();
-	    	if(rs.next()) {
-	    		qValue = rs.getDouble(DB.qVal.ordinal());
-	    		//System.out.println("id : " + rs.getInt(DB.id.ordinal()) + ", qValue : " + qValue);
+    	try {
+	    	if(tableExists(tableName)) {
+		    	prepStmt = con.prepareStatement(query);
+		    	rs = prepStmt.executeQuery();
+		    	if(rs.next()) {
+		    		qValue = rs.getDouble(DB.qVal.ordinal());
+		    		//System.out.println("id : " + rs.getInt(DB.id.ordinal()) + ", qValue : " + qValue);
+		    	}
+	    	}
+	    	else {
+	    		createTable(tableName);
+	    		insertQValue(tableName, maxQValue);
+	    		qValue = maxQValue;
 	    	}
     	}
-    	else {
+    	catch (Exception ex) {
     		createTable(tableName);
     		insertQValue(tableName, maxQValue);
     		qValue = maxQValue;

@@ -12,19 +12,17 @@ import Agents.AlwaysIncrease;
 import Agents.AlwaysSame;
 import Agents.Grim;
 import Agents.HardMajority;
-import Agents.L1;
-import Agents.L2;
-import Agents.L3;
-import Agents.L3a;
-import Agents.L3b;
-import Agents.L4;
-import Agents.L4a_3b;
+import Agents.SMNE1;
+import Agents.SMNE2;
 import Agents.Rand;
 import Agents.SoftMajority;
 import Agents.NaiveProber;
 import Agents.Pavlov;
 import Agents.Prober;
 import Agents.RL;
+import Agents.RL1Fixed;
+import Agents.RL2Fixed;
+import Agents.RLTraining;
 import Agents.TitForTat;
 import Agents.TitForTatV2;
 import Agents.TitForTwoTat;
@@ -66,20 +64,57 @@ public class CaseStudy {
 			pool1.add(new AlwaysDefect());
 			pool2.add(new TitForTatV2());
 		}
-		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RLVSAlD.getValue()){
-			pool1.add(new RL());
+		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RL1FixedVSAlD.getValue()){
+			pool1.add(new RL1Fixed());
 			pool2.add(new AlwaysDefect());
 		}
-		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RLVSAlI.getValue()){
-			pool1.add(new RL());
+		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RL1FixedVSAlI.getValue()){
+			pool1.add(new RL1Fixed());
 			pool2.add(new AlwaysIncrease());
 		}
-		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RLVSL1.getValue()){
-			pool1.add(new RL());
-			pool2.add(new L1());
+		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RLTrainingVSMNE1.getValue()){
+			pool1.add(new RLTraining());
+			pool2.add(new SMNE1());
+		}
+		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RLTrainingVSMNE2.getValue()){
+			pool1.add(new RLTraining());
+			pool2.add(new SMNE2());
+		}
+		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RL1FixedVSSMNE1.getValue()){
+			pool1.add(new RL1Fixed());
+			pool2.add(new SMNE1());
+		}
+		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RL2FixedVSSMNE2.getValue()){
+			pool1.add(new RL2Fixed());
+			pool2.add(new SMNE2());
+		}
+		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RR_AlD_AlI_AS.getValue()) {
+			pool1.add(new AlwaysDefect());
+			pool2.add(new AlwaysDefect());
+
+			pool1.add(new AlwaysIncrease());
+			pool2.add(new AlwaysIncrease());
+			
+			pool1.add(new AlwaysSame());
+			pool2.add(new AlwaysSame());
+		}
+		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RR_AlD_AlI_AS_RL1.getValue()) {
+			pool1.add(new AlwaysDefect());
+			pool2.add(new AlwaysDefect());
+
+			pool1.add(new AlwaysIncrease());
+			pool2.add(new AlwaysIncrease());
+			
+			pool1.add(new AlwaysSame());
+			pool2.add(new AlwaysSame());
+			
+			pool1.add(new RL1Fixed());
+			pool2.add(new RL1Fixed());
+		}
+		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RoundRobin.getValue()) {
+			
 		}
 		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RoundRobin.getValue()){
-			
 			
 			/*
 			pool1.add(new Grim());
@@ -95,14 +130,15 @@ public class CaseStudy {
 			pool2.add(new L4());
 			*/
 			
-			pool1.add(new RL());
-			pool2.add(new RL());
+			//pool1.add(new RL1Fixed());
+			//pool2.add(new RL1Fixed());
 			
 			pool1.add(new AlwaysDefect());
 			pool2.add(new AlwaysDefect());
 
 			pool1.add(new AlwaysIncrease());
 			pool2.add(new AlwaysIncrease());
+			
 			/*
 			pool1.add(new Grim());
 			pool2.add(new Grim());

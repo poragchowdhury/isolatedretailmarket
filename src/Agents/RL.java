@@ -2,19 +2,19 @@ package Agents;
 
 import java.util.Random;
 import Configuration.Configuration;
-import Configuration.DatabaseConnection;
 import Observer.Observer;
 import Tariff.TariffActions;
 
 public class RL extends Agent{
-	public DatabaseConnection db;
 	public double maxppts = (Configuration.MAX_TARIFF_PRICE * Configuration.POPULATION) / Configuration.PPTS_DISCRTZD;
-	public int mynextaction = 0;
-	public RL() {
-		this.name = "NO_NAME";//Configuration.DB_NAME_TRAINING;
+	
+	public RL(String rlagentName) {
+		super(rlagentName);
 	}
 	
-	public void getNextActionId() throws Exception{
+	public int getNextActionId() throws Exception{
+		//System.out.println(this.name + " getNextAction");
+		int mynextaction = 0;
 		// Get the discretized value of state features to form the position and form String s_prime
 		double maxqval = -1.0;
 		double pr = 1;///((double)TariffActions.a.length);
@@ -31,9 +31,11 @@ public class RL extends Agent{
 				mynextaction = action;
 			}
 		}
+		//System.out.println("RL getNextActionId");
+		return mynextaction;
 	}
 	
-	public void updateQvalue(Observer ob) throws Exception{
+	public int updateQvalue(Observer ob) throws Exception{
 		double spa_maxqval = -1.0;
 		
 		long cur_ppts = (long)(prevprofit / (double)Observer.timeslot-1);
@@ -67,20 +69,21 @@ public class RL extends Agent{
 		db.insertQValue(sa_tableName, sa_qval);
 		
 		Random r = new Random();
-		mynextaction = r.nextInt(TariffActions.a.length);
+		return r.nextInt(TariffActions.a.length);
 		 
 	}
 	
 	@Override
 	public void publishTariff(Observer ob) {
 		try {
+			int nextactionid = 0;
 			//System.out.println("Starting RL logic");
 			if(Configuration.RL_TRAINING)
-				updateQvalue(ob);
+				nextactionid = updateQvalue(ob);
 			else
-				getNextActionId();
+				nextactionid = getNextActionId();
 			
-			publishTariffByActionId(ob, mynextaction);
+			publishTariffByActionId(ob, nextactionid);
 			
 			//System.out.println("RL logic: action :"+ TariffActions.action.values()[mynextaction].toString() + " TariffPrice " + tariffPrice);
 		}

@@ -37,12 +37,41 @@ public class Configuration {
 		AlwaysDefectVSTitForTat(5),
 		AlwaysCoopVSTitForTat(6),
 		AlwaysDefectVSTitForTatV2(7),
-		RLVSAlD(8),
-		RLVSAlI(9),
-		RLVSL1(10);
+		RL1FixedVSAlD(8),
+		RL1FixedVSAlI(9),
+		RLTrainingVSMNE1(10),
+		RLTrainingVSMNE2(11),
+		RR_AlD_AlI_AS(12),
+		RR_AlD_AlI_AS_RL1(13),
+		RL1FixedVSSMNE1(14),
+		RL2FixedVSSMNE2(15);
 		private final int id;
 		CASE_STUDY(int id) { this.id = id; }
 	    public int getValue() { return id; }
+	}
+	
+	public static String print() {
+		return "\n********************Configurations**********************\n" +
+				"TOTAL_TIME_SLOTS : " + TOTAL_TIME_SLOTS + "\n" +
+				"PUBLICATION_CYCLE : " + PUBLICATION_CYCLE + "\n" +
+				"DEFAULT_TARIFF_PRICE : " + DEFAULT_TARIFF_PRICE + "\n" +
+				"CASE_STUDY_NO : " + CASE_STUDY_NO + "\n" +
+				"INERTIA : " + INERTIA + "\n" +
+				"RATIONALITY : " + RATIONALITY + "\n" +
+				"ACT_CHANGE_PERC : " + ACT_CHANGE_PERC + "\n" +
+				"POPULATION : " + POPULATION + "\n" +
+				"LOGFILENAME : " + LOGFILENAME + "\n" +
+				"DAYMULT : " + DAYMULT + "\n" +
+				"DMNDMULT : " + DMNDMULT  + "\n" +
+				"INITCOST : " + INITCOST  + "\n" +
+				"DLOGGING : " + DLOGGING  + "\n" +		
+				"ROUND : " + ROUND  + "\n" +
+				"LEARNING_RATE : " + LEARNING_RATE  + "\n" +
+				"DISCOUNT_FACTOR : " + DISCOUNT_FACTOR  + "\n" +
+				"DB_NAME_TRAINING : " + DB_NAME_TRAINING  + "\n" +
+				"MAX_TARIFF_PRICE : " + MAX_TARIFF_PRICE  + "\n" +
+				"RL_TRAINING : " + RL_TRAINING  + "\n" +
+				"PPTS_DISCRTZD : " + PPTS_DISCRTZD  + "\n";
 	}
 	
 	public Configuration(){

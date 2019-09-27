@@ -6,15 +6,15 @@ import Configuration.Configuration;
 import Observer.Observer;
 import Tariff.TariffActions;
 
-public class L4 extends Agent{
-	public L4() {
+public class SMNE1 extends Agent{
+	public SMNE1() {
 		// TODO Auto-generated constructor stub
-		this.name = "L4";
+		this.name = "SMNE1";
 	}
 
 	@Override
 	public void publishTariff(Observer ob) {
-		strategyL4(ob);
+		strategySMNE1(ob);
 		tariffCheck(ob); /* Tariff Check */
 	}
 }
