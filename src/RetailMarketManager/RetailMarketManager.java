@@ -207,6 +207,7 @@ public class RetailMarketManager {
 			pwOutputAvg.println(Configuration.print());
 			
 			CaseStudy cs = new CaseStudy();
+			
 			cs.configureSimulation(ob, Configuration.CASE_STUDY_NO);
 			
 			// Round Robin Tournament Set Up

@@ -10,6 +10,8 @@ import Agents.Agent;
 import Agents.AlwaysDefect;
 import Agents.AlwaysIncrease;
 import Agents.AlwaysSame;
+import Agents.DQAgent;
+import Agents.DQAgentMDP;
 import Agents.Grim;
 import Agents.HardMajority;
 import Agents.SMNE1;
@@ -173,6 +175,18 @@ public class CaseStudy {
 			pool2.add(new Pavlov());
 			*/
 		}
+		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.DQTraining.getValue()){
+	        pool1.add(new AlwaysDefect());
+		    //pool2.add(new AlwaysDefect());
+		    DQAgentMDP.trainDQAgent(pool1);
+		    //pool1.add(new DQAgent());
+		    pool2.add(new DQAgent());
+		}
+		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.DQFixed.getValue()){
+		    pool1.add(new SMNE1());
+	        pool2.add(new DQAgent());
+		}
+		
 		RetailMarketManager.numberofagents = pool1.size();		
 		//Collections.shuffle(ob.agentPool);
 	}

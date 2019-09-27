@@ -695,7 +695,11 @@ NE-1,1,
 TOTAL_TIME_SLOTS : 168
 PUBLICATION_CYCLE : 6
 DEFAULT_TARIFF_PRICE : 0.25
+<<<<<<< HEAD
 CASE_STUDY_NO : 12
+=======
+CASE_STUDY_NO : 16
+>>>>>>> 10dc3e860edd7e4cd90e8c827047625669f2e9cf
 INERTIA : 0.9
 RATIONALITY : 0.9
 ACT_CHANGE_PERC : 0.0
@@ -712,6 +716,7 @@ DB_NAME_TRAINING : rl2
 MAX_TARIFF_PRICE : 0.5
 RL_TRAINING : false
 PPTS_DISCRTZD : 5
+<<<<<<< HEAD
 
 Inertia,0.9,Rationality,0.9,AlD,993.9197999999997,AlD,998.0801999999993,Error1,3.1925368170405384,Error2,3.1925368170405295
 Inertia,0.9,Rationality,0.9,AlD,1979.156299999999,AlzIncz,13.28629999999999,Error1,0.7235234621689645,Error2,0.7787945329167121
@@ -729,6 +734,17 @@ Actual Payoff Matrix
 0.0,48.0,|,78.0,78.0,|,3.0,100.0,|,3.0,100.0,|,AlzIncz , 84.0
 8.0,44.0,|,100.0,3.0,|,51.0,51.0,|,51.0,51.0,|,AlzSame , 210.0
 8.0,44.0,|,100.0,3.0,|,51.0,51.0,|,51.0,51.0,|,SMNE1 , 210.0
+=======
+DQLEARNING_POLICY_FILENAMEagent.pol
+
+Inertia,0.9,Rationality,0.9,AlD,992.3343999999996,AlD,999.6655999999994,Error1,4.065449720659485,Error2,4.0654497206595055
+Inertia,0.9,Rationality,0.9,AlD,1278.7757999999985,DEEPQ,898.5246999999998,Error1,3.2798469952517255,Error2,3.921173702147683
+Inertia,0.9,Rationality,0.9,DEEPQ,1200.7173,DEEPQ,1211.2827,Error1,4.714892134254959,Error2,4.714892134254978
+
+Actual Payoff Matrix
+78.0,78.0,|,100.0,70.0,|,AlD , 178.0
+70.0,100.0,|,94.0,94.0,|,DEEPQ , 164.0
+>>>>>>> 10dc3e860edd7e4cd90e8c827047625669f2e9cf
 
 <?xml version="1.0" encoding="UTF-8"?>
 <gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
@@ -744,12 +760,18 @@ Actual Payoff Matrix
 <nfgfile>
 NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
 
+<<<<<<< HEAD
 { { "AlD"  "AlzIncz"  "AlzSame"  "SMNE1" }
 { "AlD"  "AlzIncz"  "AlzSame"  "SMNE1" }
+=======
+{ { "AlD"  "DEEPQ" }
+{ "AlD"  "DEEPQ" }
+>>>>>>> 10dc3e860edd7e4cd90e8c827047625669f2e9cf
 }
 ""
 
 {
+<<<<<<< HEAD
 { "" 24.0, 24.0 }
 { "" 0.0, 48.0 }
 { "" 8.0, 44.0 }
@@ -870,3 +892,183 @@ NE-6,0,0,15/22,7/22,
 NE-7,0,0,15/22,7/22,
 NE-8,0,0,0,1,
 NE-9,0,0,0,1,
+=======
+{ "" 78.0, 78.0 }
+{ "" 70.0, 100.0 }
+{ "" 100.0, 70.0 }
+{ "" 94.0, 94.0 }
+}
+1 2 3 4 </nfgfile>
+</game>
+</gambit:document>
+Count,AlD,DEEPQ,
+NE-1,1,0,
+>>>>>>> 10dc3e860edd7e4cd90e8c827047625669f2e9cf
+
+********************Configurations**********************
+TOTAL_TIME_SLOTS : 168
+PUBLICATION_CYCLE : 6
+DEFAULT_TARIFF_PRICE : 0.25
+CASE_STUDY_NO : 17
+INERTIA : 0.9
+RATIONALITY : 0.9
+ACT_CHANGE_PERC : 0.0
+POPULATION : 100
+LOGFILENAME : NiceRLStrategiesRounds.csv
+DAYMULT : 0.0
+DMNDMULT : 0.0
+INITCOST : 0.0
+DLOGGING : false
+ROUND : 100
+LEARNING_RATE : 0.1
+DISCOUNT_FACTOR : 0.99
+DB_NAME_TRAINING : rl2
+MAX_TARIFF_PRICE : 0.5
+RL_TRAINING : true
+PPTS_DISCRTZD : 5
+DQLEARNING_POLICY_FILENAMEdqagent.pol
+
+Inertia,0.9,Rationality,0.9,SMNE1,474.5475,DEEPQ,3197.719400000006,Error1,7.793038919054621,Error2,7.783434769381146
+
+Actual Payoff Matrix
+57.0,57.0,|,SMNE1 , 57.0
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "SMNE1" }
+{ "SMNE1" }
+}
+""
+
+{
+{ "" 57.0, 57.0 }
+}
+1 </nfgfile>
+</game>
+</gambit:document>
+Count,SMNE1,
+NE-1,1,
+
+********************Configurations**********************
+TOTAL_TIME_SLOTS : 168
+PUBLICATION_CYCLE : 6
+DEFAULT_TARIFF_PRICE : 0.25
+CASE_STUDY_NO : 16
+INERTIA : 0.9
+RATIONALITY : 0.9
+ACT_CHANGE_PERC : 0.0
+POPULATION : 100
+LOGFILENAME : NiceRLStrategiesRounds.csv
+DAYMULT : 0.0
+DMNDMULT : 0.0
+INITCOST : 0.0
+DLOGGING : false
+ROUND : 100
+LEARNING_RATE : 0.1
+DISCOUNT_FACTOR : 0.99
+DB_NAME_TRAINING : rl2
+MAX_TARIFF_PRICE : 0.5
+RL_TRAINING : true
+PPTS_DISCRTZD : 5
+DQLEARNING_POLICY_FILENAMEdqagent.pol
+
+Inertia,0.9,Rationality,0.9,AlD,1365.6683999999996,DEEPQ,1313.9562000000012,Error1,9.187277467664906,Error2,16.765831491801517
+
+Actual Payoff Matrix
+98.0,98.0,|,AlD , 98.0
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "AlD" }
+{ "AlD" }
+}
+""
+
+{
+{ "" 98.0, 98.0 }
+}
+1 </nfgfile>
+</game>
+</gambit:document>
+Count,AlD,
+NE-1,1,
+
+********************Configurations**********************
+TOTAL_TIME_SLOTS : 168
+PUBLICATION_CYCLE : 6
+DEFAULT_TARIFF_PRICE : 0.25
+CASE_STUDY_NO : 17
+INERTIA : 0.9
+RATIONALITY : 0.9
+ACT_CHANGE_PERC : 0.0
+POPULATION : 100
+LOGFILENAME : NiceRLStrategiesRounds.csv
+DAYMULT : 0.0
+DMNDMULT : 0.0
+INITCOST : 0.0
+DLOGGING : false
+ROUND : 100
+LEARNING_RATE : 0.1
+DISCOUNT_FACTOR : 0.99
+DB_NAME_TRAINING : rl2
+MAX_TARIFF_PRICE : 0.5
+RL_TRAINING : true
+PPTS_DISCRTZD : 5
+DQLEARNING_POLICY_FILENAMEdqagent.pol
+
+Inertia,0.9,Rationality,0.9,SMNE1,482.5725,DEEPQ,3191.8579000000054,Error1,8.067103492945904,Error2,8.149809912813208
+
+Actual Payoff Matrix
+58.0,58.0,|,SMNE1 , 58.0
+
+<?xml version="1.0" encoding="UTF-8"?>
+<gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
+<colors>
+<player id="-1" red="0" green="0" blue="0" />
+<player id="0" red="154" green="205" blue="50" />
+<player id="1" red="255" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="255" />
+</colors>
+<font size="10" family="74" face="Arial" style="90" weight="92" />
+<numbers decimals="4"/>
+<game>
+<nfgfile>
+NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
+
+{ { "SMNE1" }
+{ "SMNE1" }
+}
+""
+
+{
+{ "" 58.0, 58.0 }
+}
+1 </nfgfile>
+</game>
+</gambit:document>
+Count,SMNE1,
+NE-1,1,

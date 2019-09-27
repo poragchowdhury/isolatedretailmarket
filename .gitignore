@@ -9,3 +9,12 @@ log/*
 *.others
 *.xlsx
 /target/
+
+# Policy files
+*.pol
+
+# Java binaries
+*.class
+
+# Eclipse build paths
+.classpath

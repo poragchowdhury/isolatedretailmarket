@@ -28,6 +28,8 @@ public class Configuration {
 	public static boolean RL_TRAINING = false; 
 	public static int PPTS_DISCRTZD = 10;
 	
+	public static String DQLEARNING_POLICY_FILENAME = "dq.pol";
+	
 	public static enum CASE_STUDY{
 		RoundRobin(0),
 		AlwaysCoopVSAlwaysCoop(1),
@@ -44,7 +46,10 @@ public class Configuration {
 		RR_AlD_AlI_AS(12),
 		RR_AlD_AlI_AS_RL1(13),
 		RL1FixedVSSMNE1(14),
-		RL2FixedVSSMNE2(15);
+		RL2FixedVSSMNE2(15),
+		DQTraining(16),
+		DQFixed(17);
+	    
 		private final int id;
 		CASE_STUDY(int id) { this.id = id; }
 	    public int getValue() { return id; }
@@ -71,7 +76,8 @@ public class Configuration {
 				"DB_NAME_TRAINING : " + DB_NAME_TRAINING  + "\n" +
 				"MAX_TARIFF_PRICE : " + MAX_TARIFF_PRICE  + "\n" +
 				"RL_TRAINING : " + RL_TRAINING  + "\n" +
-				"PPTS_DISCRTZD : " + PPTS_DISCRTZD  + "\n";
+				"PPTS_DISCRTZD : " + PPTS_DISCRTZD  + "\n" +
+				"DQLEARNING_POLICY_FILENAME" + DQLEARNING_POLICY_FILENAME + "\n";
 	}
 	
 	public Configuration(){
@@ -104,6 +110,7 @@ public class Configuration {
 			MAX_TARIFF_PRICE = Double.parseDouble(prop.getProperty("maxtariff"));
 			RL_TRAINING = Boolean.parseBoolean(prop.getProperty("rl-training"));
 			PPTS_DISCRTZD = Integer.parseInt(prop.getProperty("ppts_dscretzd"));
+			DQLEARNING_POLICY_FILENAME = prop.getProperty("dqlearning-policy-filename");
 			//System.out.println("TOTAL_TIME_SLOTS " + TOTAL_TIME_SLOTS);
 			//System.out.println("PUBLICATION_CYCLE " + PUBLICATION_CYCLE);
 		} catch (IOException ex) {
