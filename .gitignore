@@ -10,6 +10,9 @@ log/*
 *.xlsx
 /target/
 
+# Policy files
+*.pol
+
 # Java binaries
 *.class
 

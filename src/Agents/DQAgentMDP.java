@@ -26,19 +26,18 @@ import Observer.Observer;
 import RetailMarketManager.RetailMarketManager;
 
 public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
-    public static QLearning.QLConfiguration QLConfig = new QLearning.QLConfiguration(123, // Random
-                                                                                          // seed
-            1000, // Max step By epoch
-            15, // Max step
-            1000, // Max size of experience replay
-            16, // size of batches
-            100, // target update (hard)
-            0, // num step noop warmup
-            0.05, // reward scaling
+    public static QLearning.QLConfiguration QLConfig = new QLearning.QLConfiguration(123, // Seed
+            10000, // Max step By epoch
+            100, // Max step
+            1000000, // Max size of experience replay
+            32, // size of batches
+            10000, // target update (hard)
+            100, // num step noop warmup
+            0.01, // reward scaling
             0.99, // gamma
-            10.0, // td-error clipping
+            100.0, // td-error clipping
             0.1f, // min epsilon
-            200, // num step for eps greedy anneal
+            10000, // num step for eps greedy anneal
             true // double DQN
     );
 
@@ -61,16 +60,8 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
     private List<Agent> opponentPool;
 
     public DQAgentMDP(List<Agent> opponentPool) {
-        retailManager = new RetailMarketManager();
-        agent = new DQAgent();
-
         this.opponentPool = opponentPool;
-
-        retailManager.ob.agentPool.add(agent);
-        retailManager.ob.agentPool.addAll(opponentPool);
-
-        Observer.timeslot = 0;
-        this.currentState = this.startingState = new DQAgentState(agent);
+        this.reset();
     }
 
     public static void trainDQAgent(List<Agent> opponentPool) {
@@ -121,6 +112,13 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 
     @Override
     public DQAgentState reset() {
+        retailManager = new RetailMarketManager();
+        agent = new DQAgent();
+        retailManager.ob.agentPool.add(agent);
+        retailManager.ob.agentPool.addAll(opponentPool);
+
+        Observer.timeslot = 0;
+        this.currentState = this.startingState = new DQAgentState(agent);
         return startingState;
     }
 

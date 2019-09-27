@@ -90,8 +90,8 @@ public abstract class Agent {
 			this.tariffPrice = newTariff;
 			this.myPrevActionId = TariffActions.action.DEFECT.ordinal();
 		}
-		else
-			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
+//		else
+//			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
 	}
 	
 	public void increase(Observer ob) {
@@ -102,8 +102,8 @@ public abstract class Agent {
 			this.tariffPrice = newTariff;
 			this.myPrevActionId = TariffActions.action.INCREASE.ordinal();
 		}
-		else
-			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
+//		else
+//			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
 	}
 	
 	
@@ -115,8 +115,8 @@ public abstract class Agent {
 			this.tariffPrice = newTariff;
 			this.myPrevActionId = actionid;
 		}
-		else
-			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
+//		else
+//			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
 	}
 	
 	public void nochange() {
@@ -131,8 +131,8 @@ public abstract class Agent {
 			this.tariffPrice = newTariff;
 			this.myPrevActionId = TariffActions.action.DEFECT.ordinal();
 		}
-		else
-			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
+//		else
+//			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
 	}
 	
 	public abstract void publishTariff(Observer ob);

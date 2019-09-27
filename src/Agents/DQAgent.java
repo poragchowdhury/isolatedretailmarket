@@ -59,5 +59,9 @@ public class DQAgent extends Agent {
         else // No change
             nochange();
     }
-
+    
+    @Override
+    public void tariffCheck(Observer ob) {
+        // Don't print tariff check log
+    }
 }
