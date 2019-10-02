@@ -270,7 +270,8 @@ public class RetailMarketManager {
 				}
 			}
 			printGameMatrix(cs, pwOutputAvg);
-			nashEqCalc(cs, pwOutputAvg);
+			if(Configuration.GET_NASH_EQ)
+				nashEqCalc(cs, pwOutputAvg);
 			pwOutput.close();
 			fwOutput.close();
 			pwOutputAvg.close();

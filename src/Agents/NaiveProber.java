@@ -17,11 +17,7 @@ public class NaiveProber extends Agent{
 	@Override
 	public void publishTariff(Observer ob) {
 		
-		double defectPr = 10;
-		Random r = new Random(100);
-		double coin = r.nextDouble();
-		if(coin < defectPr) // defect
-			defect(ob);
+		naiveProber(ob);
 		
 		/* Tariff Check */
 		tariffCheck(ob);

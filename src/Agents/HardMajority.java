@@ -13,16 +13,7 @@ public class HardMajority extends Agent{
 	@Override
 	public void publishTariff(Observer ob) {
 		
-		if(this.rivalPrevPrevPrice > this.rivalPrevPrice) 	// other agent is defecting
-			defectCounter++;
-		else coopCounter++;									// other agent is cooperating 
-		
-		if(Observer.timeslot == 0)  						// Defect on first timeslot
-			defect(ob);
-		else if(defectCounter >= coopCounter) 				// defect
-			defect(ob);
-		else {} 											// Coop
-		
+		hardmajority(ob);
 		/* Tariff Check */
 		tariffCheck(ob);
 	}

@@ -7,14 +7,14 @@ import Configuration.DatabaseConnection;
 import Observer.Observer;
 import Tariff.TariffActions;
 
-public class SMNE2 extends Agent{
+public class SMNE9 extends Agent{
 	
-	DQAgentL1 dqAgentL1;
+	DQAgentL8_2 dqAgentL8_2;
 	
-	public SMNE2() {
+	public SMNE9() {
 		// TODO Auto-generated constructor stub
-		this.name = "SMNE2";
-		dqAgentL1 = new DQAgentL1();
+		this.name = "SMNE9";
+		dqAgentL8_2 = new DQAgentL8_2();
 	}
 
 	@Override
@@ -29,12 +29,12 @@ public class SMNE2 extends Agent{
 	}
 	
 	public void strategySMNE2(Observer ob) throws Exception {
-		double prDQL1 = (1/16)*100;
+		double prDQL1 = (1/26)*100;
 		int prDQL1Int = (int) prDQL1;
 		Random r = new Random();
 		int coin = r.nextInt(100);
 		if(coin < prDQL1Int) {
-			dqAgentL1.publishTariff(ob);
+			dqAgentL8_2.publishTariff(ob);
 		}
 		else {
 			softMajority(ob);

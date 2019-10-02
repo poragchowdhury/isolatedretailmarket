@@ -13,11 +13,7 @@ public class TitForTat extends Agent{
 	@Override
 	public void publishTariff(Observer ob) {
 
-		if(Observer.timeslot == 0) {} 							// Coop in the first move
-		else if(this.rivalPrevPrevPrice > this.rivalPrevPrice ) // other agent is defecting, so defect
-			defect(ob);
-		else {} 												// other agent is Cooping, So coop
-		
+		tft(ob);
 		/* Tariff Check */
 		tariffCheck(ob);
 	}

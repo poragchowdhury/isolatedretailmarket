@@ -29,6 +29,7 @@ public class Configuration {
 	public static int PPTS_DISCRTZD = 10;
 	
 	public static String DQLEARNING_POLICY_FILENAME = "dq.pol";
+	public static boolean GET_NASH_EQ = false;
 	
 	public static enum CASE_STUDY{
 		RoundRobin(0),
@@ -43,13 +44,89 @@ public class Configuration {
 		RL1FixedVSAlI(9),
 		RLTrainingVSMNE1(10),
 		RLTrainingVSMNE2(11),
-		RR_AlD_AlI_AS(12),
-		RR_AlD_AlI_AS_RL1(13),
+		RR_AlI_NP_AlD_DQL1(12),
+		RR_AlI_NP_AlD_DQL1_Prbr(13),
 		RL1FixedVSSMNE1(14),
 		RL2FixedVSSMNE2(15),
 		DQTraining(16),
-		DQFixed(17);
-	    
+		DQFixed(17),
+		RR_AlI_NP_AlD_DQL1_Prbr_Pavlov(18),
+		RR_AlI_NP_AlD_DQL1_Prbr_Pavlov_AlS(19),
+		RR_AlI_NP_AlD_DQL1_Prbr_Pavlov_AlS_SM(20),
+		RR_DQL1_Prbr_Pavlov_AlS_SM(21),
+		DQTrainingVSSMNE2(22),
+		RR_DQL1_Prbr_Pavlov_AlS_SM_DQL2(23),
+		DQTrainingVSSMNE2_2(24),
+		RR_DQL1_Prbr_Pavlov_AlS_SM_DQL2_2(25),
+		DQTrainingVSSMNE3(26),
+		RR_DQL1_Prbr_Pavlov_AlS_SM_DQL2_2_DQ3(27),
+		DQTrainingVSSMNE4(28),
+		RR_DQL1_Prbr_Pavlov_AlS_SM_DQL2_2_DQ3_DQ4(29),
+		RR_DQL1_SM_DQ3_DQ4(30),
+		DQTrainingVSSMNE5(31),
+		RR_DQL1_SM_DQ3_DQ4_DQ5(32),
+		RR_DQL1_SM_DQ4_DQ5(33),
+		DQTrainingVSSMNE6(34),
+		RR_DQL1_SM_DQ4_DQ5_DQ6(35),
+		RR_DQL1_SM_DQ4_DQ6(36),
+		RR_SM_DQ3(37),
+		DQTrainingVSSMNE7(38),
+		RR_SM_DQ3_DQ7(39),
+		RR_SM_DQ3_DQ7_GRIM(40),
+		DQTrainingVSSMNE8(41),
+		RR_SM_DQ3_DQ7_GRIM_DQ8(42),
+		RR_SM_DQ3_DQ7_GRIM_DQ8_2(43),
+		DQTrainingVSSMNE9(44),
+		RR_SM_DQ3_DQ7_GRIM_DQ8_2_DQ9(45),
+		RR_SM_DQ3_GRIM_DQ8_2_DQ9(46),
+		RR_SM_DQ3_GRIM_DQ8_2_DQ9_Rand(47),
+		DQTrainingVSSMNE10(48),
+		RR_SM_DQ3_GRIM_DQ8_2_DQ9_Rand_DQ10(49),
+		RR_SM_DQ3_GRIM_DQ8_2_DQ9_Rand_DQ10_TF2T(50),
+		RR_SM_DQ3_GRIM_DQ8_2_DQ9_DQ10_TF2T(51),
+		RR_SM_DQ3_GRIM_DQ8_2_DQ9_TF2T(52),
+		DQTrainingVSSMNE11(53),
+		RR_SM_DQ3_GRIM_DQ8_2_DQ9_TF2T_DQ11(54),
+		RR_SM_GRIM_DQ8_2_DQ9_TF2T_DQ11(55),
+		DQTrainingVSSMNE12(56),
+		RR_SM_GRIM_DQ8_2_DQ9_TF2T_DQ11_DQ12(57),
+		RR_SM_GRIM_DQ8_2_DQ9_TF2T(58),
+		DQTrainingVSSMNE13(59),
+		RR_SM_GRIM_DQ8_2_DQ9_TF2T_DQ13(60),
+		RR_SM_GRIM_DQ8_2_DQ9_TF2T_TFT(61),
+		DQTrainingVSSMNE14(62),
+		RR_SM_GRIM_DQ8_2_DQ9_TF2T_TFT_DQ14(63),
+		RR_SM_GRIM_DQ8_2_TF2T_TFT(64),
+		RR_SM_DQ8_2_TF2T_TFT(65),
+		DQTrainingVSSMNE15(66),
+		RR_SM_DQ8_2_TF2T_TFT_DQ15(67),
+		DQTrainingVSSMNE16(68),
+		RR_SM_DQ8_2_TF2T_TFT_DQ15_DQ16(69),
+		DQTrainingVSSMNE17(70),
+		RR_SM_DQ8_2_TF2T_TFT_DQ15_DQ16_DQ17(71),
+		RR_SM_DQ8_2_TF2T_TFT_DQ15_2TFT(72),
+		DQTrainingVSSMNE18(73),
+		RR_SM_DQ8_2_TF2T_TFT_DQ15_2TFT_DQ18(74),
+		RR_DQ8_2_TF2T_TFT_DQ15_2TFT_DQ18(75),
+		RR_TF2T_TFT_DQ15_2TFT_DQ18(76),
+		DQTrainingVSSMNE19(77),
+		RR_TF2T_TFT_DQ15_2TFT_DQ18_DQ19(78),
+		RR_TF2T_TFT_DQ15_2TFT_DQ18_DQ19_TFTV2(79),
+		RR_TFT_DQ15_2TFT_DQ18_DQ19_TFTV2(80),
+		RR_TFT_DQ15_2TFT_DQ19_TFTV2(81),
+		RR_DQ15_2TFT_DQ19_TFTV2(82),
+		RR_DQ15_2TFT_TFTV2(83),
+		DQTrainingVSSMNE20(84),
+		RR_DQ15_2TFT_TFTV2_DQ20(85),
+		RR_DQ15_2TFT_TFTV2_DQ20_HM(86),
+		RR_DQ15_2TFT_TFTV2_HM(87),
+		DQTrainingVSSMNE21(88),
+		RR_DQ15_2TFT_TFTV2_HM_DQ21(89),
+		DQTrainingVSSMNE22(90),
+		RR_DQ15_2TFT_TFTV2_HM_DQ21_DQ22(91),
+		DQTrainingVSSMNE23(92),
+		RR_DQ15_2TFT_TFTV2_HM_DQ23(93),
+		RR_2TFT_TFTV2_HM(94);
 		private final int id;
 		CASE_STUDY(int id) { this.id = id; }
 	    public int getValue() { return id; }
@@ -77,7 +154,8 @@ public class Configuration {
 				"MAX_TARIFF_PRICE : " + MAX_TARIFF_PRICE  + "\n" +
 				"RL_TRAINING : " + RL_TRAINING  + "\n" +
 				"PPTS_DISCRTZD : " + PPTS_DISCRTZD  + "\n" +
-				"DQLEARNING_POLICY_FILENAME" + DQLEARNING_POLICY_FILENAME + "\n";
+				"DQLEARNING_POLICY_FILENAME : " + DQLEARNING_POLICY_FILENAME + "\n" +
+				"GET_NASH_EQ : " + GET_NASH_EQ;
 	}
 	
 	public Configuration(){
@@ -111,6 +189,7 @@ public class Configuration {
 			RL_TRAINING = Boolean.parseBoolean(prop.getProperty("rl-training"));
 			PPTS_DISCRTZD = Integer.parseInt(prop.getProperty("ppts_dscretzd"));
 			DQLEARNING_POLICY_FILENAME = prop.getProperty("dqlearning-policy-filename");
+			GET_NASH_EQ = Boolean.parseBoolean(prop.getProperty("get-nash-eq"));
 			//System.out.println("TOTAL_TIME_SLOTS " + TOTAL_TIME_SLOTS);
 			//System.out.println("PUBLICATION_CYCLE " + PUBLICATION_CYCLE);
 		} catch (IOException ex) {

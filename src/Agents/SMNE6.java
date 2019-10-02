@@ -7,20 +7,20 @@ import Configuration.DatabaseConnection;
 import Observer.Observer;
 import Tariff.TariffActions;
 
-public class SMNE2 extends Agent{
+public class SMNE6 extends Agent{
 	
 	DQAgentL1 dqAgentL1;
 	
-	public SMNE2() {
+	public SMNE6() {
 		// TODO Auto-generated constructor stub
-		this.name = "SMNE2";
+		this.name = "SMNE6";
 		dqAgentL1 = new DQAgentL1();
 	}
 
 	@Override
 	public void publishTariff(Observer ob) {
 		try {
-			strategySMNE2(ob);
+			strategySMNE6(ob);
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
@@ -28,8 +28,8 @@ public class SMNE2 extends Agent{
 		tariffCheck(ob); /* Tariff Check */
 	}
 	
-	public void strategySMNE2(Observer ob) throws Exception {
-		double prDQL1 = (1/16)*100;
+	public void strategySMNE6(Observer ob) throws Exception {
+		double prDQL1 = (2/27)*100;
 		int prDQL1Int = (int) prDQL1;
 		Random r = new Random();
 		int coin = r.nextInt(100);

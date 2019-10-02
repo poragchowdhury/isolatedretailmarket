@@ -13,17 +13,7 @@ public class TwoTitForTat extends Agent{
 	@Override
 	public void publishTariff(Observer ob) {
 
-		if(Observer.timeslot == 0) {}									// Start with Cooperation
-		else if(punishCounter > 0) {									// Other agent has defected, so defect twice
-			defectOnRivalPrice(ob);
-			punishCounter--;
-		}
-		else if(this.rivalPrevPrevPrice > this.rivalPrevPrice ) { 		// other agent is defecting with clear history, so count and coop  
-			defectOnRivalPrice(ob);
-			punishCounter++;
-		}
-		else {}															// Else Coop
-
+		ttft(ob);
 		
 		/* Tariff Check */
 		tariffCheck(ob);

@@ -78,7 +78,7 @@ public abstract class Agent {
 		if(this.tariffPrice < ob.unitcost) {
 			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
 			System.out.println(this.name + " agent is losing money. \nStopping simulation.");
-			//System.exit(0);
+			System.exit(0);
 		}
 	}
 	
@@ -159,15 +159,90 @@ public abstract class Agent {
 	} 
 
 	public void strategySMNE1(Observer ob) {
-		double prDft = (7/23)*100;
+		double prDft = (39/68)*100;
 		int prDftInt = (int) prDft;
 		Random r = new Random();
 		int coin = r.nextInt(100);
 		if(coin < prDftInt)
-			defect(ob);
+			naiveProber(ob);
 		else {
-			nochange();
+			increase(ob);
 		}
 		//increase(ob);
+	}
+	
+	public void naiveProber(Observer ob) {
+		double defectPr = 10;
+		Random r = new Random(100);
+		double coin = r.nextDouble();
+		if(coin < defectPr) // defect
+			defect(ob);
+	}
+	
+	public void softMajority(Observer ob) {
+		
+		if(this.rivalPrevPrevPrice > this.rivalPrevPrice) 	// other agent is defecting
+			defectCounter++;
+		else coopCounter++;									// other agent is cooperating 
+		
+		if(Observer.timeslot == 0) {} 						// Coop
+		else if(coopCounter >= defectCounter) {}			// Coop
+		else 	 											// Defect
+			defect(ob);
+		
+	}
+	
+	public void tf2t(Observer ob) {
+		if(Observer.timeslot == 0) {}									// Start with Cooperation
+		else if(defectCounter == 2) {									// Other agent has defected twice, so defect
+			defectCounter = 0;
+			defectOnRivalPrice(ob);
+		}
+		else if(this.rivalPrevPrevPrice > this.rivalPrevPrice )  		// other agent is defecting but not twice, so coop  
+			defectCounter++;
+		else {}															// Else Coop
+	}
+	
+	public void tft(Observer ob) {
+		if(Observer.timeslot == 0) {} 							// Coop in the first move
+		else if(this.rivalPrevPrevPrice > this.rivalPrevPrice ) // other agent is defecting, so defect
+			defect(ob);
+		else {} 												// other agent is Cooping, So coop
+		
+	}
+	
+	public void ttft(Observer ob) {
+		if(Observer.timeslot == 0) {}									// Start with Cooperation
+		else if(punishCounter > 0) {									// Other agent has defected, so defect twice
+			defectOnRivalPrice(ob);
+			punishCounter--;
+		}
+		else if(this.rivalPrevPrevPrice > this.rivalPrevPrice ) { 		// other agent is defecting with clear history, so count and coop  
+			defectOnRivalPrice(ob);
+			punishCounter++;
+		}
+		else {}															// Else Coop
+
+	}
+	
+	public void tftv2(Observer ob) {
+		if(Observer.timeslot == 0) {} 							// Coop in the first move
+		else if(this.rivalPrevPrevPrice > this.rivalPrevPrice ) // other agent is defecting, so defect
+			defectOnRivalPrice(ob);
+		else {} 												// other agent is Cooping, So coop
+		
+	}
+	
+	public void hardmajority(Observer ob) {
+		if(this.rivalPrevPrevPrice > this.rivalPrevPrice) 	// other agent is defecting
+			defectCounter++;
+		else coopCounter++;									// other agent is cooperating 
+		
+		if(Observer.timeslot == 0)  						// Defect on first timeslot
+			defect(ob);
+		else if(defectCounter >= coopCounter) 				// defect
+			defect(ob);
+		else {} 											// Coop
+		
 	}
 }

@@ -14,15 +14,7 @@ public class TitForTwoTat extends Agent{
 	@Override
 	public void publishTariff(Observer ob) {
 
-		if(Observer.timeslot == 0) {}									// Start with Cooperation
-		else if(defectCounter == 2) {									// Other agent has defected twice, so defect
-			defectCounter = 0;
-			defectOnRivalPrice(ob);
-		}
-		else if(this.rivalPrevPrevPrice > this.rivalPrevPrice )  		// other agent is defecting but not twice, so coop  
-			defectCounter++;
-		else {}															// Else Coop
-
+		tf2t(ob);
 		
 		/* Tariff Check */
 		tariffCheck(ob);
