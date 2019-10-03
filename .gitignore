@@ -8,6 +8,8 @@ log/*
 *.log
 *.others
 *.xlsx
+*.gbt
+*.nfg
 /target/
 
 # Policy files

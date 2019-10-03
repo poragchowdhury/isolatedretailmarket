@@ -1,3 +1,5 @@
+Naming convention of DQ.pol file : DQ_RoundN_CanidateAgent1_Nominator1_Denominator1_..._CanidateAgentN_NominatorN_DenominatorN.pol
+
 ********************************************************************************************************
 ******************* 14 IPD STRATEGIES FROM LITERATURE: ROUND ROBIN PERFORMANCE *************************
 ********************************************************************************************************
