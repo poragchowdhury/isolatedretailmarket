@@ -1386,8 +1386,8 @@ public class CaseStudy {
 			pool1.add(new Pavlov());
 			pool2.add(new Pavlov());
 			
-			pool1.add(new DQAgentL15());
-			pool2.add(new DQAgentL15());
+			//pool1.add(new DQAgentL15());
+			//pool2.add(new DQAgentL15());
 			
 		}
 		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.DQTraining.getValue()){
