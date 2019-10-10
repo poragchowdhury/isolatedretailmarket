@@ -1,7 +1,3 @@
-/**
- * Author: Jose G. Perez
- * Deep Q-Learning Agent for use in simulations
- */
 package Agents;
 
 import java.io.IOException;
@@ -16,6 +12,10 @@ import org.nd4j.linalg.factory.Nd4j;
 import Observer.Observer;
 import Configuration.Configuration;
 
+/**
+ * Encodes the current state of a Deep Q-Learning Agent
+ * @author Jose G. Perez
+ */
 class DQAgentState implements Encodable {
     public DQAgent agent;
     public int timeSlot;
@@ -33,11 +33,15 @@ class DQAgentState implements Encodable {
     }
 }
 
+/**
+ * Deep Q-Learning Agent for use in simulations
+ * @author Jose G. Perez
+ */
 public class DQAgent extends Agent {
     private DQNPolicy<DQAgentState> pol;
 
-    public DQAgent() {
-        this.name = "DEEPQ";
+    public DQAgent(String policyName) {
+        super("DeepQ_" + policyName);
         try {
             this.pol = DQNPolicy.load(Configuration.DQLEARNING_POLICY_FILENAME);
         } catch (IOException e) {
@@ -47,6 +51,7 @@ public class DQAgent extends Agent {
 
     @Override
     public void publishTariff(Observer ob) {
+        // Feed the current state into the policy's network
         DQAgentState state = new DQAgentState(this);
         INDArray input = Nd4j.create(state.toArray());
         input = input.reshape(Learning.makeShape(1, DQAgentMDP.observationSpace.getShape()));
@@ -58,10 +63,5 @@ public class DQAgent extends Agent {
             increase(ob);
         else // No change
             nochange();
-    }
-    
-    @Override
-    public void tariffCheck(Observer ob) {
-        // Don't print tariff check log
     }
 }

@@ -113,7 +113,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
     @Override
     public DQAgentState reset() {
         retailManager = new RetailMarketManager();
-        agent = new DQAgent();
+        agent = new DQAgent("");
         retailManager.ob.agentPool.add(agent);
         retailManager.ob.agentPool.addAll(opponentPool);
 
