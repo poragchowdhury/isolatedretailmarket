@@ -41,7 +41,7 @@ public class RL extends Agent {
     public int updateQvalue(Observer ob) throws Exception {
         double spa_maxqval = -1.0;
 
-        long cur_ppts = (long) (prevprofit / (double) Observer.timeslot - 1);
+        long cur_ppts = (long) (prevprofit / (double) ob.timeslot - 1);
         if (prevprofit == 0)
             cur_ppts = 0;
         else

@@ -17,7 +17,7 @@ public class HardMajority extends Agent {
         else
             coopCounter++; // other agent is cooperating
 
-        if (Observer.timeslot == 0) // Defect on first timeslot
+        if (ob.timeslot == 0) // Defect on first timeslot
             defect(ob);
         else if (defectCounter >= coopCounter) // defect
             defect(ob);

@@ -1,4 +1,5 @@
 package Agents;
+
 import Observer.Observer;
 
 public class TitForTat extends Agent {
@@ -7,10 +8,10 @@ public class TitForTat extends Agent {
 
     private int defectCounter = 0;
     private int punishCounter = 0;
-    
+
     public TitForTat(int numTitsPerTat, int numTatsPerTit) {
         super(numTitsPerTat + "TF" + numTatsPerTit + "T");
-        
+
         this.numTitsPerTat = numTitsPerTat;
         this.numTatsPerTit = numTatsPerTit;
     }
@@ -18,7 +19,7 @@ public class TitForTat extends Agent {
     @Override
     public void publishTariff(Observer ob) {
         // Coop in the first move
-        if (Observer.timeslot == 0) {
+        if (ob.timeslot == 0) {
             nochange();
 
         } else if (punishCounter > 0) {

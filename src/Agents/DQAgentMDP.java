@@ -22,7 +22,6 @@ import org.json.JSONObject;
 import org.nd4j.linalg.learning.config.Adam;
 
 import Configuration.Configuration;
-import Observer.Observer;
 import RetailMarketManager.RetailMarketManager;
 
 public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
@@ -101,7 +100,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 
     @Override
     public boolean isDone() {
-        return Observer.timeslot >= Configuration.TOTAL_TIME_SLOTS;
+        return retailManager.ob.timeslot >= Configuration.TOTAL_TIME_SLOTS;
     }
 
     @Override
@@ -117,8 +116,8 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
         retailManager.ob.agentPool.add(agent);
         retailManager.ob.agentPool.addAll(opponentPool);
 
-        Observer.timeslot = 0;
-        this.currentState = this.startingState = new DQAgentState(agent);
+        retailManager.ob.timeslot = 0;
+        this.currentState = this.startingState = new DQAgentState(agent, retailManager.ob);
         return startingState;
     }
 
@@ -145,11 +144,11 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
         for (int i = 0; i < Configuration.PUBLICATION_CYCLE + 1; i++) {
             retailManager.customerTariffEvaluation();
             retailManager.updateAgentAccountings();
-            Observer.timeslot++;
+            retailManager.ob.timeslot++;
         }
 
         double reward = agent.profit - agent.prevprofit;
-        DQAgentState nextState = new DQAgentState(agent);
+        DQAgentState nextState = new DQAgentState(agent, retailManager.ob);
 
         JSONObject info = new JSONObject("{}");
         return new StepReply<DQAgentState>(nextState, reward, this.isDone(), info);

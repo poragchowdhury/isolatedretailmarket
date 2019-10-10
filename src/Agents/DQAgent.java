@@ -21,10 +21,10 @@ class DQAgentState implements Encodable {
     public int timeSlot;
     public long ppts;
 
-    public DQAgentState(DQAgent agent) {
+    public DQAgentState(DQAgent agent, Observer ob) {
         this.agent = agent;
-        this.timeSlot = Observer.timeslot;
-        this.ppts = (long) (agent.prevprofit / (double) Observer.timeslot - 1);
+        this.timeSlot = ob.timeslot;
+        this.ppts = (long) (agent.prevprofit / (double) ob.timeslot - 1);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class DQAgent extends Agent {
     @Override
     public void publishTariff(Observer ob) {
         // Feed the current state into the policy's network
-        DQAgentState state = new DQAgentState(this);
+        DQAgentState state = new DQAgentState(this, ob);
         INDArray input = Nd4j.create(state.toArray());
         input = input.reshape(Learning.makeShape(1, DQAgentMDP.observationSpace.getShape()));
 

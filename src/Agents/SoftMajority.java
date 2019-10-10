@@ -17,7 +17,7 @@ public class SoftMajority extends Agent {
         else
             coopCounter++; // other agent is cooperating
 
-        if (Observer.timeslot == 0) {
+        if (ob.timeslot == 0) {
         } // Coop
         else if (coopCounter >= defectCounter) {
         } // Coop

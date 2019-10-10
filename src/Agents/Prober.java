@@ -18,9 +18,9 @@ public class Prober extends Agent {
     @Override
     public void publishTariff(Observer ob) {
 
-        if (Observer.timeslot == 0) // Start with defection
+        if (ob.timeslot == 0) // Start with defection
             defect(ob);
-        else if (Observer.timeslot == 1 || Observer.timeslot == 2) {
+        else if (ob.timeslot == 1 || ob.timeslot == 2) {
         } // Coop
         else if (coopCounter >= 2) // Other agent cooperated twice, so defect
             defect(ob);
