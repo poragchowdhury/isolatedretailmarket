@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Stack;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
@@ -506,6 +507,7 @@ public class RetailMarketManager {
 
     public void startExperiment() throws IOException {
         setupLogging();
+        Scanner input = new Scanner(System.in);
         log.info("*************** Experimental Run Log ***************");
         log.info(Configuration.print());
 
@@ -559,28 +561,36 @@ public class RetailMarketManager {
 
             // ************** Select the strategy for SMNE (either mixed or pure)
             double[] smneProbs;
-            if (nashEqMixed.size() > 0) {
-                smneProbs = nashEqMixed.get(0);
-                log.info("SMNE is picking mixed strategy: " + Arrays.toString(smneProbs));
+            if (Configuration.MANUAL_NASH_EQ_SELECTION) {
+                log.info("[Manual Selection] Please select the desired strategy for SMNE (idx)");
+                int selectedIDX = input.nextInt();
+                input.nextLine(); // Eat the newline created by pressing enter
+                smneProbs = nashEqInitial.get(selectedIDX);
+                log.info("[Manual Selection] Selected " + Arrays.toString(smneProbs));
             } else {
-                // ************** Check if one of the pure strategies is the latest RL strategy
-                if (isRLPureStrat(currentCase, nashEqPure)) {
-                    log.info("RL Pure Strategy is the ==NashEq ==, we need to add a stronger strategy to pool");
+                if (nashEqMixed.size() > 0) {
+                    smneProbs = nashEqMixed.get(0);
+                    log.info("SMNE is picking mixed strategy: " + Arrays.toString(smneProbs));
+                } else {
+                    // ************** Check if one of the pure strategies is the latest RL strategy
+                    if (isRLPureStrat(currentCase, nashEqPure)) {
+                        log.info("RL Pure Strategy is the ==NashEq ==, we need to add a stronger strategy to pool");
 
-                    // ************** Add a strategy from the literature or exit if we have finished
-                    if (litStrategies.empty()) {
-                        log.info("There are no more strategies in the stack, exiting loop");
-                        break;
-                    } else {
-                        Agent newStrat = litStrategies.pop();
-                        log.info("Adding " + newStrat + " to the pool");
-                        currentCase.addP1Strats(newStrat).addP2Strats(newStrat);
-                        continue;
+                        // ************** Add a strategy from the literature or exit if we have finished
+                        if (litStrategies.empty()) {
+                            log.info("There are no more strategies in the stack, exiting loop");
+                            break;
+                        } else {
+                            Agent newStrat = litStrategies.pop();
+                            log.info("Adding " + newStrat + " to the pool");
+                            currentCase.addP1Strats(newStrat).addP2Strats(newStrat);
+                            continue;
+                        }
                     }
-                }
-                smneProbs = nashEqPure.get(0);
-                log.info("SMNE is picking a pure strategy, specifically, the first one");
+                    smneProbs = nashEqPure.get(0);
+                    log.info("SMNE is picking a pure strategy, specifically, the first one");
 
+                }
             }
             // ************** Learn best response against SMNE using DeepQ Agent
             SMNE smne = new SMNE();
@@ -617,7 +627,7 @@ public class RetailMarketManager {
                         dqAgentCount++;
                 }
 
-                if (dqAgentCount >= 2) {
+                if (dqAgentCount >= Configuration.MAX_DQ_AGENTS_ALLOWED) {
                     log.info("We have too many DQAgents, specifically, we have " + dqAgentCount);
                     log.info("Attempting to add a strategy from the literature");
                     if (litStrategies.empty()) {
@@ -637,6 +647,7 @@ public class RetailMarketManager {
         }
 
         log.info("*************** End of Experiment ***************");
+        input.close();
     }
 
     public CaseStudy setupInitialStrategies() {
@@ -855,12 +866,14 @@ public class RetailMarketManager {
             header = header.substring(0, header.length() - 2);
 
             log.info(header);
+            int strategyIDX = 0;
             for (double[] nashEq : nashEqStrategies) {
-                String output = "[";
+                String output = strategyIDX + " [";
                 for (double d : nashEq)
                     output += String.format("%.3f, ", d);
                 output = output.substring(0, output.length() - 2) + "]";
                 log.info(output);
+                strategyIDX++;
             }
 
         } catch (Exception ex) {

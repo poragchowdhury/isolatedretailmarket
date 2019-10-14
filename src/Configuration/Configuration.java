@@ -29,13 +29,14 @@ public class Configuration {
     public static boolean RL_TRAINING = false;
     public static int PPTS_DISCRTZD = 10;
 
-    public static String DQLEARNING_POLICY_FILENAME = "dq.pol";
     public static boolean GET_NASH_EQ = false;
+    public static boolean MANUAL_NASH_EQ_SELECTION = false;
+    public static int MAX_DQ_AGENTS_ALLOWED = 3;
 
     public static String print() {
         return "\n********************Configurations**********************\n" + "TOTAL_TIME_SLOTS : " + TOTAL_TIME_SLOTS + "\n" + "PUBLICATION_CYCLE : " + PUBLICATION_CYCLE + "\n" + "DEFAULT_TARIFF_PRICE : " + DEFAULT_TARIFF_PRICE + "\n" + "CASE_STUDY_NO : " + CASE_STUDY_NO + "\n" + "INERTIA : " + INERTIA + "\n" + "RATIONALITY : " + RATIONALITY + "\n" + "ACT_CHANGE_PERC : " + ACT_CHANGE_PERC + "\n" + "POPULATION : " + POPULATION + "\n" + "LOGFILENAME : " + LOGFILENAME + "\n" + "DAYMULT : "
-                + DAYMULT + "\n" + "DMNDMULT : " + DMNDMULT + "\n" + "INITCOST : " + INITCOST + "\n" + "DLOGGING : " + DLOGGING + "\n" + "ROUND : " + ROUND + "\n" + "LEARNING_RATE : " + LEARNING_RATE + "\n" + "DISCOUNT_FACTOR : " + DISCOUNT_FACTOR + "\n" + "DB_NAME_TRAINING : " + DB_NAME_TRAINING + "\n" + "MAX_TARIFF_PRICE : " + MAX_TARIFF_PRICE + "\n" + "RL_TRAINING : " + RL_TRAINING + "\n" + "PPTS_DISCRTZD : " + PPTS_DISCRTZD + "\n" + "DQLEARNING_POLICY_FILENAME : "
-                + DQLEARNING_POLICY_FILENAME + "\n" + "GET_NASH_EQ : " + GET_NASH_EQ;
+                + DAYMULT + "\n" + "DMNDMULT : " + DMNDMULT + "\n" + "INITCOST : " + INITCOST + "\n" + "DLOGGING : " + DLOGGING + "\n" + "ROUND : " + ROUND + "\n" + "LEARNING_RATE : " + LEARNING_RATE + "\n" + "DISCOUNT_FACTOR : " + DISCOUNT_FACTOR + "\n" + "DB_NAME_TRAINING : " + DB_NAME_TRAINING + "\n" + "MAX_TARIFF_PRICE : " + MAX_TARIFF_PRICE + "\n" + "RL_TRAINING : " + RL_TRAINING + "\n" + "PPTS_DISCRTZD : " + PPTS_DISCRTZD + "\n" + "GET_NASH_EQ : " + GET_NASH_EQ
+                + "MANUAL_NASH_EQ_SELECTION : " + MANUAL_NASH_EQ_SELECTION + "\n" + "MAX_DQ_AGENTS_ALLOWED : " + MAX_DQ_AGENTS_ALLOWED + "\n";
     }
 
     public Configuration() {
@@ -68,8 +69,9 @@ public class Configuration {
             MAX_TARIFF_PRICE = Double.parseDouble(prop.getProperty("maxtariff"));
             RL_TRAINING = Boolean.parseBoolean(prop.getProperty("rl-training"));
             PPTS_DISCRTZD = Integer.parseInt(prop.getProperty("ppts_dscretzd"));
-            DQLEARNING_POLICY_FILENAME = prop.getProperty("dqlearning-policy-filename");
             GET_NASH_EQ = Boolean.parseBoolean(prop.getProperty("get-nash-eq"));
+            MANUAL_NASH_EQ_SELECTION = Boolean.parseBoolean(prop.getProperty("manual-nash-eq-selection"));
+            MAX_DQ_AGENTS_ALLOWED = Integer.parseInt(prop.getProperty("max-dq-agents-allowed"));
             // System.out.println("TOTAL_TIME_SLOTS " + TOTAL_TIME_SLOTS);
             // System.out.println("PUBLICATION_CYCLE " + PUBLICATION_CYCLE);
         } catch (IOException ex) {
