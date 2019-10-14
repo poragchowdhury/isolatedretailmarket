@@ -1,8 +1,13 @@
 package Configuration;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import Agents.Agent;
+import Agents.AlwaysDefect;
+import Agents.AlwaysIncrease;
+import Agents.AlwaysSame;
 
 public class CaseStudy {
     /**
@@ -15,18 +20,45 @@ public class CaseStudy {
      */
     public List<Agent> pool2;
 
-    private void playRound(Agent p1Strat, Agent p2Strat) {
-        // TODO: Run retail market manager
+    public CaseStudy() {
+        pool1 = new ArrayList<>();
+        pool2 = new ArrayList<>();
     }
 
-    /**
-     * Run a two player round robin tournament of this study
-     */
-    public void runRoundRobin() {
+    public CaseStudy addP1Strats(Agent... strats) {
+        pool1.addAll(Arrays.asList(strats));
+        return this;
+    }
 
+    public CaseStudy addP2Strats(Agent... strats) {
+        pool2.addAll(Arrays.asList(strats));
+        return this;
+    }
+
+    private static List<CaseStudy> caseStudies = null;
+
+    public static CaseStudy getFromIndex(int idx) {
+        if (caseStudies == null)
+            initCaseStudies();
+
+        if (idx < 0 || idx >= caseStudies.size()) {
+            System.out.printf("Case Study %s is out of range, there are only %s case studies.\n", idx, caseStudies.size());
+            return null;
+        }
+
+        return caseStudies.get(idx);
     }
 
     public static CaseStudy getFromConfiguration() {
-        return null;
+        int idx = Configuration.CASE_STUDY_NO;
+        return getFromIndex(idx);
+    }
+
+    public static void initCaseStudies() {
+        caseStudies = new ArrayList<>();
+
+        CaseStudy case0 = new CaseStudy().addP1Strats(new AlwaysDefect(), new AlwaysIncrease(), new AlwaysSame());
+        case0.addP2Strats(new AlwaysDefect(), new AlwaysIncrease(), new AlwaysSame());
+        caseStudies.add(0, case0);
     }
 }

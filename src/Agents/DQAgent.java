@@ -17,11 +17,11 @@ import Configuration.Configuration;
  * @author Jose G. Perez
  */
 class DQAgentState implements Encodable {
-    public DQAgent agent;
+    public Agent agent;
     public int timeSlot;
     public long ppts;
 
-    public DQAgentState(DQAgent agent, Observer ob) {
+    public DQAgentState(Agent agent, Observer ob) {
         this.agent = agent;
         this.timeSlot = ob.timeslot;
         this.ppts = (long) (agent.prevprofit / (double) ob.timeslot - 1);
@@ -43,10 +43,14 @@ public class DQAgent extends Agent {
     public DQAgent(String policyName) {
         super("DeepQ_" + policyName);
         try {
-            this.pol = DQNPolicy.load(Configuration.DQLEARNING_POLICY_FILENAME);
+            this.pol = DQNPolicy.load(policyName);
         } catch (IOException e) {
-            Logger.getAnonymousLogger().info("{DQAgent.Constructor} Couldn't load DQN policy from file " + Configuration.DQLEARNING_POLICY_FILENAME);
+            Logger.getAnonymousLogger().info("{DQAgent.Constructor} Couldn't load DQN policy from file: " + policyName);
         }
+    }
+
+    public DQAgent() {
+        super("DeepQ_Training");
     }
 
     @Override

@@ -7,8 +7,29 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Stack;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
 import Agents.Agent;
+import Agents.AlwaysDefect;
+import Agents.AlwaysIncrease;
+import Agents.AlwaysSame;
+import Agents.DQAgent;
+import Agents.DQAgentMDP;
+import Agents.Grim;
+import Agents.HardMajority;
+import Agents.NaiveProber;
+import Agents.Pavlov;
+import Agents.Prober;
+import Agents.Rand;
+import Agents.SMNE;
+import Agents.SoftMajority;
+import Agents.TitForTat;
 import Configuration.CaseStudy;
 import Configuration.Configuration;
 import Observer.Observer;
@@ -17,9 +38,14 @@ class Payoffs {
     public double value1;
     public double value2;
 
-    Payoffs(double val1, double val2) {
+    public Payoffs(double val1, double val2) {
         value1 = val1;
         value2 = val2;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[%.3f, %.3f]", value1, value2);
     }
 }
 
@@ -439,11 +465,354 @@ public class RetailMarketManager {
          */
     }
 
-    public static void main(String[] args) {
+    private Logger log = Logger.getLogger("rmm.experiment");
+    private int lastRLIDX = 0;
 
-        System.out.println("Isolated Retail Market Simulation");
+    /**
+     * Converts a string of the form a/b (fraction) into a double
+     * @param fString String to convert
+     * @return double representing a/b
+     */
+    public double parseFractionString(String fString) {
+        try {
+            // Try to parse it regularly first, it might not be a fraction after all
+            return Double.parseDouble(fString);
+        } catch (NumberFormatException ex) {
+            String[] split = fString.split("/");
+            double numerator = Double.parseDouble(split[0]);
+            double denominator = Double.parseDouble(split[1]);
+            return numerator / denominator;
+        }
+    }
+
+    /**
+     * Sets up the logger for this experiment
+     * This allows me to print to the console AND save to a file at the same time
+     * as well as define different logging levels
+     */
+    public void setupLogging() throws IOException {
+        System.setProperty("java.util.logging.SimpleFormatter.format", "%1$tF %1$tT %4$s %2$s %5$s%6$s%n");
+        FileHandler fh = new FileHandler("experiment.log");
+        SimpleFormatter formatter = new SimpleFormatter();
+
+        fh.setFormatter(formatter);
+        log.addHandler(fh);
+    }
+
+    public void startExperiment() throws IOException {
+        setupLogging();
+        log.info("*************** Experimental Run Log ***************");
+        log.info(Configuration.print());
+
+        Stack<Agent> litStrategies = getLiteratureStrategies();
+
+        CaseStudy currentCase = setupInitialStrategies();
+        int iterations = 0;
+        while (true) {
+            iterations++;
+            log.info("Iteration " + iterations);
+
+            // ************** Run games to populate matrices for
+            log.info("Starting game round");
+            startSimulation(currentCase);
+
+            // ************** Compute nash equilibrium strategies
+            log.info("Getting nash equilibrium strategies");
+            List<double[]> nashEqInitial = computeNashEq(currentCase);
+            List<double[]> nashEqPure = getPureStrategies(nashEqInitial);
+            List<double[]> nashEqMixed = getMixedStrategies(nashEqInitial);
+
+            // *** Remove strategies with zeros on columns from both pools
+            for (int col = 0; col < nashEqInitial.get(0).length; col++) {
+                boolean allZero = true;
+                for (double[] nashEq : nashEqInitial) {
+                    double currNumber = nashEq[col];
+                    if (currNumber != 0.0)
+                        allZero = false;
+                }
+
+                if (allZero) {
+                    log.info("Strategy #" + col + " was deemed to be removed from the pools. Its name is " + currentCase.pool1.get(col));
+                    currentCase.pool1.remove(col);
+                    currentCase.pool2.remove(col);
+                }
+            }
+
+            // ************** Select the strategy for SMNE (either mixed or pure)
+            double[] smneProbs;
+            if (nashEqMixed.size() > 0) {
+                smneProbs = nashEqMixed.get(0);
+                log.info("SMNE is picking a mixed strategy");
+            } else {
+                // ************** Check if one of the pure strategies is the latest RL strategy
+                if (isRLPureStrat(nashEqPure)) {
+                    log.info("SMNE ==NE== RL, adding a stronger strategy to pool");
+                    if (litStrategies.empty()) {
+                        log.info("There are no more strategies in the stack, exiting loop");
+                        break;
+                    } else {
+                        Agent newStrat = litStrategies.pop();
+                        log.info("Adding " + newStrat + " to the pool");
+                        currentCase.addP1Strats(newStrat).addP2Strats(newStrat);
+                        continue;
+                    }
+                }
+                smneProbs = nashEqPure.get(0);
+                log.info("SMNE is picking a pure strategy, specifically, the first one");
+
+            }
+            // ************** Learn best response against SMNE using DeepQ Agent
+            SMNE smne = new SMNE();
+            for (int idx = 0; idx < currentCase.pool1.size(); idx++) {
+                double prob = smneProbs[idx];
+                Agent strat = currentCase.pool1.get(idx);
+                smne.addStrategy(prob, strat);
+            }
+            log.info("SMNE Name: " + smne.name);
+
+            // Train DQAgent against SMNE
+            List<Agent> opponentPool = new ArrayList<>();
+            opponentPool.add(smne);
+            DQAgentMDP.trainDQAgent(opponentPool, smne.name + ".pol");
+            DQAgent dqAgent = new DQAgent(smne.name + ".pol");
+
+            // ************** Run test games of SMNE vs RL
+            log.info("Running test game");
+            CaseStudy testGame = new CaseStudy().addP1Strats(smne).addP2Strats(dqAgent);
+            startSimulation(testGame);
+
+            // ************** Does RL have a higher payoff than SMNE?
+            log.info("SMNE Profit: " + smne.profit + ", DQAgent profit: " + dqAgent.profit);
+            if (dqAgent.profit > smne.profit) {
+                log.info("DQAgent profit > SMNE profit, adding to the pool");
+                currentCase.addP1Strats(dqAgent).addP2Strats(dqAgent);
+                lastRLIDX = currentCase.pool1.size() - 1;
+            } else {
+                log.info("DQAgent could not beat SMNE, stopping experiment");
+                break;
+            }
+        }
+
+        log.info("*************** End of Experiment ***************");
+    }
+
+    public CaseStudy setupInitialStrategies() {
+        log.info("=== Setting up initial pools ===");
+        CaseStudy initial = new CaseStudy().addP1Strats(new AlwaysDefect(), new AlwaysIncrease(), new AlwaysSame());
+        initial.addP2Strats(new AlwaysDefect(), new AlwaysIncrease(), new AlwaysSame());
+        log.info("Pool1: " + initial.pool1.toString());
+        log.info("Pool2: " + initial.pool2.toString());
+        return initial;
+    }
+
+    public Stack<Agent> getLiteratureStrategies() {
+        Stack<Agent> literatureStrategies = new Stack<>();
+        TitForTat TFT = new TitForTat(1, 1);
+        TitForTat TF2T = new TitForTat(1, 2);
+        TitForTat _2TFT = new TitForTat(2, 1);
+        TitForTat TFTV2 = new TitForTat(1, 1);
+        TFTV2.isV2 = true;
+
+        literatureStrategies.add(new HardMajority());
+        literatureStrategies.add(TFTV2);
+        literatureStrategies.add(_2TFT);
+        literatureStrategies.add(TFT);
+        literatureStrategies.add(TF2T);
+        literatureStrategies.add(new Rand());
+        literatureStrategies.add(new Grim());
+        literatureStrategies.add(new SoftMajority());
+        literatureStrategies.add(new Pavlov());
+        literatureStrategies.add(new Prober());
+        literatureStrategies.add(new NaiveProber());
+
+        return literatureStrategies;
+    }
+
+    public void startSimulation(CaseStudy cs) {
+        double rationality[] = { 0.8 };
+        double inertia[] = { 0.8 };
+        double imax = 1;
+        double rmax = 1;
+        double roundmax = Configuration.ROUND;
+        rmax = rationality.length;
+        imax = inertia.length;
+        roundmax = Configuration.ROUND;
+        // Round Robin Tournament Set Up
+        for (int iagent = 0; iagent < cs.pool1.size(); iagent++) {
+            for (int kagent = iagent; kagent < cs.pool2.size(); kagent++) {
+                for (int iindex = 0; iindex < imax; iindex++) {
+                    for (int rindex = 0; rindex < rmax; rindex++) {
+                        for (int round = 0; round < roundmax; round++) {
+                            cs.pool1.get(iagent).reset();
+                            cs.pool2.get(kagent).reset();
+
+                            ob.agentPool.add(cs.pool1.get(iagent));
+                            ob.agentPool.add(cs.pool2.get(kagent));
+
+                            for (ob.timeslot = 0; ob.timeslot < Configuration.TOTAL_TIME_SLOTS;) {
+                                // log() function
+                                double tariff0 = (double) Math.round(ob.agentPool.get(0).tariffPrice * 10000) / 10000;
+                                double tariff1 = (double) Math.round(ob.agentPool.get(1).tariffPrice * 10000) / 10000;
+
+                                ob.utility[0] = (double) Math.round(ob.utility[0] * 1000) / 1000;
+                                ob.utility[1] = (double) Math.round(ob.utility[1] * 1000) / 1000;
+
+                                ob.money[0] = (double) Math.round(ob.money[0] * 100) / 100;
+                                ob.money[1] = (double) Math.round(ob.money[1] * 100) / 100;
+
+                                ob.cost[0] = (double) Math.round(ob.cost[0] * 100) / 100;
+                                ob.cost[1] = (double) Math.round(ob.cost[1] * 100) / 100;
+
+                                ob.unitcost = (double) Math.round(ob.unitcost * 100) / 100;
+
+                                ob.agentPool.get(0).revenue = (double) Math.round(ob.agentPool.get(0).revenue * 100) / 100;
+                                ob.agentPool.get(1).revenue = (double) Math.round(ob.agentPool.get(1).revenue * 100) / 100;
+                                ob.agentPool.get(0).profit = (double) Math.round(ob.agentPool.get(0).profit * 100) / 100;
+                                ob.agentPool.get(1).profit = (double) Math.round(ob.agentPool.get(1).profit * 100) / 100;
+
+                                // Agents taking Actions
+                                if (ob.timeslot % Configuration.PUBLICATION_CYCLE == 0) {
+                                    publishTariffs();
+                                    ob.publication_cycle_count++;
+                                }
+                                // Customers evaluating tariffs
+                                customerTariffEvaluation();
+                                // Update agent bank accountings
+                                updateAgentAccountings();
+                                // Going to next timeslot and updating the cost
+                                ob.timeslot++;
+                                ob.calcCost();
+                            }
+                            // printRevenues() function
+                            int agentid = 0;
+                            for (Agent a : ob.agentPool) {
+                                ob.agentPayoffs[agentid][round] = a.profit;
+                                agentid++;
+                            }
+                            // clear the observer for another simulation set up
+                            ob.clear();
+                        }
+                        // printAverageRevenues() function
+                        double[] vals = ob.calcAvg(cs);
+                        if (iagent != kagent) {
+                            gameMatrix[iagent][kagent] = new Payoffs(vals[0], vals[1]);
+                            gameMatrix[kagent][iagent] = new Payoffs(vals[1], vals[0]);
+                        } else {
+                            double avgVal = (vals[0] + vals[1]) / 2;
+                            gameMatrix[iagent][kagent] = new Payoffs(avgVal, avgVal);
+                        }
+
+                        if (largestValue < vals[0])
+                            largestValue = vals[0];
+                        if (largestValue < vals[1])
+                            largestValue = vals[1];
+                        ob.allsampleclear();
+                    }
+                }
+            }
+        }
+    }
+
+    public List<double[]> getPureStrategies(List<double[]> nashStrats) {
+        List<double[]> result = new ArrayList<>();
+        for (double[] strat : nashStrats) {
+            boolean isPure = false;
+            for (double n : strat)
+                isPure = (n % 1 == 0);
+
+            if (isPure)
+                result.add(strat);
+        }
+        return result;
+    }
+
+    public List<double[]> getMixedStrategies(List<double[]> nashStrats) {
+        List<double[]> result = new ArrayList<>();
+        for (double[] strat : nashStrats) {
+            boolean isPure = false;
+            for (double n : strat)
+                isPure = (n % 1 == 0);
+
+            if (!isPure)
+                result.add(strat);
+        }
+        return result;
+    }
+
+    public boolean isRLPureStrat(List<double[]> pureStrats) {
+        // The latest strategy added will always be the newest RL strategy
+        // Therefore if we find a pure strategy with a one at the end, it corresponds to a pure RL strategy
+        for (double[] pureStrat : pureStrats) {
+            if (pureStrat[lastRLIDX] == 1.0d) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<double[]> computeNashEq(CaseStudy cs) {
+        List<double[]> nashEqStrategies = new ArrayList<>();
+        try {
+            // Compute game matrix
+            for (int i = 0; i < cs.pool1.size(); i++) {
+                for (int k = 0; k < cs.pool2.size(); k++) {
+                    gameMatrix[i][k].value1 = Math.round(gameMatrix[i][k].value1 / largestValue * 100);
+                    gameMatrix[i][k].value2 = Math.round(gameMatrix[i][k].value2 / largestValue * 100);
+                }
+            }
+
+            // Create gambit file
+            FileWriter fw = new FileWriter("Gambit.nfg");
+            PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
+            pw.println("NFG 1 R \"IPD NFG\" { \"Player 1\" \"Player 2\" } " + "{ " + cs.pool1.size() + " " + cs.pool2.size() + " }");
+            for (int k = 0; k < cs.pool1.size(); k++)
+                for (int i = 0; i < cs.pool2.size(); i++)
+                    pw.print(gameMatrix[i][k].value1 + " " + gameMatrix[i][k].value2 + " ");
+            pw.close();
+            fw.close();
+
+            // Send file to command-line tool
+            Process process = new ProcessBuilder("gambit-enummixed.exe", "Gambit.nfg", "-q").start();
+            process.waitFor();
+            InputStream is = process.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+            String line;
+            log.info("[computeNashEq]Count" + "\t\t\t");
+            pw.print("Count" + ",");
+            for (int i = 0; i < cs.pool1.size(); i++) {// Up to no of strategies
+                log.info("[computeNashEq]" + cs.pool1.get(i).name + "\t\t\t");
+                pw.print(cs.pool1.get(i).name + ",");
+            }
+            log.info("\n");
+            pw.println();
+
+            while ((line = br.readLine()) != null) {
+                String[] nashEqRaw = line.split(",");
+                // String nashEqName = nashEqRaw[0];
+
+                double[] nashEqStrategy = new double[cs.pool1.size()];
+                for (int i = 1; i <= cs.pool1.size(); i++) {
+                    double n = parseFractionString(nashEqRaw[i]);
+                    nashEqStrategy[i - 1] = n;
+                }
+
+                nashEqStrategies.add(nashEqStrategy);
+            }
+            log.info("== Nash Eq Strategies ==");
+            for (double[] nashEq : nashEqStrategies)
+                log.info(Arrays.toString(nashEq));
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return nashEqStrategies;
+    }
+
+    public static void main(String[] args) throws IOException {
         RetailMarketManager rm = new RetailMarketManager();
-        rm.startSimulationV2();
+        rm.startExperiment();
+        // rm.startSimulationV2();
     }
 
 }

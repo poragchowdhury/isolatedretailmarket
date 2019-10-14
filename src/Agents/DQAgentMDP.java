@@ -63,7 +63,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
         this.reset();
     }
 
-    public static void trainDQAgent(List<Agent> opponentPool) {
+    public static void trainDQAgent(List<Agent> opponentPool, String policyFilename) {
         log("Setting up DeepQ training");
         DQAgentMDP mdp = new DQAgentMDP(opponentPool);
         try {
@@ -76,7 +76,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
             DQNPolicy<DQAgentState> pol = dql.getPolicy();
 
             log("Saving DeepQ policy");
-            pol.save(Configuration.DQLEARNING_POLICY_FILENAME);
+            pol.save(policyFilename);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -112,7 +112,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
     @Override
     public DQAgentState reset() {
         retailManager = new RetailMarketManager();
-        agent = new DQAgent("");
+        agent = new DQAgent();
         retailManager.ob.agentPool.add(agent);
         retailManager.ob.agentPool.addAll(opponentPool);
 

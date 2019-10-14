@@ -109,4 +109,9 @@ public abstract class Agent {
         // else
         // System.out.println(ob.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

@@ -3,6 +3,7 @@ package Agents;
 import Observer.Observer;
 
 public class TitForTat extends Agent {
+    public boolean isV2 = false;
     public int numTitsPerTat = 1;
     public int numTatsPerTit = 1;
 
@@ -10,8 +11,12 @@ public class TitForTat extends Agent {
     private int punishCounter = 0;
 
     public TitForTat(int numTitsPerTat, int numTatsPerTit) {
-        super(numTitsPerTat + "TF" + numTatsPerTit + "T");
+        super("temp");
+        String tempName = numTitsPerTat + "TF" + numTatsPerTit + "T";
+        if (isV2)
+            tempName += "V2";
 
+        this.name = tempName;
         this.numTitsPerTat = numTitsPerTat;
         this.numTatsPerTit = numTatsPerTit;
     }
@@ -32,7 +37,10 @@ public class TitForTat extends Agent {
         }
         // other agent is defecting, so defect
         else if (this.rivalPrevPrevPrice > this.rivalPrevPrice) {
-            defect(ob);
+            if (isV2)
+                defectOnRivalPrice(ob);
+            else
+                defect(ob);
             defectCounter++;
         }
     }

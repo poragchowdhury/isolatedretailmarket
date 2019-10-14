@@ -104,8 +104,8 @@ public class Observer {
         double error2 = 1.96 * (stdagent2 / Math.sqrt(Configuration.ROUND));
 
         // print avg payoff with error
-        if (Configuration.CASE_STUDY_NO > 0)
-            System.out.println(cs.pool1.get(0).name + ":" + avgagent1 + " err: " + error1 + cs.pool2.get(0).name + ":" + avgagent2 + " err2: " + error2);
+        // if (Configuration.CASE_STUDY_NO > 0)
+        //    System.out.println(cs.pool1.get(0).name + ":" + avgagent1 + " err: " + error1 + cs.pool2.get(0).name + ":" + avgagent2 + " err2: " + error2);
         return new double[] { avgagent1, avgagent2, error1, error2 };
     }
 
