@@ -20,3 +20,11 @@ log/*
 
 # Eclipse build paths
 .classpath
+
+# Lock files and logs
+*.lck
+*.log
+
+# Gambit files
+*.nfg
+*.gbt
