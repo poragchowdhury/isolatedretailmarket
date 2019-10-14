@@ -37,19 +37,30 @@ class DQAgentState implements Encodable {
  * @author Jose G. Perez
  */
 public class DQAgent extends Agent {
+    private static int CURRENT_AGENT_COUNT = 0;
     private DQNPolicy<DQAgentState> pol;
+    public int agentNumber = -1;
 
     public DQAgent(String policyName) {
-        super("DeepQ_" + policyName);
+        super("DeepQ_Default");
         try {
             this.pol = DQNPolicy.load(policyName);
         } catch (IOException e) {
             Logger.getAnonymousLogger().info("{DQAgent.Constructor} Couldn't load DQN policy from file: " + policyName);
         }
+        // Only number testing agents, not the ones used for training
+        this.agentNumber = CURRENT_AGENT_COUNT;
+        CURRENT_AGENT_COUNT++;
+        
+        this.name = "DQAgent" + this.agentNumber + "_" + policyName.substring(0, policyName.length() - 4);
     }
 
     public DQAgent() {
         super("DeepQ_Training");
+    }
+
+    public String getSimpleName() {
+        return "DQAgent" + this.agentNumber;
     }
 
     @Override

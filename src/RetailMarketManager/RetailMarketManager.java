@@ -617,7 +617,7 @@ public class RetailMarketManager {
                         dqAgentCount++;
                 }
 
-                if (dqAgentCount >= 4) {
+                if (dqAgentCount >= 2) {
                     log.info("We have too many DQAgents, specifically, we have " + dqAgentCount);
                     log.info("Attempting to add a strategy from the literature");
                     if (litStrategies.empty()) {
@@ -795,7 +795,6 @@ public class RetailMarketManager {
      */
     public boolean isRLPureStrat(CaseStudy cs, List<double[]> pureStrats) {
         int lastRLIndex = cs.pool1.indexOf(lastRLAgent);
-        log.info("LASTRLINDEX: " + lastRLIndex + ":" + cs.pool1.get(lastRLIndex));
         for (double[] pureStrat : pureStrats) {
             if (pureStrat[lastRLIndex] == 1.0d) {
                 return true;
@@ -847,8 +846,12 @@ public class RetailMarketManager {
             }
             log.info("== Nash Eq Strategies ==");
             String header = "";
-            for (Agent agent : cs.pool1)
-                header += agent.name + ", ";
+            for (Agent agent : cs.pool1) {
+                if (agent instanceof DQAgent)
+                    header += ((DQAgent) agent).getSimpleName() + ", ";
+                else
+                    header += agent.name + ", ";
+            }
             header = header.substring(0, header.length() - 2);
 
             log.info(header);
