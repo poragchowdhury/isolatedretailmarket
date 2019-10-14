@@ -774,7 +774,7 @@ public class RetailMarketManager {
             fw.close();
 
             // Send file to command-line tool
-            Process process = new ProcessBuilder("gambit-enummixed.exe", "Gambit.nfg", "-q").start();
+            Process process = new ProcessBuilder("gambit-enummixed", "Gambit.nfg", "-q").start();
             process.waitFor();
             InputStream is = process.getInputStream();
             InputStreamReader isr = new InputStreamReader(is);
