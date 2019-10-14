@@ -15,6 +15,17 @@
           <target>1.8</target>
         </configuration>
       </plugin>
+      
+      <plugin>
+  		<groupId>org.codehaus.mojo</groupId>
+  		<artifactId>exec-maven-plugin</artifactId>
+  		<version>1.4.0</version>
+  		<configuration>
+    	<mainClass>RetailMarketManager.RetailMarketManager</mainClass>
+  		</configuration>
+	  </plugin>
+      
+      
     </plugins>
   </build>
   
