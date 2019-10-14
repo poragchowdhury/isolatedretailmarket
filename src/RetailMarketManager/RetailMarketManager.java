@@ -467,6 +467,7 @@ public class RetailMarketManager {
 
     private Logger log = Logger.getLogger("rmm.experiment");
     private int lastRLIDX = 0;
+    private int currentDQAgentCount = 0;
 
     /**
      * Converts a string of the form a/b (fraction) into a double
@@ -510,7 +511,7 @@ public class RetailMarketManager {
         int iterations = 0;
         while (true) {
             iterations++;
-            log.info("*************** Iteration " + iterations);
+            log.info("****************************** Iteration " + iterations + "******************************");
 
             // ************** Run games to populate matrices for
             log.info("Starting game round");
@@ -533,9 +534,12 @@ public class RetailMarketManager {
                 }
 
                 if (allZero) {
-                    log.info("Strategy #" + col + " was deemed to be removed from the pools. Its name is " + currentCase.pool1.get(col));
-                    currentCase.pool1.remove(col);
-                    currentCase.pool2.remove(col);
+                    Agent stratToRemove = currentCase.pool1.get(col);
+                    log.info("Strategy: " + stratToRemove + " was deemed to be removed from the pools");
+                    currentCase.pool1.remove(stratToRemove);
+                    currentCase.pool2.remove(stratToRemove);
+                    log.info("New Pool1 Agents: " + currentCase.pool1.toString());
+                    log.info("New Pool2 Agents: " + currentCase.pool2.toString());
                 }
             }
 
@@ -574,8 +578,10 @@ public class RetailMarketManager {
             // Train DQAgent against SMNE
             List<Agent> opponentPool = new ArrayList<>();
             opponentPool.add(smne);
-            DQAgentMDP.trainDQAgent(opponentPool, smne.name + ".pol");
-            DQAgent dqAgent = new DQAgent(smne.name + ".pol");
+            String dqFilename = smne.name + currentDQAgentCount + ".pol";
+            DQAgentMDP.trainDQAgent(opponentPool, dqFilename);
+            DQAgent dqAgent = new DQAgent(dqFilename);
+            currentDQAgentCount++;
 
             // ************** Run test games of SMNE vs RL
             log.info("Running test game");

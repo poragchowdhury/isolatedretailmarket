@@ -114,4 +114,15 @@ public abstract class Agent {
     public String toString() {
         return this.name;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Agent){
+            Agent other = (Agent)obj;
+            return other.name.equals(this.name);
+        }
+        return super.equals(obj);
+    }
+    
+    
 }
