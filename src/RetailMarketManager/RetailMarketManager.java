@@ -510,10 +510,11 @@ public class RetailMarketManager {
         int iterations = 0;
         while (true) {
             iterations++;
-            log.info("Iteration " + iterations);
+            log.info("*************** Iteration " + iterations);
 
             // ************** Run games to populate matrices for
             log.info("Starting game round");
+            log.info("Pool Agents: " + currentCase.pool1.toString());
             startSimulation(currentCase);
 
             // ************** Compute nash equilibrium strategies
@@ -651,9 +652,6 @@ public class RetailMarketManager {
 
                             for (ob.timeslot = 0; ob.timeslot < Configuration.TOTAL_TIME_SLOTS;) {
                                 // log() function
-                                double tariff0 = (double) Math.round(ob.agentPool.get(0).tariffPrice * 10000) / 10000;
-                                double tariff1 = (double) Math.round(ob.agentPool.get(1).tariffPrice * 10000) / 10000;
-
                                 ob.utility[0] = (double) Math.round(ob.utility[0] * 1000) / 1000;
                                 ob.utility[1] = (double) Math.round(ob.utility[1] * 1000) / 1000;
 
@@ -739,9 +737,13 @@ public class RetailMarketManager {
         return result;
     }
 
+    /**
+     * Determines if there is a pure strategy where the RL agent is dominating
+     * (zero in all other columns)
+     * @param pureStrats
+     * @return
+     */
     public boolean isRLPureStrat(List<double[]> pureStrats) {
-        // The latest strategy added will always be the newest RL strategy
-        // Therefore if we find a pure strategy with a one at the end, it corresponds to a pure RL strategy
         for (double[] pureStrat : pureStrats) {
             if (pureStrat[lastRLIDX] == 1.0d) {
                 return true;
@@ -778,14 +780,6 @@ public class RetailMarketManager {
             InputStreamReader isr = new InputStreamReader(is);
             BufferedReader br = new BufferedReader(isr);
             String line;
-            log.info("[computeNashEq]Count" + "\t\t\t");
-            pw.print("Count" + ",");
-            for (int i = 0; i < cs.pool1.size(); i++) {// Up to no of strategies
-                log.info("[computeNashEq]" + cs.pool1.get(i).name + "\t\t\t");
-                pw.print(cs.pool1.get(i).name + ",");
-            }
-            log.info("\n");
-            pw.println();
 
             while ((line = br.readLine()) != null) {
                 String[] nashEqRaw = line.split(",");
@@ -800,8 +794,19 @@ public class RetailMarketManager {
                 nashEqStrategies.add(nashEqStrategy);
             }
             log.info("== Nash Eq Strategies ==");
-            for (double[] nashEq : nashEqStrategies)
-                log.info(Arrays.toString(nashEq));
+            String header = "";
+            for (Agent agent : cs.pool1)
+                header += agent.name + ", ";
+            header = header.substring(0, header.length()-2);
+
+            log.info(header);
+            for (double[] nashEq : nashEqStrategies) {
+                String output = "[";
+                for (double d : nashEq)
+                    output += String.format("%.3f, ", d);
+                output = output.substring(0, output.length()-2) + "]";
+                log.info(output);
+            }
 
         } catch (Exception ex) {
             ex.printStackTrace();
