@@ -817,7 +817,7 @@ public class RetailMarketManager {
     public List<double[]> computeNashEq(CaseStudy cs) {
         List<double[]> nashEqStrategies = new ArrayList<>();
         try {
-            // Compute game matrix
+            log.info("Computing game matrix");
             for (int i = 0; i < cs.pool1.size(); i++) {
                 for (int k = 0; k < cs.pool2.size(); k++) {
                     gameMatrix[i][k].value1 = Math.round(gameMatrix[i][k].value1 / largestValue * 100);
@@ -826,6 +826,7 @@ public class RetailMarketManager {
             }
 
             // Create gambit file
+            log.info("Creating Gambit file");
             FileWriter fw = new FileWriter("Gambit.nfg");
             PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
             pw.println("NFG 1 R \"IPD NFG\" { \"Player 1\" \"Player 2\" } " + "{ " + cs.pool1.size() + " " + cs.pool2.size() + " }");
@@ -835,15 +836,15 @@ public class RetailMarketManager {
             pw.close();
             fw.close();
 
-            // Send file to command-line tool
-            Process process = new ProcessBuilder("gambit-enummixed", "Gambit.nfg", "-q").start();
-            process.waitFor();
-            InputStream is = process.getInputStream();
-            InputStreamReader isr = new InputStreamReader(is);
-            BufferedReader br = new BufferedReader(isr);
+            log.info("Sending file to command-line tool");
+            ProcessBuilder pb = new ProcessBuilder("gambit-enummixed", "Gambit.nfg", "-q");
+            pb.redirectErrorStream(true);
+            Process process = pb.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
 
-            while ((line = br.readLine()) != null) {
+            log.info("Reading from command-line output");
+            while ((line = reader.readLine()) != null) {
                 String[] nashEqRaw = line.split(",");
                 // String nashEqName = nashEqRaw[0];
 
@@ -855,6 +856,7 @@ public class RetailMarketManager {
 
                 nashEqStrategies.add(nashEqStrategy);
             }
+            process.waitFor();
             log.info("== Nash Eq Strategies ==");
             String header = "";
             for (Agent agent : cs.pool1) {
