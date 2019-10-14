@@ -11,6 +11,7 @@ import java.util.Random;
 import Observer.Observer;
 
 public class SMNE extends Agent {
+    private static int CURRENT_COUNT = 0;
     private List<Double> strategyProbs;
     private List<Agent> agents;
     private Random rand;
@@ -21,6 +22,7 @@ public class SMNE extends Agent {
         strategyProbs = new ArrayList<Double>();
         agents = new ArrayList<Agent>();
         rand = new Random(System.currentTimeMillis());
+        CURRENT_COUNT++;
     }
 
     public void addStrategy(double probability, Agent strategy) {
@@ -32,7 +34,7 @@ public class SMNE extends Agent {
     }
 
     private String generateName() {
-        String tempName = "SMNE";
+        String tempName = CURRENT_COUNT + "_";
         for (int i = 0; i < agents.size(); i++) {
             double prob = strategyProbs.get(i);
             Agent strategy = agents.get(i);

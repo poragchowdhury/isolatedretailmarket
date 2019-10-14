@@ -466,8 +466,12 @@ public class RetailMarketManager {
     }
 
     private Logger log = Logger.getLogger("rmm.experiment");
-    private int lastRLIDX = 0;
-    private int currentDQAgentCount = 0;
+
+    /**
+     * The last RL agent added to the pools. Required to check if the
+     * current pure strategy is just playing the last RL agent created
+     */
+    private Agent lastRLAgent;
 
     /**
      * Converts a string of the form a/b (fraction) into a double
@@ -508,14 +512,26 @@ public class RetailMarketManager {
         Stack<Agent> litStrategies = getLiteratureStrategies();
 
         CaseStudy currentCase = setupInitialStrategies();
+        List<Agent> strategiesToRemove = new ArrayList<>();
         int iterations = 0;
         while (true) {
             iterations++;
-            log.info("****************************** Iteration " + iterations + "******************************");
+            log.info("****************************** Iteration " + iterations);
+
+            // ************** Check if we need to remove strategies from last round
+            if (strategiesToRemove.size() > 0) {
+                for (Agent stratToRemove : strategiesToRemove) {
+                    log.info("Removing " + stratToRemove + " as determined by the last iteration");
+                    currentCase.pool1.remove(stratToRemove);
+                    currentCase.pool2.remove(stratToRemove);
+                }
+                strategiesToRemove.clear();
+            }
 
             // ************** Run games to populate matrices for
+            log.info("Pool1 Agents: " + currentCase.pool1.toString());
+            log.info("Pool2 Agents: " + currentCase.pool2.toString());
             log.info("Starting game round");
-            log.info("Pool Agents: " + currentCase.pool1.toString());
             startSimulation(currentCase);
 
             // ************** Compute nash equilibrium strategies
@@ -524,7 +540,7 @@ public class RetailMarketManager {
             List<double[]> nashEqPure = getPureStrategies(nashEqInitial);
             List<double[]> nashEqMixed = getMixedStrategies(nashEqInitial);
 
-            // *** Remove strategies with zeros on columns from both pools
+            // ************** Strategies with zeros on columns from both pools will be removed in the next iteration
             for (int col = 0; col < nashEqInitial.get(0).length; col++) {
                 boolean allZero = true;
                 for (double[] nashEq : nashEqInitial) {
@@ -534,24 +550,24 @@ public class RetailMarketManager {
                 }
 
                 if (allZero) {
-                    Agent stratToRemove = currentCase.pool1.get(col);
-                    log.info("Strategy: " + stratToRemove + " was deemed to be removed from the pools");
-                    currentCase.pool1.remove(stratToRemove);
-                    currentCase.pool2.remove(stratToRemove);
-                    log.info("New Pool1 Agents: " + currentCase.pool1.toString());
-                    log.info("New Pool2 Agents: " + currentCase.pool2.toString());
+                    Agent agentToRemove = currentCase.pool1.get(col);
+                    log.info(agentToRemove + " will be removed next iteration from the pools");
+                    strategiesToRemove.add(agentToRemove);
                 }
+
             }
 
             // ************** Select the strategy for SMNE (either mixed or pure)
             double[] smneProbs;
             if (nashEqMixed.size() > 0) {
                 smneProbs = nashEqMixed.get(0);
-                log.info("SMNE is picking a mixed strategy");
+                log.info("SMNE is picking mixed strategy: " + Arrays.toString(smneProbs));
             } else {
                 // ************** Check if one of the pure strategies is the latest RL strategy
-                if (isRLPureStrat(nashEqPure)) {
-                    log.info("SMNE ==NE== RL, adding a stronger strategy to pool");
+                if (isRLPureStrat(currentCase, nashEqPure)) {
+                    log.info("RL Pure Strategy is the ==NashEq ==, we need to add a stronger strategy to pool");
+
+                    // ************** Add a strategy from the literature or exit if we have finished
                     if (litStrategies.empty()) {
                         log.info("There are no more strategies in the stack, exiting loop");
                         break;
@@ -573,27 +589,47 @@ public class RetailMarketManager {
                 Agent strat = currentCase.pool1.get(idx);
                 smne.addStrategy(prob, strat);
             }
-            log.info("SMNE Name: " + smne.name);
 
             // Train DQAgent against SMNE
             List<Agent> opponentPool = new ArrayList<>();
             opponentPool.add(smne);
-            String dqFilename = smne.name + currentDQAgentCount + ".pol";
+            String dqFilename = smne.name + ".pol";
             DQAgentMDP.trainDQAgent(opponentPool, dqFilename);
             DQAgent dqAgent = new DQAgent(dqFilename);
-            currentDQAgentCount++;
 
             // ************** Run test games of SMNE vs RL
-            log.info("Running test game");
+            log.info("Running SMNE vs DQAgent");
             CaseStudy testGame = new CaseStudy().addP1Strats(smne).addP2Strats(dqAgent);
             startSimulation(testGame);
 
             // ************** Does RL have a higher payoff than SMNE?
             log.info("SMNE Profit: " + smne.profit + ", DQAgent profit: " + dqAgent.profit);
             if (dqAgent.profit > smne.profit) {
-                log.info("DQAgent profit > SMNE profit, adding to the pool");
+                log.info("DQAgent profit > SMNE profit, adding DQAgent to the pool");
+                log.info("New DQAgent Name: " + dqAgent.name);
                 currentCase.addP1Strats(dqAgent).addP2Strats(dqAgent);
-                lastRLIDX = currentCase.pool1.size() - 1;
+                lastRLAgent = dqAgent;
+
+                // Check if we have too many DQAgents, if so, add an agent from the literature
+                int dqAgentCount = 0;
+                for (Agent agent : currentCase.pool1) {
+                    if (agent instanceof DQAgent)
+                        dqAgentCount++;
+                }
+
+                if (dqAgentCount >= 4) {
+                    log.info("We have too many DQAgents, specifically, we have " + dqAgentCount);
+                    log.info("Attempting to add a strategy from the literature");
+                    if (litStrategies.empty()) {
+                        log.info("There are no more strategies in the stack, exiting loop");
+                        break;
+                    } else {
+                        Agent newStrat = litStrategies.pop();
+                        log.info("Adding " + newStrat + " to the pool");
+                        currentCase.addP1Strats(newStrat).addP2Strats(newStrat);
+                        continue;
+                    }
+                }
             } else {
                 log.info("DQAgent could not beat SMNE, stopping experiment");
                 break;
@@ -720,10 +756,15 @@ public class RetailMarketManager {
     public List<double[]> getPureStrategies(List<double[]> nashStrats) {
         List<double[]> result = new ArrayList<>();
         for (double[] strat : nashStrats) {
-            boolean isPure = false;
-            for (double n : strat)
-                isPure = (n % 1 == 0);
-
+            boolean isPure = true;
+            // If all the numbers are integers, then it's a pure strategy
+            for (double n : strat) {
+                boolean isInteger = (n % 1 == 0);
+                if (!isInteger) {
+                    isPure = false;
+                    break;
+                }
+            }
             if (isPure)
                 result.add(strat);
         }
@@ -733,10 +774,15 @@ public class RetailMarketManager {
     public List<double[]> getMixedStrategies(List<double[]> nashStrats) {
         List<double[]> result = new ArrayList<>();
         for (double[] strat : nashStrats) {
-            boolean isPure = false;
-            for (double n : strat)
-                isPure = (n % 1 == 0);
-
+            boolean isPure = true;
+            // If all the numbers are integers, then it's a pure strategy
+            for (double n : strat) {
+                boolean isInteger = (n % 1 == 0);
+                if (!isInteger) {
+                    isPure = false;
+                    break;
+                }
+            }
             if (!isPure)
                 result.add(strat);
         }
@@ -746,12 +792,12 @@ public class RetailMarketManager {
     /**
      * Determines if there is a pure strategy where the RL agent is dominating
      * (zero in all other columns)
-     * @param pureStrats
-     * @return
      */
-    public boolean isRLPureStrat(List<double[]> pureStrats) {
+    public boolean isRLPureStrat(CaseStudy cs, List<double[]> pureStrats) {
+        int lastRLIndex = cs.pool1.indexOf(lastRLAgent);
+        log.info("LASTRLINDEX: " + lastRLIndex + ":" + cs.pool1.get(lastRLIndex));
         for (double[] pureStrat : pureStrats) {
-            if (pureStrat[lastRLIDX] == 1.0d) {
+            if (pureStrat[lastRLIndex] == 1.0d) {
                 return true;
             }
         }
@@ -803,14 +849,14 @@ public class RetailMarketManager {
             String header = "";
             for (Agent agent : cs.pool1)
                 header += agent.name + ", ";
-            header = header.substring(0, header.length()-2);
+            header = header.substring(0, header.length() - 2);
 
             log.info(header);
             for (double[] nashEq : nashEqStrategies) {
                 String output = "[";
                 for (double d : nashEq)
                     output += String.format("%.3f, ", d);
-                output = output.substring(0, output.length()-2) + "]";
+                output = output.substring(0, output.length() - 2) + "]";
                 log.info(output);
             }
 

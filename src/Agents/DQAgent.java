@@ -10,7 +10,6 @@ import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 
 import Observer.Observer;
-import Configuration.Configuration;
 
 /**
  * Encodes the current state of a Deep Q-Learning Agent
