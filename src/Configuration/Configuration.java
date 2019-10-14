@@ -30,6 +30,7 @@ public class Configuration {
 	
 	public static String DQLEARNING_POLICY_FILENAME = "dq.pol";
 	public static boolean GET_NASH_EQ = false;
+	public static String DQ_FIXED;
 	
 	public static enum CASE_STUDY{
 		RoundRobin(0),
@@ -39,7 +40,7 @@ public class Configuration {
 		AlwaysDefectVSAlwaysDefect(4),
 		AlwaysDefectVSTitForTat(5),
 		AlwaysCoopVSTitForTat(6),
-		AlwaysDefectVSTitForTatV2(7),
+		RR_AI_NP_AD(7),
 		RL1FixedVSAlD(8),
 		RL1FixedVSAlI(9),
 		RLTrainingVSMNE1(10),
@@ -155,7 +156,8 @@ public class Configuration {
 				"RL_TRAINING : " + RL_TRAINING  + "\n" +
 				"PPTS_DISCRTZD : " + PPTS_DISCRTZD  + "\n" +
 				"DQLEARNING_POLICY_FILENAME : " + DQLEARNING_POLICY_FILENAME + "\n" +
-				"GET_NASH_EQ : " + GET_NASH_EQ;
+				"GET_NASH_EQ : " + GET_NASH_EQ +
+				"DQ_FIXED " + DQ_FIXED;
 	}
 	
 	public Configuration(){
@@ -190,6 +192,8 @@ public class Configuration {
 			PPTS_DISCRTZD = Integer.parseInt(prop.getProperty("ppts_dscretzd"));
 			DQLEARNING_POLICY_FILENAME = prop.getProperty("dqlearning-policy-filename");
 			GET_NASH_EQ = Boolean.parseBoolean(prop.getProperty("get-nash-eq"));
+			DQ_FIXED = prop.getProperty("dqfixed");
+			
 			//System.out.println("TOTAL_TIME_SLOTS " + TOTAL_TIME_SLOTS);
 			//System.out.println("PUBLICATION_CYCLE " + PUBLICATION_CYCLE);
 		} catch (IOException ex) {

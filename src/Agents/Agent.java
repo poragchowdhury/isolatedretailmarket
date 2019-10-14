@@ -207,8 +207,9 @@ public abstract class Agent {
 		if(Observer.timeslot == 0) {} 							// Coop in the first move
 		else if(this.rivalPrevPrevPrice > this.rivalPrevPrice ) // other agent is defecting, so defect
 			defect(ob);
-		else {} 												// other agent is Cooping, So coop
-		
+		else if(this.rivalPrevPrevPrice < this.rivalPrevPrice ) // other agent is increasing, so increase
+			increase(ob);
+		else nochange(); 												// other agent is Cooping, So coop
 	}
 	
 	public void ttft(Observer ob) {

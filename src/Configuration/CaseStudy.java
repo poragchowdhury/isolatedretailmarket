@@ -109,9 +109,13 @@ public class CaseStudy {
 			pool1.add(new AlwaysSame());
 			pool2.add(new TitForTat());
 		}
-		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.AlwaysDefectVSTitForTatV2.getValue()){
+		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RR_AI_NP_AD.getValue()){
+			pool1.add(new AlwaysIncrease());
+			pool1.add(new NaiveProber());
 			pool1.add(new AlwaysDefect());
-			pool2.add(new TitForTatV2());
+			pool2.add(new AlwaysIncrease());
+			pool2.add(new NaiveProber());
+			pool2.add(new AlwaysDefect());
 		}
 		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RL1FixedVSAlD.getValue()){
 			pool1.add(new RL1Fixed());

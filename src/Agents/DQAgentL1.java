@@ -23,7 +23,7 @@ public class DQAgentL1 extends DQAgent {
         this.name = "DQAgentL1";
         try {
         	// Fixed policy
-            this.pol = DQNPolicy.load("dqagent_SMNE1_100.pol");
+            this.pol = DQNPolicy.load(Configuration.DQ_FIXED);
         } catch (IOException e) {
             Logger.getAnonymousLogger().info("{DQAgent.Constructor} Couldn't load DQN policy from file " + Configuration.DQLEARNING_POLICY_FILENAME);
         }

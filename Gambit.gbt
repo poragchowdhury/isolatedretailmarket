@@ -12,17 +12,14 @@
 <nfgfile>
 NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
 
-{ { "2TFT"  "TFTV2" }
-{ "2TFT"  "TFTV2" }
+{ { "SMNE1" }
+{ "SMNE1" }
 }
 ""
 
 {
-{ "" 100.0, 100.0 }
-{ "" 100.0, 99.0 }
-{ "" 99.0, 100.0 }
-{ "" 100.0, 100.0 }
+{ "" 53.0, 53.0 }
 }
-1 2 3 4 </nfgfile>
+1 </nfgfile>
 </game>
 </gambit:document>

@@ -46,7 +46,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
     private static final int NUM_ACTIONS = 3;
 
     public static DiscreteSpace actionSpace = new DiscreteSpace(NUM_ACTIONS);
-    public static ObservationSpace<DQAgentState> observationSpace = new ArrayObservationSpace<DQAgentState>(new int[] { 2 });
+    public static ObservationSpace<DQAgentState> observationSpace = new ArrayObservationSpace<DQAgentState>(new int[] { 3 });
 
     public static void log(String message, Object... args) {
         Logger.getAnonymousLogger().info("[SimpleMDP]" + String.format(message, args));

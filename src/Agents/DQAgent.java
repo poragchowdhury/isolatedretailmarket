@@ -20,16 +20,17 @@ class DQAgentState implements Encodable {
     public DQAgent agent;
     public int timeSlot;
     public long ppts;
-
+    public int prevaction;
     public DQAgentState(DQAgent agent) {
         this.agent = agent;
         this.timeSlot = Observer.timeslot;
         this.ppts = (long) (agent.prevprofit / (double) Observer.timeslot - 1);
+        this.prevaction = agent.myPrevActionId;
     }
 
     @Override
     public double[] toArray() {
-        return new double[] { timeSlot, ppts };
+        return new double[] { timeSlot, ppts, prevaction }; //timeSlot, 
     }
 }
 
