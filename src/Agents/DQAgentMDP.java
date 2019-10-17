@@ -26,7 +26,8 @@ import Observer.Observer;
 import RetailMarketManager.RetailMarketManager;
 
 public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
-    public static QLearning.QLConfiguration QLConfig = new QLearning.QLConfiguration(123, // Seed
+    public static QLearning.QLConfiguration QLConfig = new QLearning.QLConfiguration(
+    		123, // Seed
             10000, // Max step By epoch
             100, // Max step
             1000000, // Max size of experience replay
