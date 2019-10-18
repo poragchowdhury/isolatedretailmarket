@@ -8,6 +8,7 @@ import Agents.Agent;
 import Agents.AlwaysDefect;
 import Agents.AlwaysIncrease;
 import Agents.AlwaysSame;
+import Agents.NaiveProber;
 
 public class CaseStudy {
     /**
@@ -57,8 +58,8 @@ public class CaseStudy {
     public static void initCaseStudies() {
         caseStudies = new ArrayList<>();
 
-        CaseStudy case0 = new CaseStudy().addP1Strats(new AlwaysDefect(), new AlwaysIncrease(), new AlwaysSame());
-        case0.addP2Strats(new AlwaysDefect(), new AlwaysIncrease(), new AlwaysSame());
+        CaseStudy case0 = new CaseStudy().addP1Strats(new AlwaysDefect(), new AlwaysIncrease()); // , new NaiveProber())
+        case0.addP2Strats(new AlwaysDefect(), new AlwaysIncrease()); //, new NaiveProber()
         caseStudies.add(0, case0);
     }
 }

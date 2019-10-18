@@ -23,6 +23,7 @@ import org.nd4j.linalg.learning.config.Adam;
 
 import Configuration.Configuration;
 import RetailMarketManager.RetailMarketManager;
+import Tariff.TariffActions;
 
 public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
     public static QLearning.QLConfiguration QLConfig = new QLearning.QLConfiguration(123, // Seed
@@ -123,9 +124,9 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 
     @Override
     public StepReply<DQAgentState> step(Integer action) {
-        if (action == 0) // Increase
+        if (action == TariffActions.action.INCREASE.ordinal()) // Increase
             agent.increase(retailManager.ob);
-        else if (action == 1) // Decrease
+        else if (action == TariffActions.action.DEFECT.ordinal()) // Decrease
             agent.defect(retailManager.ob);
         else // No Change
             agent.nochange();

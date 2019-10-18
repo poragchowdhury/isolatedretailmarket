@@ -10,6 +10,7 @@ import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 
 import Observer.Observer;
+import Tariff.TariffActions;
 
 /**
  * Encodes the current state of a Deep Q-Learning Agent
@@ -71,9 +72,9 @@ public class DQAgent extends Agent {
         input = input.reshape(Learning.makeShape(1, DQAgentMDP.observationSpace.getShape()));
 
         int nextAction = pol.nextAction(input);
-        if (nextAction == 0) // Defect
+        if (nextAction == TariffActions.action.DEFECT.ordinal()) // Defect
             defect(ob);
-        else if (nextAction == 1) // Increase
+        else if (nextAction == TariffActions.action.INCREASE.ordinal()) // Increase
             increase(ob);
         else // No change
             nochange();

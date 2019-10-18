@@ -36,10 +36,12 @@ public class SMNE extends Agent {
         for (int i = 0; i < agents.size(); i++) {
             double prob = strategyProbs.get(i);
             Agent strategy = agents.get(i);
-            if (strategy instanceof DQAgent)
-                tempName += String.format("%.3f%s,", prob, ((DQAgent) strategy).getSimpleName());
-            else
-                tempName += String.format("%.3f%s,", prob, strategy.name);
+            if(prob > 0) { // If prob is greater than 0, add the agent in the name
+	            if (strategy instanceof DQAgent )
+	                tempName += String.format("%.2f%s,", prob, ((DQAgent) strategy).getSimpleName()); // Keeping the name upto 2 decimal
+	            else
+	                tempName += String.format("%.2f%s,", prob, strategy.name); // Keeping the name upto 2 decimal
+            }
         }
         return tempName.substring(0, tempName.length() - 1);
     }

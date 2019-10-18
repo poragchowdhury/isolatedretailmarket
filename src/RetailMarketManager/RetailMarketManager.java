@@ -652,8 +652,8 @@ public class RetailMarketManager {
 
     public CaseStudy setupInitialStrategies() {
         log.info("=== Setting up initial pools ===");
-        CaseStudy initial = new CaseStudy().addP1Strats(new AlwaysDefect(), new AlwaysIncrease(), new AlwaysSame());
-        initial.addP2Strats(new AlwaysDefect(), new AlwaysIncrease(), new AlwaysSame());
+        CaseStudy initial = new CaseStudy().addP1Strats(new AlwaysDefect(), new AlwaysIncrease()); // , new NaiveProber()
+        initial.addP2Strats(new AlwaysDefect(), new AlwaysIncrease()); //, new NaiveProber()
         log.info("Pool1: " + initial.pool1.toString());
         log.info("Pool2: " + initial.pool2.toString());
         return initial;
@@ -675,16 +675,16 @@ public class RetailMarketManager {
         literatureStrategies.add(new Rand());
         literatureStrategies.add(new Grim());
         literatureStrategies.add(new SoftMajority());
+        literatureStrategies.add(new AlwaysSame());
         literatureStrategies.add(new Pavlov());
         literatureStrategies.add(new Prober());
-        literatureStrategies.add(new NaiveProber());
 
         return literatureStrategies;
     }
 
     public void startSimulation(CaseStudy cs) {
-        double rationality[] = { 0.8 };
-        double inertia[] = { 0.8 };
+        double rationality[] = { Configuration.RATIONALITY };
+        double inertia[] = { Configuration.INERTIA };
         double imax = 1;
         double rmax = 1;
         double roundmax = Configuration.ROUND;
