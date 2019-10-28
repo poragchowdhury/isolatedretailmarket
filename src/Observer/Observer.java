@@ -21,6 +21,7 @@ import Tariff.TariffActions;
 public class Observer {
 	public static int publication_cycle_count = 0;
 	public static int timeslot = 0;
+	public static int rounds = 0;
 	public double [] payoffs;
 	public int payoffcount = 0;
 	public ArrayList<Agent> agentPool;
@@ -59,7 +60,7 @@ public class Observer {
 		demandmult = Configuration.DMNDMULT;
 		initcost =  Configuration.INITCOST;
 		unitcost = daymult * 0 + demandmult * fcc.usage[0] + initcost;
-		agentPayoffs = new double[2][Configuration.ROUND];
+		agentPayoffs = new double[2][Configuration.TESTROUNDS];
 		
 	}
 	
@@ -107,12 +108,12 @@ public class Observer {
 		stdagent1 = Math.sqrt(stdagent1);
 		stdagent2 = Math.sqrt(stdagent2);
 		
-		double error1 = 1.96 * (stdagent1/Math.sqrt(Configuration.ROUND));
-		double error2 = 1.96 * (stdagent2/Math.sqrt(Configuration.ROUND));
+		double error1 = 1.96 * (stdagent1/Math.sqrt(Configuration.TESTROUNDS));
+		double error2 = 1.96 * (stdagent2/Math.sqrt(Configuration.TESTROUNDS));
 		
 		// print avg payoff with error
 		if(Configuration.CASE_STUDY_NO > 0)
-			System.out.println(cs.pool1.get(0).name + ":" + avgagent1 + " err: " + error1 + cs.pool2.get(0).name + ":" + avgagent2 + " err2: " + error2);
+			System.out.println(cs.pool1.get(0).name + ":" + avgagent1 + " err: " + error1 + " " + cs.pool2.get(0).name + ":" + avgagent2 + " err2: " + error2);
 		return new double[]{avgagent1, avgagent2, error1, error2};
 	}
 	

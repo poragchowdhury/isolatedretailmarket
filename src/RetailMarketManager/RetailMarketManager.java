@@ -195,12 +195,11 @@ public class RetailMarketManager {
 			double inertia[] = {0.8};
 			double imax = 1;
 			double rmax = 1;
-			double roundmax = Configuration.ROUND;
+			//double roundmax = ;
 			if(!Configuration.DLOGGING) {
 				// Detailed logging disabled
 				rmax = rationality.length;
 				imax = inertia.length;
-				roundmax = Configuration.ROUND;
 			}
 			
 			pwOutput.println(Configuration.print());
@@ -219,7 +218,7 @@ public class RetailMarketManager {
 					{
 						for(int rindex = 0 ; rindex < rmax; rindex++)	
 						{
-							for(int round = 0; round < roundmax; round++) 
+							for(Observer.rounds = 0; Observer.rounds < Configuration.TESTROUNDS; Observer.rounds++) 
 							{
 								
 								cs.pool1.get(iagent).reset();
@@ -257,7 +256,7 @@ public class RetailMarketManager {
 									ob.calcCost(); 
 								}
 								// Print Revenues
-								printRevenues(round, pwOutput);
+								printRevenues(Observer.rounds, pwOutput);
 								// clear the observer for another simulation set up
 								ob.clear();
 							}

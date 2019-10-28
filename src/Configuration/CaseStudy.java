@@ -113,9 +113,11 @@ public class CaseStudy {
 			pool1.add(new AlwaysIncrease());
 			pool1.add(new NaiveProber());
 			pool1.add(new AlwaysDefect());
+			pool1.add(new Rand());
 			pool2.add(new AlwaysIncrease());
 			pool2.add(new NaiveProber());
 			pool2.add(new AlwaysDefect());
+			pool2.add(new Rand());
 		}
 		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.RL1FixedVSAlD.getValue()){
 			pool1.add(new RL1Fixed());

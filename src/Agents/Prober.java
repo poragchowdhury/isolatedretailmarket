@@ -30,8 +30,10 @@ public class Prober extends Agent{
 			coopCounter = 0;
 			defect(ob);
 		}
-		else															// other agent is cooperating, So coop
+		else {															// other agent is cooperating, So coop
 			coopCounter++;
+			nochange();
+		}
 		
 		/* Tariff Check */
 		tariffCheck(ob);

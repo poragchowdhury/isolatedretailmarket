@@ -3,8 +3,8 @@ package Tariff;
 import Configuration.Configuration;
 
 public class TariffActions {
-	public static double [] a = {0, -0.01, 0.01};
-	public static enum action {NOCHANGE, DEFECT, INCREASE};
+	public static double [] a = {0, -0.01, 0.01, -0.02, 0.02};
+	public static enum action {NOCHANGE, DEFECT, INCREASE, DEFECT2, INCREASE2};
 	//public static double INCREASE = 0.025;
 	//public static double COOP = 0;
 	//public static double DEFECT = -0.025;		

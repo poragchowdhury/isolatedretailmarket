@@ -94,6 +94,19 @@ public abstract class Agent {
 //			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
 	}
 	
+	public void defect2(Observer ob) {
+		double change = TariffActions.a[TariffActions.action.DEFECT2.ordinal()];//(Configuration.ACT_CHANGE_PERC * this.tariffPrice)/100;
+		double newTariff = this.tariffPrice + change;
+		if(newTariff > ob.unitcost) {
+			this.prevtariffPrice = this.tariffPrice;
+			this.tariffPrice = newTariff;
+			this.myPrevActionId = TariffActions.action.DEFECT2.ordinal();
+		}
+//		else
+//			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
+	}
+
+	
 	public void increase(Observer ob) {
 		double change = TariffActions.a[TariffActions.action.INCREASE.ordinal()];//(Configuration.ACT_CHANGE_PERC * this.tariffPrice)/100;
 		double newTariff = this.tariffPrice + change;
@@ -101,6 +114,17 @@ public abstract class Agent {
 			this.prevtariffPrice = this.tariffPrice;
 			this.tariffPrice = newTariff;
 			this.myPrevActionId = TariffActions.action.INCREASE.ordinal();
+		}
+//		else
+//			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
+	}
+	public void increase2(Observer ob) {
+		double change = TariffActions.a[TariffActions.action.INCREASE2.ordinal()];//(Configuration.ACT_CHANGE_PERC * this.tariffPrice)/100;
+		double newTariff = this.tariffPrice + change;
+		if(newTariff < Configuration.MAX_TARIFF_PRICE) {
+			this.prevtariffPrice = this.tariffPrice;
+			this.tariffPrice = newTariff;
+			this.myPrevActionId = TariffActions.action.INCREASE2.ordinal();
 		}
 //		else
 //			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
@@ -144,7 +168,9 @@ public abstract class Agent {
 				booDefect = true;
 				defect(ob);
 			}
-			else { } 												// Agent hasn't defected: So cooperate
+			else { 
+				nochange();
+			} 												// Agent hasn't defected: So cooperate
 		}
 		else 														// Always Defect
 			defect(ob);
@@ -152,23 +178,25 @@ public abstract class Agent {
 	
 	public void random(Observer ob) {
 		Random r = new Random();
-		int coin = r.nextInt(2);
+		int coin = r.nextInt(3);
 		if(coin == 0)				// Defect
 			defect(ob);
-		else {} 					// Coop 
+		else if(coin == 1)
+			increase(ob);
+		else 					// Coop
+			nochange();
 	} 
 
 	public void strategySMNE1(Observer ob) {
-		double prDft = (39/68)*100;
+		double prDft = (8/17)*100;
 		int prDftInt = (int) prDft;
 		Random r = new Random();
 		int coin = r.nextInt(100);
 		if(coin < prDftInt)
-			naiveProber(ob);
+			defect(ob);
 		else {
-			increase(ob);
+			random(ob);
 		}
-		//increase(ob);
 	}
 	
 	public void naiveProber(Observer ob) {
@@ -177,6 +205,8 @@ public abstract class Agent {
 		double coin = r.nextDouble();
 		if(coin < defectPr) // defect
 			defect(ob);
+		else
+			nochange();
 	}
 	
 	public void softMajority(Observer ob) {
@@ -243,7 +273,9 @@ public abstract class Agent {
 			defect(ob);
 		else if(defectCounter >= coopCounter) 				// defect
 			defect(ob);
-		else {} 											// Coop
+		else {
+			nochange();
+		} 											// Coop
 		
 	}
 }

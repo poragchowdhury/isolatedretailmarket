@@ -7,6 +7,7 @@ public class AlwaysSame extends Agent{
 	public AlwaysSame() {
 		// TODO Auto-generated constructor stub
 		this.name = "AlzSame";
+		this.myPrevActionId = TariffActions.action.NOCHANGE.ordinal();
 	}
 	@Override
 	public void publishTariff(Observer ob) {

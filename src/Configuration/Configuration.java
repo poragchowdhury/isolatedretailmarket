@@ -18,7 +18,8 @@ public class Configuration {
 	public static double DMNDMULT = 0;
 	public static double INITCOST = 0;
 	public static boolean DLOGGING = true;
-	public static int ROUND = 1;
+	public static int TESTROUNDS = 1;
+	public static int TRAININGROUNDS = 1;
 	
 	public static double LEARNING_RATE = 0.9;
 	public static double DISCOUNT_FACTOR = 1;
@@ -148,7 +149,7 @@ public class Configuration {
 				"DMNDMULT : " + DMNDMULT  + "\n" +
 				"INITCOST : " + INITCOST  + "\n" +
 				"DLOGGING : " + DLOGGING  + "\n" +		
-				"ROUND : " + ROUND  + "\n" +
+				"ROUND : " + TESTROUNDS  + "\n" +
 				"LEARNING_RATE : " + LEARNING_RATE  + "\n" +
 				"DISCOUNT_FACTOR : " + DISCOUNT_FACTOR  + "\n" +
 				"DB_NAME_TRAINING : " + DB_NAME_TRAINING  + "\n" +
@@ -183,7 +184,8 @@ public class Configuration {
 			DMNDMULT = Double.parseDouble(prop.getProperty("demandmult"));
 			INITCOST = Double.parseDouble(prop.getProperty("initcost"));
 			DLOGGING = Boolean.parseBoolean(prop.getProperty("detailedlogging"));		
-			ROUND = Integer.parseInt(prop.getProperty("round"));
+			TESTROUNDS = Integer.parseInt(prop.getProperty("dq-test-rounds"));
+			TRAININGROUNDS = Integer.parseInt(prop.getProperty("dq-training-rounds"));
 			LEARNING_RATE = Double.parseDouble(prop.getProperty("learningrate"));
 			DISCOUNT_FACTOR = Double.parseDouble(prop.getProperty("discountfactor"));
 			DB_NAME_TRAINING = prop.getProperty("db-name-training");

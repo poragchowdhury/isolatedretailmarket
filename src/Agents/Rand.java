@@ -13,14 +13,7 @@ public class Rand extends Agent{
 	}
 	@Override
 	public void publishTariff(Observer ob) {
-
-		Random r = new Random();
-		int coin = r.nextInt(2);
-		if(coin == 0)				// Defect
-			defect(ob);
-		else {} 					// Coop 
-		
-		
+		random(ob);
 		/* Tariff Check */
 		tariffCheck(ob);
 	}

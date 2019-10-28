@@ -14,6 +14,7 @@ import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 
 import Observer.Observer;
+import Tariff.TariffActions;
 import Configuration.Configuration;
 
 public class DQAgentL1 extends DQAgent {
@@ -23,7 +24,7 @@ public class DQAgentL1 extends DQAgent {
         this.name = "DQAgentL1";
         try {
         	// Fixed policy
-            this.pol = DQNPolicy.load(Configuration.DQ_FIXED);
+            this.pol = DQNPolicy.load(Configuration.DQ_FIXED); // 
         } catch (IOException e) {
             Logger.getAnonymousLogger().info("{DQAgent.Constructor} Couldn't load DQN policy from file " + Configuration.DQLEARNING_POLICY_FILENAME);
         }
@@ -36,9 +37,9 @@ public class DQAgentL1 extends DQAgent {
         input = input.reshape(Learning.makeShape(1, DQAgentMDP.observationSpace.getShape()));
 
         int nextAction = pol.nextAction(input);
-        if (nextAction == 0) // Defect
+        if (nextAction == TariffActions.action.DEFECT.ordinal()) // Defect
             defect(ob);
-        else if (nextAction == 1) // Increase
+        else if (nextAction == TariffActions.action.INCREASE.ordinal()) // Increase
             increase(ob);
         else // No change
             nochange();

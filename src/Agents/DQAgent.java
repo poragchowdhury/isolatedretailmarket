@@ -14,6 +14,7 @@ import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 
 import Observer.Observer;
+import Tariff.TariffActions;
 import Configuration.Configuration;
 
 class DQAgentState implements Encodable {
@@ -23,14 +24,14 @@ class DQAgentState implements Encodable {
     public int prevaction;
     public DQAgentState(DQAgent agent) {
         this.agent = agent;
-        this.timeSlot = Observer.timeslot;
-        this.ppts = (long) (agent.prevprofit / (double) Observer.timeslot - 1);
-        this.prevaction = agent.myPrevActionId;
+        //this.timeSlot = Observer.timeslot;
+        this.ppts = (long) (agent.prevprofit);// / (double) Observer.timeslot);
+        //this.prevaction = agent.myPrevActionId;
     }
 
     @Override
     public double[] toArray() {
-        return new double[] { timeSlot, ppts, prevaction }; //timeSlot, 
+        return new double[] {ppts};//, prevaction, timeSlot};//, }; timeSlot//  
     }
 }
 
@@ -53,10 +54,15 @@ public class DQAgent extends Agent {
         input = input.reshape(Learning.makeShape(1, DQAgentMDP.observationSpace.getShape()));
 
         int nextAction = pol.nextAction(input);
-        if (nextAction == 0) // Defect
+        System.out.println("Test: TS: " + Observer.timeslot +  " Action " + nextAction);
+        if (nextAction == TariffActions.action.DEFECT.ordinal()) // Defect
             defect(ob);
-        else if (nextAction == 1) // Increase
+        else if (nextAction == TariffActions.action.INCREASE.ordinal()) // Increase
             increase(ob);
+        else if (nextAction == TariffActions.action.DEFECT2.ordinal()) // Defect
+            defect2(ob);
+        else if (nextAction == TariffActions.action.INCREASE2.ordinal()) // Increase
+            increase2(ob);
         else // No change
             nochange();
     }

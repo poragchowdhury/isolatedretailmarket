@@ -14,7 +14,9 @@ public class SMNE1 extends Agent{
 
 	@Override
 	public void publishTariff(Observer ob) {
-		strategySMNE1(ob);
+		//strategySMNE1(ob);
+		nochange();
+		//random(ob);
 		tariffCheck(ob); /* Tariff Check */
 	}
 }
