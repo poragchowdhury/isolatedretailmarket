@@ -25,34 +25,32 @@ import Configuration.Configuration;
 import RetailMarketManager.RetailMarketManager;
 
 public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
-    public static QLearning.QLConfiguration QLConfig = new QLearning.QLConfiguration(123, // Seed
-            10000, // Max step By epoch
-            100, // Max step
-            1000000, // Max size of experience replay
-            32, // size of batches
-            10000, // target update (hard)
-            100, // num step noop warmup
-            0.01, // reward scaling
+    public static QLearning.QLConfiguration QLConfig = new QLearning.QLConfiguration(123, // Random seed
+            1000, // Max step By epoch
+            500, // Max step
+            10000, // Max size of experience replay
+            64, // size of batches
+            50, // target update (hard)
+            0, // num step noop warmup
+            10.0, // reward scaling
             0.99, // gamma
-            100.0, // td-error clipping
+            Double.MAX_VALUE, // td-error clipping
             0.1f, // min epsilon
-            10000, // num step for eps greedy anneal
+            3000, // num step for eps greedy anneal
             true // double DQN
     );
 
-    public static DQNFactoryStdDense.Configuration QLNet = DQNFactoryStdDense.Configuration.builder().l2(0.00).updater(new Adam(0.001)).numHiddenNodes(16).numLayer(3).build();
+    public static DQNFactoryStdDense.Configuration QLNet = DQNFactoryStdDense.Configuration.builder().l2(0.001).updater(new Adam(0.0005)).numHiddenNodes(16).numLayer(3).build();
 
-    private static final int NUM_ACTIONS = 3;
+    public static final int NUM_ACTIONS = 3;
+    public static final int NUM_OBSERVATIONS = new DQAgentState().toArray().length;
 
-    public static DiscreteSpace actionSpace = new DiscreteSpace(NUM_ACTIONS);
-    public static ObservationSpace<DQAgentState> observationSpace = new ArrayObservationSpace<DQAgentState>(new int[] { 2 });
+    public static DiscreteSpace ACTION_SPACE = new DiscreteSpace(NUM_ACTIONS);
+    public static ObservationSpace<DQAgentState> OBSERVATION_SPACE = new ArrayObservationSpace<DQAgentState>(new int[] { NUM_OBSERVATIONS });
 
     public static void log(String message, Object... args) {
         Logger.getAnonymousLogger().info("[SimpleMDP]" + String.format(message, args));
     }
-
-    public DQAgentState currentState;
-    public DQAgentState startingState;
 
     private RetailMarketManager retailManager;
     private DQAgent agent;
@@ -69,6 +67,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
         try {
             // record the training data in rl4j-data in a new folder
             DataManager manager = new DataManager(true);
+            log("QLCONFIG MAXSTEP" + QLConfig.getMaxStep());
             QLearningDiscreteDense<DQAgentState> dql = new QLearningDiscreteDense<DQAgentState>(mdp, QLNet, QLConfig, manager);
 
             log("Training DeepQ");
@@ -90,12 +89,12 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 
     @Override
     public DiscreteSpace getActionSpace() {
-        return actionSpace;
+        return ACTION_SPACE;
     }
 
     @Override
     public ObservationSpace<DQAgentState> getObservationSpace() {
-        return observationSpace;
+        return OBSERVATION_SPACE;
     }
 
     @Override
@@ -111,43 +110,43 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 
     @Override
     public DQAgentState reset() {
-        retailManager = new RetailMarketManager();
-        agent = new DQAgent();
+        // Properly reset agent variables between training epochs.
+        for (Agent ag : opponentPool)
+            ag.reset();
+
+        this.agent = new DQAgent();
+        this.retailManager = new RetailMarketManager();
+
         retailManager.ob.agentPool.add(agent);
         retailManager.ob.agentPool.addAll(opponentPool);
-
         retailManager.ob.timeslot = 0;
-        this.currentState = this.startingState = new DQAgentState(agent, retailManager.ob);
-        return startingState;
+
+        return new DQAgentState(agent, retailManager.ob);
     }
 
     @Override
     public StepReply<DQAgentState> step(Integer action) {
-        if (action == 0) // Increase
-            agent.increase(retailManager.ob);
-        else if (action == 1) // Decrease
-            agent.defect(retailManager.ob);
-        else // No Change
-            agent.nochange();
+        double before = agent.profit;
+        agent.playAction(action, retailManager.ob);
 
         // Perform other agent policies
         for (Agent ag : this.opponentPool) {
             ag.publishTariff(retailManager.ob);
         }
 
-        retailManager.updateAgentsMemory();
-
         // Run the market evaluation based on the previous action
         // then run the rest of the timeslots so the next call to
         // this function will be a publication cycle
-        // Run for 6 TS
-        for (int i = 0; i < Configuration.PUBLICATION_CYCLE + 1; i++) {
+        for (int i = 0; i < Configuration.PUBLICATION_CYCLE; i++) {
             retailManager.customerTariffEvaluation();
             retailManager.updateAgentAccountings();
             retailManager.ob.timeslot++;
         }
+        double after = agent.profit;
+        double reward = after - before;
+        // double reward = agent.profit - opponentPool.get(0).profit;
 
-        double reward = agent.profit - agent.prevprofit;
+        // log("DQAGENTMDP: Action %s, Reward %s, Agent Market %s, Opp Market %s", action, reward, agent.marketShare, opponentPool.get(0).marketShare);
         DQAgentState nextState = new DQAgentState(agent, retailManager.ob);
 
         JSONObject info = new JSONObject("{}");

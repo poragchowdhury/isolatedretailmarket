@@ -474,6 +474,39 @@ public class RetailMarketManager {
      */
     private Agent lastRLAgent;
 
+    public double distance(double[] eq1, double[] eq2) {
+        double dist = 0;
+        int commonLength = Math.min(eq1.length, eq2.length);
+        for (int i = 0; i < commonLength; i++)
+            dist += (eq1[i] - eq2[i]) * (eq1[i] - eq2[i]);
+
+        dist = Math.sqrt(dist);
+        return dist;
+    }
+
+    public int countZeros(double[] arr) {
+        int zeroCount = 0;
+        for (double d : arr) {
+            if (d == 0.0d)
+                zeroCount++;
+        }
+        return zeroCount;
+    }
+
+    public int argMinZeros(List<double[]> lst) {
+        int resultIDX = 0;
+        int lowestCount = countZeros(lst.get(0));
+        for (int i = 1; i < lst.size(); i++) {
+            double[] arr = lst.get(i);
+            int zeroCount = countZeros(arr);
+            if (zeroCount < lowestCount) {
+                lowestCount = zeroCount;
+                resultIDX = i;
+            }
+        }
+        return resultIDX;
+    }
+
     /**
      * Converts a string of the form a/b (fraction) into a double
      * @param fString String to convert
@@ -569,7 +602,8 @@ public class RetailMarketManager {
                 log.info("[Manual Selection] Selected " + Arrays.toString(smneProbs));
             } else {
                 if (nashEqMixed.size() > 0) {
-                    smneProbs = nashEqMixed.get(0);
+                    int idx = argMinZeros(nashEqMixed);
+                    smneProbs = nashEqMixed.get(idx);
                     log.info("SMNE is picking mixed strategy: " + Arrays.toString(smneProbs));
                 } else {
                     // ************** Check if one of the pure strategies is the latest RL strategy
@@ -884,10 +918,44 @@ public class RetailMarketManager {
         return nashEqStrategies;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void sandboxExperiment() throws IOException {
+        RetailMarketManager rm = new RetailMarketManager();
+        rm.setupLogging();
+        Agent alwaysD = new AlwaysDefect();
+        Agent rand = new Rand();
+        Agent tft = new TitForTat(1, 1);
+        List<Agent> oppPool = new ArrayList<>();
+        oppPool.add(alwaysD);
+        oppPool.add(rand);
+        oppPool.add(tft);
+        DQAgentMDP.trainDQAgent(oppPool, "sandbox.pol");
+        DQAgent dqAgent = new DQAgent("sandbox.pol");
+
+        rm.startSimulation(new CaseStudy().addP1Strats(alwaysD, rand, tft, dqAgent).addP2Strats(alwaysD, rand, tft, dqAgent));
+        rm.log.info("AlwaysDefect: " + alwaysD.profit + ", DQAgent:" + dqAgent.profit);
+        rm.log.info("Rand: " + rand.profit + ", TitTat: " + tft.profit);
+        rm.log.info("Feature Size: " + DQAgentMDP.NUM_OBSERVATIONS);
+    }
+
+    public static void mainExperiment() throws IOException {
         RetailMarketManager rm = new RetailMarketManager();
         rm.startExperiment();
-        // rm.startSimulationV2();
+        rm.log.info("Feature Size: " + DQAgentMDP.NUM_OBSERVATIONS);
+    }
+
+    public static void main(String[] args) throws IOException {
+        /*
+         * The Sandbox Experiment tests DQAgent against a few others
+         * We can use this experiment to make sure DQAgent is being trained correctly
+         * Or to tweak hyperparameters
+         */
+        // sandboxExperiment();
+
+        /*
+         * The Main Experiment runs the flowchart specified by Porag
+         * Basically, the SMNE vs DQAgent stuff with Gambit and such
+         */
+        mainExperiment();
     }
 
 }
