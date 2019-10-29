@@ -25,20 +25,7 @@ import Configuration.Configuration;
 import RetailMarketManager.RetailMarketManager;
 
 public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
-    public static QLearning.QLConfiguration QLConfig = new QLearning.QLConfiguration(123, // Random seed
-            1000, // Max step By epoch
-            500, // Max step
-            10000, // Max size of experience replay
-            64, // size of batches
-            50, // target update (hard)
-            0, // num step noop warmup
-            10.0, // reward scaling
-            0.99, // gamma
-            Double.MAX_VALUE, // td-error clipping
-            0.1f, // min epsilon
-            3000, // num step for eps greedy anneal
-            true // double DQN
-    );
+    public static QLearning.QLConfiguration QLConfig = QLearning.QLConfiguration.builder().seed(123).maxEpochStep(6).maxStep(500).expRepMaxSize(10000).batchSize(64).targetDqnUpdateFreq(50).updateStart(0).rewardFactor(10).gamma(0.99).errorClamp(Double.MAX_VALUE).minEpsilon(0.1f).epsilonNbStep(3000).doubleDQN(true).build();
 
     public static DQNFactoryStdDense.Configuration QLNet = DQNFactoryStdDense.Configuration.builder().l2(0.001).updater(new Adam(0.0005)).numHiddenNodes(16).numLayer(3).build();
 
@@ -144,6 +131,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
         }
         double after = agent.profit;
         double reward = after - before;
+        // double reward = agent.profit - agent.prevprofit;
         // double reward = agent.profit - opponentPool.get(0).profit;
 
         // log("DQAGENTMDP: Action %s, Reward %s, Agent Market %s, Opp Market %s", action, reward, agent.marketShare, opponentPool.get(0).marketShare);

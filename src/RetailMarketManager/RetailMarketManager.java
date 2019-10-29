@@ -935,6 +935,7 @@ public class RetailMarketManager {
         rm.log.info("AlwaysDefect: " + alwaysD.profit + ", DQAgent:" + dqAgent.profit);
         rm.log.info("Rand: " + rand.profit + ", TitTat: " + tft.profit);
         rm.log.info("Feature Size: " + DQAgentMDP.NUM_OBSERVATIONS);
+        rm.log.info("Rounds: " + Configuration.ROUND);
     }
 
     public static void mainExperiment() throws IOException {
@@ -949,13 +950,13 @@ public class RetailMarketManager {
          * We can use this experiment to make sure DQAgent is being trained correctly
          * Or to tweak hyperparameters
          */
-        // sandboxExperiment();
+        sandboxExperiment();
 
         /*
          * The Main Experiment runs the flowchart specified by Porag
          * Basically, the SMNE vs DQAgent stuff with Gambit and such
          */
-        mainExperiment();
+        // mainExperiment();
     }
 
 }
