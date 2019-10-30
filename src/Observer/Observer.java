@@ -7,7 +7,6 @@ import Agents.Agent;
 import Configuration.CaseStudy;
 import Configuration.Configuration;
 import Customers.FactoredConsumptionCustomer;
-import Tariff.TariffActions;
 
 /**
  * Contains the observable information for one game
@@ -20,7 +19,6 @@ public class Observer {
     public ArrayList<Agent> agentPool;
     public FactoredConsumptionCustomer fcc;
     public Configuration config;
-    public TariffActions tariffactions;
     public double money[];
     public double cost[];
     public double custSubs[];
@@ -42,7 +40,6 @@ public class Observer {
         config = new Configuration();
         agentPool = new ArrayList<Agent>();
         payoffs = new double[8];
-        tariffactions = new TariffActions();
         custSubs = new double[2];
         money = new double[2];
         cost = new double[2];

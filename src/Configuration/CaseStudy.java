@@ -7,8 +7,6 @@ import java.util.List;
 import Agents.Agent;
 import Agents.AlwaysDefect;
 import Agents.AlwaysIncrease;
-import Agents.AlwaysSame;
-import Agents.NaiveProber;
 
 public class CaseStudy {
     /**

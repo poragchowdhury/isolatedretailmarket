@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 import Observer.Observer;
+import Tariff.TariffAction;
 
 public class SMNE extends Agent {
     private List<Double> strategyProbs;
@@ -36,18 +37,18 @@ public class SMNE extends Agent {
         for (int i = 0; i < agents.size(); i++) {
             double prob = strategyProbs.get(i);
             Agent strategy = agents.get(i);
-            if(prob > 0) { // If prob is greater than 0, add the agent in the name
-	            if (strategy instanceof DQAgent )
-	                tempName += String.format("%.2f%s,", prob, ((DQAgent) strategy).getSimpleName()); // Keeping the name upto 2 decimal
-	            else
-	                tempName += String.format("%.2f%s,", prob, strategy.name); // Keeping the name upto 2 decimal
+            if (prob > 0) { // If prob is greater than 0, add the agent in the name
+                if (strategy instanceof DQAgent)
+                    tempName += String.format("%.2f%s,", prob, ((DQAgent) strategy).getSimpleName()); // Keeping the name upto 2 decimal
+                else
+                    tempName += String.format("%.2f%s,", prob, strategy.name); // Keeping the name upto 2 decimal
             }
         }
         return tempName.substring(0, tempName.length() - 1);
     }
 
     @Override
-    public void publishTariff(Observer ob) {
+    public TariffAction makeAction(Observer ob) throws Exception {
         // https://stackoverflow.com/questions/9330394/how-to-pick-an-item-by-its-probability
 
         double p = rand.nextDouble();
@@ -60,9 +61,9 @@ public class SMNE extends Agent {
 
             cumulativeProbability += normalizedProb;
             if (p <= cumulativeProbability)
-                strategy.publishTariff(ob);
+                return strategy.makeAction(ob);
         }
 
-        tariffCheck(ob); /* Tariff Check */
+        throw new Exception("SMNE did not run one of its strategies.");
     }
 }

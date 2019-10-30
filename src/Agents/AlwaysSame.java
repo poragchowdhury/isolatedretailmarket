@@ -1,6 +1,7 @@
 package Agents;
 
 import Observer.Observer;
+import Tariff.TariffAction;
 
 public class AlwaysSame extends Agent {
 
@@ -9,9 +10,7 @@ public class AlwaysSame extends Agent {
     }
 
     @Override
-    public void publishTariff(Observer ob) {
-        /* Tariff Check */
-        // System.out.println(name+" : marketshare " + marketShare);
-        tariffCheck(ob);
+    public TariffAction makeAction(Observer ob) {
+        return TariffAction.NOCHANGE;
     }
 }

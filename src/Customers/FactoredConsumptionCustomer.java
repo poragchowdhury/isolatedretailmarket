@@ -23,8 +23,6 @@ public class FactoredConsumptionCustomer {
         custId = new int[population];
         this.ob = ob;
 
-        // randomly assign 50% to agent1
-        int evaluate = 0;
         for (int id = 0; id < population; id++) {
             Random r = new Random();
             custId[id] = r.nextInt(2);

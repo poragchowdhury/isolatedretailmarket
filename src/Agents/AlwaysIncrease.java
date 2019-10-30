@@ -1,6 +1,7 @@
 package Agents;
 
 import Observer.Observer;
+import Tariff.TariffAction;
 
 public class AlwaysIncrease extends Agent {
     public AlwaysIncrease() {
@@ -9,10 +10,7 @@ public class AlwaysIncrease extends Agent {
     }
 
     @Override
-    public void publishTariff(Observer ob) {
-        // System.out.println(name+" : marketshare " + marketShare);
-        increase(ob);
-
-        tariffCheck(ob); /* Tariff Check */
+    public TariffAction makeAction(Observer ob) {
+        return TariffAction.INCREASE;
     }
 }

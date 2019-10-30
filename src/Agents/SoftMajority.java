@@ -1,6 +1,7 @@
 package Agents;
 
 import Observer.Observer;
+import Tariff.TariffAction;
 
 public class SoftMajority extends Agent {
     private int defectCounter = 0;
@@ -11,19 +12,15 @@ public class SoftMajority extends Agent {
     }
 
     @Override
-    public void publishTariff(Observer ob) {
+    public TariffAction makeAction(Observer ob) {
         if (this.rivalPrevPrevPrice > this.rivalPrevPrice) // other agent is defecting
             defectCounter++;
-        else
-            coopCounter++; // other agent is cooperating
+        else // other agent is cooperating
+            coopCounter++;
 
-        if (ob.timeslot == 0) {
-        } // Coop
-        else if (coopCounter >= defectCounter) {
-        } // Coop
+        if (ob.timeslot == 0 || coopCounter >= defectCounter)
+            return TariffAction.NOCHANGE;
         else // Defect
-            defect(ob);
-
-        tariffCheck(ob);
+            return TariffAction.DEFECT;
     }
 }

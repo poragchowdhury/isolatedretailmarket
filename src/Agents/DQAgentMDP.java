@@ -23,25 +23,29 @@ import org.nd4j.linalg.learning.config.Adam;
 
 import Configuration.Configuration;
 import RetailMarketManager.RetailMarketManager;
-import Tariff.TariffActions;
+import Tariff.TariffAction;
 
 public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
-    public static QLearning.QLConfiguration QLConfig = QLearning.QLConfiguration.builder().seed(123)
-    		.maxEpochStep(Configuration.TOTAL_TIME_SLOTS/Configuration.PUBLICATION_CYCLE)  // 6
-    		.maxStep((Configuration.TOTAL_TIME_SLOTS/Configuration.PUBLICATION_CYCLE)*Configuration.TRAINING_ROUNDS) // 500
-    		.expRepMaxSize(10000)
-    		.batchSize(64)
-    		.targetDqnUpdateFreq(50)
-    		.updateStart(0)
-    		.rewardFactor(10)
-    		.gamma(0.99)
-    		.errorClamp(Double.MAX_VALUE)
-    		.minEpsilon(0.1f)
-    		.epsilonNbStep(3000)
-    		.doubleDQN(true)
-    		.build();
+    public static QLearning.QLConfiguration QLConfig = QLearning.QLConfiguration.builder()
+            .seed(123)
+            .maxEpochStep(Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) // 6
+            .maxStep((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS) // 500
+            .expRepMaxSize(10000)
+            .batchSize(64)
+            .targetDqnUpdateFreq(50)
+            .updateStart(0)
+            .rewardFactor(10)
+            .gamma(0.99)
+            .errorClamp(Double.MAX_VALUE)
+            .minEpsilon(0.1f)
+            .epsilonNbStep(3000)
+            .doubleDQN(true).build();
 
-    public static DQNFactoryStdDense.Configuration QLNet = DQNFactoryStdDense.Configuration.builder().l2(0.001).updater(new Adam(0.0005)).numHiddenNodes(16).numLayer(3).build();
+    public static DQNFactoryStdDense.Configuration QLNet = DQNFactoryStdDense.Configuration.builder()
+            .l2(0.001)
+            .updater(new Adam(0.0005))
+            .numHiddenNodes(16)
+            .numLayer(3).build();
 
     public static final int NUM_ACTIONS = 3;
     public static final int NUM_OBSERVATIONS = new DQAgentState().toArray().length;
@@ -126,13 +130,19 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
     }
 
     @Override
-    public StepReply<DQAgentState> step(Integer action) {
+    public StepReply<DQAgentState> step(Integer actionInt) {
+        TariffAction action = TariffAction.valueOf(actionInt);
         double before = agent.profit;
-        agent.playAction(action, retailManager.ob);
+        agent.playAction(retailManager.ob, action);
 
         // Perform other agent policies
         for (Agent ag : this.opponentPool) {
-            ag.publishTariff(retailManager.ob);
+            try {
+                ag.publishTariff(retailManager.ob);
+            } catch (Exception ex) {
+                System.out.printf("[Agent:%s raised an exception while publishing a tariff]\n");
+                ex.printStackTrace();
+            }
         }
 
         // Run the market evaluation based on the previous action

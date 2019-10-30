@@ -24,7 +24,6 @@ import Agents.DQAgent;
 import Agents.DQAgentMDP;
 import Agents.Grim;
 import Agents.HardMajority;
-import Agents.NaiveProber;
 import Agents.Pavlov;
 import Agents.Prober;
 import Agents.Rand;
@@ -75,8 +74,12 @@ public class RetailMarketManager {
 
     public void publishTariffs() {
         for (Agent a : ob.agentPool) {
-            a.publishTariff(ob);
-            // System.out.print(a.name + " " + a.tariffPrice + " ");
+            try {
+                a.publishTariff(ob);
+            } catch (Exception ex) {
+                System.out.printf("[Agent:%s raised an exception while publishing a tariff]\n");
+                ex.printStackTrace();
+            }
         }
         updateAgentsMemory();
     }
@@ -687,7 +690,7 @@ public class RetailMarketManager {
     public CaseStudy setupInitialStrategies() {
         log.info("=== Setting up initial pools ===");
         CaseStudy initial = new CaseStudy().addP1Strats(new AlwaysDefect(), new AlwaysIncrease()); // , new NaiveProber()
-        initial.addP2Strats(new AlwaysDefect(), new AlwaysIncrease()); //, new NaiveProber()
+        initial.addP2Strats(new AlwaysDefect(), new AlwaysIncrease()); // , new NaiveProber()
         log.info("Pool1: " + initial.pool1.toString());
         log.info("Pool2: " + initial.pool2.toString());
         return initial;
@@ -778,7 +781,7 @@ public class RetailMarketManager {
                             ob.clear();
                         }
                         // printAverageRevenues() function
-                        
+
                         double[] vals = ob.calcAvg(cs);
                         System.out.println(cs.pool1.get(iagent).name + " " + vals[0] + " " + cs.pool2.get(kagent).name + " " + vals[1] + " Error1 " + vals[2] + " Error2 " + vals[3]);
                         if (iagent != kagent) {
@@ -923,20 +926,20 @@ public class RetailMarketManager {
     public static void sandboxExperiment() throws IOException {
         RetailMarketManager rm = new RetailMarketManager();
         rm.setupLogging();
-        Agent alwaysD = new AlwaysDefect();
-        Agent rand = new Rand();
-        Agent tft = new TitForTat(1, 1);
+        // Agent alwaysD = new AlwaysDefect();
+        // Agent rand = new Rand();
+        // Agent tft = new TitForTat(1, 1);
         Agent alwaysS = new AlwaysSame();
         List<Agent> oppPool = new ArrayList<>();
         Agent opponentAgent = alwaysS;
         oppPool.add(opponentAgent);
-        //oppPool.add(rand);
-        //oppPool.add(tft);
+        // oppPool.add(rand);
+        // oppPool.add(tft);
         DQAgentMDP.trainDQAgent(oppPool, "sandbox.pol");
         DQAgent dqAgent = new DQAgent("sandbox.pol");
         rm.startSimulation(new CaseStudy().addP1Strats(opponentAgent).addP2Strats(dqAgent));
         rm.log.info(opponentAgent.name + ": " + opponentAgent.profit + ", DQAgent:" + dqAgent.profit);
-        //rm.log.info("Rand: " + rand.profit + ", TitTat: " + tft.profit);
+        // rm.log.info("Rand: " + rand.profit + ", TitTat: " + tft.profit);
         rm.log.info("Feature Size: " + DQAgentMDP.NUM_OBSERVATIONS);
         rm.log.info("Training Rounds: " + Configuration.TRAINING_ROUNDS);
         rm.log.info("Test Rounds: " + Configuration.TEST_ROUNDS);

@@ -3,7 +3,7 @@ package Agents;
 import java.util.Random;
 
 import Observer.Observer;
-import Tariff.TariffActions;
+import Tariff.TariffAction;
 
 /**
  * Cooperates on the first move.
@@ -16,26 +16,24 @@ public class Pavlov extends Agent {
     public double prI = 1;
 
     public Pavlov() {
-        // TODO Auto-generated constructor stub
         super("Pavlov");
-        this.myPrevActionId = TariffActions.action.NOCHANGE.ordinal();
     }
 
     @Override
-    public void publishTariff(Observer ob) {
+    public TariffAction makeAction(Observer ob) {
         /* Tariff Check */
-        if (myPrevActionId == TariffActions.action.INCREASE.ordinal() || myPrevActionId == TariffActions.action.NOCHANGE.ordinal()) { // C
+        if (previousAction == TariffAction.INCREASE || previousAction == TariffAction.NOCHANGE) { // C
             if (this.rivalPrevPrevPrice == this.rivalPrevPrice) // other agent is C
             {
                 pr = Math.min((pr + 0.1), 1); // CC state
 
-                if (myPrevActionId == TariffActions.action.INCREASE.ordinal())
+                if (previousAction == TariffAction.INCREASE)
                     prI = Math.min((prI + 0.1), 1); // CC state: Increase
                 else
                     prI = Math.max((prI - 0.1), 0); // CC state: Nochage
             }
 
-        } else if (myPrevActionId == TariffActions.action.DEFECT.ordinal()) { // D
+        } else if (previousAction == TariffAction.DEFECT) { // D
             if (this.rivalPrevPrevPrice > this.rivalPrevPrice) // other agent is D
                 pr = Math.min((pr + 0.1), 1); // DD state
         } else {
@@ -46,20 +44,19 @@ public class Pavlov extends Agent {
         Random r = new Random();
         int coin = r.nextInt(100);
         if (coin > prInt) // Defect
-            defect(ob);
+            return TariffAction.DEFECT;
         else // Coop
-            cooperate(ob, prI);
+            return cooperate(ob, prI);
 
-        tariffCheck(ob);
     }
 
-    public void cooperate(Observer ob, double prI) {
+    public TariffAction cooperate(Observer ob, double prI) {
         int prInt = (int) prI * 100;
         Random r = new Random();
         int coin = r.nextInt(100);
-        if (coin > prInt) // Nochange
-            nochange();
+        if (coin > prInt) // No Change
+            return TariffAction.NOCHANGE;
         else // Coop
-            increase(ob);
+            return TariffAction.INCREASE;
     }
 }
