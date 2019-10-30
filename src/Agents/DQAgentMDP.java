@@ -26,7 +26,20 @@ import RetailMarketManager.RetailMarketManager;
 import Tariff.TariffActions;
 
 public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
-    public static QLearning.QLConfiguration QLConfig = QLearning.QLConfiguration.builder().seed(123).maxEpochStep(6).maxStep(500).expRepMaxSize(10000).batchSize(64).targetDqnUpdateFreq(50).updateStart(0).rewardFactor(10).gamma(0.99).errorClamp(Double.MAX_VALUE).minEpsilon(0.1f).epsilonNbStep(3000).doubleDQN(true).build();
+    public static QLearning.QLConfiguration QLConfig = QLearning.QLConfiguration.builder().seed(123)
+    		.maxEpochStep(Configuration.TOTAL_TIME_SLOTS/Configuration.PUBLICATION_CYCLE)  // 6
+    		.maxStep((Configuration.TOTAL_TIME_SLOTS/Configuration.PUBLICATION_CYCLE)*Configuration.TRAINING_ROUNDS) // 500
+    		.expRepMaxSize(10000)
+    		.batchSize(64)
+    		.targetDqnUpdateFreq(50)
+    		.updateStart(0)
+    		.rewardFactor(10)
+    		.gamma(0.99)
+    		.errorClamp(Double.MAX_VALUE)
+    		.minEpsilon(0.1f)
+    		.epsilonNbStep(3000)
+    		.doubleDQN(true)
+    		.build();
 
     public static DQNFactoryStdDense.Configuration QLNet = DQNFactoryStdDense.Configuration.builder().l2(0.001).updater(new Adam(0.0005)).numHiddenNodes(16).numLayer(3).build();
 

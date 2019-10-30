@@ -40,10 +40,17 @@ class DQAgentState implements Encodable {
         this.prevProfit = agent.prevprofit;
         if (agent.rivalPrevPrevPrice > agent.rivalPrevPrice)
             this.lastDefect = 1;
+        else
+        	this.lastDefect = 0;
         if (agent.rivalPrevPrevPrice < agent.rivalPrevPrice)
             this.lastCoop = 1;
+        else
+        	this.lastCoop = 0;
+        	
         if (agent.rivalPrevPrevPrice == agent.rivalPrevPrice)
             this.lastNoChange = 1;
+        else
+        	this.lastNoChange = 0;
     }
 
     @Override
@@ -102,6 +109,7 @@ public class DQAgent extends Agent {
     }
 
     public void playAction(int nextAction, Observer ob) {
+    	System.out.println("TS " + ob.timeslot + " Action " + TariffActions.a[nextAction]);
         if (nextAction == 0) // Defect
             increase(ob);
         else if (nextAction == 1) // Increase

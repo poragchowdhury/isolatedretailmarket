@@ -217,12 +217,12 @@ public class RetailMarketManager {
             double inertia[] = { 0.8 };
             double imax = 1;
             double rmax = 1;
-            double roundmax = Configuration.ROUND;
+            double roundmax = Configuration.TEST_ROUNDS;
             if (!Configuration.DLOGGING) {
                 // Detailed logging disabled
                 rmax = rationality.length;
                 imax = inertia.length;
-                roundmax = Configuration.ROUND;
+                roundmax = Configuration.TEST_ROUNDS;
             }
 
             pwOutput.println(Configuration.print());
@@ -721,10 +721,10 @@ public class RetailMarketManager {
         double inertia[] = { Configuration.INERTIA };
         double imax = 1;
         double rmax = 1;
-        double roundmax = Configuration.ROUND;
+        double roundmax = Configuration.TEST_ROUNDS;
         rmax = rationality.length;
         imax = inertia.length;
-        roundmax = Configuration.ROUND;
+        roundmax = Configuration.TEST_ROUNDS;
         // Round Robin Tournament Set Up
         for (int iagent = 0; iagent < cs.pool1.size(); iagent++) {
             for (int kagent = iagent; kagent < cs.pool2.size(); kagent++) {
@@ -778,7 +778,9 @@ public class RetailMarketManager {
                             ob.clear();
                         }
                         // printAverageRevenues() function
+                        
                         double[] vals = ob.calcAvg(cs);
+                        System.out.println(cs.pool1.get(iagent).name + " " + vals[0] + " " + cs.pool2.get(kagent).name + " " + vals[1] + " Error1 " + vals[2] + " Error2 " + vals[3]);
                         if (iagent != kagent) {
                             gameMatrix[iagent][kagent] = new Payoffs(vals[0], vals[1]);
                             gameMatrix[kagent][iagent] = new Payoffs(vals[1], vals[0]);
@@ -924,18 +926,20 @@ public class RetailMarketManager {
         Agent alwaysD = new AlwaysDefect();
         Agent rand = new Rand();
         Agent tft = new TitForTat(1, 1);
+        Agent alwaysS = new AlwaysSame();
         List<Agent> oppPool = new ArrayList<>();
-        oppPool.add(alwaysD);
-        oppPool.add(rand);
-        oppPool.add(tft);
+        Agent opponentAgent = alwaysS;
+        oppPool.add(opponentAgent);
+        //oppPool.add(rand);
+        //oppPool.add(tft);
         DQAgentMDP.trainDQAgent(oppPool, "sandbox.pol");
         DQAgent dqAgent = new DQAgent("sandbox.pol");
-
-        rm.startSimulation(new CaseStudy().addP1Strats(alwaysD, rand, tft, dqAgent).addP2Strats(alwaysD, rand, tft, dqAgent));
-        rm.log.info("AlwaysDefect: " + alwaysD.profit + ", DQAgent:" + dqAgent.profit);
-        rm.log.info("Rand: " + rand.profit + ", TitTat: " + tft.profit);
+        rm.startSimulation(new CaseStudy().addP1Strats(opponentAgent).addP2Strats(dqAgent));
+        rm.log.info(opponentAgent.name + ": " + opponentAgent.profit + ", DQAgent:" + dqAgent.profit);
+        //rm.log.info("Rand: " + rand.profit + ", TitTat: " + tft.profit);
         rm.log.info("Feature Size: " + DQAgentMDP.NUM_OBSERVATIONS);
-        rm.log.info("Rounds: " + Configuration.ROUND);
+        rm.log.info("Training Rounds: " + Configuration.TRAINING_ROUNDS);
+        rm.log.info("Test Rounds: " + Configuration.TEST_ROUNDS);
     }
 
     public static void mainExperiment() throws IOException {

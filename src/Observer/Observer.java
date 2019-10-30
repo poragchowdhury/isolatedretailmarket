@@ -52,7 +52,7 @@ public class Observer {
         demandmult = Configuration.DMNDMULT;
         initcost = Configuration.INITCOST;
         unitcost = daymult * 0 + demandmult * fcc.usage[0] + initcost;
-        agentPayoffs = new double[2][Configuration.ROUND];
+        agentPayoffs = new double[2][Configuration.TEST_ROUNDS];
 
     }
 
@@ -100,8 +100,8 @@ public class Observer {
         stdagent1 = Math.sqrt(stdagent1);
         stdagent2 = Math.sqrt(stdagent2);
 
-        double error1 = 1.96 * (stdagent1 / Math.sqrt(Configuration.ROUND));
-        double error2 = 1.96 * (stdagent2 / Math.sqrt(Configuration.ROUND));
+        double error1 = 1.96 * (stdagent1 / Math.sqrt(Configuration.TEST_ROUNDS));
+        double error2 = 1.96 * (stdagent2 / Math.sqrt(Configuration.TEST_ROUNDS));
 
         // print avg payoff with error
         // if (Configuration.CASE_STUDY_NO > 0)

@@ -19,7 +19,8 @@ public class Configuration {
     public static double DMNDMULT = 0;
     public static double INITCOST = 0;
     public static boolean DLOGGING = true;
-    public static int ROUND = 1;
+    public static int TEST_ROUNDS = 1;
+    public static int TRAINING_ROUNDS = 1;
 
     public static double LEARNING_RATE = 0.9;
     public static double DISCOUNT_FACTOR = 1;
@@ -35,7 +36,7 @@ public class Configuration {
 
     public static String print() {
         return "\n********************Configurations**********************\n" + "TOTAL_TIME_SLOTS : " + TOTAL_TIME_SLOTS + "\n" + "PUBLICATION_CYCLE : " + PUBLICATION_CYCLE + "\n" + "DEFAULT_TARIFF_PRICE : " + DEFAULT_TARIFF_PRICE + "\n" + "CASE_STUDY_NO : " + CASE_STUDY_NO + "\n" + "INERTIA : " + INERTIA + "\n" + "RATIONALITY : " + RATIONALITY + "\n" + "ACT_CHANGE_PERC : " + ACT_CHANGE_PERC + "\n" + "POPULATION : " + POPULATION + "\n" + "LOGFILENAME : " + LOGFILENAME + "\n" + "DAYMULT : "
-                + DAYMULT + "\n" + "DMNDMULT : " + DMNDMULT + "\n" + "INITCOST : " + INITCOST + "\n" + "DLOGGING : " + DLOGGING + "\n" + "ROUND : " + ROUND + "\n" + "LEARNING_RATE : " + LEARNING_RATE + "\n" + "DISCOUNT_FACTOR : " + DISCOUNT_FACTOR + "\n" + "DB_NAME_TRAINING : " + DB_NAME_TRAINING + "\n" + "MAX_TARIFF_PRICE : " + MAX_TARIFF_PRICE + "\n" + "RL_TRAINING : " + RL_TRAINING + "\n" + "PPTS_DISCRTZD : " + PPTS_DISCRTZD + "\n" + "GET_NASH_EQ : " + GET_NASH_EQ
+                + DAYMULT + "\n" + "DMNDMULT : " + DMNDMULT + "\n" + "INITCOST : " + INITCOST + "\n" + "DLOGGING : " + DLOGGING + "\n" + "TEST_ROUNDS : " + TEST_ROUNDS + "\n" + "TRAINING_ROUNDS : " + TRAINING_ROUNDS + "\n" + "LEARNING_RATE : " + LEARNING_RATE + "\n" + "DISCOUNT_FACTOR : " + DISCOUNT_FACTOR + "\n" + "DB_NAME_TRAINING : " + DB_NAME_TRAINING + "\n" + "MAX_TARIFF_PRICE : " + MAX_TARIFF_PRICE + "\n" + "RL_TRAINING : " + RL_TRAINING + "\n" + "PPTS_DISCRTZD : " + PPTS_DISCRTZD + "\n" + "GET_NASH_EQ : " + GET_NASH_EQ
                 + "MANUAL_NASH_EQ_SELECTION : " + MANUAL_NASH_EQ_SELECTION + "\n" + "MAX_DQ_AGENTS_ALLOWED : " + MAX_DQ_AGENTS_ALLOWED + "\n";
     }
 
@@ -62,7 +63,8 @@ public class Configuration {
             DMNDMULT = Double.parseDouble(prop.getProperty("demandmult"));
             INITCOST = Double.parseDouble(prop.getProperty("initcost"));
             DLOGGING = Boolean.parseBoolean(prop.getProperty("detailedlogging"));
-            ROUND = Integer.parseInt(prop.getProperty("round"));
+            TEST_ROUNDS = Integer.parseInt(prop.getProperty("test-rounds"));
+            TRAINING_ROUNDS = Integer.parseInt(prop.getProperty("dq-training-rounds"));
             LEARNING_RATE = Double.parseDouble(prop.getProperty("learningrate"));
             DISCOUNT_FACTOR = Double.parseDouble(prop.getProperty("discountfactor"));
             DB_NAME_TRAINING = prop.getProperty("db-name-training");
