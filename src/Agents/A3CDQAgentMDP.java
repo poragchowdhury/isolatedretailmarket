@@ -14,6 +14,8 @@ import java.util.logging.Logger;
 import org.deeplearning4j.gym.StepReply;
 import org.deeplearning4j.rl4j.learning.Learning;
 import org.deeplearning4j.rl4j.learning.NeuralNetFetchable;
+import org.deeplearning4j.rl4j.learning.async.nstep.discrete.AsyncNStepQLearningDiscrete;
+import org.deeplearning4j.rl4j.learning.async.nstep.discrete.AsyncNStepQLearningDiscreteDense;
 import org.deeplearning4j.rl4j.learning.sync.qlearning.QLearning;
 import org.deeplearning4j.rl4j.learning.sync.qlearning.discrete.QLearningDiscreteDense;
 import org.deeplearning4j.rl4j.mdp.MDP;
@@ -34,7 +36,7 @@ import Observer.Observer;
 import RetailMarketManager.RetailMarketManager;
 import Tariff.TariffActions;
 
-public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
+public class A3CDQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
     public static QLearning.QLConfiguration QLConfig = new QLearning.QLConfiguration(
             123,   //Random seed
             Configuration.TOTAL_TIME_SLOTS/Configuration.PUBLICATION_CYCLE,//Max step By epoch
@@ -48,8 +50,25 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
             10.0,  //td-error clipping
             0.5f,  //min epsilon
             Configuration.TOTAL_TIME_SLOTS/6,  //num step for eps greedy anneal
-            false   //double DQN
+            true   //double DQN
     );
+    
+    public static AsyncNStepQLearningDiscrete.AsyncNStepQLConfiguration ASYNC_QL_Config =
+            new AsyncNStepQLearningDiscrete.AsyncNStepQLConfiguration(
+                    123,        //Random seed
+                    Configuration.TOTAL_TIME_SLOTS/Configuration.PUBLICATION_CYCLE,//Max step By epoch
+                    (Configuration.TOTAL_TIME_SLOTS/Configuration.PUBLICATION_CYCLE)*Configuration.TRAININGROUNDS, //Max step
+                    8,          //Number of threads
+                    5,          //t_max
+                    100,        //target update (hard)
+                    0,          //num step noop warmup
+                    0.9,        //reward scaling
+                    0.1,       //gamma
+                    10.0,       //td-error clipping
+                    0.5f,       //min epsilon
+                    (Configuration.TOTAL_TIME_SLOTS/Configuration.PUBLICATION_CYCLE)*Configuration.TRAININGROUNDS/2        //num step for eps greedy anneal
+            );
+
 
     public static DQNFactoryStdDense.Configuration QLNet = DQNFactoryStdDense.Configuration.builder().
     		l2(0.01).updater(new Adam(0.001)).numHiddenNodes(16).numLayer(3).build();
@@ -70,7 +89,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
     private DQAgent agent;
     private List<Agent> opponentPool;
 
-    public DQAgentMDP(List<Agent> opponentPool) {
+    public A3CDQAgentMDP(List<Agent> opponentPool) {
         this.opponentPool = opponentPool;
         this.retailManager = new RetailMarketManager();
         this.reset();
@@ -78,13 +97,13 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 
     public static void trainDQAgent(List<Agent> opponentPool) {
     	log("Setting up DeepQ training");
-        DQAgentMDP mdp = new DQAgentMDP(opponentPool);
+        A3CDQAgentMDP mdp = new A3CDQAgentMDP(opponentPool);
     	try {
             // record the training data in rl4j-data in a new folder
             DataManager manager = new DataManager();
-            QLearningDiscreteDense<DQAgentState> dql = new QLearningDiscreteDense<DQAgentState>(mdp, QLNet, QLConfig, manager);
+            //QLearningDiscreteDense<DQAgentState> dql = new QLearningDiscreteDense<DQAgentState>(mdp, QLNet, QLConfig, manager);
             //Learning<DQAgentState, Integer, DiscreteSpace, IDQN> dql  = new QLearningDiscreteDense<DQAgentState>(mdp, QLNet, QLConfig, manager);
-            
+            AsyncNStepQLearningDiscreteDense dql = new AsyncNStepQLearningDiscreteDense<DQAgentState>(mdp, QLNet, ASYNC_QL_Config, manager);
             // enable some logging for debug purposes on toy mdp
             //mdp.setFetchable(dql);
             
@@ -126,7 +145,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 
     @Override
     public MDP<DQAgentState, Integer, DiscreteSpace> newInstance() {
-        DQAgentMDP mdp = new DQAgentMDP(this.opponentPool);
+        A3CDQAgentMDP mdp = new A3CDQAgentMDP(this.opponentPool);
         return mdp;
     }
 
@@ -146,7 +165,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 
     @Override
     public StepReply<DQAgentState> step(Integer action) {
-    	//System.out.println("Training: TS: " + Observer.timeslot +  " a " + action + " : " + TariffActions.a[action] + " profit " + agent.profit + " mktshare " + agent.marketShare);
+    	System.out.println("Training: TS: " + Observer.timeslot +  " a " + action + " : " + TariffActions.a[action] + " profit " + agent.profit + " mktshare " + agent.marketShare);
     	if (action == TariffActions.action.INCREASE.ordinal()) // Increase
             agent.increase(retailManager.ob);
         else if (action == TariffActions.action.DEFECT.ordinal()) // Decrease

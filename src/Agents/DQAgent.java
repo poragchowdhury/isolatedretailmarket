@@ -54,7 +54,7 @@ public class DQAgent extends Agent {
         input = input.reshape(Learning.makeShape(1, DQAgentMDP.observationSpace.getShape()));
 
         int nextAction = pol.nextAction(input);
-        System.out.println("Test: TS: " + Observer.timeslot +  " Action " + nextAction);
+        System.out.println("Test: TS: " + Observer.timeslot +  " a " + nextAction + " : " + TariffActions.a[nextAction]);
         if (nextAction == TariffActions.action.DEFECT.ordinal()) // Defect
             defect(ob);
         else if (nextAction == TariffActions.action.INCREASE.ordinal()) // Increase

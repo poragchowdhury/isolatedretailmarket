@@ -6,6 +6,7 @@ import RetailMarketManager.RetailMarketManager;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import Agents.A3CDQAgentMDP;
 import Agents.Agent;
 import Agents.AlwaysDefect;
 import Agents.AlwaysIncrease;
@@ -1398,9 +1399,8 @@ public class CaseStudy {
 		}
 		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.DQTraining.getValue()){
 	        pool1.add(new SMNE1());
-		    //pool2.add(new AlwaysDefect());
-		    DQAgentMDP.trainDQAgent(pool1);
-		    //pool1.add(new DQAgent());
+		    //DQAgentMDP.trainDQAgent(pool1);
+	        A3CDQAgentMDP.trainDQAgent(pool1);
 		    pool2.add(new DQAgent());
 		}
 		else if(Configuration.CASE_STUDY_NO == Configuration.CASE_STUDY.DQFixed.getValue()){
