@@ -1,6 +1,8 @@
 package Agents;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.deeplearning4j.rl4j.learning.Learning;
@@ -20,17 +22,52 @@ class DQAgentState implements Encodable {
     public Agent agent;
     public int timeSlot;
     public long ppts;
+    public double[][] agentPayoffs;
+    public double prevProfit;
+    public int lastDefect = 0;
+    public int lastCoop = 0;
+    public int lastNoChange = 0;
+
+    public DQAgentState() {
+        this(new DQAgent(), new Observer());
+    }
 
     public DQAgentState(Agent agent, Observer ob) {
         this.agent = agent;
         this.timeSlot = ob.timeslot;
-        this.ppts = (long) (agent.prevprofit / (double) ob.timeslot - 1);
+        this.ppts = (long) (agent.prevprofit / (double) ob.timeslot);
+        this.agentPayoffs = ob.agentPayoffs;
+        this.prevProfit = agent.prevprofit;
+        if (agent.rivalPrevPrevPrice > agent.rivalPrevPrice)
+            this.lastDefect = 1;
+        if (agent.rivalPrevPrevPrice < agent.rivalPrevPrice)
+            this.lastCoop = 1;
+        if (agent.rivalPrevPrevPrice == agent.rivalPrevPrice)
+            this.lastNoChange = 1;
     }
 
     @Override
     public double[] toArray() {
-        return new double[] { timeSlot, ppts };
+        List<Double> features = new ArrayList<>();
+        /* ===== NOTE: Add your features here ===== */
+        features.add((double) timeSlot);
+        features.add((double) ppts);
+        features.add(prevProfit);
+        features.add((double) lastDefect);
+        features.add((double) lastCoop);
+        features.add((double) lastNoChange);
+        // for(double[] arr : agentPayoffs)
+        // for(double d : arr)
+        // state.add(d);
+
+        // Get all the features from the list
+        // Convert to a double array for use in the MDP
+        double[] result = new double[features.size()];
+        for (int i = 0; i < features.size(); i++)
+            result[i] = features.get(i);
+        return result;
     }
+
 }
 
 /**
@@ -52,7 +89,7 @@ public class DQAgent extends Agent {
         // Only number testing agents, not the ones used for training
         this.agentNumber = CURRENT_AGENT_COUNT;
         CURRENT_AGENT_COUNT++;
-        
+
         this.name = "DQAgent" + this.agentNumber + "_" + policyName.substring(0, policyName.length() - 4);
     }
 
@@ -64,19 +101,24 @@ public class DQAgent extends Agent {
         return "DQAgent" + this.agentNumber;
     }
 
+    public void playAction(int nextAction, Observer ob) {
+        if (nextAction == 0) // Defect
+            increase(ob);
+        else if (nextAction == 1) // Increase
+            defectOnRivalPrice(ob);
+        else // No change
+            nochange();
+    }
+
     @Override
     public void publishTariff(Observer ob) {
         // Feed the current state into the policy's network
         DQAgentState state = new DQAgentState(this, ob);
         INDArray input = Nd4j.create(state.toArray());
-        input = input.reshape(Learning.makeShape(1, DQAgentMDP.observationSpace.getShape()));
+        input = input.reshape(Learning.makeShape(1, DQAgentMDP.OBSERVATION_SPACE.getShape()));
 
         int nextAction = pol.nextAction(input);
-        if (nextAction == TariffActions.action.DEFECT.ordinal()) // Defect
-            defect(ob);
-        else if (nextAction == TariffActions.action.INCREASE.ordinal()) // Increase
-            increase(ob);
-        else // No change
-            nochange();
+        playAction(nextAction, ob);
+
     }
 }
