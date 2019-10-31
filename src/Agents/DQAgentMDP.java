@@ -35,7 +35,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
             .maxStep((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS) // 500
             .expRepMaxSize(4) // 10000 
             .batchSize(1) // 64
-            .targetDqnUpdateFreq(1) // 50
+            .targetDqnUpdateFreq((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE)) // 50
             .updateStart(0) // 0
             .rewardFactor(0.9) // 10
             .gamma(0.1) // 0.99
@@ -51,13 +51,13 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
                     ((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS),      //Max step
                     8,          //Number of threads
                     5,          //t_max
-                    100,        //target update (hard)
+                    (Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE),        //target update (hard)
                     0,          //num step noop warmup
-                    0.1,        //reward scaling
-                    0.99,       //gamma
-                    10.0,       //td-error clipping
-                    0.1f,       //min epsilon
-                    2000        //num step for eps greedy anneal
+                    0.9,        //reward scaling
+                    0.1,       //gamma
+                    0.0,       //td-error clipping
+                    0.5f,       //min epsilon
+                    ((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS)/2        //num step for eps greedy anneal
             );
     
     
@@ -94,8 +94,8 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
             DataManager manager = new DataManager(true);
             log("QLCONFIG MAXSTEP" + QLConfig.getMaxStep());
             
-            //QLearningDiscreteDense<DQAgentState> dql = new QLearningDiscreteDense<DQAgentState>(mdp, QLNet, QLConfig, manager);
-            AsyncNStepQLearningDiscreteDense<DQAgentState> dql = new AsyncNStepQLearningDiscreteDense<DQAgentState>(mdp, QLNet, ASYNC_QLConfig, manager);
+            QLearningDiscreteDense<DQAgentState> dql = new QLearningDiscreteDense<DQAgentState>(mdp, QLNet, QLConfig, manager);
+            //AsyncNStepQLearningDiscreteDense<DQAgentState> dql = new AsyncNStepQLearningDiscreteDense<DQAgentState>(mdp, QLNet, ASYNC_QLConfig, manager);
             
             //define the training
             log("Training DeepQ");
