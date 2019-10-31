@@ -9,6 +9,8 @@ log/*
 *.others
 *.xlsx
 /target/
+*.nfg
+*.gbt
 
 # Policy files
 *.pol
