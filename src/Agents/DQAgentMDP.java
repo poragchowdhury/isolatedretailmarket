@@ -9,9 +9,12 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.deeplearning4j.gym.StepReply;
+import org.deeplearning4j.rl4j.learning.async.nstep.discrete.AsyncNStepQLearningDiscrete;
+import org.deeplearning4j.rl4j.learning.async.nstep.discrete.AsyncNStepQLearningDiscreteDense;
 import org.deeplearning4j.rl4j.learning.sync.qlearning.QLearning;
 import org.deeplearning4j.rl4j.learning.sync.qlearning.discrete.QLearningDiscreteDense;
 import org.deeplearning4j.rl4j.mdp.MDP;
+import org.deeplearning4j.rl4j.mdp.toy.SimpleToyState;
 import org.deeplearning4j.rl4j.network.dqn.DQNFactoryStdDense;
 import org.deeplearning4j.rl4j.policy.DQNPolicy;
 import org.deeplearning4j.rl4j.space.ArrayObservationSpace;
@@ -30,17 +33,34 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
             .seed(123)
             .maxEpochStep(Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) // 6
             .maxStep((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS) // 500
-            .expRepMaxSize(10000)
-            .batchSize(64)
-            .targetDqnUpdateFreq(50)
-            .updateStart(0)
-            .rewardFactor(10)
-            .gamma(0.99)
+            .expRepMaxSize(4) // 10000 
+            .batchSize(1) // 64
+            .targetDqnUpdateFreq(1) // 50
+            .updateStart(0) // 0
+            .rewardFactor(0.9) // 10
+            .gamma(0.1) // 0.99
             .errorClamp(Double.MAX_VALUE)
-            .minEpsilon(0.1f)
-            .epsilonNbStep(3000)
+            .minEpsilon(1.0f) // 0.1f
+            .epsilonNbStep((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS) // 3000
             .doubleDQN(true).build();
 
+    public static AsyncNStepQLearningDiscrete.AsyncNStepQLConfiguration ASYNC_QLConfig =
+            new AsyncNStepQLearningDiscrete.AsyncNStepQLConfiguration(
+                    123,        //Random seed
+                    (Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE),     //Max step By epoch
+                    ((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS),      //Max step
+                    8,          //Number of threads
+                    5,          //t_max
+                    100,        //target update (hard)
+                    0,          //num step noop warmup
+                    0.1,        //reward scaling
+                    0.99,       //gamma
+                    10.0,       //td-error clipping
+                    0.1f,       //min epsilon
+                    2000        //num step for eps greedy anneal
+            );
+    
+    
     public static DQNFactoryStdDense.Configuration QLNet = DQNFactoryStdDense.Configuration.builder()
             .l2(0.001)
             .updater(new Adam(0.0005))
@@ -73,12 +93,15 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
             // record the training data in rl4j-data in a new folder
             DataManager manager = new DataManager(true);
             log("QLCONFIG MAXSTEP" + QLConfig.getMaxStep());
-            QLearningDiscreteDense<DQAgentState> dql = new QLearningDiscreteDense<DQAgentState>(mdp, QLNet, QLConfig, manager);
-
+            
+            //QLearningDiscreteDense<DQAgentState> dql = new QLearningDiscreteDense<DQAgentState>(mdp, QLNet, QLConfig, manager);
+            AsyncNStepQLearningDiscreteDense<DQAgentState> dql = new AsyncNStepQLearningDiscreteDense<DQAgentState>(mdp, QLNet, ASYNC_QLConfig, manager);
+            
+            //define the training
             log("Training DeepQ");
             dql.train();
-            DQNPolicy<DQAgentState> pol = dql.getPolicy();
-
+            //DQNPolicy<DQAgentState> pol = dql.getPolicy();
+            DQNPolicy<DQAgentState> pol = (DQNPolicy<DQAgentState>) dql.getPolicy();
             log("Saving DeepQ policy");
             pol.save(policyFilename);
         } catch (IOException e) {

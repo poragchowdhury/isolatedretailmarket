@@ -20,7 +20,9 @@ class DQAgentState implements Encodable {
     public int lastDefect;
     public int lastCoop;
     public int lastNoChange;
-
+    public int prevAction;
+    public double prevHourUsage;
+    
     public DQAgentState() {
         this(new DQAgent(), new Observer());
     }
@@ -28,7 +30,7 @@ class DQAgentState implements Encodable {
     public DQAgentState(Agent agent, Observer ob) {
         this.agent = agent;
         this.timeSlot = ob.timeslot;
-        this.ppts = (long) (agent.prevprofit / (double) ob.timeslot);
+        this.ppts = (long) (agent.prevprofit / (double) (ob.timeslot-6));
         this.agentPayoffs = ob.agentPayoffs;
         this.prevProfit = agent.prevprofit;
         if (agent.rivalPrevPrevPrice > agent.rivalPrevPrice)
@@ -44,7 +46,9 @@ class DQAgentState implements Encodable {
             this.lastNoChange = 1;
         else
             this.lastNoChange = 0;
-
+        
+        this.prevAction = agent.previousAction.index;
+        this.prevHourUsage = ob.fcc.usage[ob.timeslot%24 == 0 ? 23 : (ob.timeslot%24)-1];
     }
 
     @Override
@@ -57,6 +61,8 @@ class DQAgentState implements Encodable {
         features.add((double) lastDefect);
         features.add((double) lastCoop);
         features.add((double) lastNoChange);
+        features.add((double) prevAction);
+        features.add((double) prevHourUsage);
         // for(double[] arr : agentPayoffs)
         // for(double d : arr)
         // state.add(d);

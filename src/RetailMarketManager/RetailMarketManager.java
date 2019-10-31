@@ -928,7 +928,7 @@ public class RetailMarketManager {
         rm.setupLogging();
         // Agent alwaysD = new AlwaysDefect();
         // Agent rand = new Rand();
-        // Agent tft = new TitForTat(1, 1);
+        Agent tft = new TitForTat(1, 1);
         Agent alwaysS = new AlwaysSame();
         List<Agent> oppPool = new ArrayList<>();
         Agent opponentAgent = alwaysS;
