@@ -38,15 +38,15 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
             .seed(123)
             .maxEpochStep(Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) // 6
             .maxStep((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS) // 500
-            .expRepMaxSize((168 / 6) * 10) // 10000
-            .batchSize(168 / 6) // 64
+            .expRepMaxSize((168/6)*50) // 10000
+            .batchSize((168 / 6)*10) // 64
             .targetDqnUpdateFreq((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE)) // 50
             .updateStart(0) // 0
-            .rewardFactor(0.1) // 10
+            .rewardFactor(0.1)
             .gamma(0.9) // 0.99
             .errorClamp(Double.MAX_VALUE)
-            .minEpsilon(0.01f) // 0.1f
-            .epsilonNbStep((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE))// * Configuration.TRAINING_ROUNDS) // 3000
+            .minEpsilon(0.1f) // 0.1f
+            .epsilonNbStep((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS) // 3000
             .doubleDQN(true).build();
     
     public static A3CConfiguration QLConfig2 = A3CConfiguration.builder().
