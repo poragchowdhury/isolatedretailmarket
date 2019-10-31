@@ -23,7 +23,9 @@ class DQAgentState implements Encodable {
     public int lastCoop;
     public int lastNoChange;
     public double marketShare;
-
+    public int prevAction;
+    public double prevHourUsage;
+    
     public DQAgentState() {
         this(new DQAgent(), new Observer());
     }
@@ -33,7 +35,7 @@ class DQAgentState implements Encodable {
         this.ob = ob;
 
         this.timeSlot = ob.timeslot;
-        this.ppts = (long) (agent.prevprofit / (double) ob.timeslot);
+        this.ppts = (long) (agent.prevprofit / (double) (ob.timeslot-6));
         this.agentPayoffs = ob.agentPayoffs;
         this.prevProfit = agent.prevprofit;
         if (agent.rivalPrevPrevPrice > agent.rivalPrevPrice)
@@ -44,11 +46,6 @@ class DQAgentState implements Encodable {
             this.lastCoop = 1;
         else
             this.lastCoop = 0;
-
-        if (agent.rivalPrevPrevPrice == agent.rivalPrevPrice)
-            this.lastNoChange = 1;
-        else
-            this.lastNoChange = 0;
 
         this.marketShare = agent.marketShare;
     }
@@ -77,17 +74,10 @@ class DQAgentState implements Encodable {
         features.add((double) lastNoChange);
         features.add((double) lastDefect);
         features.add((double) lastCoop);
-        // features.add(ob.fcc.usage[(ob.timeslot + 1) % 24 == 0 ? 0 : (ob.timeslot + 1) % 24]);
 
-        // features.add(marketShare);
-        // for (double[] arr : agentPayoffs)
-        // for (double d : arr)
-        // features.add(d);
-
-        // features.add((double)ob.payoffcount);
-        // features.add((double)ob.publication_cycle_count);
-        // for (double d : ob.cost)
-        // features.add(d);
+        // for(double[] arr : agentPayoffs)
+        // for(double d : arr)
+        // state.add(d);
 
         // Get all the features from the list
         // Convert to a double array for use in the MDP
