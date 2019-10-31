@@ -35,9 +35,15 @@ class DQAgentState implements Encodable {
         this.ob = ob;
 
         this.timeSlot = ob.timeslot;
-        this.ppts = (long) (agent.prevprofit / (double) (ob.timeslot-6));
+        this.ppts = (long) (agent.prevprofit / (double) (ob.timeslot+1));
         this.agentPayoffs = ob.agentPayoffs;
         this.prevProfit = agent.prevprofit;
+        
+        if (agent.rivalPrevPrevPrice == agent.rivalPrevPrice)
+            this.lastNoChange = 1;
+        else
+            this.lastNoChange = 0;
+        
         if (agent.rivalPrevPrevPrice > agent.rivalPrevPrice)
             this.lastDefect = 1;
         else
@@ -64,9 +70,9 @@ class DQAgentState implements Encodable {
         List<Double> features = new ArrayList<>();
         /* ===== NOTE: Add your features here ===== */
         features.add((double) timeSlot / Configuration.TOTAL_TIME_SLOTS);
-        // features.add(agent.profit);
-        // features.add((double) ppts);
-        // features.add(prevProfit);
+         features.add(agent.profit);
+         features.add((double) ppts);
+         features.add(prevProfit);
 
         for (double d : one_hot(agent.previousAction.index))
             features.add(d);
