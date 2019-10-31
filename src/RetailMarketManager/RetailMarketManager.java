@@ -926,23 +926,28 @@ public class RetailMarketManager {
     public static void sandboxExperiment() throws IOException {
         RetailMarketManager rm = new RetailMarketManager();
         rm.setupLogging();
-        // Agent alwaysD = new AlwaysDefect();
-        // Agent rand = new Rand();
-        // Agent tft = new TitForTat(1, 1);
+        Agent alwaysD = new AlwaysDefect();
+        Agent rand = new Rand();
+        Agent tft = new TitForTat(1, 1);
         Agent alwaysS = new AlwaysSame();
         List<Agent> oppPool = new ArrayList<>();
         Agent opponentAgent = alwaysS;
         oppPool.add(opponentAgent);
-        // oppPool.add(rand);
-        // oppPool.add(tft);
+        oppPool.add(alwaysD);
+        oppPool.add(rand);
+        oppPool.add(tft);
         DQAgentMDP.trainDQAgent(oppPool, "sandbox.pol");
         DQAgent dqAgent = new DQAgent("sandbox.pol");
+        double reward = dqAgent.pol.play(new DQAgentMDP(oppPool));
+
         rm.startSimulation(new CaseStudy().addP1Strats(opponentAgent).addP2Strats(dqAgent));
         rm.log.info(opponentAgent.name + ": " + opponentAgent.profit + ", DQAgent:" + dqAgent.profit);
         // rm.log.info("Rand: " + rand.profit + ", TitTat: " + tft.profit);
+        rm.log.info("REWARD : " + reward);
         rm.log.info("Feature Size: " + DQAgentMDP.NUM_OBSERVATIONS);
         rm.log.info("Training Rounds: " + Configuration.TRAINING_ROUNDS);
         rm.log.info("Test Rounds: " + Configuration.TEST_ROUNDS);
+        rm.log.info(String.format("Def %s, NoC %s, Inc %s", DQAgent.DEFECT, DQAgent.NOC, DQAgent.INC));
     }
 
     public static void mainExperiment() throws IOException {

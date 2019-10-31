@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 import org.deeplearning4j.rl4j.learning.Learning;
+import org.deeplearning4j.rl4j.policy.ACPolicy;
 import org.deeplearning4j.rl4j.policy.DQNPolicy;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
@@ -17,7 +18,11 @@ import Tariff.TariffAction;
  */
 public class DQAgent extends Agent {
     private static int CURRENT_AGENT_COUNT = 0;
-    private DQNPolicy<DQAgentState> pol;
+    public static int DEFECT = 0;
+    public static int NOC = 0;
+    public static int INC = 0;
+
+    public DQNPolicy<DQAgentState> pol;
     public int agentNumber = -1;
 
     public boolean isTraining() {
@@ -53,12 +58,21 @@ public class DQAgent extends Agent {
         INDArray input = Nd4j.create(state.toArray());
         input = input.reshape(Learning.makeShape(1, DQAgentMDP.OBSERVATION_SPACE.getShape()));
 
+        INDArray output = pol.getNeuralNet().output(input);
+        System.out.println("NN Input: " + input.toString());
+        System.out.println("NN Output: " + output.toString());
+        
         int nextActionInt = pol.nextAction(input);
         TariffAction nextAction = TariffAction.valueOf(nextActionInt);
 
-        if (!isTraining())
-            System.out.println("TS: " + ob.timeslot + " Action: " + nextAction);
-
+        if (!isTraining()) {
+            if (nextAction == TariffAction.DEFECT)
+                DEFECT++;
+            else if (nextAction == TariffAction.NOCHANGE)
+                NOC++;
+            else
+                INC++;
+        }
         return nextAction;
     }
 }

@@ -11,9 +11,14 @@ import java.util.logging.Logger;
 import org.deeplearning4j.gym.StepReply;
 import org.deeplearning4j.rl4j.learning.sync.qlearning.QLearning;
 import org.deeplearning4j.rl4j.learning.sync.qlearning.discrete.QLearningDiscreteDense;
+import org.deeplearning4j.rl4j.learning.async.a3c.discrete.A3CDiscrete.A3CConfiguration;
+import org.deeplearning4j.rl4j.learning.async.a3c.discrete.A3CDiscreteDense;
 import org.deeplearning4j.rl4j.mdp.MDP;
+import org.deeplearning4j.rl4j.network.ac.ActorCriticFactorySeparateStdDense;
 import org.deeplearning4j.rl4j.network.dqn.DQNFactoryStdDense;
+import org.deeplearning4j.rl4j.policy.ACPolicy;
 import org.deeplearning4j.rl4j.policy.DQNPolicy;
+import org.deeplearning4j.rl4j.policy.Policy;
 import org.deeplearning4j.rl4j.space.ArrayObservationSpace;
 import org.deeplearning4j.rl4j.space.DiscreteSpace;
 import org.deeplearning4j.rl4j.space.ObservationSpace;
@@ -30,22 +35,31 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
             .seed(123)
             .maxEpochStep(Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) // 6
             .maxStep((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS) // 500
-            .expRepMaxSize(10000)
-            .batchSize(64)
-            .targetDqnUpdateFreq(50)
-            .updateStart(0)
-            .rewardFactor(10)
-            .gamma(0.99)
+            .expRepMaxSize((168/6)*10) // 10000
+            .batchSize(168 / 6) // 64
+            .targetDqnUpdateFreq((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE)) // 50
+            .updateStart(0) // 0
+            .rewardFactor(0.9) // 10
+            .gamma(0.1) // 0.99
             .errorClamp(Double.MAX_VALUE)
-            .minEpsilon(0.1f)
-            .epsilonNbStep(3000)
+            .minEpsilon(1.0f) // 0.1f
+            .epsilonNbStep((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS) // 3000
             .doubleDQN(true).build();
+
+    public static A3CConfiguration QLConfig2 = A3CConfiguration.builder().seed(1738).maxEpochStep(10).maxStep(1000).build();
 
     public static DQNFactoryStdDense.Configuration QLNet = DQNFactoryStdDense.Configuration.builder()
             .l2(0.001)
             .updater(new Adam(0.0005))
             .numHiddenNodes(16)
             .numLayer(3).build();
+
+    public static ActorCriticFactorySeparateStdDense.Configuration QLNet2 = ActorCriticFactorySeparateStdDense.Configuration.builder()
+            .l2(0.0001)
+            .updater(new Adam(0.0005))
+            .numHiddenNodes(16)
+            .numLayer(3)
+            .build();
 
     public static final int NUM_ACTIONS = 3;
     public static final int NUM_OBSERVATIONS = new DQAgentState().toArray().length;
@@ -72,12 +86,15 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
         try {
             // record the training data in rl4j-data in a new folder
             DataManager manager = new DataManager(true);
-            log("QLCONFIG MAXSTEP" + QLConfig.getMaxStep());
             QLearningDiscreteDense<DQAgentState> dql = new QLearningDiscreteDense<DQAgentState>(mdp, QLNet, QLConfig, manager);
-
+            A3CDiscreteDense<DQAgentState> dqc = new A3CDiscreteDense<>(mdp, QLNet2, QLConfig2, manager);
             log("Training DeepQ");
+
             dql.train();
             DQNPolicy<DQAgentState> pol = dql.getPolicy();
+
+            // dqc.train();
+            // ACPolicy<DQAgentState> pol = dqc.getPolicy();
 
             log("Saving DeepQ policy");
             pol.save(policyFilename);
@@ -129,12 +146,16 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
         return new DQAgentState(agent, retailManager.ob);
     }
 
+    public double comReward = 0;
+    public int rep = 0;
+
     @Override
     public StepReply<DQAgentState> step(Integer actionInt) {
         TariffAction action = TariffAction.valueOf(actionInt);
-        double before = agent.profit;
+        double before = agent.marketShare;
         agent.playAction(retailManager.ob, action);
 
+        // log("TS %s: Agent Market %s, Opp Market %s", retailManager.ob.timeslot, agent.marketShare, opponentPool.get(0).marketShare);
         // Perform other agent policies
         for (Agent ag : this.opponentPool) {
             try {
@@ -153,12 +174,12 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
             retailManager.updateAgentAccountings();
             retailManager.ob.timeslot++;
         }
-        double after = agent.profit;
+        double after = agent.marketShare;
         double reward = after - before;
         // double reward = agent.profit - agent.prevprofit;
         // double reward = agent.profit - opponentPool.get(0).profit;
 
-        // log("DQAGENTMDP: Action %s, Reward %s, Agent Market %s, Opp Market %s", action, reward, agent.marketShare, opponentPool.get(0).marketShare);
+        // log("AFTER: Agent Market %s, Opp Market %s, Action %s, Reward %s", agent.marketShare, opponentPool.get(0).marketShare, action, reward);
         DQAgentState nextState = new DQAgentState(agent, retailManager.ob);
 
         JSONObject info = new JSONObject("{}");
