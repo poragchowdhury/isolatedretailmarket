@@ -38,15 +38,15 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
             .seed(123)
             .maxEpochStep(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME) // 6
             .maxStep(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * Configuration.TRAINING_ROUNDS) // 500
-            .expRepMaxSize(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME) // 10000
-            .batchSize(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME*10) // 64
-            .targetDqnUpdateFreq(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * Configuration.TRAINING_ROUNDS) // 50
+            .expRepMaxSize(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME*100)//*((int)(Configuration.TRAINING_ROUNDS*0.2))) // 10000
+            .batchSize(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME*10)//((int)(Configuration.TRAINING_ROUNDS*0.1))) // 64
+            .targetDqnUpdateFreq(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME)// * Configuration.TRAINING_ROUNDS) // 50
             .updateStart(0) // 0
-            .rewardFactor(0.1)
+            .rewardFactor(1)
             .gamma(0.9) // 0.99
             .errorClamp(Double.MAX_VALUE)
             .minEpsilon(0.1f) // 0.1f
-            .epsilonNbStep(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * Configuration.TRAINING_ROUNDS) // 3000
+            .epsilonNbStep((Configuration.TOTAL_PUBLICATIONS_IN_A_GAME*(Configuration.TRAINING_ROUNDS))) // 3000
             .doubleDQN(true).build();
     
     public static A3CConfiguration QLConfig2 = A3CConfiguration.builder().
@@ -84,7 +84,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
     public static DQNFactoryStdDense.Configuration QLNet = DQNFactoryStdDense.Configuration.builder()
             .l2(0.001)
             .updater(new Adam(0.0005))
-            .numHiddenNodes(16)
+            .numHiddenNodes(25)
             .numLayer(3).build();
 
     public static ActorCriticFactorySeparateStdDense.Configuration QLNet2 = ActorCriticFactorySeparateStdDense.Configuration.builder()
@@ -211,7 +211,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
             retailManager.ob.timeslot++;
         }
         double after = agent.profit;
-        double reward = after - before;
+        double reward = (after - before)/(0.5*Configuration.POPULATION*7);
         // double reward = agent.profit - agent.prevprofit;
         // double reward = agent.profit - opponentPool.get(0).profit;
 

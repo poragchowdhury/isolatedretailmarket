@@ -24,7 +24,7 @@ class DQAgentState implements Encodable {
     public int lastNoChange;
     public double marketShare;
     public int prevAction;
-    public double prevHourUsage;
+    public double curHourUsage;
     
     public DQAgentState() {
         this(new DQAgent(), new Observer());
@@ -54,6 +54,7 @@ class DQAgentState implements Encodable {
             this.lastCoop = 0;
 
         this.marketShare = agent.marketShare;
+        this.curHourUsage = ob.fcc.usage[ob.timeslot%24]/7;
     }
 
     public double[] one_hot(int i) {
@@ -70,9 +71,9 @@ class DQAgentState implements Encodable {
         List<Double> features = new ArrayList<>();
         /* ===== NOTE: Add your features here ===== */
         features.add((double) timeSlot / Configuration.TOTAL_TIME_SLOTS);
-         features.add(agent.profit);
-         features.add((double) ppts);
-         features.add(prevProfit);
+        features.add(agent.profit/(0.5*Configuration.POPULATION*Configuration.TOTAL_TIME_SLOTS));
+        features.add((double) ppts/(0.5*Configuration.POPULATION));
+        features.add(prevProfit/(0.5*Configuration.POPULATION*Configuration.TOTAL_TIME_SLOTS));
 
         for (double d : one_hot(agent.previousAction.index))
             features.add(d);
@@ -80,11 +81,8 @@ class DQAgentState implements Encodable {
         features.add((double) lastNoChange);
         features.add((double) lastDefect);
         features.add((double) lastCoop);
-
-        // for(double[] arr : agentPayoffs)
-        // for(double d : arr)
-        // state.add(d);
-
+        features.add((double) marketShare/Configuration.POPULATION);
+        features.add(curHourUsage);
         // Get all the features from the list
         // Convert to a double array for use in the MDP
         double[] result = new double[features.size()];

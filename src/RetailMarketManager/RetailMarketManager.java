@@ -932,7 +932,7 @@ public class RetailMarketManager {
         Agent tft = new TitForTat(1, 1);
         Agent alwaysS = new AlwaysSame();
         List<Agent> oppPool = new ArrayList<>();
-        Agent opponentAgent = alwaysS;
+        Agent opponentAgent = alwaysI;
         oppPool.add(opponentAgent);
         oppPool.add(alwaysD);
         oppPool.add(rand);
