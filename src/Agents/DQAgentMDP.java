@@ -36,17 +36,17 @@ import Tariff.TariffAction;
 public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
     public static QLearning.QLConfiguration QLConfig = QLearning.QLConfiguration.builder()
             .seed(123)
-            .maxEpochStep(Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) // 6
-            .maxStep((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS) // 500
-            .expRepMaxSize((168/6)*50) // 10000
-            .batchSize((168 / 6)*10) // 64
-            .targetDqnUpdateFreq((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE)) // 50
+            .maxEpochStep(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME) // 6
+            .maxStep(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * Configuration.TRAINING_ROUNDS) // 500
+            .expRepMaxSize(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME) // 10000
+            .batchSize(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME*10) // 64
+            .targetDqnUpdateFreq(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * Configuration.TRAINING_ROUNDS) // 50
             .updateStart(0) // 0
             .rewardFactor(0.1)
             .gamma(0.9) // 0.99
             .errorClamp(Double.MAX_VALUE)
             .minEpsilon(0.1f) // 0.1f
-            .epsilonNbStep((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS) // 3000
+            .epsilonNbStep(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * Configuration.TRAINING_ROUNDS) // 3000
             .doubleDQN(true).build();
     
     public static A3CConfiguration QLConfig2 = A3CConfiguration.builder().
@@ -211,7 +211,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
             retailManager.ob.timeslot++;
         }
         double after = agent.profit;
-        double reward = after;// - before;
+        double reward = after - before;
         // double reward = agent.profit - agent.prevprofit;
         // double reward = agent.profit - opponentPool.get(0).profit;
 
