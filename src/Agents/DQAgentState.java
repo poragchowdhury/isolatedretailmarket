@@ -79,8 +79,9 @@ class DQAgentState implements Encodable {
         features.add((double) ppts/(0.5*Configuration.POPULATION*7));
         features.add(prevProfit/(0.5*Configuration.POPULATION*Configuration.TOTAL_TIME_SLOTS*7));
 
-        for (double d : one_hot(agent.previousAction.index))
-            features.add(d);
+        // for(double[] arr : agentPayoffs)
+        // for(double d : arr)
+        // state.add(d);
 
         features.add((double) lastNoChange);
         features.add((double) lastDefect);

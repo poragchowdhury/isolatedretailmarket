@@ -102,7 +102,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
     public static ObservationSpace<DQAgentState> OBSERVATION_SPACE = new ArrayObservationSpace<DQAgentState>(new int[] { NUM_OBSERVATIONS });
 
     public static void log(String message, Object... args) {
-        Logger.getAnonymousLogger().info("[SimpleMDP]" + String.format(message, args));
+        Logger.getAnonymousLogger().info(String.format(message, args));
     }
 
     private RetailMarketManager retailManager;
@@ -191,6 +191,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 
     @Override
     public StepReply<DQAgentState> step(Integer actionInt) {
+        int t = retailManager.ob.timeslot;
         TariffAction action = TariffAction.valueOf(actionInt);
         double before = agent.profit;
         agent.playAction(retailManager.ob, action);
@@ -219,7 +220,8 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
         // double reward = agent.profit - agent.prevprofit;
         // double reward = agent.profit - opponentPool.get(0).profit;
 
-        // log("AFTER: Agent Market %s, Opp Market %s, Action %s, Reward %s", agent.marketShare, opponentPool.get(0).marketShare, action, reward);
+        log("TS %s, AFTER: Agent Market %s, Opp Market %s, Action %s, Reward %s", t, agent.marketShare, opponentPool.get(0).marketShare, action, reward);
+        // log("TS %s, Done %s", retailManager.ob.timeslot, isDone());
         DQAgentState nextState = new DQAgentState(agent, retailManager.ob);
 
         JSONObject info = new JSONObject("{}");

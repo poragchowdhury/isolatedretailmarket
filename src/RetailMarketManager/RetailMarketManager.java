@@ -535,7 +535,13 @@ public class RetailMarketManager {
      * as well as define different logging levels
      */
     public void setupLogging() throws IOException {
-        System.setProperty("java.util.logging.SimpleFormatter.format", "%1$tF %1$tT %4$s %2$s %5$s%6$s%n");
+        // %1 = Date, %2 = Source, %3 = Logger, %4 = Level, %5 = Message, &6 = Thrown
+        // %1$tF = Date -> Y-m-d
+        // %1$tT = Date -> 24 hour format
+        // %4$s = Log Type (Info, ...)
+        // %2$s = Class and Method Call
+        // %5$s%6$s = Message
+        System.setProperty("java.util.logging.SimpleFormatter.format", "{%1$tT} %2$s %5$s%6$s" + "\n");
         FileHandler fh = new FileHandler("experiment.log");
         SimpleFormatter formatter = new SimpleFormatter();
 
@@ -744,6 +750,7 @@ public class RetailMarketManager {
                 for (int iindex = 0; iindex < imax; iindex++) {
                     for (int rindex = 0; rindex < rmax; rindex++) {
                         for (int round = 0; round < roundmax; round++) {
+                            System.out.println("=== Round " + round);
                             cs.pool1.get(iagent).reset();
                             cs.pool2.get(kagent).reset();
 
@@ -967,7 +974,13 @@ public class RetailMarketManager {
         rm.startExperiment();
         rm.log.info("Feature Size: " + DQAgentMDP.NUM_OBSERVATIONS);
     }
-
+    
+    public static void plotExperiment() throws IOException {
+        RetailMarketManager rm = new RetailMarketManager();
+        rm.setupLogging();
+        rm.log.info("=*****PlotExperiment******=");
+    }
+ 
     public static void main(String[] args) throws IOException {
         /*
          * The Sandbox Experiment tests DQAgent against a few others
