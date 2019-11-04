@@ -15,6 +15,7 @@ import org.deeplearning4j.rl4j.learning.sync.qlearning.QLearning;
 import org.deeplearning4j.rl4j.learning.sync.qlearning.discrete.QLearningDiscreteDense;
 import org.deeplearning4j.rl4j.mdp.MDP;
 import org.deeplearning4j.rl4j.learning.async.a3c.discrete.A3CDiscrete.A3CConfiguration;
+import org.deeplearning4j.rl4j.learning.async.a3c.discrete.A3CDiscrete;
 import org.deeplearning4j.rl4j.learning.async.a3c.discrete.A3CDiscreteDense;
 import org.deeplearning4j.rl4j.network.ac.ActorCriticFactorySeparateStdDense;
 import org.deeplearning4j.rl4j.network.dqn.DQNFactoryStdDense;
@@ -35,20 +36,36 @@ import Tariff.TariffAction;
 public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
     public static QLearning.QLConfiguration QLConfig = QLearning.QLConfiguration.builder()
             .seed(123)
-            .maxEpochStep(Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) // 6
-            .maxStep((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS) // 500
-            .expRepMaxSize((168 / 6) * 10) // 10000
-            .batchSize(168 / 6) // 64
-            .targetDqnUpdateFreq((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE)) // 50
+            .maxEpochStep(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME) // 6
+            .maxStep(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * Configuration.TRAINING_ROUNDS) // 500
+            .expRepMaxSize(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME*100)//*((int)(Configuration.TRAINING_ROUNDS*0.2))) // 10000
+            .batchSize(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME*10)//((int)(Configuration.TRAINING_ROUNDS*0.1))) // 64
+            .targetDqnUpdateFreq(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME)// * Configuration.TRAINING_ROUNDS) // 50
             .updateStart(0) // 0
-            .rewardFactor(0.9) // 10
-            .gamma(0.1) // 0.99
+            .rewardFactor(1)
+            .gamma(0.9) // 0.99
             .errorClamp(Double.MAX_VALUE)
-            .minEpsilon(1.0f) // 0.1f
-            .epsilonNbStep((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS) // 3000
+            .minEpsilon(0.1f) // 0.1f
+            .epsilonNbStep((Configuration.TOTAL_PUBLICATIONS_IN_A_GAME*(Configuration.TRAINING_ROUNDS))) // 3000
             .doubleDQN(true).build();
-    public static A3CConfiguration QLConfig2 = A3CConfiguration.builder().seed(1738).maxEpochStep(10).maxStep(1000).build();
+    
+    public static A3CConfiguration QLConfig2 = A3CConfiguration.builder().
+    		seed(123).
+    		maxEpochStep(168/6).
+    		maxStep(168/6).build();
 
+    private static A3CDiscrete.A3CConfiguration A3C =
+            new A3CDiscrete.A3CConfiguration(
+                    123,            //Random seed
+                    (int)Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE, // 6
+                    (int)(Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS, // 500
+                    16,              //Number of threads
+                    5,              //t_max
+                    0,             //num step noop warmup
+                    0.01,           //reward scaling
+                    0.99,           //gamma
+                    10.0           //td-error clipping
+            );
     public static AsyncNStepQLearningDiscrete.AsyncNStepQLConfiguration ASYNC_QLConfig = new AsyncNStepQLearningDiscrete.AsyncNStepQLConfiguration(
             123, // Random seed
             (Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE), // Max step By epoch
@@ -67,7 +84,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
     public static DQNFactoryStdDense.Configuration QLNet = DQNFactoryStdDense.Configuration.builder()
             .l2(0.001)
             .updater(new Adam(0.0005))
-            .numHiddenNodes(16)
+            .numHiddenNodes(25)
             .numLayer(3).build();
 
     public static ActorCriticFactorySeparateStdDense.Configuration QLNet2 = ActorCriticFactorySeparateStdDense.Configuration.builder()
@@ -104,7 +121,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
             DataManager manager = new DataManager(true);
 
             QLearningDiscreteDense<DQAgentState> dql = new QLearningDiscreteDense<DQAgentState>(mdp, QLNet, QLConfig, manager);
-            A3CDiscreteDense<DQAgentState> dqc = new A3CDiscreteDense<>(mdp, QLNet2, QLConfig2, manager);
+            A3CDiscreteDense<DQAgentState> dqc = new A3CDiscreteDense<>(mdp, QLNet2, A3C, manager);
             log("QLCONFIG MAXSTEP" + QLConfig.getMaxStep());
 
             // define the training
@@ -195,8 +212,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
             retailManager.ob.timeslot++;
         }
         double after = agent.profit;
-        double reward = agent.profit;
-        // double reward = after - before;
+        double reward = (after - before)/(0.5*Configuration.POPULATION*7);
         // double reward = agent.profit - agent.prevprofit;
         // double reward = agent.profit - opponentPool.get(0).profit;
 

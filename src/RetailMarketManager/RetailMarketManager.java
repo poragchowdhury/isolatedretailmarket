@@ -77,7 +77,7 @@ public class RetailMarketManager {
             try {
                 a.publishTariff(ob);
             } catch (Exception ex) {
-                System.out.printf("[Agent:%s raised an exception while publishing a tariff]\n");
+                System.out.printf("[Agent:%s raised an exception while publishing a tariff]\n", a.name);
                 ex.printStackTrace();
             }
         }
@@ -928,12 +928,13 @@ public class RetailMarketManager {
         RetailMarketManager rm = new RetailMarketManager();
         rm.setupLogging();
         Agent alwaysD = new AlwaysDefect();
+        Agent alwaysI = new AlwaysIncrease();
         Agent rand = new Rand();
         Agent tft = new TitForTat(1, 1);
         Agent alwaysS = new AlwaysSame();
         List<Agent> oppPool = new ArrayList<>();
-        Agent opponentAgent = alwaysS;
-        // oppPool.add(opponentAgent);
+        Agent opponentAgent = alwaysI;
+        oppPool.add(opponentAgent);
         oppPool.add(alwaysD);
         // oppPool.add(rand);
         // oppPool.add(tft);
@@ -969,7 +970,7 @@ public class RetailMarketManager {
          * The Main Experiment runs the flowchart specified by Porag
          * Basically, the SMNE vs DQAgent stuff with Gambit and such
          */
-        // mainExperiment();
+        //mainExperiment();
     }
 
 }

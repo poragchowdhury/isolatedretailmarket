@@ -28,3 +28,8 @@ log/*
 # Gambit files
 *.nfg
 *.gbt
+
+# Vimdiff
+*.swp
+*.orig
+config_*.properties

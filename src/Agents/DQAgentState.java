@@ -24,8 +24,8 @@ class DQAgentState implements Encodable {
     public int lastNoChange;
     public double marketShare;
     public int prevAction;
-    public double prevHourUsage;
-
+    public double curHourUsage;
+    
     public DQAgentState() {
         this(new DQAgent(), new Observer());
     }
@@ -35,9 +35,15 @@ class DQAgentState implements Encodable {
         this.ob = ob;
 
         this.timeSlot = ob.timeslot;
-        this.ppts = (long) (agent.prevprofit / (double) (ob.timeslot - 6));
+        this.ppts = (long) (agent.prevprofit / (double) (ob.timeslot+1));
         this.agentPayoffs = ob.agentPayoffs;
         this.prevProfit = agent.prevprofit;
+        
+        if (agent.rivalPrevPrevPrice == agent.rivalPrevPrice)
+            this.lastNoChange = 1;
+        else
+            this.lastNoChange = 0;
+        
         if (agent.rivalPrevPrevPrice > agent.rivalPrevPrice)
             this.lastDefect = 1;
         else
@@ -48,6 +54,7 @@ class DQAgentState implements Encodable {
             this.lastCoop = 0;
 
         this.marketShare = agent.marketShare;
+        this.curHourUsage = ob.fcc.usage[ob.timeslot%24]/7;
     }
 
     public double[] one_hot(int i) {
@@ -64,23 +71,19 @@ class DQAgentState implements Encodable {
         List<Double> features = new ArrayList<>();
         /* ===== NOTE: Add your features here ===== */
         features.add((double) timeSlot / Configuration.TOTAL_TIME_SLOTS);
-        features.add(agent.marketShare / 100.0d);
-        // features.add(agent.profit / (100.0d));
-        // features.add(agent.profit);
-        // features.add((double) ppts);
-        // features.add(prevProfit);
-
-        // for (double d : one_hot(agent.previousAction.index))
-        // features.add(d);
-        //
-        // features.add((double) lastNoChange);
-        // features.add((double) lastDefect);
-        // features.add((double) lastCoop);
+        features.add(agent.profit/(0.5*Configuration.POPULATION*Configuration.TOTAL_TIME_SLOTS));
+        features.add((double) ppts/(0.5*Configuration.POPULATION));
+        features.add(prevProfit/(0.5*Configuration.POPULATION*Configuration.TOTAL_TIME_SLOTS));
 
         // for(double[] arr : agentPayoffs)
         // for(double d : arr)
         // state.add(d);
 
+        features.add((double) lastNoChange);
+        features.add((double) lastDefect);
+        features.add((double) lastCoop);
+        features.add((double) marketShare/Configuration.POPULATION);
+        features.add(curHourUsage);
         // Get all the features from the list
         // Convert to a double array for use in the MDP
         double[] result = new double[features.size()];
