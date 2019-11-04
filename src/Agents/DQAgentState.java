@@ -24,7 +24,9 @@ class DQAgentState implements Encodable {
     public int lastNoChange;
     public double marketShare;
     public int prevAction;
+    public double prevHourUsage;
     public double curHourUsage;
+    public double nextHourUsage;
     
     public DQAgentState() {
         this(new DQAgent(), new Observer());
@@ -54,7 +56,9 @@ class DQAgentState implements Encodable {
             this.lastCoop = 0;
 
         this.marketShare = agent.marketShare;
-        this.curHourUsage = ob.fcc.usage[ob.timeslot%24]/7;
+        this.prevHourUsage = ob.fcc.usage[ob.timeslot == 0? 0:(ob.timeslot-1)%24];
+        this.curHourUsage = ob.fcc.usage[ob.timeslot%24];
+        this.nextHourUsage = ob.fcc.usage[(ob.timeslot+1)%24];
     }
 
     public double[] one_hot(int i) {
@@ -71,9 +75,9 @@ class DQAgentState implements Encodable {
         List<Double> features = new ArrayList<>();
         /* ===== NOTE: Add your features here ===== */
         features.add((double) timeSlot / Configuration.TOTAL_TIME_SLOTS);
-        features.add(agent.profit/(0.5*Configuration.POPULATION*Configuration.TOTAL_TIME_SLOTS));
-        features.add((double) ppts/(0.5*Configuration.POPULATION));
-        features.add(prevProfit/(0.5*Configuration.POPULATION*Configuration.TOTAL_TIME_SLOTS));
+        features.add(agent.profit/(0.5*Configuration.POPULATION*Configuration.TOTAL_TIME_SLOTS*7));
+        features.add((double) ppts/(0.5*Configuration.POPULATION*7));
+        features.add(prevProfit/(0.5*Configuration.POPULATION*Configuration.TOTAL_TIME_SLOTS*7));
 
         for (double d : one_hot(agent.previousAction.index))
             features.add(d);
@@ -82,7 +86,9 @@ class DQAgentState implements Encodable {
         features.add((double) lastDefect);
         features.add((double) lastCoop);
         features.add((double) marketShare/Configuration.POPULATION);
-        features.add(curHourUsage);
+        features.add(prevHourUsage/7);
+        features.add(curHourUsage/7);
+        features.add(nextHourUsage/7);
         // Get all the features from the list
         // Convert to a double array for use in the MDP
         double[] result = new double[features.size()];

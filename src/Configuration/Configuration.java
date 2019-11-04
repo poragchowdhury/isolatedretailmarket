@@ -34,6 +34,7 @@ public class Configuration {
     public static boolean MANUAL_NASH_EQ_SELECTION = false;
     public static int MAX_DQ_AGENTS_ALLOWED = 3;
     public static int TOTAL_PUBLICATIONS_IN_A_GAME = 1;
+    public static boolean RUN_ONE_ITERATION = true;
     
     public static String print() {
         return "\n********************Configurations**********************\n" + "TOTAL_TIME_SLOTS : " + TOTAL_TIME_SLOTS + "\n" + "PUBLICATION_CYCLE : " + PUBLICATION_CYCLE + "\n" + "DEFAULT_TARIFF_PRICE : " + DEFAULT_TARIFF_PRICE + "\n" + "CASE_STUDY_NO : " + CASE_STUDY_NO + "\n" + "INERTIA : " + INERTIA + "\n" + "RATIONALITY : " + RATIONALITY + "\n" + "ACT_CHANGE_PERC : " + ACT_CHANGE_PERC + "\n" + "POPULATION : " + POPULATION + "\n" + "LOGFILENAME : " + LOGFILENAME + "\n" + "DAYMULT : "
@@ -75,6 +76,7 @@ public class Configuration {
             GET_NASH_EQ = Boolean.parseBoolean(prop.getProperty("get-nash-eq"));
             MANUAL_NASH_EQ_SELECTION = Boolean.parseBoolean(prop.getProperty("manual-nash-eq-selection"));
             MAX_DQ_AGENTS_ALLOWED = Integer.parseInt(prop.getProperty("max-dq-agents-allowed"));
+            RUN_ONE_ITERATION = Boolean.parseBoolean(prop.getProperty("run-one-iteration"));
             // System.out.println("TOTAL_TIME_SLOTS " + TOTAL_TIME_SLOTS);
             // System.out.println("PUBLICATION_CYCLE " + PUBLICATION_CYCLE);
             TOTAL_PUBLICATIONS_IN_A_GAME = TOTAL_TIME_SLOTS / PUBLICATION_CYCLE;

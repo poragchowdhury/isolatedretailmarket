@@ -44,7 +44,7 @@ public class SMNE extends Agent {
                     tempName += String.format("%.2f%s,", prob, strategy.name); // Keeping the name upto 2 decimal
             }
         }
-        return tempName.substring(0, tempName.length() - 1);
+        return tempName.substring(0, tempName.length() == 0 ? 0 : tempName.length() - 1);
     }
 
     @Override

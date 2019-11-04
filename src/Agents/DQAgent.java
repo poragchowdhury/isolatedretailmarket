@@ -34,7 +34,7 @@ public class DQAgent extends Agent {
 		super("DeepQ_Default");
 		try {
 			this.pol = DQNPolicy.load(policyName);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			Logger.getAnonymousLogger().info("{DQAgent.Constructor} Couldn't load DQN policy from file: " + policyName);
 		}
 		// Only number testing agents, not the ones used for training
@@ -42,6 +42,20 @@ public class DQAgent extends Agent {
 		CURRENT_AGENT_COUNT++;
 
 		this.name = "DQAgent" + this.agentNumber + "_" + policyName.substring(0, policyName.length() - 4);
+	}
+	
+	public DQAgent(String name, String policyName) {
+		super(name);
+		try {
+			this.pol = DQNPolicy.load(policyName);
+		} catch (Exception e) {
+			Logger.getAnonymousLogger().info("{DQAgent.Constructor} Couldn't load DQN policy from file: " + policyName);
+		}
+		// Only number testing agents, not the ones used for training
+//		this.agentNumber = CURRENT_AGENT_COUNT;
+//		CURRENT_AGENT_COUNT++;
+
+//		this.name = "DQAgent" + this.agentNumber + "_" + policyName.substring(0, policyName.length() - 4);
 	}
 
 	public DQAgent() {
@@ -67,12 +81,18 @@ public class DQAgent extends Agent {
 		TariffAction nextAction = TariffAction.valueOf(nextActionInt);
 
 		if (!isTraining()) {
-			if (nextAction == TariffAction.DEFECT)
+			if (nextAction == TariffAction.DEFECT) {
 				DEFECT++;
-			else if (nextAction == TariffAction.NOCHANGE)
+//				System.out.println("TS " + ob.timeslot + " DQ: DEFECT");
+			}
+			else if (nextAction == TariffAction.NOCHANGE) {
 				NOC++;
-			else
+//				System.out.println("TS " + ob.timeslot + " DQ: NOCHANGE");
+			}
+			else {
 				INC++;
+//				System.out.println("TS " + ob.timeslot + " DQ: INCREASE");
+			}
 		}
 		return nextAction;
 	}

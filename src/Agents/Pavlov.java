@@ -46,17 +46,16 @@ public class Pavlov extends Agent {
         if (coin > prInt) // Defect
             return TariffAction.DEFECT;
         else // Coop
-            return cooperate(ob, prI);
-
-    }
-
-    public TariffAction cooperate(Observer ob, double prI) {
-        int prInt = (int) prI * 100;
-        Random r = new Random();
-        int coin = r.nextInt(100);
-        if (coin > prInt) // No Change
             return TariffAction.NOCHANGE;
-        else // Coop
-            return TariffAction.INCREASE;
     }
+
+//    public TariffAction cooperate(Observer ob, double prI) {
+//        int prInt = (int) prI * 100;
+//        Random r = new Random();
+//        int coin = r.nextInt(100);
+//        if (coin > prInt) // No Change
+//            return TariffAction.NOCHANGE;
+//        else // Coop
+//            return TariffAction.INCREASE;
+//    }
 }
