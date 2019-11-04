@@ -25,7 +25,7 @@ class DQAgentState implements Encodable {
     public double marketShare;
     public int prevAction;
     public double prevHourUsage;
-    
+
     public DQAgentState() {
         this(new DQAgent(), new Observer());
     }
@@ -35,7 +35,7 @@ class DQAgentState implements Encodable {
         this.ob = ob;
 
         this.timeSlot = ob.timeslot;
-        this.ppts = (long) (agent.prevprofit / (double) (ob.timeslot-6));
+        this.ppts = (long) (agent.prevprofit / (double) (ob.timeslot - 6));
         this.agentPayoffs = ob.agentPayoffs;
         this.prevProfit = agent.prevprofit;
         if (agent.rivalPrevPrevPrice > agent.rivalPrevPrice)
@@ -64,16 +64,18 @@ class DQAgentState implements Encodable {
         List<Double> features = new ArrayList<>();
         /* ===== NOTE: Add your features here ===== */
         features.add((double) timeSlot / Configuration.TOTAL_TIME_SLOTS);
+        features.add(agent.marketShare / 100.0d);
+        // features.add(agent.profit / (100.0d));
         // features.add(agent.profit);
         // features.add((double) ppts);
         // features.add(prevProfit);
 
-        for (double d : one_hot(agent.previousAction.index))
-            features.add(d);
-
-        features.add((double) lastNoChange);
-        features.add((double) lastDefect);
-        features.add((double) lastCoop);
+        // for (double d : one_hot(agent.previousAction.index))
+        // features.add(d);
+        //
+        // features.add((double) lastNoChange);
+        // features.add((double) lastDefect);
+        // features.add((double) lastCoop);
 
         // for(double[] arr : agentPayoffs)
         // for(double d : arr)

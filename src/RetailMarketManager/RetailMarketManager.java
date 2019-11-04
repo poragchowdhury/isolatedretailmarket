@@ -734,6 +734,7 @@ public class RetailMarketManager {
                 for (int iindex = 0; iindex < imax; iindex++) {
                     for (int rindex = 0; rindex < rmax; rindex++) {
                         for (int round = 0; round < roundmax; round++) {
+                            System.out.println("=== Round " + round);
                             cs.pool1.get(iagent).reset();
                             cs.pool2.get(kagent).reset();
 
@@ -932,10 +933,10 @@ public class RetailMarketManager {
         Agent alwaysS = new AlwaysSame();
         List<Agent> oppPool = new ArrayList<>();
         Agent opponentAgent = alwaysS;
-        oppPool.add(opponentAgent);
+        // oppPool.add(opponentAgent);
         oppPool.add(alwaysD);
-        oppPool.add(rand);
-        oppPool.add(tft);
+        // oppPool.add(rand);
+        // oppPool.add(tft);
         DQAgentMDP.trainDQAgent(oppPool, "sandbox.pol");
         DQAgent dqAgent = new DQAgent("sandbox.pol");
         double reward = dqAgent.pol.play(new DQAgentMDP(oppPool));
