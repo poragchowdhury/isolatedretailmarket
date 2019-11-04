@@ -101,7 +101,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
     public static ObservationSpace<DQAgentState> OBSERVATION_SPACE = new ArrayObservationSpace<DQAgentState>(new int[] { NUM_OBSERVATIONS });
 
     public static void log(String message, Object... args) {
-        Logger.getAnonymousLogger().info("[SimpleMDP]" + String.format(message, args));
+        Logger.getAnonymousLogger().info(String.format(message, args));
     }
 
     private RetailMarketManager retailManager;
