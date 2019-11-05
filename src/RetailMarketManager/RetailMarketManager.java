@@ -16,6 +16,11 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import org.deeplearning4j.api.storage.StatsStorage;
+import org.deeplearning4j.ui.api.UIServer;
+import org.deeplearning4j.ui.stats.StatsListener;
+import org.deeplearning4j.ui.storage.InMemoryStatsStorage;
+
 import Agents.Agent;
 import Agents.AlwaysDefect;
 import Agents.AlwaysIncrease;
@@ -740,7 +745,7 @@ public class RetailMarketManager {
                 for (int iindex = 0; iindex < imax; iindex++) {
                     for (int rindex = 0; rindex < rmax; rindex++) {
                         for (int round = 0; round < roundmax; round++) {
-                            System.out.println("=== Round " + round);
+                            // System.out.println("=== Round " + round);
                             cs.pool1.get(iagent).reset();
                             cs.pool2.get(kagent).reset();
 
@@ -790,7 +795,7 @@ public class RetailMarketManager {
                         // printAverageRevenues() function
 
                         double[] vals = ob.calcAvg(cs);
-                        System.out.println(cs.pool1.get(iagent).name + " " + vals[0] + " " + cs.pool2.get(kagent).name + " " + vals[1] + " Error1 " + vals[2] + " Error2 " + vals[3]);
+                        // System.out.println(cs.pool1.get(iagent).name + " " + vals[0] + " " + cs.pool2.get(kagent).name + " " + vals[1] + " Error1 " + vals[2] + " Error2 " + vals[3]);
                         if (iagent != kagent) {
                             gameMatrix[iagent][kagent] = new Payoffs(vals[0], vals[1]);
                             gameMatrix[kagent][iagent] = new Payoffs(vals[1], vals[0]);
@@ -939,23 +944,35 @@ public class RetailMarketManager {
         Agent tft = new TitForTat(1, 1);
         Agent alwaysS = new AlwaysSame();
         List<Agent> oppPool = new ArrayList<>();
-        Agent opponentAgent = alwaysI;
-        oppPool.add(opponentAgent);
-        oppPool.add(alwaysD);
+        // oppPool.add(alwaysI);
+        oppPool.add(alwaysS);
         // oppPool.add(rand);
         // oppPool.add(tft);
-        DQAgentMDP.trainDQAgent(oppPool, "sandbox.pol");
+        DQAgent bestAgent = DQAgentMDP.trainDQAgent(oppPool, "sandbox.pol");
         DQAgent dqAgent = new DQAgent("sandbox.pol");
-        double reward = dqAgent.pol.play(new DQAgentMDP(oppPool));
 
+        DQAgent.DEFECT = 0;
+        DQAgent.INC = 0;
+        DQAgent.NOC = 0;
+        Agent opponentAgent = alwaysS;
+        opponentAgent.reset();
         rm.startSimulation(new CaseStudy().addP1Strats(opponentAgent).addP2Strats(dqAgent));
         rm.log.info(opponentAgent.name + ": " + opponentAgent.profit + ", DQAgent:" + dqAgent.profit);
-        // rm.log.info("Rand: " + rand.profit + ", TitTat: " + tft.profit);
-        rm.log.info("REWARD : " + reward);
         rm.log.info("Feature Size: " + DQAgentMDP.NUM_OBSERVATIONS);
         rm.log.info("Training Rounds: " + Configuration.TRAINING_ROUNDS);
         rm.log.info("Test Rounds: " + Configuration.TEST_ROUNDS);
         rm.log.info(String.format("Def %s, NoC %s, Inc %s", DQAgent.DEFECT, DQAgent.NOC, DQAgent.INC));
+
+        rm = new RetailMarketManager();
+        opponentAgent.reset();
+        DQAgent.DEFECT = 0;
+        DQAgent.INC = 0;
+        DQAgent.NOC = 0;
+        rm.setupLogging();
+        rm.startSimulation(new CaseStudy().addP1Strats(opponentAgent).addP2Strats(bestAgent));
+        rm.log.info(opponentAgent.name + ": " + opponentAgent.profit + ", DQAgent:" + bestAgent.profit);
+        rm.log.info(String.format("Def %s, NoC %s, Inc %s", DQAgent.DEFECT, DQAgent.NOC, DQAgent.INC));
+
     }
 
     public static void mainExperiment() throws IOException {
@@ -963,13 +980,14 @@ public class RetailMarketManager {
         rm.startExperiment();
         rm.log.info("Feature Size: " + DQAgentMDP.NUM_OBSERVATIONS);
     }
-    
+
     public static void plotExperiment() throws IOException {
         RetailMarketManager rm = new RetailMarketManager();
         rm.setupLogging();
         rm.log.info("=*****PlotExperiment******=");
+
     }
- 
+
     public static void main(String[] args) throws IOException {
         /*
          * The Sandbox Experiment tests DQAgent against a few others
@@ -982,7 +1000,7 @@ public class RetailMarketManager {
          * The Main Experiment runs the flowchart specified by Porag
          * Basically, the SMNE vs DQAgent stuff with Gambit and such
          */
-        //mainExperiment();
+        // mainExperiment();
     }
 
 }
