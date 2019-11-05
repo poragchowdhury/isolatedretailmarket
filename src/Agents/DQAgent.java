@@ -63,7 +63,7 @@ public class DQAgent extends Agent {
 	}
 
 	public String getSimpleName() {
-		return "DQAgent" + this.agentNumber;
+		return this.name;//"DQAgent" + this.agentNumber;
 	}
 
 	@Override

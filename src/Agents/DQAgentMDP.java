@@ -220,7 +220,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
         // double reward = agent.profit - agent.prevprofit;
         // double reward = agent.profit - opponentPool.get(0).profit;
 
-        log("TS %s, AFTER: Agent Market %s, Opp Market %s, Action %s, Reward %s", t, agent.marketShare, opponentPool.get(0).marketShare, action, reward);
+        //log("TS %s, AFTER: Agent Market %s, Opp Market %s, Action %s, Reward %s", t, agent.marketShare, opponentPool.get(0).marketShare, action, reward);
         // log("TS %s, Done %s", retailManager.ob.timeslot, isDone());
         DQAgentState nextState = new DQAgentState(agent, retailManager.ob);
 

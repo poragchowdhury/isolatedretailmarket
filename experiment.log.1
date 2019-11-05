@@ -1,7 +1,7 @@
-2019-11-04 12:19:45 INFO RetailMarketManager.RetailMarketManager startExperiment *************** Experimental Run Log ***************
-2019-11-04 12:19:45 INFO RetailMarketManager.RetailMarketManager startExperiment 
+{22:38:26} RetailMarketManager.RetailMarketManager startExperiment *************** Experimental Run Log ***************
+{22:38:26} RetailMarketManager.RetailMarketManager startExperiment 
 ********************Configurations**********************
-TOTAL_TIME_SLOTS : 168
+TOTAL_TIME_SLOTS : 48
 PUBLICATION_CYCLE : 6
 DEFAULT_TARIFF_PRICE : 0.25
 CASE_STUDY_NO : 91
@@ -15,31 +15,1490 @@ DMNDMULT : 0.0
 INITCOST : 0.0
 DLOGGING : false
 TEST_ROUNDS : 1000
-TRAINING_ROUNDS : 1000
+TRAINING_ROUNDS : 2000
 LEARNING_RATE : 0.1
 DISCOUNT_FACTOR : 0.99
 DB_NAME_TRAINING : rl1
 MAX_TARIFF_PRICE : 0.5
 RL_TRAINING : false
 PPTS_DISCRTZD : 5
-GET_NASH_EQ : trueMANUAL_NASH_EQ_SELECTION : false
+GET_NASH_EQ : trueMANUAL_NASH_EQ_SELECTION : true
 MAX_DQ_AGENTS_ALLOWED : 2
 
-2019-11-04 12:19:45 INFO RetailMarketManager.RetailMarketManager setupInitialStrategies === Setting up initial pools ===
-2019-11-04 12:19:45 INFO RetailMarketManager.RetailMarketManager setupInitialStrategies Pool1: [AlzIncz, NvPbr]
-2019-11-04 12:19:45 INFO RetailMarketManager.RetailMarketManager setupInitialStrategies Pool2: [AlzIncz, NvPbr]
-2019-11-04 12:19:45 INFO RetailMarketManager.RetailMarketManager startExperiment ****************************** Iteration 1 TraningRounds for DQAgent: 1000
-2019-11-04 12:19:45 INFO RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [AlzIncz, NvPbr]
-2019-11-04 12:19:45 INFO RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [AlzIncz, NvPbr]
-2019-11-04 12:19:45 INFO RetailMarketManager.RetailMarketManager startExperiment Starting game round
-2019-11-04 12:19:57 INFO RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
-2019-11-04 12:19:57 INFO RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
-2019-11-04 12:19:57 INFO RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
-2019-11-04 12:19:57 INFO RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
-2019-11-04 12:19:57 INFO RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
-2019-11-04 12:19:57 INFO RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
-2019-11-04 12:19:57 INFO RetailMarketManager.RetailMarketManager computeNashEq AlzIncz, NvPbr
-2019-11-04 12:19:57 INFO RetailMarketManager.RetailMarketManager computeNashEq 0 [1.000, 0.000]
-2019-11-04 12:19:57 INFO RetailMarketManager.RetailMarketManager computeNashEq 1 [0.764, 0.236]
-2019-11-04 12:19:57 INFO RetailMarketManager.RetailMarketManager computeNashEq 2 [0.000, 1.000]
-2019-11-04 12:19:57 INFO RetailMarketManager.RetailMarketManager startExperiment SMNE is picking mixed strategy: [0.7636363636363637, 0.23636363636363636]
+{22:38:29} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool1: [NvPbr, DQ3, DQ4, Grim, Prober]
+{22:38:29} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool2: [NvPbr, DQ3, DQ4, Grim, Prober]
+{22:38:29} RetailMarketManager.RetailMarketManager startExperiment ****************************** Iteration 1 TraningRounds for DQAgent: 2000
+{22:38:29} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [NvPbr, DQ3, DQ4, Grim, Prober]
+{22:38:29} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [NvPbr, DQ3, DQ4, Grim, Prober]
+{22:38:29} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{22:38:30} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1214.28935 NvPbr 1215.7106500000002 Error1 3.2045691877393008 Error2 3.2045691877393
+{22:38:36} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1215.9749999999995 DQ3 1213.9583000000005 Error1 3.182092173536148 Error2 3.180464500520669
+{22:38:42} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1216.547200000001 DQ4 1213.452799999999 Error1 3.230523078965674 Error2 3.2305230789656747
+{22:38:43} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1216.9269000000008 Grim 1213.1466999999993 Error1 3.302340784997789 Error2 3.2874773484100217
+{22:38:44} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1211.2775000000017 Prober 1218.1523999999981 Error1 3.2287336785690477 Error2 3.38055738839387
+{22:38:55} RetailMarketManager.RetailMarketManager startSimulation DQ3 1214.118699999999 DQ3 1215.666400000001 Error1 3.258760876055637 Error2 3.2747259479698876
+{22:39:05} RetailMarketManager.RetailMarketManager startSimulation DQ3 1216.4933499999997 DQ4 1213.5066500000007 Error1 3.3622700092834377 Error2 3.362270009283437
+{22:39:12} RetailMarketManager.RetailMarketManager startSimulation DQ3 1216.4195500000021 Grim 1213.580449999998 Error1 3.1738271135622513 Error2 3.173827113562252
+{22:39:17} RetailMarketManager.RetailMarketManager startSimulation DQ3 1214.2132500000012 Prober 1215.7867499999988 Error1 3.1945902983317143 Error2 3.194590298331714
+{22:39:27} RetailMarketManager.RetailMarketManager startSimulation DQ4 1213.8463999999997 DQ4 1216.1536000000003 Error1 3.231952593420404 Error2 3.2319525934204036
+{22:39:33} RetailMarketManager.RetailMarketManager startSimulation DQ4 1216.1175000000012 Grim 1213.882499999999 Error1 3.172215679440162 Error2 3.172215679440162
+{22:39:40} RetailMarketManager.RetailMarketManager startSimulation DQ4 1213.7099000000012 Prober 1216.2900999999988 Error1 3.2490035091105685 Error2 3.2490035091105693
+{22:39:41} RetailMarketManager.RetailMarketManager startSimulation Grim 1211.9781499999997 Grim 1218.0959500000004 Error1 3.3021780961822365 Error2 3.3166538151589084
+{22:39:42} RetailMarketManager.RetailMarketManager startSimulation Grim 1217.73595 Prober 1212.26405 Error1 3.3131915831051097 Error2 3.3131915831051097
+{22:39:43} RetailMarketManager.RetailMarketManager startSimulation Prober 1215.8508499999998 Prober 1213.6454500000004 Error1 3.3120456569891163 Error2 3.1388467543824543
+{22:39:43} RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq NvPbr, DQ3, DQ4, Grim, Prober
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 0 [1.000, 0.000, 0.000, 0.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 1 [1.000, 0.000, 0.000, 0.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 2 [1.000, 0.000, 0.000, 0.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 3 [1.000, 0.000, 0.000, 0.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 4 [0.000, 1.000, 0.000, 0.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 5 [0.000, 1.000, 0.000, 0.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 6 [0.000, 1.000, 0.000, 0.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 7 [0.000, 1.000, 0.000, 0.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 8 [0.000, 1.000, 0.000, 0.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 9 [0.000, 0.000, 1.000, 0.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 10 [0.000, 0.000, 1.000, 0.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 11 [0.000, 0.000, 1.000, 0.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 12 [0.000, 0.000, 1.000, 0.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 13 [0.000, 0.000, 1.000, 0.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 14 [0.000, 0.000, 0.000, 1.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 15 [0.000, 0.000, 0.000, 1.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 16 [0.000, 0.000, 0.000, 1.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 17 [0.000, 0.000, 0.000, 1.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 18 [0.000, 0.000, 0.000, 1.000, 0.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 19 [0.000, 0.000, 0.000, 0.000, 1.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 20 [0.000, 0.000, 0.000, 0.000, 1.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 21 [0.000, 0.000, 0.000, 0.000, 1.000]
+{22:39:43} RetailMarketManager.RetailMarketManager computeNashEq 22 [0.000, 0.000, 0.000, 0.000, 1.000]
+{22:39:43} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Please select the desired strategy for SMNE (idx)
+{22:41:31} RetailMarketManager.RetailMarketManager startExperiment *************** Experimental Run Log ***************
+{22:41:31} RetailMarketManager.RetailMarketManager startExperiment 
+********************Configurations**********************
+TOTAL_TIME_SLOTS : 48
+PUBLICATION_CYCLE : 6
+DEFAULT_TARIFF_PRICE : 0.25
+CASE_STUDY_NO : 91
+INERTIA : 0.9
+RATIONALITY : 0.9
+ACT_CHANGE_PERC : 0.0
+POPULATION : 100
+LOGFILENAME : RLExistingPopularStrategiesRoundRobin.csv
+DAYMULT : 0.0
+DMNDMULT : 0.0
+INITCOST : 0.0
+DLOGGING : false
+TEST_ROUNDS : 1000
+TRAINING_ROUNDS : 2000
+LEARNING_RATE : 0.1
+DISCOUNT_FACTOR : 0.99
+DB_NAME_TRAINING : rl1
+MAX_TARIFF_PRICE : 0.5
+RL_TRAINING : false
+PPTS_DISCRTZD : 5
+GET_NASH_EQ : trueMANUAL_NASH_EQ_SELECTION : true
+MAX_DQ_AGENTS_ALLOWED : 2
+
+{22:41:34} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool1: [NvPbr, DQ3, DQ4, Grim, Prober, 1TF1T]
+{22:41:34} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool2: [NvPbr, DQ3, DQ4, Grim, Prober, 1TF1T]
+{22:41:34} RetailMarketManager.RetailMarketManager startExperiment ****************************** Iteration 1 TraningRounds for DQAgent: 2000
+{22:41:34} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [NvPbr, DQ3, DQ4, Grim, Prober, 1TF1T]
+{22:41:34} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [NvPbr, DQ3, DQ4, Grim, Prober, 1TF1T]
+{22:41:34} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{22:41:34} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1214.5888999999993 NvPbr 1215.4111000000007 Error1 3.133467601859078 Error2 3.1334676018590786
+{22:41:41} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1217.1756999999993 DQ3 1212.8243000000007 Error1 3.1888771281812702 Error2 3.1888771281812693
+{22:41:47} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1219.5925499999998 DQ4 1210.40745 Error1 3.265478760780048 Error2 3.2654787607800486
+{22:41:48} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1218.103249999999 Grim 1211.961550000001 Error1 3.1008475968049605 Error2 3.090121382697604
+{22:41:49} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1217.3532999999989 Prober 1212.1542000000015 Error1 3.1396055272783854 Error2 3.325636982790845
+{22:41:49} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1409.8516499999994 1TF1T 705.8852500000002 Error1 2.9948105203864333 Error2 2.124092720601412
+{22:42:00} RetailMarketManager.RetailMarketManager startSimulation DQ3 1215.4676999999995 DQ3 1214.5323000000005 Error1 3.1636688871196883 Error2 3.163668887119688
+{22:42:10} RetailMarketManager.RetailMarketManager startSimulation DQ3 1215.3750499999999 DQ4 1214.4769500000002 Error1 3.161713699792311 Error2 3.1571109359590634
+{22:42:16} RetailMarketManager.RetailMarketManager startSimulation DQ3 1214.3459500000001 Grim 1215.6540499999996 Error1 3.3133539106784515 Error2 3.313353910678449
+{22:42:21} RetailMarketManager.RetailMarketManager startSimulation DQ3 1214.4836499999994 Prober 1215.5163500000003 Error1 3.2125334007007433 Error2 3.212533400700744
+{22:42:27} RetailMarketManager.RetailMarketManager startSimulation DQ3 1409.370350000002 1TF1T 706.8292499999993 Error1 3.0051583229904884 Error2 2.238573581606621
+{22:42:37} RetailMarketManager.RetailMarketManager startSimulation DQ4 1218.0062499999995 DQ4 1211.9937500000005 Error1 3.3626206946019783 Error2 3.3626206946019783
+{22:42:42} RetailMarketManager.RetailMarketManager startSimulation DQ4 1216.5023500000011 Grim 1213.4976499999989 Error1 3.2069962392364553 Error2 3.2069962392364553
+{22:42:48} RetailMarketManager.RetailMarketManager startSimulation DQ4 1215.596750000001 Prober 1214.403249999999 Error1 3.2439495676084578 Error2 3.2439495676084578
+{22:42:53} RetailMarketManager.RetailMarketManager startSimulation DQ4 1411.5242999999991 1TF1T 705.3405 Error1 3.0607622222364173 Error2 2.201235105714881
+{22:42:54} RetailMarketManager.RetailMarketManager startSimulation Grim 1214.9189000000008 Grim 1215.163099999999 Error1 3.1754291137920347 Error2 3.1911611828334596
+{22:42:55} RetailMarketManager.RetailMarketManager startSimulation Grim 1214.5420499999989 Prober 1215.4579500000011 Error1 3.1718429166106707 Error2 3.1718429166106703
+{22:42:55} RetailMarketManager.RetailMarketManager startSimulation Grim 1412.1344000000001 1TF1T 703.7355000000001 Error1 3.0436723891897812 Error2 2.1501979472242994
+{22:42:56} RetailMarketManager.RetailMarketManager startSimulation Prober 1214.5108500000017 Prober 1214.9996499999982 Error1 3.3095601951560356 Error2 3.137795857874348
+{22:42:57} RetailMarketManager.RetailMarketManager startSimulation Prober 1411.2974500000012 1TF1T 704.1920500000007 Error1 3.1007293514887753 Error2 2.2105422297936927
+{22:42:57} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1924.20775 1TF1T 1925.79225 Error1 5.683949615083154 Error2 5.683949615083154
+{22:42:57} RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq NvPbr, DQ3, DQ4, Grim, Prober, 1TF1T
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 0 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 1 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 2 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 3 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 4 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 5 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 6 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 7 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 8 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 9 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 10 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 11 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 12 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 13 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 14 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 15 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 16 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 17 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 18 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 19 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 20 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 21 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 22 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 23 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 24 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 25 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 26 [0.509, 0.000, 0.000, 0.000, 0.000, 0.491]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 27 [0.509, 0.000, 0.000, 0.000, 0.000, 0.491]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 28 [0.509, 0.000, 0.000, 0.000, 0.000, 0.491]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 29 [0.509, 0.000, 0.000, 0.000, 0.000, 0.491]
+{22:42:57} RetailMarketManager.RetailMarketManager computeNashEq 30 [0.509, 0.000, 0.000, 0.000, 0.000, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 31 [0.000, 0.509, 0.000, 0.000, 0.000, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 32 [0.000, 0.509, 0.000, 0.000, 0.000, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 33 [0.000, 0.509, 0.000, 0.000, 0.000, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 34 [0.000, 0.509, 0.000, 0.000, 0.000, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 35 [0.000, 0.509, 0.000, 0.000, 0.000, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 36 [0.000, 0.000, 0.509, 0.000, 0.000, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 37 [0.000, 0.000, 0.509, 0.000, 0.000, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 38 [0.000, 0.000, 0.509, 0.000, 0.000, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 39 [0.000, 0.000, 0.509, 0.000, 0.000, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 40 [0.000, 0.000, 0.509, 0.000, 0.000, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 41 [0.000, 0.000, 0.000, 0.509, 0.000, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 42 [0.000, 0.000, 0.000, 0.509, 0.000, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 43 [0.000, 0.000, 0.000, 0.509, 0.000, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 44 [0.000, 0.000, 0.000, 0.509, 0.000, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 45 [0.000, 0.000, 0.000, 0.509, 0.000, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 46 [0.000, 0.000, 0.000, 0.000, 0.509, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 47 [0.000, 0.000, 0.000, 0.000, 0.509, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 48 [0.000, 0.000, 0.000, 0.000, 0.509, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 49 [0.000, 0.000, 0.000, 0.000, 0.509, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager computeNashEq 50 [0.000, 0.000, 0.000, 0.000, 0.509, 0.491]
+{22:42:58} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Please select the desired strategy for SMNE (idx)
+{22:43:44} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Selected [0.0, 0.5094339622641509, 0.0, 0.0, 0.0, 0.49056603773584906]
+{22:47:43} RetailMarketManager.RetailMarketManager startExperiment Training DQ Agent
+{22:47:43} RetailMarketManager.RetailMarketManager startExperiment Running SMNE vs DQAgent
+{22:47:51} RetailMarketManager.RetailMarketManager startSimulation 0.51DQ3,0.491TF1T 753.05485 DQAgent0_DQ5_0.51DQ3,0.491TF1T 1363.2065500000006 Error1 10.815278696230065 Error2 12.253932810310893
+{22:47:51} RetailMarketManager.RetailMarketManager startExperiment SMNE Profit: 753.05485, DQAgent profit: 1363.2065500000006
+{22:47:51} RetailMarketManager.RetailMarketManager startExperiment DQAgent profit > SMNE profit, adding DQAgent to the pool
+{22:47:51} RetailMarketManager.RetailMarketManager startExperiment ***************Total Training Rounds: 2000 : End of Experiment ***************
+{22:47:51} RetailMarketManager.RetailMarketManager mainExperiment Feature Size: 14
+{22:48:47} RetailMarketManager.RetailMarketManager startExperiment *************** Experimental Run Log ***************
+{22:48:47} RetailMarketManager.RetailMarketManager startExperiment 
+********************Configurations**********************
+TOTAL_TIME_SLOTS : 48
+PUBLICATION_CYCLE : 6
+DEFAULT_TARIFF_PRICE : 0.25
+CASE_STUDY_NO : 91
+INERTIA : 0.9
+RATIONALITY : 0.9
+ACT_CHANGE_PERC : 0.0
+POPULATION : 100
+LOGFILENAME : RLExistingPopularStrategiesRoundRobin.csv
+DAYMULT : 0.0
+DMNDMULT : 0.0
+INITCOST : 0.0
+DLOGGING : false
+TEST_ROUNDS : 1000
+TRAINING_ROUNDS : 2000
+LEARNING_RATE : 0.1
+DISCOUNT_FACTOR : 0.99
+DB_NAME_TRAINING : rl1
+MAX_TARIFF_PRICE : 0.5
+RL_TRAINING : false
+PPTS_DISCRTZD : 5
+GET_NASH_EQ : trueMANUAL_NASH_EQ_SELECTION : true
+MAX_DQ_AGENTS_ALLOWED : 2
+
+{22:48:49} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool1: [NvPbr, DQ3, DQ4, Grim, Prober, 1TF1T, DQ5]
+{22:48:49} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool2: [NvPbr, DQ3, DQ4, Grim, Prober, 1TF1T, DQ5]
+{22:48:49} RetailMarketManager.RetailMarketManager startExperiment ****************************** Iteration 1 TraningRounds for DQAgent: 2000
+{22:48:49} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [NvPbr, DQ3, DQ4, Grim, Prober, 1TF1T, DQ5]
+{22:48:49} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [NvPbr, DQ3, DQ4, Grim, Prober, 1TF1T, DQ5]
+{22:48:49} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{22:48:50} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1215.4494000000022 NvPbr 1214.550599999998 Error1 3.156572715947632 Error2 3.156572715947633
+{22:48:56} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1215.186299999999 DQ3 1214.813700000001 Error1 3.292108999676971 Error2 3.292108999676971
+{22:49:02} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1214.682849999999 DQ4 1215.317150000001 Error1 3.1048506578215647 Error2 3.104850657821565
+{22:49:03} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1214.5631999999998 Grim 1215.5134000000003 Error1 3.141284176720028 Error2 3.124595749527019
+{22:49:04} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1216.2798499999997 Prober 1213.1126500000007 Error1 3.194596040144663 Error2 3.3407683677605617
+{22:49:04} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1413.4380499999984 1TF1T 703.595050000001 Error1 2.855600910834341 Error2 2.0743232387405772
+{22:49:10} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1214.5697499999985 DQ5 1215.4302500000015 Error1 3.216189995926842 Error2 3.216189995926841
+{22:49:21} RetailMarketManager.RetailMarketManager startSimulation DQ3 1217.2879499999995 DQ3 1212.4862500000002 Error1 3.3277326661223987 Error2 3.3345939717449107
+{22:49:31} RetailMarketManager.RetailMarketManager startSimulation DQ3 1214.6474999999998 DQ4 1215.2824 Error1 3.259536034981361 Error2 3.260491573838824
+{22:49:36} RetailMarketManager.RetailMarketManager startSimulation DQ3 1213.5792000000001 Grim 1216.3525 Error1 3.23970689308434 Error2 3.237587250804833
+{22:49:42} RetailMarketManager.RetailMarketManager startSimulation DQ3 1214.834150000002 Prober 1215.165849999998 Error1 3.22580613347976 Error2 3.22580613347976
+{22:49:47} RetailMarketManager.RetailMarketManager startSimulation DQ3 1412.7510000000004 1TF1T 704.3007000000005 Error1 3.1438763031694514 Error2 2.209586881515552
+{22:49:57} RetailMarketManager.RetailMarketManager startSimulation DQ3 1216.1362 DQ5 1213.8638000000003 Error1 3.2648812469977666 Error2 3.2648812469977684
+{22:50:07} RetailMarketManager.RetailMarketManager startSimulation DQ4 1211.9451000000008 DQ4 1218.0548999999994 Error1 3.1949504450897472 Error2 3.194950445089746
+{22:50:13} RetailMarketManager.RetailMarketManager startSimulation DQ4 1213.9517500000002 Grim 1216.0482499999998 Error1 3.157090997415043 Error2 3.1570909974150427
+{22:50:18} RetailMarketManager.RetailMarketManager startSimulation DQ4 1214.005 Prober 1215.9949999999997 Error1 3.354373078055569 Error2 3.3543730780555694
+{22:50:24} RetailMarketManager.RetailMarketManager startSimulation DQ4 1411.4850499999995 1TF1T 704.5864499999996 Error1 3.0519352361589855 Error2 2.159143992196129
+{22:50:34} RetailMarketManager.RetailMarketManager startSimulation DQ4 1217.313350000001 DQ5 1212.6866499999992 Error1 3.3220918393555054 Error2 3.322091839355504
+{22:50:35} RetailMarketManager.RetailMarketManager startSimulation Grim 1216.0397999999973 Grim 1214.0350000000028 Error1 3.1304657061069885 Error2 3.1420515839610266
+{22:50:36} RetailMarketManager.RetailMarketManager startSimulation Grim 1215.5997499999985 Prober 1214.4002500000015 Error1 3.1307746000483494 Error2 3.1307746000483494
+{22:50:37} RetailMarketManager.RetailMarketManager startSimulation Grim 1413.3121500000007 1TF1T 704.3799499999993 Error1 2.9908598019127215 Error2 2.156277184534307
+{22:50:42} RetailMarketManager.RetailMarketManager startSimulation Grim 1213.8387999999998 DQ5 1216.1612000000002 Error1 3.268925623580582 Error2 3.268925623580584
+{22:50:43} RetailMarketManager.RetailMarketManager startSimulation Prober 1217.1315999999997 Prober 1212.3510000000008 Error1 3.409423919118873 Error2 3.2327550320762635
+{22:50:43} RetailMarketManager.RetailMarketManager startSimulation Prober 1412.67135 1TF1T 704.2905499999988 Error1 3.00704880065959 Error2 2.145086675741452
+{22:50:49} RetailMarketManager.RetailMarketManager startSimulation Prober 1217.5622499999993 DQ5 1212.4377500000005 Error1 3.3748333819001948 Error2 3.374833381900193
+{22:50:49} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1926.1165 1TF1T 1923.8835 Error1 5.8189900608820775 Error2 5.8189900608820775
+{22:50:55} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 711.53605 DQ5 1406.7617499999992 Error1 2.2899539804448117 Error2 3.1571571580697557
+{22:51:05} RetailMarketManager.RetailMarketManager startSimulation DQ5 1214.6173499999998 DQ5 1215.3826500000005 Error1 3.325322132028107 Error2 3.325322132028105
+{22:51:05} RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq NvPbr, DQ3, DQ4, Grim, Prober, 1TF1T, DQ5
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 0 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 1 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 2 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 3 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 4 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 5 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 6 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 7 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 8 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 9 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 10 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 11 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 12 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 13 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 14 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 15 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 16 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 17 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 18 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 19 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 20 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 21 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 22 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 23 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 24 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 25 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 26 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 27 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 28 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 29 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 30 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 31 [0.509, 0.000, 0.000, 0.000, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 32 [0.509, 0.000, 0.000, 0.000, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 33 [0.509, 0.000, 0.000, 0.000, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 34 [0.509, 0.000, 0.000, 0.000, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 35 [0.509, 0.000, 0.000, 0.000, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 36 [0.509, 0.000, 0.000, 0.000, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 37 [0.000, 0.509, 0.000, 0.000, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 38 [0.000, 0.509, 0.000, 0.000, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 39 [0.000, 0.509, 0.000, 0.000, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 40 [0.000, 0.509, 0.000, 0.000, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 41 [0.000, 0.509, 0.000, 0.000, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 42 [0.000, 0.509, 0.000, 0.000, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 43 [0.000, 0.000, 0.509, 0.000, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 44 [0.000, 0.000, 0.509, 0.000, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 45 [0.000, 0.000, 0.509, 0.000, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 46 [0.000, 0.000, 0.509, 0.000, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 47 [0.000, 0.000, 0.509, 0.000, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 48 [0.000, 0.000, 0.509, 0.000, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 49 [0.000, 0.000, 0.000, 0.509, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 50 [0.000, 0.000, 0.000, 0.509, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 51 [0.000, 0.000, 0.000, 0.509, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 52 [0.000, 0.000, 0.000, 0.509, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 53 [0.000, 0.000, 0.000, 0.509, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 54 [0.000, 0.000, 0.000, 0.509, 0.000, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 55 [0.000, 0.000, 0.000, 0.000, 0.509, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 56 [0.000, 0.000, 0.000, 0.000, 0.509, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 57 [0.000, 0.000, 0.000, 0.000, 0.509, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 58 [0.000, 0.000, 0.000, 0.000, 0.509, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 59 [0.000, 0.000, 0.000, 0.000, 0.509, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 60 [0.000, 0.000, 0.000, 0.000, 0.509, 0.491, 0.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 61 [0.000, 0.000, 0.000, 0.000, 0.000, 0.491, 0.509]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 62 [0.000, 0.000, 0.000, 0.000, 0.000, 0.491, 0.509]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 63 [0.000, 0.000, 0.000, 0.000, 0.000, 0.491, 0.509]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 64 [0.000, 0.000, 0.000, 0.000, 0.000, 0.491, 0.509]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 65 [0.000, 0.000, 0.000, 0.000, 0.000, 0.491, 0.509]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 66 [0.000, 0.000, 0.000, 0.000, 0.000, 0.491, 0.509]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 67 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 68 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 69 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 70 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 71 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{22:51:05} RetailMarketManager.RetailMarketManager computeNashEq 72 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{22:51:05} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Please select the desired strategy for SMNE (idx)
+{22:52:52} RetailMarketManager.RetailMarketManager startExperiment *************** Experimental Run Log ***************
+{22:52:52} RetailMarketManager.RetailMarketManager startExperiment 
+********************Configurations**********************
+TOTAL_TIME_SLOTS : 48
+PUBLICATION_CYCLE : 6
+DEFAULT_TARIFF_PRICE : 0.25
+CASE_STUDY_NO : 91
+INERTIA : 0.9
+RATIONALITY : 0.9
+ACT_CHANGE_PERC : 0.0
+POPULATION : 100
+LOGFILENAME : RLExistingPopularStrategiesRoundRobin.csv
+DAYMULT : 0.0
+DMNDMULT : 0.0
+INITCOST : 0.0
+DLOGGING : false
+TEST_ROUNDS : 1000
+TRAINING_ROUNDS : 2000
+LEARNING_RATE : 0.1
+DISCOUNT_FACTOR : 0.99
+DB_NAME_TRAINING : rl1
+MAX_TARIFF_PRICE : 0.5
+RL_TRAINING : false
+PPTS_DISCRTZD : 5
+GET_NASH_EQ : trueMANUAL_NASH_EQ_SELECTION : true
+MAX_DQ_AGENTS_ALLOWED : 2
+
+{22:52:54} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool1: [NvPbr, Grim, Prober, 1TF1T, DQ5]
+{22:52:54} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool2: [NvPbr, Grim, Prober, 1TF1T, DQ5]
+{22:52:54} RetailMarketManager.RetailMarketManager startExperiment ****************************** Iteration 1 TraningRounds for DQAgent: 2000
+{22:52:54} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [NvPbr, Grim, Prober, 1TF1T, DQ5]
+{22:52:54} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [NvPbr, Grim, Prober, 1TF1T, DQ5]
+{22:52:54} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{22:52:54} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1214.8537999999999 NvPbr 1215.1462000000001 Error1 3.258695534673852 Error2 3.2586955346738526
+{22:52:55} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1214.909099999999 Grim 1215.1631000000011 Error1 3.1566651180987013 Error2 3.1425815560610406
+{22:52:56} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1213.587349999998 Prober 1215.8296500000022 Error1 3.18463735974154 Error2 3.325529682918949
+{22:52:57} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1411.8498499999994 1TF1T 703.7086500000008 Error1 3.040584069874333 Error2 2.121977204361508
+{22:53:04} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1216.1050999999984 DQ5 1213.8949000000016 Error1 3.231774514875688 Error2 3.2317745148756876
+{22:53:04} RetailMarketManager.RetailMarketManager startSimulation Grim 1214.7733499999997 Grim 1215.2911500000007 Error1 3.288414468382788 Error2 3.296597966287108
+{22:53:05} RetailMarketManager.RetailMarketManager startSimulation Grim 1213.6740499999994 Prober 1216.3259500000008 Error1 3.2169551645052445 Error2 3.2169551645052454
+{22:53:06} RetailMarketManager.RetailMarketManager startSimulation Grim 1408.7044999999991 1TF1T 706.4801999999994 Error1 3.0718237391972205 Error2 2.1931676442942365
+{22:53:11} RetailMarketManager.RetailMarketManager startSimulation Grim 1215.3037000000004 DQ5 1214.6962999999996 Error1 3.1980105149959255 Error2 3.198010514995926
+{22:53:12} RetailMarketManager.RetailMarketManager startSimulation Prober 1212.4445999999998 Prober 1217.0291000000002 Error1 3.301289538655302 Error2 3.1283338273922605
+{22:53:13} RetailMarketManager.RetailMarketManager startSimulation Prober 1409.9909499999978 1TF1T 705.7145499999998 Error1 3.018917141533924 Error2 2.1647872332346374
+{22:53:18} RetailMarketManager.RetailMarketManager startSimulation Prober 1213.1689499999998 DQ5 1216.83105 Error1 3.2629924260377687 Error2 3.262992426037771
+{22:53:19} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1926.7965 1TF1T 1923.2035 Error1 6.002773301858099 Error2 6.002773301858099
+{22:53:24} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 713.4246499999989 DQ5 1404.509650000001 Error1 2.2134482150674777 Error2 3.072627117762358
+{22:53:34} RetailMarketManager.RetailMarketManager startSimulation DQ5 1215.9235500000007 DQ5 1214.0764499999993 Error1 3.2560629252953732 Error2 3.2560629252953746
+{22:53:34} RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq NvPbr, Grim, Prober, 1TF1T, DQ5
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 0 [1.000, 0.000, 0.000, 0.000, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 1 [1.000, 0.000, 0.000, 0.000, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 2 [1.000, 0.000, 0.000, 0.000, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 3 [1.000, 0.000, 0.000, 0.000, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 4 [0.000, 1.000, 0.000, 0.000, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 5 [0.000, 1.000, 0.000, 0.000, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 6 [0.000, 1.000, 0.000, 0.000, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 7 [0.000, 1.000, 0.000, 0.000, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 8 [0.000, 0.000, 1.000, 0.000, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 9 [0.000, 0.000, 1.000, 0.000, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 10 [0.000, 0.000, 1.000, 0.000, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 11 [0.000, 0.000, 1.000, 0.000, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 12 [0.000, 0.000, 0.000, 1.000, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 13 [0.509, 0.000, 0.000, 0.491, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 14 [0.509, 0.000, 0.000, 0.491, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 15 [0.509, 0.000, 0.000, 0.491, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 16 [0.509, 0.000, 0.000, 0.491, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 17 [0.000, 0.509, 0.000, 0.491, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 18 [0.000, 0.509, 0.000, 0.491, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 19 [0.000, 0.509, 0.000, 0.491, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 20 [0.000, 0.509, 0.000, 0.491, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 21 [0.000, 0.000, 0.509, 0.491, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 22 [0.000, 0.000, 0.509, 0.491, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 23 [0.000, 0.000, 0.509, 0.491, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 24 [0.000, 0.000, 0.509, 0.491, 0.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 25 [0.000, 0.000, 0.000, 0.491, 0.509]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 26 [0.000, 0.000, 0.000, 0.491, 0.509]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 27 [0.000, 0.000, 0.000, 0.491, 0.509]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 28 [0.000, 0.000, 0.000, 0.491, 0.509]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 29 [0.000, 0.000, 0.000, 0.000, 1.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 30 [0.000, 0.000, 0.000, 0.000, 1.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 31 [0.000, 0.000, 0.000, 0.000, 1.000]
+{22:53:34} RetailMarketManager.RetailMarketManager computeNashEq 32 [0.000, 0.000, 0.000, 0.000, 1.000]
+{22:53:34} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Please select the desired strategy for SMNE (idx)
+{22:54:23} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Selected [0.0, 0.0, 0.0, 0.49056603773584906, 0.5094339622641509]
+{22:58:06} RetailMarketManager.RetailMarketManager startExperiment Training DQ Agent
+{22:58:06} RetailMarketManager.RetailMarketManager startExperiment Running SMNE vs DQAgent
+{22:58:14} RetailMarketManager.RetailMarketManager startSimulation 0.491TF1T,0.51DQ5 741.2542999999994 DQAgent0_DQ6_0.491TF1T,0.51DQ5 1388.7598999999993 Error1 10.702542471975184 Error2 13.293455915555018
+{22:58:14} RetailMarketManager.RetailMarketManager startExperiment SMNE Profit: 741.2542999999994, DQAgent profit: 1388.7598999999993
+{22:58:14} RetailMarketManager.RetailMarketManager startExperiment DQAgent profit > SMNE profit, adding DQAgent to the pool
+{22:58:14} RetailMarketManager.RetailMarketManager startExperiment ***************Total Training Rounds: 2000 : End of Experiment ***************
+{22:58:14} RetailMarketManager.RetailMarketManager mainExperiment Feature Size: 14
+{22:59:12} RetailMarketManager.RetailMarketManager startExperiment *************** Experimental Run Log ***************
+{22:59:12} RetailMarketManager.RetailMarketManager startExperiment 
+********************Configurations**********************
+TOTAL_TIME_SLOTS : 48
+PUBLICATION_CYCLE : 6
+DEFAULT_TARIFF_PRICE : 0.25
+CASE_STUDY_NO : 91
+INERTIA : 0.9
+RATIONALITY : 0.9
+ACT_CHANGE_PERC : 0.0
+POPULATION : 100
+LOGFILENAME : RLExistingPopularStrategiesRoundRobin.csv
+DAYMULT : 0.0
+DMNDMULT : 0.0
+INITCOST : 0.0
+DLOGGING : false
+TEST_ROUNDS : 1000
+TRAINING_ROUNDS : 2000
+LEARNING_RATE : 0.1
+DISCOUNT_FACTOR : 0.99
+DB_NAME_TRAINING : rl1
+MAX_TARIFF_PRICE : 0.5
+RL_TRAINING : false
+PPTS_DISCRTZD : 5
+GET_NASH_EQ : trueMANUAL_NASH_EQ_SELECTION : true
+MAX_DQ_AGENTS_ALLOWED : 2
+
+{22:59:14} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool1: [NvPbr, Grim, Prober, 1TF1T, DQ5, DQ6]
+{22:59:14} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool2: [NvPbr, Grim, Prober, 1TF1T, DQ5, DQ6]
+{22:59:14} RetailMarketManager.RetailMarketManager startExperiment ****************************** Iteration 1 TraningRounds for DQAgent: 2000
+{22:59:14} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [NvPbr, Grim, Prober, 1TF1T, DQ5, DQ6]
+{22:59:14} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [NvPbr, Grim, Prober, 1TF1T, DQ5, DQ6]
+{22:59:14} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{22:59:15} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1215.8246999999985 NvPbr 1214.1753000000012 Error1 3.284879871106137 Error2 3.2848798711061375
+{22:59:15} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1216.8253000000004 Grim 1213.2435999999993 Error1 3.3083344452649053 Error2 3.290162471861847
+{22:59:16} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1215.240900000001 Prober 1214.2358999999992 Error1 3.132811454042697 Error2 3.3014931654867206
+{22:59:17} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1411.5453999999972 1TF1T 704.4958000000009 Error1 2.9553562240853037 Error2 2.126122403985758
+{22:59:24} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1215.9465 DQ5 1214.0535 Error1 3.2283908558469796 Error2 3.22839085584698
+{22:59:29} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1216.4541000000002 DQ6 1213.5458999999998 Error1 3.1068050903445346 Error2 3.1068050903445354
+{22:59:30} RetailMarketManager.RetailMarketManager startSimulation Grim 1212.4278000000004 Grim 1217.6509999999994 Error1 3.2806412475834477 Error2 3.2974371975045114
+{22:59:31} RetailMarketManager.RetailMarketManager startSimulation Grim 1213.811699999998 Prober 1216.188300000002 Error1 3.124091897899833 Error2 3.124091897899832
+{22:59:32} RetailMarketManager.RetailMarketManager startSimulation Grim 1412.0195000000006 1TF1T 704.8797 Error1 3.031609419296557 Error2 2.1691547823433566
+{22:59:37} RetailMarketManager.RetailMarketManager startSimulation Grim 1217.6871999999994 DQ5 1212.3128000000006 Error1 3.2644961422970407 Error2 3.2644961422970407
+{22:59:43} RetailMarketManager.RetailMarketManager startSimulation Grim 1214.3019500000014 DQ6 1215.6980499999986 Error1 3.0880460575121473 Error2 3.0880460575121473
+{22:59:44} RetailMarketManager.RetailMarketManager startSimulation Prober 1213.9027999999996 Prober 1215.5465000000004 Error1 3.3492527096858282 Error2 3.195630792343259
+{22:59:44} RetailMarketManager.RetailMarketManager startSimulation Prober 1410.6554499999982 1TF1T 705.9150500000009 Error1 3.103482365072319 Error2 2.2242223795601013
+{22:59:50} RetailMarketManager.RetailMarketManager startSimulation Prober 1214.8587999999995 DQ5 1215.1412000000005 Error1 3.1507220370046127 Error2 3.1507220370046123
+{22:59:56} RetailMarketManager.RetailMarketManager startSimulation Prober 1213.4134999999985 DQ6 1216.5865000000015 Error1 3.1526664202576846 Error2 3.152666420257684
+{22:59:57} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1924.4175 1TF1T 1925.5825 Error1 5.990055562038636 Error2 5.990055562038636
+{23:00:02} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 713.0756000000009 DQ5 1406.7559999999992 Error1 2.2129583083052027 Error2 3.073478980433476
+{23:00:08} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 714.7202500000003 DQ6 1404.0339500000014 Error1 2.201321821078394 Error2 3.025514859041059
+{23:00:19} RetailMarketManager.RetailMarketManager startSimulation DQ5 1213.7347500000005 DQ5 1216.2652499999995 Error1 3.275734604315789 Error2 3.2757346043157893
+{23:00:31} RetailMarketManager.RetailMarketManager startSimulation DQ5 1212.8904000000011 DQ6 1217.1095999999989 Error1 3.1809710163605938 Error2 3.180971016360594
+{23:00:42} RetailMarketManager.RetailMarketManager startSimulation DQ6 1215.7461500000002 DQ6 1214.2538499999998 Error1 3.174803627373179 Error2 3.1748036273731786
+{23:00:42} RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq NvPbr, Grim, Prober, 1TF1T, DQ5, DQ6
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 0 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 1 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 2 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 3 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 4 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 5 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 6 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 7 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 8 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 9 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 10 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 11 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 12 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 13 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 14 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 15 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 16 [0.509, 0.000, 0.000, 0.491, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 17 [0.509, 0.000, 0.000, 0.491, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 18 [0.509, 0.000, 0.000, 0.491, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 19 [0.509, 0.000, 0.000, 0.491, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 20 [0.509, 0.000, 0.000, 0.491, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 21 [0.000, 0.509, 0.000, 0.491, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 22 [0.000, 0.509, 0.000, 0.491, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 23 [0.000, 0.509, 0.000, 0.491, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 24 [0.000, 0.509, 0.000, 0.491, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 25 [0.000, 0.509, 0.000, 0.491, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 26 [0.000, 0.000, 0.509, 0.491, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 27 [0.000, 0.000, 0.509, 0.491, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 28 [0.000, 0.000, 0.509, 0.491, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 29 [0.000, 0.000, 0.509, 0.491, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 30 [0.000, 0.000, 0.509, 0.491, 0.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 31 [0.000, 0.000, 0.000, 0.491, 0.509, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 32 [0.000, 0.000, 0.000, 0.491, 0.509, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 33 [0.000, 0.000, 0.000, 0.491, 0.509, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 34 [0.000, 0.000, 0.000, 0.491, 0.509, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 35 [0.000, 0.000, 0.000, 0.491, 0.509, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 36 [0.000, 0.000, 0.000, 0.491, 0.000, 0.509]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 37 [0.000, 0.000, 0.000, 0.491, 0.000, 0.509]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 38 [0.000, 0.000, 0.000, 0.491, 0.000, 0.509]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 39 [0.000, 0.000, 0.000, 0.491, 0.000, 0.509]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 40 [0.000, 0.000, 0.000, 0.491, 0.000, 0.509]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 41 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 42 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 43 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 44 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 45 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 46 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 47 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 48 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 49 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:00:42} RetailMarketManager.RetailMarketManager computeNashEq 50 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:00:42} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Please select the desired strategy for SMNE (idx)
+{23:02:56} RetailMarketManager.RetailMarketManager startExperiment *************** Experimental Run Log ***************
+{23:02:56} RetailMarketManager.RetailMarketManager startExperiment 
+********************Configurations**********************
+TOTAL_TIME_SLOTS : 48
+PUBLICATION_CYCLE : 6
+DEFAULT_TARIFF_PRICE : 0.25
+CASE_STUDY_NO : 91
+INERTIA : 0.9
+RATIONALITY : 0.9
+ACT_CHANGE_PERC : 0.0
+POPULATION : 100
+LOGFILENAME : RLExistingPopularStrategiesRoundRobin.csv
+DAYMULT : 0.0
+DMNDMULT : 0.0
+INITCOST : 0.0
+DLOGGING : false
+TEST_ROUNDS : 1000
+TRAINING_ROUNDS : 2000
+LEARNING_RATE : 0.1
+DISCOUNT_FACTOR : 0.99
+DB_NAME_TRAINING : rl1
+MAX_TARIFF_PRICE : 0.5
+RL_TRAINING : false
+PPTS_DISCRTZD : 5
+GET_NASH_EQ : trueMANUAL_NASH_EQ_SELECTION : true
+MAX_DQ_AGENTS_ALLOWED : 2
+
+{23:02:58} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool1: [NvPbr, Grim, Prober, 1TF1T, DQ6, 2TF1T]
+{23:02:58} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool2: [NvPbr, Grim, Prober, 1TF1T, DQ6, 2TF1T]
+{23:02:58} RetailMarketManager.RetailMarketManager startExperiment ****************************** Iteration 1 TraningRounds for DQAgent: 2000
+{23:02:58} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [NvPbr, Grim, Prober, 1TF1T, DQ6, 2TF1T]
+{23:02:58} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [NvPbr, Grim, Prober, 1TF1T, DQ6, 2TF1T]
+{23:02:58} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{23:02:59} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1215.5698999999977 NvPbr 1214.4301000000023 Error1 3.0962815390748917 Error2 3.096281539074892
+{23:03:00} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1216.5463999999981 Grim 1213.524000000002 Error1 3.3288564682552586 Error2 3.311025374367041
+{23:03:00} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1214.4158500000005 Prober 1215.0189499999994 Error1 3.22691295894445 Error2 3.385192348122604
+{23:03:01} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1412.8699500000023 1TF1T 703.11975 Error1 3.1552244425634153 Error2 2.239134352375466
+{23:03:08} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1211.4988000000005 DQ6 1218.5012 Error1 3.2287711336562848 Error2 3.228771133656288
+{23:03:09} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1412.3972499999995 2TF1T 763.4185499999988 Error1 2.976002504066135 Error2 2.338182000737288
+{23:03:10} RetailMarketManager.RetailMarketManager startSimulation Grim 1214.76535 Grim 1215.3164500000003 Error1 3.1361028351513913 Error2 3.1442211363479875
+{23:03:10} RetailMarketManager.RetailMarketManager startSimulation Grim 1213.7142999999994 Prober 1216.2857000000008 Error1 3.2212855660681825 Error2 3.2212855660681825
+{23:03:11} RetailMarketManager.RetailMarketManager startSimulation Grim 1412.7357500000019 1TF1T 704.29935 Error1 3.045214330879043 Error2 2.1802546268555245
+{23:03:17} RetailMarketManager.RetailMarketManager startSimulation Grim 1214.4010500000009 DQ6 1215.5989499999991 Error1 3.1439629444598496 Error2 3.1439629444598496
+{23:03:17} RetailMarketManager.RetailMarketManager startSimulation Grim 1412.3850500000003 2TF1T 764.6247499999996 Error1 3.2072418056424765 Error2 2.399625942773561
+{23:03:18} RetailMarketManager.RetailMarketManager startSimulation Prober 1216.2580999999998 Prober 1213.2341 Error1 3.457972644743253 Error2 3.2784224889182796
+{23:03:19} RetailMarketManager.RetailMarketManager startSimulation Prober 1412.8675499999995 1TF1T 703.2965500000004 Error1 3.1428250837521325 Error2 2.2257078326876942
+{23:03:24} RetailMarketManager.RetailMarketManager startSimulation Prober 1216.1964500000013 DQ6 1213.8035499999987 Error1 3.3014340012313204 Error2 3.30143400123132
+{23:03:25} RetailMarketManager.RetailMarketManager startSimulation Prober 1410.7204999999979 2TF1T 765.6709000000005 Error1 3.079625748451847 Error2 2.339568277907423
+{23:03:26} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1928.1225 1TF1T 1921.8775 Error1 5.916610665895636 Error2 5.916610665895636
+{23:03:31} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 715.2800999999998 DQ6 1403.6845999999991 Error1 2.1305999167258 Error2 2.973705355241191
+{23:03:32} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1924.67975 2TF1T 1925.32025 Error1 5.914747438713166 Error2 5.914747438713166
+{23:03:43} RetailMarketManager.RetailMarketManager startSimulation DQ6 1216.4939999999986 DQ6 1213.5060000000014 Error1 3.153704280401444 Error2 3.1537042804014437
+{23:03:49} RetailMarketManager.RetailMarketManager startSimulation DQ6 1413.5195999999971 2TF1T 763.1170000000006 Error1 3.1076404997095373 Error2 2.4529606695733217
+{23:03:49} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 1923.04075 2TF1T 1926.95925 Error1 5.989820937647728 Error2 5.989820937647728
+{23:03:49} RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
+{23:03:49} RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
+{23:03:49} RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
+{23:03:49} RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
+{23:03:49} RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq NvPbr, Grim, Prober, 1TF1T, DQ6, 2TF1T
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 0 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 1 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 2 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 3 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 4 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 5 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 6 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 7 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 8 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 9 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 10 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 11 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 12 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 13 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 14 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 15 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 16 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 17 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 18 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 19 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 20 [0.540, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 21 [0.540, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 22 [0.540, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 23 [0.540, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 24 [0.000, 0.540, 0.000, 0.000, 0.000, 0.460]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 25 [0.000, 0.540, 0.000, 0.000, 0.000, 0.460]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 26 [0.000, 0.540, 0.000, 0.000, 0.000, 0.460]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 27 [0.000, 0.540, 0.000, 0.000, 0.000, 0.460]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 28 [0.000, 0.000, 0.540, 0.000, 0.000, 0.460]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 29 [0.000, 0.000, 0.540, 0.000, 0.000, 0.460]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 30 [0.000, 0.000, 0.540, 0.000, 0.000, 0.460]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 31 [0.000, 0.000, 0.540, 0.000, 0.000, 0.460]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 32 [0.000, 0.000, 0.000, 0.000, 0.540, 0.460]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 33 [0.000, 0.000, 0.000, 0.000, 0.540, 0.460]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 34 [0.000, 0.000, 0.000, 0.000, 0.540, 0.460]
+{23:03:50} RetailMarketManager.RetailMarketManager computeNashEq 35 [0.000, 0.000, 0.000, 0.000, 0.540, 0.460]
+{23:03:50} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Please select the desired strategy for SMNE (idx)
+{23:04:49} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Selected [0.0, 0.0, 0.0, 0.0, 0.54, 0.46]
+{23:08:21} RetailMarketManager.RetailMarketManager startExperiment Training DQ Agent
+{23:08:21} RetailMarketManager.RetailMarketManager startExperiment Running SMNE vs DQAgent
+{23:08:29} RetailMarketManager.RetailMarketManager startSimulation 0.54DQ6,0.462TF1T 763.0931999999998 DQAgent0_DQ7_0.54DQ6,0.462TF1T 1359.9643999999982 Error1 11.31269727520773 Error2 12.518333624099883
+{23:08:29} RetailMarketManager.RetailMarketManager startExperiment SMNE Profit: 763.0931999999998, DQAgent profit: 1359.9643999999982
+{23:08:29} RetailMarketManager.RetailMarketManager startExperiment DQAgent profit > SMNE profit, adding DQAgent to the pool
+{23:08:29} RetailMarketManager.RetailMarketManager startExperiment ***************Total Training Rounds: 2000 : End of Experiment ***************
+{23:08:29} RetailMarketManager.RetailMarketManager mainExperiment Feature Size: 14
+{23:10:03} RetailMarketManager.RetailMarketManager startExperiment *************** Experimental Run Log ***************
+{23:10:03} RetailMarketManager.RetailMarketManager startExperiment 
+********************Configurations**********************
+TOTAL_TIME_SLOTS : 48
+PUBLICATION_CYCLE : 6
+DEFAULT_TARIFF_PRICE : 0.25
+CASE_STUDY_NO : 91
+INERTIA : 0.9
+RATIONALITY : 0.9
+ACT_CHANGE_PERC : 0.0
+POPULATION : 100
+LOGFILENAME : RLExistingPopularStrategiesRoundRobin.csv
+DAYMULT : 0.0
+DMNDMULT : 0.0
+INITCOST : 0.0
+DLOGGING : false
+TEST_ROUNDS : 1000
+TRAINING_ROUNDS : 2000
+LEARNING_RATE : 0.1
+DISCOUNT_FACTOR : 0.99
+DB_NAME_TRAINING : rl1
+MAX_TARIFF_PRICE : 0.5
+RL_TRAINING : false
+PPTS_DISCRTZD : 5
+GET_NASH_EQ : trueMANUAL_NASH_EQ_SELECTION : true
+MAX_DQ_AGENTS_ALLOWED : 2
+
+{23:10:05} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool1: [NvPbr, Grim, Prober, 1TF1T, DQ6, 2TF1T, DQ7]
+{23:10:05} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool2: [NvPbr, Grim, Prober, 1TF1T, DQ6, 2TF1T, DQ7]
+{23:10:05} RetailMarketManager.RetailMarketManager startExperiment ****************************** Iteration 1 TraningRounds for DQAgent: 2000
+{23:10:05} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [NvPbr, Grim, Prober, 1TF1T, DQ6, 2TF1T, DQ7]
+{23:10:05} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [NvPbr, Grim, Prober, 1TF1T, DQ6, 2TF1T, DQ7]
+{23:10:05} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{23:10:06} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1214.7496999999992 NvPbr 1215.2503000000008 Error1 3.0418697997866806 Error2 3.0418697997866815
+{23:10:06} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1214.5737499999998 Grim 1215.50185 Error1 3.278753246821343 Error2 3.267345472303798
+{23:10:07} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1214.390049999997 Prober 1215.096150000003 Error1 3.1436776594790996 Error2 3.323773300870847
+{23:10:08} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1409.5990000000015 1TF1T 706.5762999999993 Error1 3.013198198428774 Error2 2.1172692439563967
+{23:10:15} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1216.4581999999991 DQ6 1213.5418000000009 Error1 3.316840481499647 Error2 3.316840481499648
+{23:10:16} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1413.4548999999995 2TF1T 762.968 Error1 2.8916077228163566 Error2 2.2472095101155127
+{23:10:21} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1215.3020500000016 DQ7 1214.6979499999982 Error1 3.2445307775818186 Error2 3.2445307775818186
+{23:10:22} RetailMarketManager.RetailMarketManager startSimulation Grim 1215.2830999999996 Grim 1214.7821000000004 Error1 3.2264339325392406 Error2 3.2413821877453683
+{23:10:23} RetailMarketManager.RetailMarketManager startSimulation Grim 1213.8446499999986 Prober 1216.1553500000014 Error1 3.2019235295890183 Error2 3.2019235295890183
+{23:10:24} RetailMarketManager.RetailMarketManager startSimulation Grim 1408.691200000001 1TF1T 706.3270999999995 Error1 2.9034444486840965 Error2 2.094721939113289
+{23:10:29} RetailMarketManager.RetailMarketManager startSimulation Grim 1212.8593499999995 DQ6 1217.1406500000005 Error1 3.1589067961245303 Error2 3.15890679612453
+{23:10:30} RetailMarketManager.RetailMarketManager startSimulation Grim 1411.3859999999997 2TF1T 764.2863999999995 Error1 3.126302289436261 Error2 2.4350143083443383
+{23:10:36} RetailMarketManager.RetailMarketManager startSimulation Grim 1215.141750000003 DQ7 1214.858249999997 Error1 3.3053086964722542 Error2 3.3053086964722542
+{23:10:36} RetailMarketManager.RetailMarketManager startSimulation Prober 1213.5853499999978 Prober 1215.8453500000023 Error1 3.4321428890275256 Error2 3.27813194044825
+{23:10:37} RetailMarketManager.RetailMarketManager startSimulation Prober 1411.8237500000005 1TF1T 703.1480500000006 Error1 3.112470560041573 Error2 2.2106383392070987
+{23:10:43} RetailMarketManager.RetailMarketManager startSimulation Prober 1215.646300000001 DQ6 1214.353699999999 Error1 3.2918159103778115 Error2 3.291815910377811
+{23:10:43} RetailMarketManager.RetailMarketManager startSimulation Prober 1416.4448500000015 2TF1T 762.0956500000007 Error1 3.052570175382568 Error2 2.3738513266351187
+{23:10:49} RetailMarketManager.RetailMarketManager startSimulation Prober 1214.5504999999996 DQ7 1215.4495000000004 Error1 3.080037573642178 Error2 3.080037573642179
+{23:10:50} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1928.398 1TF1T 1921.602 Error1 5.883585982884383 Error2 5.883585982884383
+{23:10:55} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 714.4150499999993 DQ6 1404.1489499999989 Error1 2.2651995215750866 Error2 3.265779612096421
+{23:10:56} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1926.60575 2TF1T 1923.39425 Error1 5.713293301524712 Error2 5.713293301524712
+{23:11:01} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 714.3663 DQ7 1404.6231000000012 Error1 2.1759226515014953 Error2 3.063029305658669
+{23:11:12} RetailMarketManager.RetailMarketManager startSimulation DQ6 1213.7025999999978 DQ6 1216.297400000002 Error1 3.279076829929851 Error2 3.2790768299298474
+{23:11:17} RetailMarketManager.RetailMarketManager startSimulation DQ6 1412.0330000000001 2TF1T 764.3771 Error1 3.086756347451089 Error2 2.4619715223443475
+{23:11:27} RetailMarketManager.RetailMarketManager startSimulation DQ6 1213.5607499999999 DQ7 1216.4392500000004 Error1 3.266844143271469 Error2 3.2668441432714697
+{23:11:28} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 1922.69525 2TF1T 1927.30475 Error1 5.788331341575387 Error2 5.788331341575387
+{23:11:33} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 772.6555999999993 DQ7 1404.4848999999992 Error1 2.3634148487371864 Error2 3.1018361609609215
+{23:11:44} RetailMarketManager.RetailMarketManager startSimulation DQ7 1211.4156499999985 DQ7 1218.5843500000012 Error1 3.301096833780816 Error2 3.3010968337808144
+{23:11:44} RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq NvPbr, Grim, Prober, 1TF1T, DQ6, 2TF1T, DQ7
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 0 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 1 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 2 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 3 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 4 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 5 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 6 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 7 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 8 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 9 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 10 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 11 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 12 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 13 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 14 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 15 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 16 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 17 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 18 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 19 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 20 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 21 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 22 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 23 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 24 [0.540, 0.000, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 25 [0.540, 0.000, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 26 [0.540, 0.000, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 27 [0.540, 0.000, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 28 [0.540, 0.000, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 29 [0.000, 0.540, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 30 [0.000, 0.540, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 31 [0.000, 0.540, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 32 [0.000, 0.540, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 33 [0.000, 0.540, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 34 [0.000, 0.000, 0.540, 0.000, 0.000, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 35 [0.000, 0.000, 0.540, 0.000, 0.000, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 36 [0.000, 0.000, 0.540, 0.000, 0.000, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 37 [0.000, 0.000, 0.540, 0.000, 0.000, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 38 [0.000, 0.000, 0.540, 0.000, 0.000, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 39 [0.000, 0.000, 0.000, 0.000, 0.540, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 40 [0.000, 0.000, 0.000, 0.000, 0.540, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 41 [0.000, 0.000, 0.000, 0.000, 0.540, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 42 [0.000, 0.000, 0.000, 0.000, 0.540, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 43 [0.000, 0.000, 0.000, 0.000, 0.540, 0.460, 0.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 44 [0.000, 0.000, 0.000, 0.000, 0.000, 0.460, 0.540]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 45 [0.000, 0.000, 0.000, 0.000, 0.000, 0.460, 0.540]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 46 [0.000, 0.000, 0.000, 0.000, 0.000, 0.460, 0.540]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 47 [0.000, 0.000, 0.000, 0.000, 0.000, 0.460, 0.540]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 48 [0.000, 0.000, 0.000, 0.000, 0.000, 0.460, 0.540]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 49 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 50 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 51 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 52 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:11:44} RetailMarketManager.RetailMarketManager computeNashEq 53 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:11:44} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Please select the desired strategy for SMNE (idx)
+{23:12:50} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Selected [0.0, 0.0, 0.0, 0.0, 0.0, 0.46, 0.54]
+{23:16:30} RetailMarketManager.RetailMarketManager startExperiment Training DQ Agent
+{23:16:30} RetailMarketManager.RetailMarketManager startExperiment Running SMNE vs DQAgent
+{23:16:39} RetailMarketManager.RetailMarketManager startSimulation 0.462TF1T,0.54DQ7 753.2500499999999 DQAgent0_DQ8_0.462TF1T,0.54DQ7 1363.8545500000018 Error1 10.59311621488834 Error2 12.275908616445184
+{23:16:39} RetailMarketManager.RetailMarketManager startExperiment SMNE Profit: 753.2500499999999, DQAgent profit: 1363.8545500000018
+{23:16:39} RetailMarketManager.RetailMarketManager startExperiment DQAgent profit > SMNE profit, adding DQAgent to the pool
+{23:16:39} RetailMarketManager.RetailMarketManager startExperiment ***************Total Training Rounds: 2000 : End of Experiment ***************
+{23:16:39} RetailMarketManager.RetailMarketManager mainExperiment Feature Size: 14
+{23:20:00} RetailMarketManager.RetailMarketManager startExperiment *************** Experimental Run Log ***************
+{23:20:00} RetailMarketManager.RetailMarketManager startExperiment 
+********************Configurations**********************
+TOTAL_TIME_SLOTS : 48
+PUBLICATION_CYCLE : 6
+DEFAULT_TARIFF_PRICE : 0.25
+CASE_STUDY_NO : 91
+INERTIA : 0.9
+RATIONALITY : 0.9
+ACT_CHANGE_PERC : 0.0
+POPULATION : 100
+LOGFILENAME : RLExistingPopularStrategiesRoundRobin.csv
+DAYMULT : 0.0
+DMNDMULT : 0.0
+INITCOST : 0.0
+DLOGGING : false
+TEST_ROUNDS : 1000
+TRAINING_ROUNDS : 2000
+LEARNING_RATE : 0.1
+DISCOUNT_FACTOR : 0.99
+DB_NAME_TRAINING : rl1
+MAX_TARIFF_PRICE : 0.5
+RL_TRAINING : false
+PPTS_DISCRTZD : 5
+GET_NASH_EQ : trueMANUAL_NASH_EQ_SELECTION : true
+MAX_DQ_AGENTS_ALLOWED : 2
+
+{23:20:03} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool1: [NvPbr, Grim, Prober, 1TF1T, 2TF1T, DQ7, DQ8]
+{23:20:03} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool2: [NvPbr, Grim, Prober, 1TF1T, 2TF1T, DQ7, DQ8]
+{23:20:03} RetailMarketManager.RetailMarketManager startExperiment ****************************** Iteration 1 TraningRounds for DQAgent: 2000
+{23:20:03} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [NvPbr, Grim, Prober, 1TF1T, 2TF1T, DQ7, DQ8]
+{23:20:03} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [NvPbr, Grim, Prober, 1TF1T, 2TF1T, DQ7, DQ8]
+{23:20:03} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{23:20:04} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1217.3425999999997 NvPbr 1212.6574 Error1 3.087243434995367 Error2 3.0872434349953664
+{23:20:04} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1216.1805000000002 Grim 1213.8859 Error1 3.242287560553442 Error2 3.221933554324718
+{23:20:05} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1217.3909499999975 Prober 1212.1155500000027 Error1 3.322849009164177 Error2 3.469119035938593
+{23:20:06} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1414.4664500000008 1TF1T 703.1631500000009 Error1 3.0360533156322282 Error2 2.1466076095907516
+{23:20:07} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1410.2404 2TF1T 764.1155999999997 Error1 2.948758465415259 Error2 2.3342060350629352
+{23:20:14} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1213.1681499999997 DQ7 1216.8318500000003 Error1 3.1484722671833274 Error2 3.148472267183327
+{23:20:19} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1218.146100000002 DQ8 1211.8538999999976 Error1 3.1396171426314505 Error2 3.1396171426314488
+{23:20:20} RetailMarketManager.RetailMarketManager startSimulation Grim 1213.2459000000003 Grim 1216.8346999999997 Error1 3.1994930276252664 Error2 3.215137811050696
+{23:20:21} RetailMarketManager.RetailMarketManager startSimulation Grim 1215.9681000000016 Prober 1214.0318999999984 Error1 3.245052374338114 Error2 3.2450523743381146
+{23:20:21} RetailMarketManager.RetailMarketManager startSimulation Grim 1412.2312000000006 1TF1T 704.1966999999994 Error1 3.1271236327911467 Error2 2.207306449030805
+{23:20:22} RetailMarketManager.RetailMarketManager startSimulation Grim 1412.861700000001 2TF1T 764.1616000000009 Error1 3.1324516500701782 Error2 2.35673940935741
+{23:20:28} RetailMarketManager.RetailMarketManager startSimulation Grim 1213.6770999999992 DQ7 1216.3229000000006 Error1 3.1986499524059466 Error2 3.1986499524059466
+{23:20:33} RetailMarketManager.RetailMarketManager startSimulation Grim 1212.0605500000008 DQ8 1217.9394499999994 Error1 3.1778861938578484 Error2 3.1778861938578484
+{23:20:34} RetailMarketManager.RetailMarketManager startSimulation Prober 1211.989350000001 Prober 1217.4447499999987 Error1 3.304949788040982 Error2 3.1323636198487397
+{23:20:35} RetailMarketManager.RetailMarketManager startSimulation Prober 1412.0142499999995 1TF1T 704.6714499999991 Error1 3.116876289483286 Error2 2.21283782333777
+{23:20:36} RetailMarketManager.RetailMarketManager startSimulation Prober 1412.1226500000005 2TF1T 764.059249999999 Error1 3.011874839366466 Error2 2.2872430279240326
+{23:20:41} RetailMarketManager.RetailMarketManager startSimulation Prober 1212.6842500000005 DQ7 1217.3157499999998 Error1 3.359996635301753 Error2 3.359996635301753
+{23:20:47} RetailMarketManager.RetailMarketManager startSimulation Prober 1215.90775 DQ8 1214.09225 Error1 3.2868974531658126 Error2 3.286897453165812
+{23:20:48} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1922.745 1TF1T 1927.255 Error1 5.991593884181404 Error2 5.991593884181404
+{23:20:49} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1923.439 2TF1T 1926.561 Error1 5.986728248902437 Error2 5.986728248902437
+{23:20:54} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 714.3002500000002 DQ7 1405.2961499999992 Error1 2.22866048588741 Error2 3.157270702839067
+{23:21:00} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 716.1208500000001 DQ8 1402.8261500000006 Error1 2.285902640227278 Error2 3.124059628484624
+{23:21:01} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 1930.07975 2TF1T 1919.92025 Error1 5.886406388679251 Error2 5.886406388679251
+{23:21:06} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 772.9744000000006 DQ7 1404.4208999999992 Error1 2.3035184197329586 Error2 2.9870623541986374
+{23:21:12} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 772.2412000000006 DQ8 1406.1871999999994 Error1 2.389869104960037 Error2 3.065084244469676
+{23:21:22} RetailMarketManager.RetailMarketManager startSimulation DQ7 1217.2093500000003 DQ7 1212.79065 Error1 3.16357465610308 Error2 3.16357465610308
+{23:21:33} RetailMarketManager.RetailMarketManager startSimulation DQ7 1214.1379 DQ8 1215.8621 Error1 3.068581175786512 Error2 3.0685811757865125
+{23:21:43} RetailMarketManager.RetailMarketManager startSimulation DQ8 1214.7165499999978 DQ8 1215.2834500000022 Error1 3.115038518717252 Error2 3.1150385187172533
+{23:21:43} RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq NvPbr, Grim, Prober, 1TF1T, 2TF1T, DQ7, DQ8
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 0 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 1 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 2 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 3 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 4 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 5 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 6 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 7 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 8 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 9 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 10 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 11 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 12 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 13 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 14 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 15 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 16 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 17 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 18 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 19 [0.540, 0.000, 0.000, 0.000, 0.460, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 20 [0.540, 0.000, 0.000, 0.000, 0.460, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 21 [0.540, 0.000, 0.000, 0.000, 0.460, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 22 [0.540, 0.000, 0.000, 0.000, 0.460, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 23 [0.540, 0.000, 0.000, 0.000, 0.460, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 24 [0.000, 0.540, 0.000, 0.000, 0.460, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 25 [0.000, 0.540, 0.000, 0.000, 0.460, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 26 [0.000, 0.540, 0.000, 0.000, 0.460, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 27 [0.000, 0.540, 0.000, 0.000, 0.460, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 28 [0.000, 0.540, 0.000, 0.000, 0.460, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 29 [0.000, 0.000, 0.540, 0.000, 0.460, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 30 [0.000, 0.000, 0.540, 0.000, 0.460, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 31 [0.000, 0.000, 0.540, 0.000, 0.460, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 32 [0.000, 0.000, 0.540, 0.000, 0.460, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 33 [0.000, 0.000, 0.540, 0.000, 0.460, 0.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 34 [0.000, 0.000, 0.000, 0.000, 0.460, 0.540, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 35 [0.000, 0.000, 0.000, 0.000, 0.460, 0.540, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 36 [0.000, 0.000, 0.000, 0.000, 0.460, 0.540, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 37 [0.000, 0.000, 0.000, 0.000, 0.460, 0.540, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 38 [0.000, 0.000, 0.000, 0.000, 0.460, 0.540, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 39 [0.000, 0.000, 0.000, 0.000, 0.460, 0.000, 0.540]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 40 [0.000, 0.000, 0.000, 0.000, 0.460, 0.000, 0.540]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 41 [0.000, 0.000, 0.000, 0.000, 0.460, 0.000, 0.540]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 42 [0.000, 0.000, 0.000, 0.000, 0.460, 0.000, 0.540]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 43 [0.000, 0.000, 0.000, 0.000, 0.460, 0.000, 0.540]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 44 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 45 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 46 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 47 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 48 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 49 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 50 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 51 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 52 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:21:43} RetailMarketManager.RetailMarketManager computeNashEq 53 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:21:43} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Please select the desired strategy for SMNE (idx)
+{23:23:04} RetailMarketManager.RetailMarketManager startExperiment *************** Experimental Run Log ***************
+{23:23:04} RetailMarketManager.RetailMarketManager startExperiment 
+********************Configurations**********************
+TOTAL_TIME_SLOTS : 48
+PUBLICATION_CYCLE : 6
+DEFAULT_TARIFF_PRICE : 0.25
+CASE_STUDY_NO : 91
+INERTIA : 0.9
+RATIONALITY : 0.9
+ACT_CHANGE_PERC : 0.0
+POPULATION : 100
+LOGFILENAME : RLExistingPopularStrategiesRoundRobin.csv
+DAYMULT : 0.0
+DMNDMULT : 0.0
+INITCOST : 0.0
+DLOGGING : false
+TEST_ROUNDS : 1000
+TRAINING_ROUNDS : 2000
+LEARNING_RATE : 0.1
+DISCOUNT_FACTOR : 0.99
+DB_NAME_TRAINING : rl1
+MAX_TARIFF_PRICE : 0.5
+RL_TRAINING : false
+PPTS_DISCRTZD : 5
+GET_NASH_EQ : trueMANUAL_NASH_EQ_SELECTION : true
+MAX_DQ_AGENTS_ALLOWED : 2
+
+{23:23:07} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool1: [NvPbr, Grim, Prober, 1TF1T, 2TF1T, DQ7, DQ8, 1TF2T]
+{23:23:07} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool2: [NvPbr, Grim, Prober, 1TF1T, 2TF1T, DQ7, DQ8, 1TF2T]
+{23:23:07} RetailMarketManager.RetailMarketManager startExperiment ****************************** Iteration 1 TraningRounds for DQAgent: 2000
+{23:23:07} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [NvPbr, Grim, Prober, 1TF1T, 2TF1T, DQ7, DQ8, 1TF2T]
+{23:23:07} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [NvPbr, Grim, Prober, 1TF1T, 2TF1T, DQ7, DQ8, 1TF2T]
+{23:23:07} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{23:23:08} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1216.5847500000016 NvPbr 1213.4152499999984 Error1 3.066133324815459 Error2 3.0661333248154596
+{23:23:09} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1216.0181000000005 Grim 1214.0471999999995 Error1 3.1176926584750815 Error2 3.1012903714450633
+{23:23:09} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1216.606949999998 Prober 1212.8317500000019 Error1 3.1384474366662767 Error2 3.3026604537783046
+{23:23:10} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1412.8376499999963 1TF1T 704.3476500000007 Error1 3.04613181979007 Error2 2.15593543661325
+{23:23:11} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1410.383649999999 2TF1T 765.2211500000003 Error1 3.009651742533991 Error2 2.3028823471002355
+{23:23:21} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1214.2312499999996 DQ7 1215.7687500000004 Error1 3.1859584501385934 Error2 3.185958450138593
+{23:23:28} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1213.3444499999996 DQ8 1216.6555500000002 Error1 3.125666451500082 Error2 3.1256664515000816
+{23:23:29} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1413.8997000000002 1TF2T 763.7669000000003 Error1 3.068404144594754 Error2 2.3420748554870356
+{23:23:30} RetailMarketManager.RetailMarketManager startSimulation Grim 1214.2343000000003 Grim 1215.8342999999998 Error1 3.249716406092692 Error2 3.268415684093444
+{23:23:31} RetailMarketManager.RetailMarketManager startSimulation Grim 1214.6584000000012 Prober 1215.3415999999988 Error1 3.2932917742005046 Error2 3.2932917742005055
+{23:23:32} RetailMarketManager.RetailMarketManager startSimulation Grim 1410.6112500000013 1TF1T 705.3520500000006 Error1 3.0324857966284857 Error2 2.1632074775988723
+{23:23:32} RetailMarketManager.RetailMarketManager startSimulation Grim 1414.7513999999965 2TF1T 762.5672999999992 Error1 3.064981523117953 Error2 2.3580687550348345
+{23:23:39} RetailMarketManager.RetailMarketManager startSimulation Grim 1214.6127000000008 DQ7 1215.3872999999992 Error1 3.0943121289120685 Error2 3.0943121289120703
+{23:23:45} RetailMarketManager.RetailMarketManager startSimulation Grim 1214.9184 DQ8 1215.0815999999998 Error1 3.3055139187297202 Error2 3.3055139187297184
+{23:23:46} RetailMarketManager.RetailMarketManager startSimulation Grim 1412.7192 1TF2T 763.7883999999992 Error1 3.0818900119453625 Error2 2.3352511283393724
+{23:23:47} RetailMarketManager.RetailMarketManager startSimulation Prober 1215.5376999999994 Prober 1213.9390000000005 Error1 3.3374780225572023 Error2 3.1800788258894443
+{23:23:48} RetailMarketManager.RetailMarketManager startSimulation Prober 1413.1356000000012 1TF1T 704.3542000000008 Error1 2.961012143361426 Error2 2.1335755642681544
+{23:23:49} RetailMarketManager.RetailMarketManager startSimulation Prober 1410.9631999999992 2TF1T 764.3807000000011 Error1 3.008370821789032 Error2 2.2224213796889223
+{23:23:55} RetailMarketManager.RetailMarketManager startSimulation Prober 1216.2769999999994 DQ7 1213.7230000000004 Error1 3.157173527857093 Error2 3.1571735278570934
+{23:24:02} RetailMarketManager.RetailMarketManager startSimulation Prober 1214.0383499999998 DQ8 1215.96165 Error1 3.1825339211861428 Error2 3.1825339211861414
+{23:24:02} RetailMarketManager.RetailMarketManager startSimulation Prober 1412.5388500000004 1TF2T 763.8539499999993 Error1 2.9787437835649246 Error2 2.330226320447316
+{23:24:03} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1927.05125 1TF1T 1922.94875 Error1 5.9062947329520785 Error2 5.9062947329520785
+{23:24:04} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1927.71675 2TF1T 1922.28325 Error1 5.840358558082811 Error2 5.840358558082811
+{23:24:10} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 713.8639500000002 DQ7 1402.6160499999999 Error1 2.1402167366477247 Error2 2.9626480799997594
+{23:24:15} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 713.0330500000003 DQ8 1405.9454500000024 Error1 2.226852372083682 Error2 3.1371706131164254
+{23:24:16} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1922.003 1TF2T 1927.997 Error1 5.785697359767932 Error2 5.785697359767932
+{23:24:16} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 1924.61475 2TF1T 1925.38525 Error1 6.069174186740061 Error2 6.069174186740061
+{23:24:22} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 772.089500000002 DQ7 1406.8073000000015 Error1 2.3708370766713602 Error2 3.1121018449596294
+{23:24:28} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 775.7002999999999 DQ8 1400.770800000001 Error1 2.4034832837343103 Error2 3.0419963199271267
+{23:24:29} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 1917.819 1TF2T 1932.181 Error1 5.957589507119669 Error2 5.957589507119669
+{23:24:40} RetailMarketManager.RetailMarketManager startSimulation DQ7 1214.8664000000003 DQ7 1215.1335999999997 Error1 3.1577944619463865 Error2 3.157794461946386
+{23:24:54} RetailMarketManager.RetailMarketManager startSimulation DQ7 1215.6668500000003 DQ8 1214.3331499999997 Error1 3.266086174299648 Error2 3.266086174299649
+{23:24:59} RetailMarketManager.RetailMarketManager startSimulation DQ7 1409.9494499999987 1TF2T 765.164950000001 Error1 3.0105621036799626 Error2 2.3210575334835633
+{23:25:10} RetailMarketManager.RetailMarketManager startSimulation DQ8 1213.6625 DQ8 1216.3375 Error1 3.2813777774608655 Error2 3.2813777774608646
+{23:25:15} RetailMarketManager.RetailMarketManager startSimulation DQ8 1411.5733999999998 1TF2T 763.9096000000003 Error1 3.13048431385904 Error2 2.362119371255852
+{23:25:16} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 1920.06525 1TF2T 1929.93475 Error1 5.959857307423378 Error2 5.959857307423378
+{23:25:16} RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq NvPbr, Grim, Prober, 1TF1T, 2TF1T, DQ7, DQ8, 1TF2T
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 0 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 1 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 2 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 3 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 4 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 5 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 6 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 7 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 8 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 9 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 10 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 11 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 12 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 13 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 14 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 15 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 16 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 17 [0.540, 0.000, 0.000, 0.000, 0.460, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 18 [0.540, 0.000, 0.000, 0.000, 0.460, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 19 [0.540, 0.000, 0.000, 0.000, 0.460, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 20 [0.000, 0.000, 0.540, 0.000, 0.460, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 21 [0.000, 0.000, 0.540, 0.000, 0.460, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 22 [0.000, 0.000, 0.540, 0.000, 0.460, 0.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 23 [0.000, 0.000, 0.000, 0.000, 0.460, 0.540, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 24 [0.000, 0.000, 0.000, 0.000, 0.460, 0.540, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 25 [0.000, 0.000, 0.000, 0.000, 0.460, 0.540, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 26 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 27 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 28 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 29 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 30 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 31 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 32 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 33 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 34 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 35 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 36 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 37 [0.540, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 38 [0.540, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 39 [0.540, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 40 [0.540, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 41 [0.540, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 42 [0.000, 0.540, 0.000, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 43 [0.000, 0.540, 0.000, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 44 [0.000, 0.540, 0.000, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 45 [0.000, 0.540, 0.000, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 46 [0.000, 0.540, 0.000, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 47 [0.000, 0.000, 0.540, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 48 [0.000, 0.000, 0.540, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 49 [0.000, 0.000, 0.540, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 50 [0.000, 0.000, 0.540, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 51 [0.000, 0.000, 0.540, 0.000, 0.000, 0.000, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 52 [0.000, 0.000, 0.000, 0.000, 0.000, 0.540, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 53 [0.000, 0.000, 0.000, 0.000, 0.000, 0.540, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 54 [0.000, 0.000, 0.000, 0.000, 0.000, 0.540, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 55 [0.000, 0.000, 0.000, 0.000, 0.000, 0.540, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 56 [0.000, 0.000, 0.000, 0.000, 0.000, 0.540, 0.000, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 57 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.540, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 58 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.540, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 59 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.540, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 60 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.540, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager computeNashEq 61 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.540, 0.460]
+{23:25:16} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Please select the desired strategy for SMNE (idx)
+{23:25:32} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Selected [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.54, 0.46]
+{23:28:47} RetailMarketManager.RetailMarketManager startExperiment Training DQ Agent
+{23:28:47} RetailMarketManager.RetailMarketManager startExperiment Running SMNE vs DQAgent
+{23:28:55} RetailMarketManager.RetailMarketManager startSimulation 0.54DQ8,0.461TF2T 757.8311000000004 DQAgent0_DQ9_0.54DQ8,0.461TF2T 1355.6898999999996 Error1 10.831508101193947 Error2 12.048716030438365
+{23:28:55} RetailMarketManager.RetailMarketManager startExperiment SMNE Profit: 757.8311000000004, DQAgent profit: 1355.6898999999996
+{23:28:55} RetailMarketManager.RetailMarketManager startExperiment DQAgent profit > SMNE profit, adding DQAgent to the pool
+{23:28:55} RetailMarketManager.RetailMarketManager startExperiment ***************Total Training Rounds: 2000 : End of Experiment ***************
+{23:28:55} RetailMarketManager.RetailMarketManager mainExperiment Feature Size: 14
+{23:29:43} RetailMarketManager.RetailMarketManager startExperiment *************** Experimental Run Log ***************
+{23:29:43} RetailMarketManager.RetailMarketManager startExperiment 
+********************Configurations**********************
+TOTAL_TIME_SLOTS : 48
+PUBLICATION_CYCLE : 6
+DEFAULT_TARIFF_PRICE : 0.25
+CASE_STUDY_NO : 91
+INERTIA : 0.9
+RATIONALITY : 0.9
+ACT_CHANGE_PERC : 0.0
+POPULATION : 100
+LOGFILENAME : RLExistingPopularStrategiesRoundRobin.csv
+DAYMULT : 0.0
+DMNDMULT : 0.0
+INITCOST : 0.0
+DLOGGING : false
+TEST_ROUNDS : 1000
+TRAINING_ROUNDS : 2000
+LEARNING_RATE : 0.1
+DISCOUNT_FACTOR : 0.99
+DB_NAME_TRAINING : rl1
+MAX_TARIFF_PRICE : 0.5
+RL_TRAINING : false
+PPTS_DISCRTZD : 5
+GET_NASH_EQ : trueMANUAL_NASH_EQ_SELECTION : true
+MAX_DQ_AGENTS_ALLOWED : 2
+
+{23:29:46} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool1: [NvPbr, Grim, Prober, DQ7, DQ8, 1TF2T, DQ9]
+{23:29:46} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool2: [NvPbr, Grim, Prober, DQ7, DQ8, 1TF2T, DQ9]
+{23:29:46} RetailMarketManager.RetailMarketManager startExperiment ****************************** Iteration 1 TraningRounds for DQAgent: 2000
+{23:29:46} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [NvPbr, Grim, Prober, DQ7, DQ8, 1TF2T, DQ9]
+{23:29:46} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [NvPbr, Grim, Prober, DQ7, DQ8, 1TF2T, DQ9]
+{23:29:46} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{23:29:46} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1214.5476499999997 NvPbr 1215.4523500000005 Error1 3.2904025412859084 Error2 3.2904025412859075
+{23:29:47} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1215.4543999999985 Grim 1214.613500000001 Error1 3.162065327605145 Error2 3.143260700489921
+{23:29:48} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1216.4459500000007 Prober 1213.0089499999995 Error1 3.2178264534322176 Error2 3.3921510445701304
+{23:29:55} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1215.7265000000004 DQ7 1214.2734999999996 Error1 3.2110248366109526 Error2 3.2110248366109526
+{23:30:00} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1212.6323499999983 DQ8 1217.3676500000015 Error1 3.3140805062272047 Error2 3.3140805062272065
+{23:30:01} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1410.6570000000008 1TF2T 764.8442000000005 Error1 2.9815625530841383 Error2 2.315964776423116
+{23:30:06} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1211.7725499999988 DQ9 1218.2274500000008 Error1 3.239591778842023 Error2 3.239591778842022
+{23:30:07} RetailMarketManager.RetailMarketManager startSimulation Grim 1214.4772499999992 Grim 1215.5895500000008 Error1 3.3246904433140707 Error2 3.335493864692855
+{23:30:08} RetailMarketManager.RetailMarketManager startSimulation Grim 1214.8882000000003 Prober 1215.1117999999994 Error1 3.187375364411228 Error2 3.18737536441123
+{23:30:13} RetailMarketManager.RetailMarketManager startSimulation Grim 1214.859549999999 DQ7 1215.140450000001 Error1 3.139358010425777 Error2 3.139358010425777
+{23:30:19} RetailMarketManager.RetailMarketManager startSimulation Grim 1216.2032 DQ8 1213.7968000000003 Error1 3.042711616239374 Error2 3.0427116162393726
+{23:30:20} RetailMarketManager.RetailMarketManager startSimulation Grim 1411.4272499999981 1TF2T 764.9539499999992 Error1 3.042675042981737 Error2 2.2880596350500624
+{23:30:25} RetailMarketManager.RetailMarketManager startSimulation Grim 1215.4489500000004 DQ9 1214.5510499999996 Error1 3.1073928402608915 Error2 3.107392840260891
+{23:30:26} RetailMarketManager.RetailMarketManager startSimulation Prober 1212.4028000000008 Prober 1217.0592999999994 Error1 3.34283028511976 Error2 3.163500732403272
+{23:30:31} RetailMarketManager.RetailMarketManager startSimulation Prober 1215.2575499999991 DQ7 1214.7424500000009 Error1 3.1479102155860796 Error2 3.14791021558608
+{23:30:37} RetailMarketManager.RetailMarketManager startSimulation Prober 1213.8076999999992 DQ8 1216.1923000000006 Error1 3.233956630676348 Error2 3.233956630676349
+{23:30:37} RetailMarketManager.RetailMarketManager startSimulation Prober 1413.695149999998 1TF2T 762.7163500000007 Error1 3.0732209487936233 Error2 2.333308460284211
+{23:30:43} RetailMarketManager.RetailMarketManager startSimulation Prober 1216.7363 DQ9 1213.2636999999997 Error1 3.189636365980627 Error2 3.189636365980626
+{23:30:53} RetailMarketManager.RetailMarketManager startSimulation DQ7 1213.6742499999993 DQ7 1216.3257500000009 Error1 3.153981020001091 Error2 3.15398102000109
+{23:31:03} RetailMarketManager.RetailMarketManager startSimulation DQ7 1216.9999499999997 DQ8 1213.0000500000006 Error1 3.1899892239119545 Error2 3.189989223911953
+{23:31:09} RetailMarketManager.RetailMarketManager startSimulation DQ7 1411.4373499999997 1TF2T 764.6851499999997 Error1 3.181136871782407 Error2 2.4711104196479674
+{23:31:19} RetailMarketManager.RetailMarketManager startSimulation DQ7 1215.0593 DQ9 1214.9407 Error1 3.1696712341799804 Error2 3.16967123417998
+{23:31:29} RetailMarketManager.RetailMarketManager startSimulation DQ8 1213.48605 DQ8 1216.51395 Error1 3.0756051347536557 Error2 3.075605134753656
+{23:31:34} RetailMarketManager.RetailMarketManager startSimulation DQ8 1409.894350000001 1TF2T 765.6952499999996 Error1 3.052215561925228 Error2 2.39789444752514
+{23:31:44} RetailMarketManager.RetailMarketManager startSimulation DQ8 1218.2650000000003 DQ9 1211.7349999999997 Error1 3.1443977684765003 Error2 3.1443977684765017
+{23:31:45} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 1925.60525 1TF2T 1924.39475 Error1 5.7101942181974765 Error2 5.7101942181974765
+{23:31:50} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 774.1697 DQ9 1403.8231000000005 Error1 2.3480257491828023 Error2 3.0124197452818273
+{23:32:01} RetailMarketManager.RetailMarketManager startSimulation DQ9 1216.5196999999991 DQ9 1213.4803000000009 Error1 3.14294101284537 Error2 3.14294101284537
+{23:32:01} RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq NvPbr, Grim, Prober, DQ7, DQ8, 1TF2T, DQ9
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 0 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 1 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 2 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 3 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 4 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 5 [1.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 6 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 7 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 8 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 9 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 10 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 11 [0.000, 1.000, 0.000, 0.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 12 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 13 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 14 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 15 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 16 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 17 [0.000, 0.000, 1.000, 0.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 18 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 19 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 20 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 21 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 22 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 23 [0.000, 0.000, 0.000, 1.000, 0.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 24 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 25 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 26 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 27 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 28 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 29 [0.000, 0.000, 0.000, 0.000, 1.000, 0.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 30 [0.000, 0.000, 0.000, 0.000, 0.000, 1.000, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 31 [0.540, 0.000, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 32 [0.540, 0.000, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 33 [0.540, 0.000, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 34 [0.540, 0.000, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 35 [0.540, 0.000, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 36 [0.540, 0.000, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 37 [0.000, 0.540, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 38 [0.000, 0.540, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 39 [0.000, 0.540, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 40 [0.000, 0.540, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 41 [0.000, 0.540, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 42 [0.000, 0.540, 0.000, 0.000, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 43 [0.000, 0.000, 0.540, 0.000, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 44 [0.000, 0.000, 0.540, 0.000, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 45 [0.000, 0.000, 0.540, 0.000, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 46 [0.000, 0.000, 0.540, 0.000, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 47 [0.000, 0.000, 0.540, 0.000, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 48 [0.000, 0.000, 0.540, 0.000, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 49 [0.000, 0.000, 0.000, 0.540, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 50 [0.000, 0.000, 0.000, 0.540, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 51 [0.000, 0.000, 0.000, 0.540, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 52 [0.000, 0.000, 0.000, 0.540, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 53 [0.000, 0.000, 0.000, 0.540, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 54 [0.000, 0.000, 0.000, 0.540, 0.000, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 55 [0.000, 0.000, 0.000, 0.000, 0.540, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 56 [0.000, 0.000, 0.000, 0.000, 0.540, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 57 [0.000, 0.000, 0.000, 0.000, 0.540, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 58 [0.000, 0.000, 0.000, 0.000, 0.540, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 59 [0.000, 0.000, 0.000, 0.000, 0.540, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 60 [0.000, 0.000, 0.000, 0.000, 0.540, 0.460, 0.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 61 [0.000, 0.000, 0.000, 0.000, 0.000, 0.460, 0.540]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 62 [0.000, 0.000, 0.000, 0.000, 0.000, 0.460, 0.540]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 63 [0.000, 0.000, 0.000, 0.000, 0.000, 0.460, 0.540]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 64 [0.000, 0.000, 0.000, 0.000, 0.000, 0.460, 0.540]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 65 [0.000, 0.000, 0.000, 0.000, 0.000, 0.460, 0.540]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 66 [0.000, 0.000, 0.000, 0.000, 0.000, 0.460, 0.540]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 67 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 68 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 69 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 70 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 71 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:32:01} RetailMarketManager.RetailMarketManager computeNashEq 72 [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+{23:32:01} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Please select the desired strategy for SMNE (idx)
+{23:33:06} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Selected [0.0, 0.0, 0.0, 0.0, 0.0, 0.46, 0.54]
+{23:36:13} RetailMarketManager.RetailMarketManager startExperiment Training DQ Agent
+{23:36:13} RetailMarketManager.RetailMarketManager startExperiment Running SMNE vs DQAgent
+{23:36:22} RetailMarketManager.RetailMarketManager startSimulation 0.461TF2T,0.54DQ9 759.9479000000005 DQAgent0_DQ9_0.461TF2T,0.54DQ9 1358.154599999999 Error1 11.04623961492066 Error2 12.444969231719933
+{23:36:22} RetailMarketManager.RetailMarketManager startExperiment SMNE Profit: 759.9479000000005, DQAgent profit: 1358.154599999999
+{23:36:22} RetailMarketManager.RetailMarketManager startExperiment DQAgent profit > SMNE profit, adding DQAgent to the pool
+{23:36:22} RetailMarketManager.RetailMarketManager startExperiment ***************Total Training Rounds: 2000 : End of Experiment ***************
+{23:36:22} RetailMarketManager.RetailMarketManager mainExperiment Feature Size: 14
+{23:37:09} RetailMarketManager.RetailMarketManager startExperiment *************** Experimental Run Log ***************
+{23:37:09} RetailMarketManager.RetailMarketManager startExperiment 
+********************Configurations**********************
+TOTAL_TIME_SLOTS : 48
+PUBLICATION_CYCLE : 6
+DEFAULT_TARIFF_PRICE : 0.25
+CASE_STUDY_NO : 91
+INERTIA : 0.9
+RATIONALITY : 0.9
+ACT_CHANGE_PERC : 0.0
+POPULATION : 100
+LOGFILENAME : RLExistingPopularStrategiesRoundRobin.csv
+DAYMULT : 0.0
+DMNDMULT : 0.0
+INITCOST : 0.0
+DLOGGING : false
+TEST_ROUNDS : 1000
+TRAINING_ROUNDS : 2000
+LEARNING_RATE : 0.1
+DISCOUNT_FACTOR : 0.99
+DB_NAME_TRAINING : rl1
+MAX_TARIFF_PRICE : 0.5
+RL_TRAINING : false
+PPTS_DISCRTZD : 5
+GET_NASH_EQ : trueMANUAL_NASH_EQ_SELECTION : true
+MAX_DQ_AGENTS_ALLOWED : 2
+
+{23:37:09} RetailMarketManager.RetailMarketManager setupRoundRobin === Setting up initial pools ===
+{23:37:12} RetailMarketManager.RetailMarketManager startExperiment ****************************** Iteration 1 TraningRounds for DQAgent: 2000
+{23:37:12} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [DQ10, HardMJ, 2TF1T, 1TF1T, 1TF2T, Rand, Grim, SoftMJ, AlzSame, Pavlov, Prober, NvPbr, AlzIncz]
+{23:37:12} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [DQ10, HardMJ, 2TF1T, 1TF1T, 1TF2T, Rand, Grim, SoftMJ, AlzSame, Pavlov, Prober, NvPbr, AlzIncz]
+{23:37:12} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{23:37:23} RetailMarketManager.RetailMarketManager startSimulation DQ10 2310.0 DQ10 2310.0 Error1 8.913048077374696E-16 Error2 8.913048077374696E-16
+{23:37:28} RetailMarketManager.RetailMarketManager startSimulation DQ10 1272.5108999999977 HardMJ 1157.094600000002 Error1 3.354431007908719 Error2 3.397232795942451
+{23:37:34} RetailMarketManager.RetailMarketManager startSimulation DQ10 1411.7367500000003 2TF1T 764.1644499999991 Error1 2.9818792737807325 Error2 2.3651856924572137
+{23:37:39} RetailMarketManager.RetailMarketManager startSimulation DQ10 1412.5787999999984 1TF1T 704.238600000001 Error1 3.1234993916092395 Error2 2.196668179066121
+{23:37:45} RetailMarketManager.RetailMarketManager startSimulation DQ10 1410.0123500000009 1TF2T 765.5056500000006 Error1 3.0214700514195996 Error2 2.300195133794202
+{23:37:51} RetailMarketManager.RetailMarketManager startSimulation DQ10 1396.952649999998 Rand 726.8340499999999 Error1 13.961736195973991 Error2 11.134323814363729
+{23:37:56} RetailMarketManager.RetailMarketManager startSimulation DQ10 1216.9127499999984 Grim 1213.1634500000016 Error1 3.1996475507730393 Error2 3.1889873985904935
+{23:38:02} RetailMarketManager.RetailMarketManager startSimulation DQ10 2280.333250000002 SoftMJ 234.99275 Error1 2.0581663290869057 Error2 2.8500272048132995
+{23:38:08} RetailMarketManager.RetailMarketManager startSimulation DQ10 2279.164500000001 AlzSame 237.333 Error1 1.5659095708576534 Error2 2.561330996692462
+{23:38:13} RetailMarketManager.RetailMarketManager startSimulation DQ10 2279.591950000001 Pavlov 236.61025 Error1 1.5407856860688687 Error2 2.535543553365214
+{23:38:18} RetailMarketManager.RetailMarketManager startSimulation DQ10 1217.0986499999997 Prober 1212.3472500000003 Error1 3.301912605712438 Error2 3.475517863242816
+{23:38:24} RetailMarketManager.RetailMarketManager startSimulation DQ10 1214.927499999999 NvPbr 1215.072500000001 Error1 3.3040592865464764 Error2 3.3040592865464755
+{23:38:29} RetailMarketManager.RetailMarketManager startSimulation DQ10 2430.0 AlzIncz 0.0 Error1 0.0 Error2 0.0
+{23:38:30} RetailMarketManager.RetailMarketManager startSimulation HardMJ 890.0 HardMJ 890.0 Error1 0.0 Error2 0.0
+{23:38:31} RetailMarketManager.RetailMarketManager startSimulation HardMJ 1372.1551500000007 2TF1T 795.0352499999996 Error1 3.2482643103668734 Error2 2.6459196351045713
+{23:38:31} RetailMarketManager.RetailMarketManager startSimulation HardMJ 1373.3870000000006 1TF1T 733.8364999999995 Error1 3.340907331261015 Error2 2.575681716583088
+{23:38:32} RetailMarketManager.RetailMarketManager startSimulation HardMJ 1383.5273999999997 1TF2T 920.4512999999997 Error1 3.5407202177998185 Error2 11.915846733491477
+{23:38:33} RetailMarketManager.RetailMarketManager startSimulation HardMJ 1373.1965999999995 Rand 755.5022999999991 Error1 15.388784651265976 Error2 12.623235894017268
+{23:38:34} RetailMarketManager.RetailMarketManager startSimulation HardMJ 1176.9081500000007 Grim 1253.0918499999998 Error1 3.4123222048199544 Error2 3.4123222048199557
+{23:38:34} RetailMarketManager.RetailMarketManager startSimulation HardMJ 2261.375150000006 SoftMJ 267.22675 Error1 1.7574728131864685 Error2 2.8858049180211576
+{23:38:35} RetailMarketManager.RetailMarketManager startSimulation HardMJ 2259.7083999999995 AlzSame 269.7505 Error1 1.7733538700306561 Error2 2.9210356974264453
+{23:38:36} RetailMarketManager.RetailMarketManager startSimulation HardMJ 2260.2099000000003 Pavlov 268.95 Error1 1.7910931514884383 Error2 2.9497094869834166
+{23:38:36} RetailMarketManager.RetailMarketManager startSimulation HardMJ 1173.4536500000015 Prober 1256.5463499999985 Error1 3.418302406536948 Error2 3.4183024065369483
+{23:38:37} RetailMarketManager.RetailMarketManager startSimulation HardMJ 1174.7689499999983 NvPbr 1255.2310500000008 Error1 3.300191889254295 Error2 3.300191889254293
+{23:38:38} RetailMarketManager.RetailMarketManager startSimulation HardMJ 2430.0 AlzIncz 0.0 Error1 0.0 Error2 0.0
+{23:38:38} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 3850.0 2TF1T 3850.0 Error1 0.0 Error2 0.0
+{23:38:39} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 1924.08425 1TF1T 1925.91575 Error1 6.006076603056533 Error2 6.006076603056533
+{23:38:40} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 1927.096 1TF2T 1922.904 Error1 6.060240892375019 Error2 6.060240892375019
+{23:38:41} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 990.5094500000005 Rand 1111.8247499999995 Error1 16.764213449125368 Error2 16.79451990013505
+{23:38:41} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 772.2047 Grim 1406.3131000000017 Error1 2.2887060935181394 Error2 2.996939801557419
+{23:38:42} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 1931.355 SoftMJ 1918.645 Error1 5.78009802208924 Error2 5.78009802208924
+{23:38:43} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 1928.78925 AlzSame 1921.21075 Error1 5.969011871379971 Error2 5.969011871379971
+{23:38:43} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 1922.2685 Pavlov 1927.7315 Error1 5.963174590166919 Error2 5.963174590166919
+{23:38:44} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 773.9641999999992 Prober 1403.4426000000021 Error1 2.3505050930035787 Error2 3.141750983523994
+{23:38:45} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 771.0730500000001 NvPbr 1406.4876499999982 Error1 2.341704507316052 Error2 3.165796653648111
+{23:38:46} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 3609.2665500000003 AlzIncz 1999.9136499999981 Error1 7.9357628537740545 Error2 6.208267688899013
+{23:38:46} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 3850.0 1TF1T 3850.0 Error1 0.0 Error2 0.0
+{23:38:47} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1928.95975 1TF2T 1921.04025 Error1 5.986592422778411 Error2 5.986592422778411
+{23:38:48} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 931.0870499999982 Rand 1115.9440500000003 Error1 16.969436228036745 Error2 17.474399595822728
+{23:38:48} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 713.1651500000004 Grim 1405.1929499999983 Error1 2.1964788407281244 Error2 3.1092859758463645
+{23:38:49} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1928.24925 SoftMJ 1921.75075 Error1 5.754863508923484 Error2 5.754863508923484
+{23:38:50} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1922.67425 AlzSame 1927.32575 Error1 5.868250457722393 Error2 5.868250457722393
+{23:38:50} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1920.25325 Pavlov 1929.74675 Error1 5.7677698902542165 Error2 5.7677698902542165
+{23:38:51} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 716.14095 Prober 1403.2320499999998 Error1 2.162014966218171 Error2 2.951797124130126
+{23:38:52} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 714.4528999999991 NvPbr 1403.6157000000023 Error1 2.3314983382031693 Error2 3.3267581275548146
+{23:38:53} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 3617.706849999996 AlzIncz 1993.1614500000017 Error1 8.276323781762208 Error2 6.4723977120087985
+{23:38:53} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 3850.0 1TF2T 3850.0 Error1 0.0 Error2 0.0
+{23:38:54} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 990.8347499999984 Rand 1117.3756499999988 Error1 17.38654243546911 Error2 16.860909970829475
+{23:38:55} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 773.6819999999992 Grim 1403.754200000001 Error1 2.3510269903022394 Error2 3.0789594099608024
+{23:38:55} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 1921.4205 SoftMJ 1928.5795 Error1 6.080900885948366 Error2 6.080900885948366
+{23:38:56} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 1929.68125 AlzSame 1920.31875 Error1 5.732165879223788 Error2 5.732165879223788
+{23:38:57} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 1925.2765 Pavlov 1924.7235 Error1 6.053939881997211 Error2 6.053939881997211
+{23:38:58} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 772.4225500000005 Prober 1405.2580499999983 Error1 2.353482280265734 Error2 3.099766402381108
+{23:38:58} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 772.3064999999991 NvPbr 1406.0036999999993 Error1 2.3427273469058227 Error2 3.0609877744062475
+{23:38:59} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 3611.3871999999965 AlzIncz 1998.287200000002 Error1 8.09343625336484 Error2 6.334244004776595
+{23:39:00} RetailMarketManager.RetailMarketManager startSimulation Rand 1234.47 Rand 1234.47 Error1 20.601541175711986 Error2 20.601541175711986
+{23:39:00} RetailMarketManager.RetailMarketManager startSimulation Rand 752.1590999999997 Grim 1372.425499999998 Error1 10.951607947180959 Error2 12.887064925730742
+{23:39:01} RetailMarketManager.RetailMarketManager startSimulation Rand 1583.8424000000011 SoftMJ 504.37 Error1 20.18524083240795 Error2 21.770563088518408
+{23:39:02} RetailMarketManager.RetailMarketManager startSimulation Rand 1587.7260500000016 AlzSame 507.05675 Error1 20.384035346769295 Error2 22.314370554604196
+{23:39:03} RetailMarketManager.RetailMarketManager startSimulation Rand 1603.1702500000008 Pavlov 499.76225 Error1 20.184838346395647 Error2 22.16653467172124
+{23:39:03} RetailMarketManager.RetailMarketManager startSimulation Rand 755.5520000000001 Prober 1379.6957000000007 Error1 11.25106561304171 Error2 12.80766037745259
+{23:39:04} RetailMarketManager.RetailMarketManager startSimulation Rand 744.8077500000011 NvPbr 1381.3970499999984 Error1 10.84809358888297 Error2 13.130581218136712
+{23:39:05} RetailMarketManager.RetailMarketManager startSimulation Rand 1980.08 AlzIncz 0.0 Error1 37.294818690721186 Error2 0.0
+{23:39:05} RetailMarketManager.RetailMarketManager startSimulation Grim 2310.0 Grim 2310.0 Error1 0.0 Error2 0.0
+{23:39:06} RetailMarketManager.RetailMarketManager startSimulation Grim 2279.70995 SoftMJ 236.51175 Error1 1.590275213113754 Error2 2.5978526814889054
+{23:39:07} RetailMarketManager.RetailMarketManager startSimulation Grim 2279.8842000000027 AlzSame 236.1735 Error1 1.6263987944458689 Error2 2.672034489260272
+{23:39:08} RetailMarketManager.RetailMarketManager startSimulation Grim 2279.221950000002 Pavlov 237.26575 Error1 1.5781770062421758 Error2 2.589722411020745
+{23:39:08} RetailMarketManager.RetailMarketManager startSimulation Grim 1215.9997999999998 Prober 1214.0002000000002 Error1 3.1890007781783862 Error2 3.1890007781783862
+{23:39:09} RetailMarketManager.RetailMarketManager startSimulation Grim 1216.3874500000004 NvPbr 1213.6125499999996 Error1 3.304441066778827 Error2 3.304441066778827
+{23:39:10} RetailMarketManager.RetailMarketManager startSimulation Grim 2430.0 AlzIncz 0.0 Error1 0.0 Error2 0.0
+{23:39:10} RetailMarketManager.RetailMarketManager startSimulation SoftMJ 3850.0 SoftMJ 3850.0 Error1 0.0 Error2 0.0
+{23:39:11} RetailMarketManager.RetailMarketManager startSimulation SoftMJ 1923.31425 AlzSame 1926.68575 Error1 6.025309680284916 Error2 6.025309680284916
+{23:39:12} RetailMarketManager.RetailMarketManager startSimulation SoftMJ 1920.034 Pavlov 1929.966 Error1 5.925661583140778 Error2 5.925661583140778
+{23:39:12} RetailMarketManager.RetailMarketManager startSimulation SoftMJ 271.1215 Prober 2257.789400000002 Error1 2.6924171663285037 Error2 1.6476472106752165
+{23:39:13} RetailMarketManager.RetailMarketManager startSimulation SoftMJ 276.806 NvPbr 2254.279800000001 Error1 2.691476905704822 Error2 1.6389803050901925
+{23:39:14} RetailMarketManager.RetailMarketManager startSimulation SoftMJ 3850.0 AlzIncz 0.0 Error1 0.0 Error2 0.0
+{23:39:15} RetailMarketManager.RetailMarketManager startSimulation AlzSame 3850.0 AlzSame 3850.0 Error1 0.0 Error2 0.0
+{23:39:15} RetailMarketManager.RetailMarketManager startSimulation AlzSame 1920.874 Pavlov 1929.126 Error1 5.892560433492256 Error2 5.892560433492256
+{23:39:16} RetailMarketManager.RetailMarketManager startSimulation AlzSame 275.3165 Prober 2255.1705999999976 Error1 2.6775332181850517 Error2 1.6333960554949984
+{23:39:17} RetailMarketManager.RetailMarketManager startSimulation AlzSame 274.26425 NvPbr 2255.872350000002 Error1 2.766925730990101 Error2 1.686927847589919
+{23:39:17} RetailMarketManager.RetailMarketManager startSimulation AlzSame 3850.0 AlzIncz 0.0 Error1 0.0 Error2 0.0
+{23:39:18} RetailMarketManager.RetailMarketManager startSimulation Pavlov 3850.0 Pavlov 3850.0 Error1 0.0 Error2 0.0
+{23:39:19} RetailMarketManager.RetailMarketManager startSimulation Pavlov 275.56025 Prober 2255.0108500000033 Error1 2.648607099902115 Error2 1.6138405469293573
+{23:39:19} RetailMarketManager.RetailMarketManager startSimulation Pavlov 275.452 NvPbr 2255.1504 Error1 2.7532420730755964 Error2 1.6794485967940012
+{23:39:20} RetailMarketManager.RetailMarketManager startSimulation Pavlov 3850.0 AlzIncz 0.0 Error1 0.0 Error2 0.0
+{23:39:21} RetailMarketManager.RetailMarketManager startSimulation Prober 2310.0 Prober 2310.0 Error1 1.2604953473106735E-15 Error2 1.2604953473106735E-15
+{23:39:22} RetailMarketManager.RetailMarketManager startSimulation Prober 1214.745300000002 NvPbr 1215.254699999998 Error1 3.230662291053502 Error2 3.2306622910535014
+{23:39:22} RetailMarketManager.RetailMarketManager startSimulation Prober 2430.0 AlzIncz 0.0 Error1 0.0 Error2 0.0
+{23:39:23} RetailMarketManager.RetailMarketManager startSimulation NvPbr 2310.0 NvPbr 2310.0 Error1 0.0 Error2 0.0
+{23:39:24} RetailMarketManager.RetailMarketManager startSimulation NvPbr 2430.0 AlzIncz 0.0 Error1 0.0 Error2 0.0
+{23:39:24} RetailMarketManager.RetailMarketManager startSimulation AlzIncz 5390.0 AlzIncz 5390.0 Error1 0.0 Error2 0.0
+{23:39:24} RetailMarketManager.RetailMarketManager printGameMatrix 
+Total Payoffs
+{23:39:24} RetailMarketManager.RetailMarketManager printGameMatrix DQ10 , 411.0
+{23:39:24} RetailMarketManager.RetailMarketManager printGameMatrix HardMJ , 376.0
+{23:39:24} RetailMarketManager.RetailMarketManager printGameMatrix 2TF1T , 407.0
+{23:39:24} RetailMarketManager.RetailMarketManager printGameMatrix 1TF1T , 401.0
+{23:39:24} RetailMarketManager.RetailMarketManager printGameMatrix 1TF2T , 409.0
+{23:39:24} RetailMarketManager.RetailMarketManager printGameMatrix Rand , 280.0
+{23:39:24} RetailMarketManager.RetailMarketManager printGameMatrix Grim , 409.0
+{23:39:24} RetailMarketManager.RetailMarketManager printGameMatrix SoftMJ , 354.0
+{23:39:24} RetailMarketManager.RetailMarketManager printGameMatrix AlzSame , 354.0
+{23:39:24} RetailMarketManager.RetailMarketManager printGameMatrix Pavlov , 354.0
+{23:39:24} RetailMarketManager.RetailMarketManager printGameMatrix Prober , 409.0
+{23:39:24} RetailMarketManager.RetailMarketManager printGameMatrix NvPbr , 410.0
+{23:39:24} RetailMarketManager.RetailMarketManager printGameMatrix AlzIncz , 211.0
+{23:39:24} RetailMarketManager.RetailMarketManager startExperiment ***************Total Training Rounds: 2000 : End of Experiment ***************
+{23:39:24} RetailMarketManager.RetailMarketManager roundRobinExperiment Feature Size: 14
+{07:42:48} RetailMarketManager.RetailMarketManager startExperiment *************** Experimental Run Log ***************
+{07:42:48} RetailMarketManager.RetailMarketManager startExperiment 
+********************Configurations**********************
+TOTAL_TIME_SLOTS : 48
+PUBLICATION_CYCLE : 6
+DEFAULT_TARIFF_PRICE : 0.25
+CASE_STUDY_NO : 91
+INERTIA : 0.9
+RATIONALITY : 0.9
+ACT_CHANGE_PERC : 0.0
+POPULATION : 100
+LOGFILENAME : RLExistingPopularStrategiesRoundRobin.csv
+DAYMULT : 0.0
+DMNDMULT : 0.0
+INITCOST : 0.0
+DLOGGING : false
+TEST_ROUNDS : 1000
+TRAINING_ROUNDS : 2000
+LEARNING_RATE : 0.1
+DISCOUNT_FACTOR : 0.99
+DB_NAME_TRAINING : rl1
+MAX_TARIFF_PRICE : 0.5
+RL_TRAINING : false
+PPTS_DISCRTZD : 5
+GET_NASH_EQ : trueMANUAL_NASH_EQ_SELECTION : true
+MAX_DQ_AGENTS_ALLOWED : 2
+
+{07:42:48} RetailMarketManager.RetailMarketManager setupRoundRobin === Setting up initial pools ===
+{07:42:51} RetailMarketManager.RetailMarketManager startExperiment ****************************** Iteration 1 TraningRounds for DQAgent: 2000
+{07:42:51} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [DQ10, HardMJ, 2TF1T, 1TF1T, 1TF2T, Rand, Grim, SoftMJ, AlzSame, Pavlov, Prober, NvPbr, AlzIncz, AlD]
+{07:42:51} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [DQ10, HardMJ, 2TF1T, 1TF1T, 1TF2T, Rand, Grim, SoftMJ, AlzSame, Pavlov, Prober, NvPbr, AlzIncz, AlD]
+{07:42:51} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{07:43:32} RetailMarketManager.RetailMarketManager startSimulation DQ10 2310.0 DQ10 2310.0 Error1 8.913048077374696E-16 Error2 8.913048077374696E-16
+{07:43:52} RetailMarketManager.RetailMarketManager startSimulation DQ10 1274.5052500000013 HardMJ 1155.116949999998 Error1 3.2507178806054347 Error2 3.3340142972025073
+{07:44:16} RetailMarketManager.RetailMarketManager startSimulation DQ10 1410.4673999999986 2TF1T 764.7058 Error1 3.042905821440616 Error2 2.303882490946222
+{07:44:31} RetailMarketManager.RetailMarketManager startSimulation DQ10 1411.7776499999993 1TF1T 704.7307500000002 Error1 3.0257906061521123 Error2 2.1896069553203157
+{07:44:41} RetailMarketManager.RetailMarketManager startSimulation DQ10 1410.4024000000002 1TF2T 765.0769000000017 Error1 2.940780380999641 Error2 2.2956987621819667
+{07:44:52} RetailMarketManager.RetailMarketManager startSimulation DQ10 1385.9497999999996 Rand 734.7320000000002 Error1 13.658555682278493 Error2 10.857897871238318
+{07:45:04} RetailMarketManager.RetailMarketManager startSimulation DQ10 1211.8118500000019 Grim 1218.2575499999982 Error1 3.161037308581621 Error2 3.1517779774494246
+{07:45:14} RetailMarketManager.RetailMarketManager startSimulation DQ10 2280.1203000000023 SoftMJ 235.19129999999998 Error1 2.047847069163871 Error2 2.8122817171295793
+{07:45:25} RetailMarketManager.RetailMarketManager startSimulation DQ10 2279.9204500000014 AlzSame 236.11325 Error1 1.6228037810743696 Error2 2.659994224771755
+{07:45:36} RetailMarketManager.RetailMarketManager startSimulation DQ10 2281.38515 Pavlov 233.47025 Error1 1.4810613739790677 Error2 2.4296878564630275
+{07:45:47} RetailMarketManager.RetailMarketManager startSimulation DQ10 1217.1838000000002 Prober 1212.2189999999998 Error1 3.1389268543020394 Error2 3.3095336741695793
+{07:45:58} RetailMarketManager.RetailMarketManager startSimulation DQ10 1213.4050499999992 NvPbr 1216.594950000001 Error1 3.1701643947861116 Error2 3.1701643947861124
+{07:46:08} RetailMarketManager.RetailMarketManager startSimulation DQ10 2430.0 AlzIncz 0.0 Error1 0.0 Error2 0.0
+{07:46:20} RetailMarketManager.RetailMarketManager startSimulation DQ10 1216.0296499999993 AlD 1213.970350000001 Error1 3.2249192239209648 Error2 3.2249192239209625
+{07:46:21} RetailMarketManager.RetailMarketManager startSimulation HardMJ 890.0 HardMJ 890.0 Error1 3.8594630300792684E-16 Error2 3.8594630300792684E-16
+{07:46:22} RetailMarketManager.RetailMarketManager startSimulation HardMJ 1370.5921500000013 2TF1T 796.7139499999992 Error1 3.2927718370581047 Error2 2.7112869140810325
+{07:46:23} RetailMarketManager.RetailMarketManager startSimulation HardMJ 1375.0459000000005 1TF1T 732.0377000000002 Error1 3.2315470373761674 Error2 2.4974663126161163
+{07:46:25} RetailMarketManager.RetailMarketManager startSimulation HardMJ 1388.7622500000011 1TF2T 917.3189500000004 Error1 3.50968462279617 Error2 11.737838821678375
+{07:46:26} RetailMarketManager.RetailMarketManager startSimulation HardMJ 1367.1049500000004 Rand 760.5111500000002 Error1 15.24782246502165 Error2 11.714325006374999
+{07:46:27} RetailMarketManager.RetailMarketManager startSimulation HardMJ 1176.1089 Grim 1253.8910999999991 Error1 3.2910654102516514 Error2 3.291065410251648
+{07:46:29} RetailMarketManager.RetailMarketManager startSimulation HardMJ 2259.7412999999997 SoftMJ 269.57 Error1 1.8183738137504333 Error2 2.993213103198636
+{07:46:30} RetailMarketManager.RetailMarketManager startSimulation HardMJ 2258.19155 AlzSame 272.33375 Error1 1.8697297170575622 Error2 3.0809114926069334
+{07:46:31} RetailMarketManager.RetailMarketManager startSimulation HardMJ 2259.780100000002 Pavlov 269.8195 Error1 1.7748894784678801 Error2 2.9292869138258877
+{07:46:33} RetailMarketManager.RetailMarketManager startSimulation HardMJ 1175.0095500000002 Prober 1254.9904499999996 Error1 3.2228204375460416 Error2 3.222820437546043
+{07:46:34} RetailMarketManager.RetailMarketManager startSimulation HardMJ 1175.0322500000002 NvPbr 1254.9677499999993 Error1 3.300443125535101 Error2 3.300443125535101
+{07:46:36} RetailMarketManager.RetailMarketManager startSimulation HardMJ 2430.0 AlzIncz 0.0 Error1 0.0 Error2 0.0
+{07:46:37} RetailMarketManager.RetailMarketManager startSimulation HardMJ 1170.5701000000001 AlD 1259.4298999999999 Error1 3.373812454604313 Error2 3.373812454604312
+{07:46:39} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 3850.0 2TF1T 3850.0 Error1 0.0 Error2 0.0
+{07:46:40} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 1925.88825 1TF1T 1924.11175 Error1 5.860670337560297 Error2 5.860670337560297
+{07:46:41} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 1925.951 1TF2T 1924.049 Error1 5.800276757717547 Error2 5.800276757717547
+{07:46:42} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 1003.3258999999994 Rand 1115.7281999999998 Error1 18.328301071011698 Error2 17.75799542773467
+{07:46:43} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 773.6226999999997 Grim 1404.0075000000006 Error1 2.3110327125884513 Error2 2.957993586601229
+{07:46:45} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 1923.18375 SoftMJ 1926.81625 Error1 6.030275472536681 Error2 6.030275472536681
+{07:46:46} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 1926.57425 AlzSame 1923.42575 Error1 5.964429888339631 Error2 5.964429888339631
+{07:46:47} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 1926.8895 Pavlov 1923.1105 Error1 5.984331716967532 Error2 5.984331716967532
+{07:46:48} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 774.5278500000002 Prober 1403.8473500000005 Error1 2.3163078301202984 Error2 3.0453448582533893
+{07:46:50} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 774.3092499999989 NvPbr 1403.4627499999995 Error1 2.2563071299384556 Error2 3.0163689602672785
+{07:46:51} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 3615.0083 AlzIncz 1995.2982000000006 Error1 8.316630465862497 Error2 6.49712885561686
+{07:46:52} RetailMarketManager.RetailMarketManager startSimulation 2TF1T 773.3366499999993 AlD 1404.7149500000007 Error1 2.343046968111491 Error2 3.0744078049375285
+{07:46:54} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 3850.0 1TF1T 3850.0 Error1 0.0 Error2 0.0
+{07:46:55} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1919.7815 1TF2T 1930.2185 Error1 5.994156403596125 Error2 5.994156403596125
+{07:46:56} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 924.8930999999999 Rand 1109.0382000000006 Error1 16.982942711297987 Error2 16.214811547994746
+{07:46:57} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 713.1110499999999 Grim 1405.7500500000012 Error1 2.1581394192347805 Error2 3.0101597221839254
+{07:46:59} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1925.68275 SoftMJ 1924.31725 Error1 6.082082096751397 Error2 6.082082096751397
+{07:47:00} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1927.6145 AlzSame 1922.3855 Error1 5.865671648026644 Error2 5.865671648026644
+{07:47:02} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 1925.254 Pavlov 1924.746 Error1 5.885212509377582 Error2 5.885212509377582
+{07:47:03} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 714.545799999998 Prober 1403.3341999999982 Error1 2.12848809364069 Error2 3.0517060932584874
+{07:47:05} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 714.9375000000002 NvPbr 1402.4329000000005 Error1 2.2692065198491735 Error2 3.2070830728245485
+{07:47:06} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 3616.0066 AlzIncz 1994.5400999999997 Error1 8.074431650924533 Error2 6.318143697553323
+{07:47:08} RetailMarketManager.RetailMarketManager startSimulation 1TF1T 714.9261999999994 AlD 1402.9474000000007 Error1 2.1794789167789883 Error2 3.012713419929415
+{07:47:09} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 3850.0 1TF2T 3850.0 Error1 0.0 Error2 0.0
+{07:47:10} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 1010.6153499999988 Rand 1126.45015 Error1 17.455464481929226 Error2 16.71523145954699
+{07:47:12} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 773.4092000000005 Grim 1405.1318000000022 Error1 2.3709025872521585 Error2 3.0216679555934696
+{07:47:13} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 1925.7945 SoftMJ 1924.2055 Error1 5.7808149156214625 Error2 5.7808149156214625
+{07:47:14} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 1923.536 AlzSame 1926.464 Error1 5.765361973413848 Error2 5.765361973413848
+{07:47:16} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 1923.95125 Pavlov 1926.04875 Error1 5.89914219393782 Error2 5.89914219393782
+{07:47:17} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 772.8159000000014 Prober 1407.0469000000019 Error1 2.2774355828126294 Error2 2.963165526275273
+{07:47:19} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 775.1183500000001 NvPbr 1403.5184499999982 Error1 2.31272987144691 Error2 3.038329702854804
+{07:47:20} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 3620.433149999999 AlzIncz 1991.1804499999985 Error1 8.389803631366318 Error2 6.557770253987168
+{07:47:21} RetailMarketManager.RetailMarketManager startSimulation 1TF2T 772.8993999999999 AlD 1405.4272000000028 Error1 2.2337365572477474 Error2 2.9258152771353605
+{07:47:23} RetailMarketManager.RetailMarketManager startSimulation Rand 1216.57 Rand 1216.57 Error1 20.2122984254676 Error2 20.2122984254676
+{07:47:24} RetailMarketManager.RetailMarketManager startSimulation Rand 749.4820499999995 Grim 1384.4969499999977 Error1 10.937164947368345 Error2 13.367232432384931
+{07:47:26} RetailMarketManager.RetailMarketManager startSimulation Rand 1574.7745000000018 SoftMJ 485.98 Error1 20.101729825011965 Error2 22.108009956451543
+{07:47:27} RetailMarketManager.RetailMarketManager startSimulation Rand 1600.0262499999992 AlzSame 499.13675 Error1 20.137432553558302 Error2 21.572379134736593
+{07:47:28} RetailMarketManager.RetailMarketManager startSimulation Rand 1571.9412000000016 Pavlov 472.426 Error1 20.464665457418505 Error2 21.191452271305007
+{07:47:30} RetailMarketManager.RetailMarketManager startSimulation Rand 742.9306999999998 Prober 1383.8406000000014 Error1 10.546304688566247 Error2 13.647094462672571
+{07:47:31} RetailMarketManager.RetailMarketManager startSimulation Rand 748.3779500000006 NvPbr 1378.5366499999966 Error1 10.802014997125697 Error2 13.136586641796729
+{07:47:33} RetailMarketManager.RetailMarketManager startSimulation Rand 1932.45 AlzIncz 0.0 Error1 36.19810108826141 Error2 0.0
+{07:47:34} RetailMarketManager.RetailMarketManager startSimulation Rand 749.0181499999997 AlD 1387.8450499999985 Error1 10.666510428953538 Error2 13.716210956810889
+{07:47:36} RetailMarketManager.RetailMarketManager startSimulation Grim 2310.0 Grim 2310.0 Error1 0.0 Error2 0.0
+{07:47:37} RetailMarketManager.RetailMarketManager startSimulation Grim 2280.380750000001 SoftMJ 235.48225 Error1 1.4959172009663841 Error2 2.462612473808233
+{07:47:38} RetailMarketManager.RetailMarketManager startSimulation Grim 2279.6994500000005 AlzSame 236.50525 Error1 1.614966637719156 Error2 2.646914261855849
+{07:47:40} RetailMarketManager.RetailMarketManager startSimulation Grim 2280.970799999999 Pavlov 234.3305 Error1 1.5704616497075545 Error2 2.592113908737732
+{07:47:41} RetailMarketManager.RetailMarketManager startSimulation Grim 1215.88785 Prober 1214.11215 Error1 3.087974000489221 Error2 3.0879740004892224
+{07:47:42} RetailMarketManager.RetailMarketManager startSimulation Grim 1211.4983499999994 NvPbr 1218.5016500000008 Error1 3.20557485868249 Error2 3.2055748586824873
+{07:47:44} RetailMarketManager.RetailMarketManager startSimulation Grim 2430.0 AlzIncz 0.0 Error1 0.0 Error2 0.0
+{07:47:45} RetailMarketManager.RetailMarketManager startSimulation Grim 1214.8236500000014 AlD 1215.1763499999988 Error1 3.2372633204641668 Error2 3.2372633204641668
+{07:47:47} RetailMarketManager.RetailMarketManager startSimulation SoftMJ 3850.0 SoftMJ 3850.0 Error1 0.0 Error2 0.0
+{07:47:48} RetailMarketManager.RetailMarketManager startSimulation SoftMJ 1923.03925 AlzSame 1926.96075 Error1 6.10305864784823 Error2 6.10305864784823
+{07:47:50} RetailMarketManager.RetailMarketManager startSimulation SoftMJ 1923.75025 Pavlov 1926.24975 Error1 5.84329593858294 Error2 5.84329593858294
+{07:47:51} RetailMarketManager.RetailMarketManager startSimulation SoftMJ 273.83975 Prober 2256.10405 Error1 2.758969187427054 Error2 1.6795923276748308
+{07:47:52} RetailMarketManager.RetailMarketManager startSimulation SoftMJ 274.407 NvPbr 2255.697599999997 Error1 2.7087317720294117 Error2 1.646922798608478
+{07:47:54} RetailMarketManager.RetailMarketManager startSimulation SoftMJ 3850.0 AlzIncz 0.0 Error1 0.0 Error2 0.0
+{07:47:55} RetailMarketManager.RetailMarketManager startSimulation SoftMJ 274.2705 AlD 2255.8844000000013 Error1 2.755208401875907 Error2 1.68278877248341
+{07:47:57} RetailMarketManager.RetailMarketManager startSimulation AlzSame 3850.0 AlzSame 3850.0 Error1 0.0 Error2 0.0
+{07:47:58} RetailMarketManager.RetailMarketManager startSimulation AlzSame 1926.63625 Pavlov 1923.36375 Error1 5.596681329359167 Error2 5.596681329359167
+{07:48:00} RetailMarketManager.RetailMarketManager startSimulation AlzSame 272.14975 Prober 2257.1477499999996 Error1 2.9174585268311706 Error2 1.7704590358333354
+{07:48:01} RetailMarketManager.RetailMarketManager startSimulation AlzSame 275.45325 NvPbr 2255.1212499999983 Error1 2.8059417789118686 Error2 1.7077965392146401
+{07:48:02} RetailMarketManager.RetailMarketManager startSimulation AlzSame 3850.0 AlzIncz 0.0 Error1 0.0 Error2 0.0
+{07:48:04} RetailMarketManager.RetailMarketManager startSimulation AlzSame 274.9915 AlD 2255.304800000001 Error1 2.8522228186178604 Error2 1.7432716792679042
+{07:48:05} RetailMarketManager.RetailMarketManager startSimulation Pavlov 3850.0 Pavlov 3850.0 Error1 0.0 Error2 0.0
+{07:48:06} RetailMarketManager.RetailMarketManager startSimulation Pavlov 274.91075 Prober 2255.4692499999996 Error1 2.819784585069419 Error2 1.7240764210634925
+{07:48:08} RetailMarketManager.RetailMarketManager startSimulation Pavlov 274.67825 NvPbr 2255.6068500000006 Error1 2.703562317296034 Error2 1.642786514437747
+{07:48:09} RetailMarketManager.RetailMarketManager startSimulation Pavlov 3850.0 AlzIncz 0.0 Error1 0.0 Error2 0.0
+{07:48:10} RetailMarketManager.RetailMarketManager startSimulation Pavlov 275.46475 AlD 2255.1900499999974 Error1 2.644290759820467 Error2 1.60945984310886
+{07:48:12} RetailMarketManager.RetailMarketManager startSimulation Prober 2310.0 Prober 2310.0 Error1 0.0 Error2 0.0
+{07:48:13} RetailMarketManager.RetailMarketManager startSimulation Prober 1213.8750499999996 NvPbr 1216.1249500000004 Error1 3.2132349632590502 Error2 3.2132349632590507
+{07:48:14} RetailMarketManager.RetailMarketManager startSimulation Prober 2430.0 AlzIncz 0.0 Error1 0.0 Error2 0.0
+{07:48:15} RetailMarketManager.RetailMarketManager startSimulation Prober 1214.3383500000002 AlD 1215.6616499999998 Error1 3.263997675684902 Error2 3.263997675684901
+{07:48:17} RetailMarketManager.RetailMarketManager startSimulation NvPbr 2310.0 NvPbr 2310.0 Error1 0.0 Error2 0.0
+{07:48:18} RetailMarketManager.RetailMarketManager startSimulation NvPbr 2430.0 AlzIncz 0.0 Error1 0.0 Error2 0.0
+{07:48:20} RetailMarketManager.RetailMarketManager startSimulation NvPbr 1216.0511999999997 AlD 1213.9488000000003 Error1 3.196446792374947 Error2 3.1964467923749473
+{07:48:21} RetailMarketManager.RetailMarketManager startSimulation AlzIncz 5390.0 AlzIncz 5390.0 Error1 0.0 Error2 0.0
+{07:48:22} RetailMarketManager.RetailMarketManager startSimulation AlzIncz 52.57615 AlD 2405.822649999998 Error1 1.4451166511390978 Error2 0.6256932607474379
+{07:48:24} RetailMarketManager.RetailMarketManager startSimulation AlD 2310.0 AlD 2310.0 Error1 8.913048077374696E-16 Error2 8.913048077374696E-16
+{07:48:24} RetailMarketManager.RetailMarketManager printGameMatrix 
+Total Payoffs
+{07:48:24} RetailMarketManager.RetailMarketManager printGameMatrix DQ10 , 433.0
+{07:48:24} RetailMarketManager.RetailMarketManager printGameMatrix HardMJ , 399.0
+{07:48:24} RetailMarketManager.RetailMarketManager printGameMatrix 2TF1T , 422.0
+{07:48:24} RetailMarketManager.RetailMarketManager printGameMatrix 1TF1T , 414.0
+{07:48:24} RetailMarketManager.RetailMarketManager printGameMatrix 1TF2T , 424.0
+{07:48:24} RetailMarketManager.RetailMarketManager printGameMatrix Rand , 294.0
+{07:48:24} RetailMarketManager.RetailMarketManager printGameMatrix Grim , 432.0
+{07:48:24} RetailMarketManager.RetailMarketManager printGameMatrix SoftMJ , 359.0
+{07:48:24} RetailMarketManager.RetailMarketManager printGameMatrix AlzSame , 359.0
+{07:48:24} RetailMarketManager.RetailMarketManager printGameMatrix Pavlov , 359.0
+{07:48:24} RetailMarketManager.RetailMarketManager printGameMatrix Prober , 432.0
+{07:48:24} RetailMarketManager.RetailMarketManager printGameMatrix NvPbr , 433.0
+{07:48:24} RetailMarketManager.RetailMarketManager printGameMatrix AlzIncz , 212.0
+{07:48:24} RetailMarketManager.RetailMarketManager printGameMatrix AlD , 433.0
+{07:48:24} RetailMarketManager.RetailMarketManager startExperiment ***************Total Training Rounds: 2000 : End of Experiment ***************
+{07:48:24} RetailMarketManager.RetailMarketManager roundRobinExperiment Feature Size: 14
