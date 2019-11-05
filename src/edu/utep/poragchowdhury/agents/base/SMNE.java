@@ -13,6 +13,7 @@ import edu.utep.poragchowdhury.simulation.Observer;
 import edu.utep.poragchowdhury.simulation.TariffAction;
 
 public class SMNE extends Agent {
+    public static final boolean SHARE_VARIABLES = true;
     private List<Double> strategyProbs;
     private List<Agent> agents;
     private Random rand;
@@ -64,8 +65,13 @@ public class SMNE extends Agent {
             Agent strategy = agents.get(i);
 
             cumulativeProbability += normalizedProb;
-            if (p <= cumulativeProbability)
+            if (p <= cumulativeProbability) {
+                // If sharing variables, then copy all of SMNEs to the given strategy
+                if(SHARE_VARIABLES)
+                    this.copyTo(strategy);
+                
                 return strategy.makeAction(ob);
+            }
         }
 
         throw new Exception("SMNE did not run one of its strategies.");
