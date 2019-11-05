@@ -29,11 +29,13 @@ import Agents.DQAgent;
 import Agents.DQAgentMDP;
 import Agents.Grim;
 import Agents.HardMajority;
+import Agents.NaiveProber;
 import Agents.Pavlov;
 import Agents.Prober;
 import Agents.Rand;
 import Agents.SMNE;
 import Agents.SoftMajority;
+import Agents.Test;
 import Agents.TitForTat;
 import Configuration.CaseStudy;
 import Configuration.Configuration;
@@ -565,7 +567,7 @@ public class RetailMarketManager {
         int iterations = 0;
         while (true) {
             iterations++;
-            log.info("****************************** Iteration " + iterations);
+            log.info("****************************** Iteration " + iterations + " TraningRounds for DQAgent: " + Configuration.TRAINING_ROUNDS);
 
             // ************** Check if we need to remove strategies from last round
             if (strategiesToRemove.size() > 0) {
@@ -653,6 +655,7 @@ public class RetailMarketManager {
             opponentPool.add(smne);
             String dqFilename = smne.name + ".pol";
             DQAgentMDP.trainDQAgent(opponentPool, dqFilename);
+            log.info("Training DQ Agent");
             DQAgent dqAgent = new DQAgent(dqFilename);
 
             // ************** Run test games of SMNE vs RL
@@ -664,6 +667,9 @@ public class RetailMarketManager {
             log.info("SMNE Profit: " + smne.profit + ", DQAgent profit: " + dqAgent.profit);
             if (dqAgent.profit > smne.profit) {
                 log.info("DQAgent profit > SMNE profit, adding DQAgent to the pool");
+
+                // if(Configuration.RUN_ONE_ITERATION)
+                // break;
                 log.info("New DQAgent Name: " + dqAgent.name);
                 currentCase.addP1Strats(dqAgent).addP2Strats(dqAgent);
                 lastRLAgent = dqAgent;
@@ -689,19 +695,21 @@ public class RetailMarketManager {
                     }
                 }
             } else {
-                log.info("DQAgent could not beat SMNE, stopping experiment");
+                log.info("DQAgent could not beat SMNE, incrementing training rounds by 500.");
+                // Configuration.TRAINING_ROUNDS += 500;
                 break;
             }
         }
 
-        log.info("*************** End of Experiment ***************");
+        log.info("***************Total Training Rounds: " + Configuration.TRAINING_ROUNDS + " : End of Experiment ***************");
         input.close();
     }
 
     public CaseStudy setupInitialStrategies() {
         log.info("=== Setting up initial pools ===");
-        CaseStudy initial = new CaseStudy().addP1Strats(new AlwaysDefect(), new AlwaysIncrease()); // , new NaiveProber()
-        initial.addP2Strats(new AlwaysDefect(), new AlwaysIncrease()); // , new NaiveProber()
+
+        CaseStudy initial = new CaseStudy().addP1Strats(new NaiveProber(), new Grim(), new TitForTat(1, 2), new DQAgent("DQ0", "0.55NvPbr,0.09DQAgent-1,0.00DQAgent0,0.00AlD,0.00DQAgent1,0.00Prober,0.01DQAgent2,0.35Pavlov.pol")); //
+        initial.addP2Strats(new NaiveProber(), new Grim(), new TitForTat(1, 2), new DQAgent("DQ0", "0.55NvPbr,0.09DQAgent-1,0.00DQAgent0,0.00AlD,0.00DQAgent1,0.00Prober,0.01DQAgent2,0.35Pavlov.pol"));
         log.info("Pool1: " + initial.pool1.toString());
         log.info("Pool2: " + initial.pool2.toString());
         return initial;
@@ -719,14 +727,14 @@ public class RetailMarketManager {
         literatureStrategies.add(TFTV2);
         literatureStrategies.add(_2TFT);
         literatureStrategies.add(TFT);
-        literatureStrategies.add(TF2T);
-        literatureStrategies.add(new Rand());
-        literatureStrategies.add(new Grim());
-        literatureStrategies.add(new SoftMajority());
-        literatureStrategies.add(new AlwaysSame());
-        literatureStrategies.add(new Pavlov());
-        literatureStrategies.add(new Prober());
-
+        // literatureStrategies.add(TF2T);
+        // literatureStrategies.add(new Rand());
+        // literatureStrategies.add(new Grim());
+        // literatureStrategies.add(new SoftMajority());
+        // literatureStrategies.add(new AlwaysSame());
+        // literatureStrategies.add(new Pavlov());
+        // literatureStrategies.add(new Prober());
+        // literatureStrategies.add(new AlwaysDefect());
         return literatureStrategies;
     }
 
@@ -938,10 +946,11 @@ public class RetailMarketManager {
     public static void sandboxExperiment() throws IOException {
         RetailMarketManager rm = new RetailMarketManager();
         rm.setupLogging();
-        Agent alwaysD = new AlwaysDefect();
-        Agent alwaysI = new AlwaysIncrease();
-        Agent rand = new Rand();
-        Agent tft = new TitForTat(1, 1);
+        // Agent alwaysD = new AlwaysDefect();
+        // Agent alwaysI = new AlwaysIncrease();
+        // Agent rand = new Rand();
+        // Agent tft = new TitForTat(1, 1);
+        // Agent test = new Test();
         Agent alwaysS = new AlwaysSame();
         List<Agent> oppPool = new ArrayList<>();
         // oppPool.add(alwaysI);

@@ -42,6 +42,10 @@ public class TitForTat extends Agent {
             defectCounter++;
             return TariffAction.DEFECT;
         }
-        return TariffAction.DEFECT;
+        // other agent is increasing price
+        else if (this.rivalPrevPrevPrice < this.rivalPrevPrice) {
+            return TariffAction.INCREASE;
+        }
+        return TariffAction.NOCHANGE;
     }
 }

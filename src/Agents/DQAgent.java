@@ -48,11 +48,16 @@ public class DQAgent extends Agent {
         this.agentNumber = CURRENT_AGENT_COUNT;
         CURRENT_AGENT_COUNT++;
 
-        this.name = "DQAgent" + this.agentNumber + "_" + policyName.substring(0, policyName.length() - 4);
+        // this.name = "DQAgent" + this.agentNumber + "_" + policyName.substring(0, policyName.length() - 4);
     }
 
     public DQAgent() {
         super("DeepQ_Training");
+    }
+
+    public DQAgent(String name, String policyFilename) {
+        this(policyFilename);
+        this.name = name;
     }
 
     public String getSimpleName() {

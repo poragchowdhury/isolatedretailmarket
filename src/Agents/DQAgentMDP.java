@@ -39,6 +39,7 @@ import org.deeplearning4j.rl4j.policy.ACPolicy;
 import org.deeplearning4j.rl4j.policy.DQNPolicy;
 import org.deeplearning4j.rl4j.policy.Policy;
 import org.deeplearning4j.rl4j.space.ArrayObservationSpace;
+import org.deeplearning4j.rl4j.space.Box;
 import org.deeplearning4j.rl4j.space.DiscreteSpace;
 import org.deeplearning4j.rl4j.space.ObservationSpace;
 import org.deeplearning4j.rl4j.util.Constants;
@@ -131,49 +132,53 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
             .seed(123)
             .maxEpochStep(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME) // 6
             .maxStep(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * Configuration.TRAINING_ROUNDS) // 500
-            .expRepMaxSize(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * 100)// *((int)(Configuration.TRAINING_ROUNDS*0.2))) // 10000
-            .batchSize(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * 10)// ((int)(Configuration.TRAINING_ROUNDS*0.1))) // 64
-            .targetDqnUpdateFreq(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME*Configuration.TRAINING_ROUNDS/10)// * Configuration.TRAINING_ROUNDS) // 50
+            .expRepMaxSize(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME*100)//*((int)(Configuration.TRAINING_ROUNDS*0.2))) // 10000
+            .batchSize(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME*10)//((int)(Configuration.TRAINING_ROUNDS*0.1))) // 64
+            .targetDqnUpdateFreq(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * Configuration.TRAINING_ROUNDS / 10)// * Configuration.TRAINING_ROUNDS) // 50
             .updateStart(0) // 0
             .rewardFactor(1)
-            .gamma(0.9) // 0.99
+            .gamma(0.99) // 0.99
             .errorClamp(Double.MAX_VALUE)
             .minEpsilon(0.1f) // 0.1f
             .epsilonNbStep((Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * (Configuration.TRAINING_ROUNDS))) // 3000
             .doubleDQN(true).build();
+    
+    public static A3CConfiguration QLConfig2 = A3CConfiguration.builder().
+    		seed(123).
+    		maxEpochStep(168/6).
+    		maxStep(168/6).build();
 
-    public static A3CConfiguration QLConfig2 = A3CConfiguration.builder().seed(123).maxEpochStep(168 / 6).maxStep(168 / 6).build();
-
-    private static A3CDiscrete.A3CConfiguration A3C = new A3CDiscrete.A3CConfiguration(
-            123, // Random seed
-            (int) Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE, // 6
-            (int) (Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS, // 500
-            16, // Number of threads
-            5, // t_max
-            0, // num step noop warmup
-            0.01, // reward scaling
-            0.99, // gamma
-            10.0 // td-error clipping
-    );
+    private static A3CDiscrete.A3CConfiguration A3C =
+            new A3CDiscrete.A3CConfiguration(
+                    123,            //Random seed
+                    (int)Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE, // 6
+                    (int)(Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS, // 500
+                    8,              //Number of threads
+                    5,              //t_max
+                    0,             //num step noop warmup
+                    1,           //reward scaling
+                    0.99,           //gamma
+                    Double.MAX_VALUE           //td-error clipping
+            );
     public static AsyncNStepQLearningDiscrete.AsyncNStepQLConfiguration ASYNC_QLConfig = new AsyncNStepQLearningDiscrete.AsyncNStepQLConfiguration(
             123, // Random seed
-            (Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE), // Max step By epoch
-            ((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS), // Max step
+            Configuration.TOTAL_PUBLICATIONS_IN_A_GAME, // Max step By epoch
+            Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * Configuration.TRAINING_ROUNDS, // Max step
             8, // Number of threads
             5, // t_max
-            (Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE), // target update (hard)
+            Configuration.TOTAL_PUBLICATIONS_IN_A_GAME, // target update (hard)
             0, // num step noop warmup
-            0.9, // reward scaling
-            0.1, // gamma
-            0.0, // td-error clipping
-            0.5f, // min epsilon
-            ((Configuration.TOTAL_TIME_SLOTS / Configuration.PUBLICATION_CYCLE) * Configuration.TRAINING_ROUNDS) / 2 // num step for eps greedy anneal
+            1, // reward scaling
+            0.99, // gamma
+            Double.MAX_VALUE, // td-error clipping
+            0.1f, // min epsilon
+            Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * (Configuration.TRAINING_ROUNDS / 2) // num step for eps greedy anneal
     );
 
     public static DQNFactoryStdDense.Configuration QLNet = DQNFactoryStdDense.Configuration.builder()
             .l2(0.001)
             .updater(new Adam(0.0005))
-            .numHiddenNodes(25)
+            .numHiddenNodes(16)
             .numLayer(3).build();
 
     public static ActorCriticFactorySeparateStdDense.Configuration QLNet2 = ActorCriticFactorySeparateStdDense.Configuration.builder()
@@ -262,9 +267,12 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
             log("Training DeepQ");
             dql.train();
             DQNPolicy<DQAgentState> pol = dql.getPolicy();
-
-            // dqc.train();
-            // ACPolicy<DQAgentState> pol = dqc.getPolicy();
+            log("QLCONFIG MAXSTEP" + QLConfig.getMaxStep());
+//            dql_asyn.train();
+//            DQNPolicy<DQAgentState> pol = (DQNPolicy<DQAgentState>) dql_asyn.getPolicy();
+            
+//             dqc.train();
+//             ACPolicy<DQAgentState> pol = dqc.getPolicy();
 
             log("Saving DeepQ policy");
             pol.save(policyFilename);
