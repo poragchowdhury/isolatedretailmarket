@@ -33,3 +33,6 @@ log/*
 *.swp
 *.orig
 config_*.properties
+
+# Plots
+*.png
