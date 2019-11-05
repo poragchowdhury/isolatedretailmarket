@@ -16,7 +16,13 @@ import java.util.logging.Logger;
 import edu.utep.poragchowdhury.agents.AlwaysDefect;
 import edu.utep.poragchowdhury.agents.AlwaysIncrease;
 import edu.utep.poragchowdhury.agents.AlwaysSame;
+import edu.utep.poragchowdhury.agents.Grim;
 import edu.utep.poragchowdhury.agents.HardMajority;
+import edu.utep.poragchowdhury.agents.NaiveProber;
+import edu.utep.poragchowdhury.agents.Pavlov;
+import edu.utep.poragchowdhury.agents.Prober;
+import edu.utep.poragchowdhury.agents.Rand;
+import edu.utep.poragchowdhury.agents.SoftMajority;
 import edu.utep.poragchowdhury.agents.TitForTat;
 import edu.utep.poragchowdhury.agents.base.Agent;
 import edu.utep.poragchowdhury.agents.base.SMNE;
@@ -130,6 +136,22 @@ public class RetailMarketManager {
         ob.agentPool.get(1).marketShare = (ob.custSubs[1]);
     }
 
+    public void printGameMatrix(CaseStudy cs) {
+        // Normalizing the values
+        numberofagents = cs.pool1.size();
+        double[] avgValues = new double[numberofagents];
+
+        log.info("\nTotal Payoffs");
+        for (int i = 0; i < numberofagents; i++) {
+            for (int k = 0; k < numberofagents; k++) {
+                gameMatrix[i][k].value1 = Math.round(gameMatrix[i][k].value1 / largestValue * 100);
+                gameMatrix[i][k].value2 = Math.round(gameMatrix[i][k].value2 / largestValue * 100);
+                avgValues[i] += gameMatrix[i][k].value1;
+            }
+            log.info(cs.pool1.get(i).name + " , " + avgValues[i]);
+        }
+    }
+
     public double distance(double[] eq1, double[] eq2) {
         double dist = 0;
         int commonLength = Math.min(eq1.length, eq2.length);
@@ -163,14 +185,21 @@ public class RetailMarketManager {
         return resultIDX;
     }
 
-    public void startExperiment() throws IOException {
+    public void startExperiment(boolean roundRobin) throws IOException {
         Scanner input = new Scanner(System.in);
         log.info("*************** Experimental Run Log ***************");
         log.info(Configuration.toStringRepresentation());
 
-        Stack<Agent> litStrategies = getLiteratureStrategies();
+        Stack<Agent> litStrategies = null;
+        CaseStudy currentCase = null;
 
-        CaseStudy currentCase = setupInitialStrategies();
+        if (roundRobin) {
+            currentCase = setupRoundRobinStrategies();
+        } else {
+            litStrategies = getLiteratureStrategies();
+            currentCase = setupInitialStrategies();
+        }
+
         List<Agent> strategiesToRemove = new ArrayList<>();
         int iterations = 0;
         while (true) {
@@ -191,6 +220,11 @@ public class RetailMarketManager {
             log.info("Pool2 Agents: " + currentCase.pool2.toString());
             log.info("Starting game round");
             startSimulation(currentCase);
+
+            if (roundRobin) {
+                printGameMatrix(currentCase);
+                break;
+            }
 
             // ************** Compute nash equilibrium strategies
             log.info("Getting nash equilibrium strategies");
@@ -241,7 +275,7 @@ public class RetailMarketManager {
                             Agent newStrat = litStrategies.pop();
                             log.info("Adding " + newStrat + " to the pool");
                             currentCase.addP1Strats(newStrat);
-                            currentCase.addP2Strats(newStrat);
+                            currentCase.addP2Strats(newStrat.clone());
                             continue;
                         }
                     }
@@ -263,7 +297,7 @@ public class RetailMarketManager {
             opponentPool.add(smne);
 
             log.info("Training DQ Agent");
-            String dqFilename = smne.name + ".pol";
+            String dqFilename = Configuration.DQ_TRAINING + "_" + smne.name + ".pol";
             DQAgent dqAgent = Trainer.train(opponentPool, dqFilename);
 
             // ************** Run test games of SMNE vs RL
@@ -276,10 +310,14 @@ public class RetailMarketManager {
             // ************** Does RL have a higher payoff than SMNE?
             log.info(String.format("SMNE Profit: %.3f, DQAgent profit: %.3f", smne.profit, dqAgent.profit));
             if (dqAgent.profit > smne.profit) {
-                log.info("DQAgent profit > SMNE profit, adding DQAgent to the pool");
+                log.info("DQAgent profit > SMNE profit");
+
+                if (Configuration.RUN_ONE_ITERATION)
+                    break;
+
                 log.info("New DQAgent Name: " + dqAgent.name);
                 currentCase.addP1Strats(dqAgent);
-                currentCase.addP2Strats(dqAgent);
+                currentCase.addP2Strats(dqAgent.clone());
                 lastRLAgent = dqAgent;
 
                 // Check if we have too many DQAgents, if so, add an agent from the literature
@@ -299,7 +337,7 @@ public class RetailMarketManager {
                         Agent newStrat = litStrategies.pop();
                         log.info("Adding " + newStrat + " to the pool");
                         currentCase.addP1Strats(newStrat);
-                        currentCase.addP2Strats(newStrat);
+                        currentCase.addP2Strats(newStrat.clone());
                         continue;
                     }
                 }
@@ -313,32 +351,55 @@ public class RetailMarketManager {
         input.close();
     }
 
+    private CaseStudy setupRoundRobinStrategies() {
+        log.info("=== Setting up round robin pools ===");
+        ArrayList<Agent> strats = new ArrayList<>();
+        TitForTat TFT = new TitForTat(1, 1);
+        TitForTat TF2T = new TitForTat(1, 2);
+        TitForTat _2TFT = new TitForTat(2, 1);
+
+        strats.add(new DQAgent("DQ10", "DQ10_0.461TF2T,0.54DQ9.pol"));
+        strats.add(new HardMajority());
+        strats.add(_2TFT);
+        strats.add(TFT);
+        strats.add(TF2T);
+        strats.add(new Rand());
+        strats.add(new Grim());
+        strats.add(new SoftMajority());
+        strats.add(new AlwaysSame());
+        strats.add(new Pavlov());
+        strats.add(new Prober());
+        strats.add(new NaiveProber());
+        strats.add(new AlwaysIncrease());
+        strats.add(new AlwaysDefect());
+
+        CaseStudy initial = new CaseStudy();
+        initial.addToBothStrats(strats);
+
+        return initial;
+    }
+
     public CaseStudy setupInitialStrategies() {
         log.info("=== Setting up initial pools ===");
 
-        List<Agent> initialStrats = new ArrayList<>();
-        initialStrats.add(new AlwaysDefect());
-        initialStrats.add(new AlwaysIncrease());
-        initialStrats.add(new AlwaysSame());
-
         CaseStudy initialStudy = new CaseStudy();
-        initialStudy.addP1Strats(initialStrats);
-        initialStudy.addP2Strats(initialStrats);
+        initialStudy.addP1Strats(new NaiveProber(), new Grim(), new Prober(), new DQAgent("DQ7", "DQ7_0.54DQ6,0.462TF1T.pol"), new DQAgent("DQ8", "DQ8_0.462TF1T,0.54DQ7.pol"), new TitForTat(1, 2), new DQAgent("DQ9", "DQ9_0.54DQ8,0.461TF2T.pol"));
+        initialStudy.addP2Strats(new NaiveProber(), new Grim(), new Prober(), new DQAgent("DQ7", "DQ7_0.54DQ6,0.462TF1T.pol"), new DQAgent("DQ8", "DQ8_0.462TF1T,0.54DQ7.pol"), new TitForTat(1, 2), new DQAgent("DQ9", "DQ9_0.54DQ8,0.461TF2T.pol"));
+        Configuration.DQ_TRAINING = "DQ9";
 
         return initialStudy;
     }
 
     public Stack<Agent> getLiteratureStrategies() {
         Stack<Agent> literatureStrategies = new Stack<>();
-        TitForTat TFT = new TitForTat(1, 1);
         TitForTat TF2T = new TitForTat(1, 2);
-        TitForTat _2TFT = new TitForTat(2, 1);
-
-        literatureStrategies.add(new HardMajority());
-        literatureStrategies.add(TFT);
         literatureStrategies.add(TF2T);
-        literatureStrategies.add(_2TFT);
 
+        // TitForTat TFT = new TitForTat(1, 1);
+        // TitForTat _2TFT = new TitForTat(2, 1);
+        // literatureStrategies.add(new HardMajority());
+        // literatureStrategies.add(TFT);
+        // literatureStrategies.add(_2TFT);
         // literatureStrategies.add(TF2T);
         // literatureStrategies.add(new Rand());
         // literatureStrategies.add(new Grim());
@@ -365,7 +426,6 @@ public class RetailMarketManager {
                 for (int iindex = 0; iindex < imax; iindex++) {
                     for (int rindex = 0; rindex < rmax; rindex++) {
                         for (int round = 0; round < roundmax; round++) {
-                            // System.out.println("=== Round " + round);
                             cs.pool1.get(iagent).reset();
                             cs.pool2.get(kagent).reset();
 
@@ -415,7 +475,12 @@ public class RetailMarketManager {
                         // printAverageRevenues() function
 
                         double[] vals = ob.calcAvg(cs);
-                        // System.out.println(cs.pool1.get(iagent).name + " " + vals[0] + " " + cs.pool2.get(kagent).name + " " + vals[1] + " Error1 " + vals[2] + " Error2 " + vals[3]);
+
+                        // Porag added this to his branch
+                        cs.pool1.get(iagent).profit = vals[0];
+                        cs.pool2.get(kagent).profit = vals[1];
+
+                        // log.info(cs.pool1.get(iagent).name + " " + vals[0] + " " + cs.pool2.get(kagent).name + " " + vals[1] + " Error1 " + vals[2] + " Error2 " + vals[3]);
                         if (iagent != kagent) {
                             gameMatrix[iagent][kagent] = new Payoffs(vals[0], vals[1]);
                             gameMatrix[kagent][iagent] = new Payoffs(vals[1], vals[0]);
@@ -597,21 +662,32 @@ public class RetailMarketManager {
         log.info(String.format("Defect %s, NoChange %s, Increase %s", DQAgent.DEFECT, DQAgent.NOC, DQAgent.INC));
     }
 
+    public static void roundRobinExperiment() throws IOException {
+        RetailMarketManager rm = new RetailMarketManager();
+        rm.startExperiment(true);
+    }
+
     public static void mainExperiment() throws IOException {
         RetailMarketManager rm = new RetailMarketManager();
-        rm.startExperiment();
+        rm.startExperiment(false);
     }
 
     public static void main(String[] args) throws IOException {
         Logging.setupFormat();
         Logging.attachLoggerToFile(log, "experiment.log");
-
+        log.info("Feature Size: " + RetailMDP.NUM_OBSERVATIONS);
         /*
          * The Sandbox Experiment tests DQAgent against a few others
          * We can use this experiment to make sure DQAgent is being trained correctly
          * Or to tweak hyperparameters
          */
-        sandboxExperiment();
+        // sandboxExperiment();
+
+        /*
+         * The round robin experiment
+         * 
+         */
+        roundRobinExperiment();
 
         /*
          * The Main Experiment runs the flowchart specified by Porag

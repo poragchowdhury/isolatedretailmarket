@@ -2,7 +2,6 @@ package edu.utep.poragchowdhury.simulation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import edu.utep.poragchowdhury.agents.Grim;
@@ -36,7 +35,7 @@ public class CaseStudy {
         addP1Strats(Arrays.asList(strats));
     }
 
-    public void addP1Strats(Collection<Agent> strats) {
+    public void addP1Strats(List<Agent> strats) {
         pool1.addAll(strats);
     }
 
@@ -44,8 +43,17 @@ public class CaseStudy {
         addP2Strats(Arrays.asList(strats));
     }
 
-    public void addP2Strats(Collection<Agent> strats) {
+    public void addP2Strats(List<Agent> strats) {
         pool2.addAll(strats);
+    }
+
+    public void addToBothStrats(ArrayList<Agent> strats) {
+        List<Agent> stratsCopy = new ArrayList<>();
+        for (Agent ag : strats) {
+            stratsCopy.add(ag.clone());
+        }
+        pool1.addAll(strats);
+        pool2.addAll(stratsCopy);
     }
 
     private static List<CaseStudy> caseStudies = null;

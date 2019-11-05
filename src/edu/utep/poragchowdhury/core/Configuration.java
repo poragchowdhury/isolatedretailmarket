@@ -27,6 +27,7 @@ public class Configuration {
     public static double DISCOUNT_FACTOR = 1;
 
     public static String DB_NAME_TRAINING = "RL0";
+    public static String DQ_TRAINING = "RL0";
     public static double MAX_TARIFF_PRICE = 0.5;
     public static boolean RL_TRAINING = false;
     public static int PPTS_DISCRTZD = 10;

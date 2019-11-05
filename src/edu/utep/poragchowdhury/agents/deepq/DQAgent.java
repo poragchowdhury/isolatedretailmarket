@@ -55,7 +55,8 @@ public class DQAgent extends Agent {
     }
 
     public String getSimpleName() {
-        return "DQAgent" + this.agentNumber;
+        return this.name;
+        // return "DQAgent" + this.agentNumber;
     }
 
     public void loadPolicy(String policyFilename) {

@@ -6,6 +6,8 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class Logging {
+    private static final boolean APPEND = true;
+    
     public static void setupFormat() {
         // %1 = Date, %2 = Source, %3 = Logger, %4 = Level, %5 = Message, &6 = Thrown
         // %1$tF = Date -> Y-m-d
@@ -20,7 +22,7 @@ public class Logging {
         // Connect to file for saving
         FileHandler fh;
         try {
-            fh = new FileHandler(logFilename);
+            fh = new FileHandler(logFilename, APPEND);
             SimpleFormatter formatter = new SimpleFormatter();
             fh.setFormatter(formatter);
             l.addHandler(fh);

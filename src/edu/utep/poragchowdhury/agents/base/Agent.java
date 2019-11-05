@@ -4,7 +4,7 @@ import edu.utep.poragchowdhury.core.Configuration;
 import edu.utep.poragchowdhury.simulation.Observer;
 import edu.utep.poragchowdhury.simulation.TariffAction;
 
-public abstract class Agent {
+public abstract class Agent implements Cloneable {
     public String name;
     public double prevtariffPrice;
     public double tariffPrice;
@@ -124,4 +124,18 @@ public abstract class Agent {
     public String toString() {
         return this.name;
     }
+
+    @Override
+    public Agent clone() {
+        Agent c = null;
+        try {
+            // Shallow copy
+            c = (Agent) super.clone();
+            // Deep copy
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return c;
+    }
+
 }
