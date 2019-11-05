@@ -19,7 +19,7 @@ import org.nd4j.linalg.lossfunctions.LossFunctions;
 
 import edu.utep.poragchowdhury.core.Configuration;
 
-public final class NeuralNet {
+public class NeuralNet {
     public static final double LEARNING_RATE = 0.005;
     public static final double L2_RATE = 0.01;
 

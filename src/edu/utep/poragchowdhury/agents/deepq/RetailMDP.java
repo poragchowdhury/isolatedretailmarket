@@ -44,7 +44,7 @@ public class RetailMDP implements MDP<MDPState, Integer, DiscreteSpace> {
     @Override
     public StepReply<MDPState> step(Integer actionInt) {
         TariffAction action = TariffAction.valueOf(actionInt);
-        
+
         double before = agent.profit;
         agent.playAction(retailManager.ob, action);
 

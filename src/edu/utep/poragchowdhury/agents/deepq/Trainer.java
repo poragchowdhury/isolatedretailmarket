@@ -14,8 +14,9 @@ import edu.utep.poragchowdhury.core.Configuration;
 import edu.utep.poragchowdhury.core.Plot;
 import edu.utep.poragchowdhury.core.Plot.Data;
 
-public final class Trainer {
+public class Trainer {
     public static boolean isTraining = false;
+
     public static DQAgent train(List<Agent> opponentPool, String policyFilename) {
         // Set-up mdp and network
         RetailMDP mdp = new RetailMDP(opponentPool);
@@ -27,11 +28,11 @@ public final class Trainer {
 
             if (Configuration.USE_ACTOR_CRITIC) {
                 A3CDiscreteDense<MDPState> dqc = new A3CDiscreteDense<>(mdp, NeuralNet.A3C_NET_FACTORY_CONFIG, QLearningConfig.ACTOR_CRITIC, manager);
-                
+
                 isTraining = true;
                 dqc.train();
                 isTraining = false;
-                
+
                 dqc.getPolicy().save(policyFilename);
             } else {
                 // Set-up my own training listener for plots and such
@@ -40,11 +41,11 @@ public final class Trainer {
 
                 // Perform learning and save result
                 QLearningDiscreteDense<MDPState> dql = new QLearningDiscreteDense<MDPState>(mdp, new DQN(model), QLearningConfig.REGULAR, manager);
-                
+
                 isTraining = true;
                 dql.train();
                 isTraining = false;
-                
+
                 dql.getPolicy().save(policyFilename);
 
                 // Plotting

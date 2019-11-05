@@ -50,9 +50,9 @@ public class Configuration {
 
             }
         }
-        
+
         p += "********************Configurations**********************\n";
-        
+
         return p;
     }
 

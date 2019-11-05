@@ -5,7 +5,7 @@ import org.deeplearning4j.rl4j.learning.sync.qlearning.QLearning;
 
 import edu.utep.poragchowdhury.core.Configuration;
 
-public final class QLearningConfig {
+public class QLearningConfig {
 
     /**
      * The configuration of the QLearning algorithm
@@ -17,12 +17,12 @@ public final class QLearningConfig {
             .expRepMaxSize(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * 100)
             .batchSize(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * 10)
             .targetDqnUpdateFreq(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * Configuration.TRAINING_ROUNDS / 10)
-            .updateStart(0) // 0
+            .updateStart(0)
             .rewardFactor(1)
-            .gamma(0.99) // 0.99
+            .gamma(0.99)
             .errorClamp(Double.MAX_VALUE)
-            .minEpsilon(0.1f) // 0.1f
-            .epsilonNbStep((Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * (Configuration.TRAINING_ROUNDS))) // 3000
+            .minEpsilon(0.1f)
+            .epsilonNbStep((Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * (Configuration.TRAINING_ROUNDS)))
             .doubleDQN(true)
             .build();
 
@@ -40,7 +40,4 @@ public final class QLearningConfig {
             .gamma(0.99)
             .errorClamp(Double.MAX_VALUE)
             .build();
-
-
-
 }

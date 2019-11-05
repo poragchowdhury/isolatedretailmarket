@@ -6,7 +6,7 @@ import edu.utep.poragchowdhury.core.Configuration;
 
 public class FactoredConsumptionCustomer {
     // algorithm parameters - needed for numerical stablity
-    public double[] usage = {4,3,2,1,1,1,1,1,4,5,7,3,2,4,3,2,1,1,4,5,6,7,5,4}; //new double[24];// =
+    public double[] usage = { 4, 3, 2, 1, 1, 1, 1, 1, 4, 5, 7, 3, 2, 4, 3, 2, 1, 1, 4, 5, 6, 7, 5, 4 }; // new double[24];// =
     public double lambdaMax = 50.0;
     public double maxLinearUtility = 7.0;
 
@@ -28,7 +28,7 @@ public class FactoredConsumptionCustomer {
             inertiaPC[id] = 0;
             custMem[id] = Configuration.DEFAULT_TARIFF_PRICE;
         }
-//        Arrays.fill(usage, 1);
+        // Arrays.fill(usage, 1);
         // printCustomers();
     }
 
