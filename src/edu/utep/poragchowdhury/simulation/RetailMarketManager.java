@@ -605,12 +605,13 @@ public class RetailMarketManager {
     public static void main(String[] args) throws IOException {
         Logging.setupFormat();
         Logging.attachLoggerToFile(log, "experiment.log");
+
         /*
          * The Sandbox Experiment tests DQAgent against a few others
          * We can use this experiment to make sure DQAgent is being trained correctly
          * Or to tweak hyperparameters
          */
-        // sandboxExperiment();
+        sandboxExperiment();
 
         /*
          * The Main Experiment runs the flowchart specified by Porag

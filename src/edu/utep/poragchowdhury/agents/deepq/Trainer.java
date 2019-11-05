@@ -35,12 +35,12 @@ public class Trainer {
 
                 dqc.getPolicy().save(policyFilename);
             } else {
-                // Set-up my own training listener for plots and such
-                NeuralNetListener netListener = new NeuralNetListener();
-                model.addListeners(netListener);
-
                 // Perform learning and save result
                 QLearningDiscreteDense<MDPState> dql = new QLearningDiscreteDense<MDPState>(mdp, new DQN(model), QLearningConfig.REGULAR, manager);
+
+                // Set-up my own training listener for plots and such
+                NeuralNetListener netListener = new NeuralNetListener(dql);
+                model.addListeners(netListener);
 
                 isTraining = true;
                 dql.train();

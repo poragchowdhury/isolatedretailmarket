@@ -39,7 +39,8 @@ public class SMNE extends Agent {
         for (int i = 0; i < agents.size(); i++) {
             double prob = strategyProbs.get(i);
             Agent strategy = agents.get(i);
-            if (prob > 0) { // If prob is greater than 0, add the agent in the name
+            // If prob is greater than 0, add the agent in the name
+            if (prob > 0) {
                 if (strategy instanceof DQAgent)
                     tempName += String.format("%.2f%s,", prob, ((DQAgent) strategy).getSimpleName()); // Keeping the name upto 2 decimal
                 else
@@ -55,7 +56,6 @@ public class SMNE extends Agent {
     @Override
     public TariffAction makeAction(Observer ob) throws Exception {
         // https://stackoverflow.com/questions/9330394/how-to-pick-an-item-by-its-probability
-
         double p = rand.nextDouble();
         double cumulativeProbability = 0;
 
@@ -67,9 +67,9 @@ public class SMNE extends Agent {
             cumulativeProbability += normalizedProb;
             if (p <= cumulativeProbability) {
                 // If sharing variables, then copy all of SMNEs to the given strategy
-                if(SHARE_VARIABLES)
+                if (SHARE_VARIABLES)
                     this.copyTo(strategy);
-                
+
                 return strategy.makeAction(ob);
             }
         }

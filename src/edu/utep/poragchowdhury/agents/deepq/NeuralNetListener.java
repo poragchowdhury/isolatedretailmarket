@@ -20,13 +20,16 @@ import edu.utep.poragchowdhury.simulation.RetailMarketManager;
  * Listener for MultiLayerNetwork training
  */
 public class NeuralNetListener extends BaseTrainingListener {
+    private static Logger log = Logger.getLogger("retailmarketmanager");
+
     public QLearningDiscreteDense<MDPState> dql;
     public int prevEpoch = -1;
     public List<Double> profits;
     public double bestProfit = -1;
     public MultiLayerNetwork bestMDP = null;
 
-    public NeuralNetListener() {
+    public NeuralNetListener(QLearningDiscreteDense<MDPState> dql) {
+        this.dql = dql;
         profits = new ArrayList<>();
     }
 
@@ -65,11 +68,12 @@ public class NeuralNetListener extends BaseTrainingListener {
             if (epoch != prevEpoch) {
                 prevEpoch = epoch;
 
-                if (epoch % 10 == 0) {
-                    Logger.getAnonymousLogger().info("===Evaluating model");
+                if (epoch % 2 == 0) {
+                    log.info(" *** Evaluating model *** ");
                     MultiLayerNetwork mdp = (MultiLayerNetwork) model;
                     RetailMarketManager rm = new RetailMarketManager();
-                    // Agent set-up
+
+                    // Evaluation Setup
                     Agent dq = new DQAgent(mdp);
                     Agent opponent = new AlwaysDefect();
 
@@ -78,7 +82,6 @@ public class NeuralNetListener extends BaseTrainingListener {
                     cs.addP2Strats(dq);
 
                     rm.startSimulation(cs);
-                    Logger.getAnonymousLogger().info("=== Opp : " + opponent.profit + ", DQ : " + dq.profit);
                     profits.add(dq.profit);
 
                     if (dq.profit > bestProfit) {
