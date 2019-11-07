@@ -22,10 +22,10 @@ public class Observer {
     public double custSubs[];
     public double utility[];
 
-    public double unitcost;
-    public double daymult;
-    public double demandmult;
-    public double initcost;
+    //public double unitcost;
+    //public double daymult;
+    //public double demandmult;
+    //public double initcost;
     public int SEED = 0;
 
     /*
@@ -43,18 +43,17 @@ public class Observer {
         cost = new double[2];
         utility = new double[2];
         fcc = new FactoredConsumptionCustomer(this);
-        daymult = Configuration.DAYMULT;
-        demandmult = Configuration.DMNDMULT;
-        initcost = Configuration.INITCOST;
-        unitcost = daymult * 0 + demandmult * fcc.usage[0] + initcost;
+//        daymult = Configuration.DAYMULT;
+//        demandmult = Configuration.DMNDMULT;
+//        initcost = Configuration.INITCOST;
+        //unitcost = daymult * 0 + demandmult * fcc.usage[0] + initcost;
         agentPayoffs = new double[2][Configuration.TEST_ROUNDS];
 
     }
 
-    public void calcCost() {
-        int day = timeslot / 24;
-        int hour = timeslot % 24;
-        unitcost = daymult * day + demandmult * fcc.usage[hour] + initcost;
+    public void updateAgentUnitCost() {
+        for(Agent a : agentPool)
+        	a.randomWalkCost(timeslot);
     }
 
     public void clear() {

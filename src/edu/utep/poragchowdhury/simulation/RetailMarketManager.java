@@ -123,7 +123,7 @@ public class RetailMarketManager {
 
         for (int i = 0; i < ob.fcc.population; i++) {
             ob.money[ob.fcc.custId[i]] += (tariffPrice[ob.fcc.custId[i]] * ob.fcc.usage[hour]);
-            ob.cost[ob.fcc.custId[i]] += (ob.unitcost * ob.fcc.usage[hour]);
+            ob.cost[ob.fcc.custId[i]] += (ob.agentPool.get(ob.fcc.custId[i]).unitcost * ob.fcc.usage[hour]);
             ob.custSubs[ob.fcc.custId[i]] += 1;
         }
         ob.agentPool.get(0).revenue += ob.money[0];
@@ -443,7 +443,7 @@ public class RetailMarketManager {
                                 ob.cost[0] = (double) Math.round(ob.cost[0] * 100) / 100;
                                 ob.cost[1] = (double) Math.round(ob.cost[1] * 100) / 100;
 
-                                ob.unitcost = (double) Math.round(ob.unitcost * 100) / 100;
+                                //ob.unitcost = (double) Math.round(ob.unitcost * 100) / 100;
 
                                 ob.agentPool.get(0).revenue = (double) Math.round(ob.agentPool.get(0).revenue * 100) / 100;
                                 ob.agentPool.get(1).revenue = (double) Math.round(ob.agentPool.get(1).revenue * 100) / 100;
@@ -461,7 +461,7 @@ public class RetailMarketManager {
                                 updateAgentAccountings();
                                 // Going to next timeslot and updating the cost
                                 ob.timeslot++;
-                                ob.calcCost();
+                                ob.updateAgentUnitCost();
                             }
                             // printRevenues() function
                             int agentid = 0;

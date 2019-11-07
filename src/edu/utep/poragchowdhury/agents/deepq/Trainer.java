@@ -27,7 +27,8 @@ public class Trainer {
             DataManager manager = new DataManager(true);
 
             if (Configuration.USE_ACTOR_CRITIC) {
-                A3CDiscreteDense<MDPState> dqc = new A3CDiscreteDense<>(mdp, NeuralNet.A3C_NET_FACTORY_CONFIG, QLearningConfig.ACTOR_CRITIC, manager);
+                A3CDiscreteDense<MDPState> dqc = new A3CDiscreteDense<>(mdp, 
+                		NeuralNet.A3C_NET_FACTORY_CONFIG, QLearningConfig.ACTOR_CRITIC, manager);
 
                 isTraining = true;
                 dqc.train();

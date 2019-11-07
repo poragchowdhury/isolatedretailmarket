@@ -65,6 +65,7 @@ public class RetailMDP implements MDP<MDPState, Integer, DiscreteSpace> {
             retailManager.customerTariffEvaluation();
             retailManager.updateAgentAccountings();
             retailManager.ob.timeslot++;
+            retailManager.ob.updateAgentUnitCost();
         }
         double after = agent.profit;
         double reward = (after - before) / (0.5 * Configuration.POPULATION * 7);

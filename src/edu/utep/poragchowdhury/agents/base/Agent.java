@@ -1,5 +1,7 @@
 package edu.utep.poragchowdhury.agents.base;
 
+import java.util.Random;
+
 import edu.utep.poragchowdhury.core.Configuration;
 import edu.utep.poragchowdhury.simulation.Observer;
 import edu.utep.poragchowdhury.simulation.TariffAction;
@@ -14,12 +16,20 @@ public abstract class Agent implements Cloneable {
     public double prevrevenue;
     public double marketShare;
     public double prevmarketShare;
+    public double unitcost;
     public double cost;
     public double profit;
     public double prevprofit;
     public double tariffUtility;
     public TariffAction previousAction;
 
+    // Random walk cost variables
+    public double c_max = 0.12;
+	public double c_min = 0.03;
+	public double tr_min = 0.95;
+	public double tr_max = 1/0.95;
+	public double trend = 1;
+	
     public abstract TariffAction makeAction(Observer ob) throws Exception;
 
     /**
@@ -29,6 +39,7 @@ public abstract class Agent implements Cloneable {
     public Agent(String agentName) {
         this.name = agentName;
         this.reset();
+        this.unitcost = Configuration.DEFAULT_UNITCOST;
     }
 
     /**
@@ -43,7 +54,7 @@ public abstract class Agent implements Cloneable {
         prevrevenue = 0;
         marketShare = 0;
         prevmarketShare = 0;
-        cost = 0;
+        unitcost = Configuration.DEFAULT_UNITCOST;
         profit = 0;
         prevprofit = 0;
         tariffUtility = 0;
@@ -77,7 +88,7 @@ public abstract class Agent implements Cloneable {
     public final void playAction(Observer ob, TariffAction action) {
         double tariffChange = action.tariff;
         double newTariff = this.tariffPrice + tariffChange;
-        boolean validTariff = newTariff < Configuration.MAX_TARIFF_PRICE && newTariff > ob.unitcost;
+        boolean validTariff = newTariff < Configuration.MAX_TARIFF_PRICE && newTariff > this.unitcost;
 
         if (validTariff) {
             this.prevtariffPrice = this.tariffPrice;
@@ -137,5 +148,34 @@ public abstract class Agent implements Cloneable {
         }
         return c;
     }
+    
+    public void randomWalkCost(int ts) {
+		double new_cost = Math.min(this.c_max, Math.max(this.c_min, this.trend*this.cost));
+		double new_trend = Math.max(this.tr_min, Math.min(this.tr_max, this.trend+getRandomValInRange(0.01)));
+		if((this.trend * this.cost) < this.c_min || (this.trend * this.cost) > this.c_max)
+			this.trend = 1;
+		else
+			this.trend = new_trend;
+		this.cost = new_cost;
+    }
+    
+	/*
+	 * Generation random values between -max to +max
+	 * */
+	public double getRandomValInRange(double max) {
+		int divisor = 100;
+		while(max % 1 != 0) {
+			max *= 10;
+			divisor *= 10;
+		}
+		int maxbound = (int) max*100;
+		Random r = new Random();
+		int randInt = r.nextInt(maxbound+1);
+		double val = (double) randInt/divisor;
+		int coin = r.nextInt(2);
+		if(coin == 0)
+			val *= -1;
+		return val;
+	}
 
 }

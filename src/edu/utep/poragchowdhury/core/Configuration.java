@@ -10,6 +10,7 @@ public class Configuration {
     public static int TOTAL_TIME_SLOTS = 0;
     public static int PUBLICATION_CYCLE = 0;
     public static double DEFAULT_TARIFF_PRICE = 1;
+    public static double DEFAULT_UNITCOST = 0.05;
     public static int CASE_STUDY_NO = 0;
     public static double INERTIA = 0;
     public static double RATIONALITY = 0;
