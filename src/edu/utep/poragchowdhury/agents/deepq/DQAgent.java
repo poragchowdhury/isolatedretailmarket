@@ -100,6 +100,8 @@ public class DQAgent extends Agent {
                 NOC++;
             else
                 INC++;
+            
+            System.out.println(nextAction.name());
         }
         return nextAction;
     }

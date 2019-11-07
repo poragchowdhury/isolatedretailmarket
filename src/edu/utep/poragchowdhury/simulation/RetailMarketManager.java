@@ -641,7 +641,7 @@ public class RetailMarketManager {
         RetailMarketManager rm = new RetailMarketManager();
 
         // Opponent
-        Agent opponentAgent = new AlwaysSame();
+        Agent opponentAgent = new AlwaysIncrease();
 
         // Training opponents
         List<Agent> oppPool = new ArrayList<>();
@@ -681,13 +681,13 @@ public class RetailMarketManager {
          * We can use this experiment to make sure DQAgent is being trained correctly
          * Or to tweak hyperparameters
          */
-        // sandboxExperiment();
+        sandboxExperiment();
 
         /*
          * The round robin experiment
          * 
          */
-        roundRobinExperiment();
+        // roundRobinExperiment();
 
         /*
          * The Main Experiment runs the flowchart specified by Porag
