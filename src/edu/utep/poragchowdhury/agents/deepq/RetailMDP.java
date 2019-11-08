@@ -5,12 +5,15 @@
 package edu.utep.poragchowdhury.agents.deepq;
 
 import java.util.List;
+import java.util.logging.Logger;
+
 import org.deeplearning4j.gym.StepReply;
 import org.deeplearning4j.rl4j.mdp.MDP;
 import org.deeplearning4j.rl4j.space.ArrayObservationSpace;
 import org.deeplearning4j.rl4j.space.DiscreteSpace;
 import org.deeplearning4j.rl4j.space.ObservationSpace;
 import org.json.JSONObject;
+import org.nd4j.linalg.api.ndarray.INDArray;
 
 import edu.utep.poragchowdhury.agents.base.Agent;
 import edu.utep.poragchowdhury.core.Configuration;
@@ -18,6 +21,7 @@ import edu.utep.poragchowdhury.simulation.RetailMarketManager;
 import edu.utep.poragchowdhury.simulation.TariffAction;
 
 public class RetailMDP implements MDP<MDPState, Integer, DiscreteSpace> {
+    private static Logger log = Logger.getLogger("retailmarketmanager");
     public static final int NUM_ACTIONS = 3;
     public static final int NUM_OBSERVATIONS = new MDPState().toArray().length;
 
@@ -38,8 +42,8 @@ public class RetailMDP implements MDP<MDPState, Integer, DiscreteSpace> {
         return retailManager.ob.timeslot >= Configuration.TOTAL_TIME_SLOTS;
     }
 
-    public double comReward = 0;
-    public int rep = 0;
+    private String H = "";
+    private String D = "";
 
     @Override
     public StepReply<MDPState> step(Integer actionInt) {
@@ -68,9 +72,24 @@ public class RetailMDP implements MDP<MDPState, Integer, DiscreteSpace> {
             retailManager.ob.updateAgentUnitCost();
         }
         double after = agent.profit;
-        double reward = (after - before) / (0.5 * Configuration.POPULATION * 7);
+        double d1 = (after - before) / (0.5f * Configuration.POPULATION * 7f);
+        d1 -= 0.3;
+        double d2 = (agent.marketShare / 100f);
+        double reward = ((0.3 * d1) + (0.7 * d2));
+
+        // double reward = after;
+        // double reward = (after - before) / (0.5f * Configuration.POPULATION * 7f);
+
         // double reward = agent.profit - agent.prevprofit;
+
         // double reward = agent.profit - opponentPool.get(0).profit;
+
+        H += agent.previousAction.toString().charAt(0);
+        D += reward + ",";
+        if (H.length() == 4)
+            log.info(H);
+        if (H.equals("NIII") || H.equals("DDDD"))
+            log.info(H + " - " + D.substring(0, D.length() - 2));
 
         MDPState nextState = new MDPState(agent, retailManager.ob);
 
@@ -90,6 +109,9 @@ public class RetailMDP implements MDP<MDPState, Integer, DiscreteSpace> {
         retailManager.ob.agentPool.add(agent);
         retailManager.ob.agentPool.addAll(opponentPool);
         retailManager.ob.timeslot = 0;
+
+        H = "";
+        D = "";
 
         return new MDPState(agent, retailManager.ob);
     }

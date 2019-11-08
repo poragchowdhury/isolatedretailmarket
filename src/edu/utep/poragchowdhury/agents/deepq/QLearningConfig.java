@@ -16,7 +16,7 @@ public class QLearningConfig {
             .maxStep(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * Configuration.TRAINING_ROUNDS)
             .expRepMaxSize(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * 100)
             .batchSize(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * 10)
-            .targetDqnUpdateFreq(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * Configuration.TRAINING_ROUNDS / 10)
+            .targetDqnUpdateFreq(Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * Configuration.TRAINING_ROUNDS / 100)
             .updateStart(0)
             .rewardFactor(1)
             .gamma(0.99)

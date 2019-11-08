@@ -188,7 +188,6 @@ public class RetailMarketManager {
     public void startExperiment(boolean roundRobin) throws IOException {
         Scanner input = new Scanner(System.in);
         log.info("*************** Experimental Run Log ***************");
-        log.info(Configuration.toStringRepresentation());
 
         Stack<Agent> litStrategies = null;
         CaseStudy currentCase = null;
@@ -443,7 +442,7 @@ public class RetailMarketManager {
                                 ob.cost[0] = (double) Math.round(ob.cost[0] * 100) / 100;
                                 ob.cost[1] = (double) Math.round(ob.cost[1] * 100) / 100;
 
-                                //ob.unitcost = (double) Math.round(ob.unitcost * 100) / 100;
+                                // ob.unitcost = (double) Math.round(ob.unitcost * 100) / 100;
 
                                 ob.agentPool.get(0).revenue = (double) Math.round(ob.agentPool.get(0).revenue * 100) / 100;
                                 ob.agentPool.get(1).revenue = (double) Math.round(ob.agentPool.get(1).revenue * 100) / 100;
@@ -675,6 +674,7 @@ public class RetailMarketManager {
     public static void main(String[] args) throws IOException {
         Logging.setupFormat();
         Logging.attachLoggerToFile(log, "experiment.log");
+        log.info(Configuration.toStringRepresentation());
         log.info("Feature Size: " + RetailMDP.NUM_OBSERVATIONS);
         /*
          * The Sandbox Experiment tests DQAgent against a few others

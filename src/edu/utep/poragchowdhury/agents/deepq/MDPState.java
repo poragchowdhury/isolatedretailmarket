@@ -73,23 +73,23 @@ public class MDPState implements Encodable {
         List<Double> features = new ArrayList<>();
         /* ===== NOTE: Add your features here ===== */
         features.add((double) timeSlot / Configuration.TOTAL_TIME_SLOTS);
-        features.add(agent.profit / (0.5 * Configuration.POPULATION * Configuration.TOTAL_TIME_SLOTS * 7));
-        features.add((double) ppts / (0.5 * Configuration.POPULATION * 7));
-        features.add(prevProfit / (0.5 * Configuration.POPULATION * Configuration.TOTAL_TIME_SLOTS * 7));
+        features.add(agent.profit / (0.5f * Configuration.POPULATION * Configuration.TOTAL_TIME_SLOTS * 7f));
+        features.add((double) ppts / (0.5f * Configuration.POPULATION * 7f));
+        features.add(prevProfit / (0.5f * Configuration.POPULATION * Configuration.TOTAL_TIME_SLOTS * 7f));
 
         // for(double[] arr : agentPayoffs)
         // for(double d : arr)
         // state.add(d);
-        for (double d : one_hot(agent.previousAction.index))
-            features.add(d);
-        
+        // for (double d : one_hot(agent.previousAction.index))
+        // features.add(d);
+
         features.add((double) lastNoChange);
         features.add((double) lastDefect);
         features.add((double) lastCoop);
-        features.add((double) marketShare / Configuration.POPULATION);
-        features.add(prevHourUsage / 7);
-        features.add(curHourUsage / 7);
-        features.add(nextHourUsage / 7);
+        // features.add((double) marketShare / Configuration.POPULATION);
+        // features.add(prevHourUsage / 7f);
+        // features.add(curHourUsage / 7f);
+        // features.add(nextHourUsage / 7f);
         // Get all the features from the list
         // Convert to a double array for use in the MDP
         double[] result = new double[features.size()];

@@ -15,28 +15,49 @@ import org.deeplearning4j.ui.stats.StatsListener;
 import org.deeplearning4j.ui.storage.InMemoryStatsStorage;
 import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.learning.config.Adam;
+import org.nd4j.linalg.learning.config.Nadam;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 
 import edu.utep.poragchowdhury.core.Configuration;
 
 public class NeuralNet {
-    public static final double LEARNING_RATE = 0.005;
-    public static final double L2_RATE = 0.01;
+    public static final double LEARNING_RATE = 0.0005;
+    public static final double L2_RATE = 0.1;
 
     public static final int[] INPUT_SHAPE = RetailMDP.OBSERVATION_SPACE.getShape();
     public static final int INPUT_NUM = RetailMDP.NUM_OBSERVATIONS;
     public static final int OUTPUT_NUM = RetailMDP.NUM_ACTIONS;
 
-    public static final int LAYER0_NEURONS = 16;
-    public static final int LAYER1_NEURONS = 16;
-    public static final int LAYER2_NEURONS = 16;
+    private static final int LAYER0_NEURONS = 16;
+    private static final int LAYER1_NEURONS = 16;
+    private static final int LAYER2_NEURONS = 16;
+
+    private static DenseLayer layer0 = new DenseLayer.Builder()
+            .nIn(INPUT_NUM)
+            .nOut(LAYER0_NEURONS)
+            .activation(Activation.RELU).build();
+
+    private static DenseLayer layer1 = new DenseLayer.Builder()
+            .nIn(layer0.getNOut())
+            .nOut(LAYER1_NEURONS)
+            .activation(Activation.RELU).build();
+    
+    private static DenseLayer layer2 = new DenseLayer.Builder()
+            .nIn(layer1.getNOut())
+            .nOut(LAYER2_NEURONS)
+            .activation(Activation.RELU).build();
+
+    private static OutputLayer layerOutput = new OutputLayer.Builder(LossFunctions.LossFunction.MSE)
+            .nIn(layer2.getNOut())
+            .nOut(OUTPUT_NUM)
+            .activation(Activation.SOFTMAX).build();
 
     public static final MultiLayerConfiguration NEURAL_NET_CONFIG = new NeuralNetConfiguration.Builder()
             .seed(Constants.NEURAL_NET_SEED)
             .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT)
             // .updater(Updater.NESTEROVS).momentum(0.9)
             // .updater(Updater.RMSPROP).rho(conf.getRmsDecay())//.rmsDecay(conf.getRmsDecay())
-            .updater(new Adam(LEARNING_RATE))
+            .updater(new Nadam(LEARNING_RATE))
             .weightInit(WeightInit.XAVIER)
             .l2(L2_RATE)
             .list()
@@ -45,23 +66,10 @@ public class NeuralNet {
              * Can also use LSTM.Builder() or RnnOutputLayer.Builder()
              * More details in ActorCriticFactorySeparateStdDense
              */
-            .layer(0, new DenseLayer.Builder()
-                    .nIn(INPUT_NUM)
-                    .nOut(LAYER0_NEURONS)
-                    .activation(Activation.RELU).build())
-            .layer(1, new DenseLayer.Builder()
-                    .nIn(LAYER0_NEURONS)
-                    .nOut(LAYER1_NEURONS)
-                    .activation(Activation.RELU).build())
-            .layer(2, new DenseLayer.Builder()
-                    .nIn(LAYER1_NEURONS)
-                    .nOut(LAYER2_NEURONS)
-                    .activation(Activation.RELU).build())
-            /* Output Layer */
-            .layer(3, new OutputLayer.Builder(LossFunctions.LossFunction.MSE)
-                    .nIn(LAYER2_NEURONS)
-                    .nOut(OUTPUT_NUM)
-                    .activation(Activation.IDENTITY).build())
+            .layer(0, layer0)
+            .layer(1, layer1)
+            .layer(2, layer2)
+            .layer(3, layerOutput)
             .build();
 
     public static ActorCriticFactorySeparateStdDense.Configuration A3C_NET_FACTORY_CONFIG = ActorCriticFactorySeparateStdDense.Configuration.builder()
