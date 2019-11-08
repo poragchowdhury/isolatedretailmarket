@@ -1,74 +1,100 @@
-/**
- * Author: Jose G. Perez
- * Deep Q-Learning Agent for use in simulations
- */
 package Agents;
 
 import java.io.IOException;
 import java.util.logging.Logger;
 
 import org.deeplearning4j.rl4j.learning.Learning;
+import org.deeplearning4j.rl4j.policy.ACPolicy;
 import org.deeplearning4j.rl4j.policy.DQNPolicy;
-import org.deeplearning4j.rl4j.space.Encodable;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 
-import Observer.Observer;
-import Tariff.TariffActions;
 import Configuration.Configuration;
+import Observer.Observer;
+import Tariff.TariffAction;
 
-class DQAgentState implements Encodable {
-    public DQAgent agent;
-    public int timeSlot;
-    public long ppts;
-    public int prevaction;
-    public DQAgentState(DQAgent agent) {
-        this.agent = agent;
-        //this.timeSlot = Observer.timeslot;
-        this.ppts = (long) (agent.prevprofit);// / (double) Observer.timeslot);
-        //this.prevaction = agent.myPrevActionId;
-    }
-
-    @Override
-    public double[] toArray() {
-        return new double[] {ppts};//, prevaction, timeSlot};//, }; timeSlot//  
-    }
-}
-
+/**
+ * Deep Q-Learning Agent for use in simulations
+ * 
+ * @author Jose G. Perez
+ */
 public class DQAgent extends Agent {
-    private DQNPolicy<DQAgentState> pol;
+	private static int CURRENT_AGENT_COUNT = 0;
+	public static int DEFECT = 0;
+	public static int NOC = 0;
+	public static int INC = 0;
+	public DQNPolicy<DQAgentState> pol;
+	public int agentNumber = -1;
 
-    public DQAgent() {
-        this.name = "DEEPQ";
-        try {
-            this.pol = DQNPolicy.load(Configuration.DQLEARNING_POLICY_FILENAME);
-        } catch (IOException e) {
-            Logger.getAnonymousLogger().info("{DQAgent.Constructor} Couldn't load DQN policy from file " + Configuration.DQLEARNING_POLICY_FILENAME);
-        }
-    }
+	public boolean isTraining() {
+		return pol == null;
+	}
 
-    @Override
-    public void publishTariff(Observer ob) {
-        DQAgentState state = new DQAgentState(this);
-        INDArray input = Nd4j.create(state.toArray());
-        input = input.reshape(Learning.makeShape(1, DQAgentMDP.observationSpace.getShape()));
+	public DQAgent(String policyName) {
+		super("DeepQ_Default");
+		try {
+			this.pol = DQNPolicy.load(policyName);
+		} catch (Exception e) {
+			Logger.getAnonymousLogger().info("{DQAgent.Constructor} Couldn't load DQN policy from file: " + policyName);
+		}
+		// Only number testing agents, not the ones used for training
+		this.agentNumber = CURRENT_AGENT_COUNT;
+		CURRENT_AGENT_COUNT++;
 
-        int nextAction = pol.nextAction(input);
-        System.out.println("Test: TS: " + Observer.timeslot +  " a " + nextAction + " : " + TariffActions.a[nextAction]);
-        if (nextAction == TariffActions.action.DEFECT.ordinal()) // Defect
-            defect(ob);
-        else if (nextAction == TariffActions.action.INCREASE.ordinal()) // Increase
-            increase(ob);
-        else if (nextAction == TariffActions.action.DEFECT2.ordinal()) // Defect
-            defect2(ob);
-        else if (nextAction == TariffActions.action.INCREASE2.ordinal()) // Increase
-            increase2(ob);
-        else // No change
-            nochange();
-    }
-    
-    @Override
-    public void tariffCheck(Observer ob) {
-        // Don't print tariff check log
-    }
+		this.name = "DQAgent" + this.agentNumber + "_" + policyName.substring(0, policyName.length() - 4);
+	}
+	
+	public DQAgent(String name, String policyName) {
+		super(name);
+		try {
+			this.pol = DQNPolicy.load(policyName);
+		} catch (Exception e) {
+			Logger.getAnonymousLogger().info("{DQAgent.Constructor} Couldn't load DQN policy from file: " + policyName);
+		}
+		// Only number testing agents, not the ones used for training
+//		this.agentNumber = CURRENT_AGENT_COUNT;
+//		CURRENT_AGENT_COUNT++;
+
+//		this.name = "DQAgent" + this.agentNumber + "_" + policyName.substring(0, policyName.length() - 4);
+	}
+
+	public DQAgent() {
+		super("DeepQ_Training");
+	}
+
+	public String getSimpleName() {
+		return this.name;//"DQAgent" + this.agentNumber;
+	}
+
+	@Override
+	public TariffAction makeAction(Observer ob) {
+		// Feed the current state into the policy's network
+		DQAgentState state = new DQAgentState(this, ob);
+		INDArray input = Nd4j.create(state.toArray());
+		input = input.reshape(Learning.makeShape(1, DQAgentMDP.OBSERVATION_SPACE.getShape()));
+
+		INDArray output = pol.getNeuralNet().output(input);
+//		System.out.println("NN Input: " + input.toString());
+//		System.out.println("NN Output: " + output.toString());
+
+		int nextActionInt = pol.nextAction(input);
+		TariffAction nextAction = TariffAction.valueOf(nextActionInt);
+
+		if (!isTraining()) {
+			if (nextAction == TariffAction.DEFECT) {
+				DEFECT++;
+			}
+			else if (nextAction == TariffAction.NOCHANGE) {
+				NOC++;
+			}
+			else {
+				INC++;
+			}
+		}
+		actionHistory = actionHistory + nextAction.name().substring(0,1);
+		if(actionHistory.length() == Configuration.TOTAL_PUBLICATIONS_IN_A_GAME)
+			Logger.getAnonymousLogger().info(actionHistory);
+		
+		return nextAction;
+	}
 }

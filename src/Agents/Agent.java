@@ -3,279 +3,123 @@ package Agents;
 import java.util.Random;
 
 import Configuration.Configuration;
-import Configuration.DatabaseConnection;
 import Observer.Observer;
-import Tariff.TariffActions;
+import Tariff.TariffAction;
 
 public abstract class Agent {
 	public String name;
-	public double prevtariffPrice;
-	public double tariffPrice;
-	public double rivalPrevPrice;
-	public double rivalPrevPrevPrice;
-	public double revenue;
-	public double prevrevenue;
-	public double marketShare;
-	public double prevmarketShare;
-	public double cost;
-	public double profit;
-	public double prevprofit;
-	public double tariffUtility;
-	public int coopCounter;
-	public int defectCounter;
-	public boolean booDefect;
-	public int agentId;
-	public int punishCounter;
-	public int myPrevActionId = 0; // 0: Defect, 1 : Coop
-	public DatabaseConnection db;
+    public double prevtariffPrice;
+    public double tariffPrice;
+    public double rivalPrevPrice;
+    public double rivalPrevPrevPrice;
+    public double revenue;
+    public double prevrevenue;
+    public double marketShare;
+    public double prevmarketShare;
+    public double cost;
+    public double profit;
+    public double prevprofit;
+    public double tariffUtility;
+    public TariffAction previousAction;
+	public String actionHistory;
 	
-	public Agent() {
-		prevtariffPrice = Configuration.DEFAULT_TARIFF_PRICE;
-		tariffPrice = Configuration.DEFAULT_TARIFF_PRICE;
-		rivalPrevPrice = Configuration.DEFAULT_TARIFF_PRICE;
-		rivalPrevPrevPrice = Configuration.DEFAULT_TARIFF_PRICE;
-		booDefect = false;
-	}
+	// Random walk cost variables
+	public double c_max = 0.12;
+	public double c_min = 0.03;
+	public double tr_min = 0.95;
+	public double tr_max = 1/0.95;
+	public double unitcost = 0.05;
+	public double trend = 1;
 	
-	public Agent(String rlagentName) {
-		prevtariffPrice = Configuration.DEFAULT_TARIFF_PRICE;
-		tariffPrice = Configuration.DEFAULT_TARIFF_PRICE;
-		rivalPrevPrice = Configuration.DEFAULT_TARIFF_PRICE;
-		rivalPrevPrevPrice = Configuration.DEFAULT_TARIFF_PRICE;
-		booDefect = false;
-		db = new DatabaseConnection(rlagentName);
-	}
+	
+    public abstract TariffAction makeAction(Observer ob) throws Exception;
 
-	
-	public void reset() {
-		prevtariffPrice = Configuration.DEFAULT_TARIFF_PRICE;
-		tariffPrice = Configuration.DEFAULT_TARIFF_PRICE;
-		rivalPrevPrice = Configuration.DEFAULT_TARIFF_PRICE;
-		rivalPrevPrevPrice = Configuration.DEFAULT_TARIFF_PRICE;
-		revenue = 0;
-		prevrevenue = 0;
-		marketShare = 0;
-		prevmarketShare = 0;
-		cost = 0;
-		profit = 0;
-		prevprofit = 0;
-		tariffUtility = 0;
-		coopCounter = 0;
-		defectCounter = 0;
-		booDefect = false;
-		punishCounter = 0;
-		myPrevActionId = 0; // 0: Defect, 1 : Coop
-	}
-	
-	public boolean isOtherAgentCoop(double rivalCurPrice) {
-		if(rivalPrevPrice >= this.rivalPrevPrevPrice)
-			return true;
+    public Agent(String agentName) {
+        this.name = agentName;
+        this.reset();
+    }
+
+    public void reset() {
+        prevtariffPrice = Configuration.DEFAULT_TARIFF_PRICE;
+        tariffPrice = Configuration.DEFAULT_TARIFF_PRICE;
+        rivalPrevPrice = Configuration.DEFAULT_TARIFF_PRICE;
+        rivalPrevPrevPrice = Configuration.DEFAULT_TARIFF_PRICE;
+        revenue = 0;
+        prevrevenue = 0;
+        marketShare = 0;
+        prevmarketShare = 0;
+        cost = 0;
+        profit = 0;
+        prevprofit = 0;
+        tariffUtility = 0;
+        previousAction = TariffAction.NOCHANGE;
+        unitcost = 0.05;
+        actionHistory = "";
+    }
+
+    public boolean isOtherAgentCoop(double rivalCurPrice) {
+        return rivalPrevPrice >= this.rivalPrevPrevPrice;
+    }
+
+    public final void publishTariff(Observer ob) throws Exception {
+        TariffAction action = makeAction(ob);
+        playAction(ob, action);
+    }
+
+    public final void playAction(Observer ob, TariffAction action) {
+        double tariffChange = action.tariff;
+        double newTariff = this.tariffPrice + tariffChange;
+        boolean validTariff = newTariff < Configuration.MAX_TARIFF_PRICE && newTariff > this.unitcost;
+
+        if (validTariff) {
+            this.prevtariffPrice = this.tariffPrice;
+            this.tariffPrice = newTariff;
+            this.previousAction = action;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Agent) {
+            Agent other = (Agent) obj;
+            return other.name.equals(this.name);
+        }
+        return super.equals(obj);
+    }
+
+	public void randomWalkCost(int ts) {
+		double new_cost = Math.min(this.c_max, Math.max(this.c_min, this.trend*this.cost));
+		double new_trend = Math.max(this.tr_min, Math.min(this.tr_max, this.trend+getRandomValInRange(0.01)));
+		if((this.trend * this.cost) < this.c_min || (this.trend * this.cost) > this.c_max)
+			this.trend = 1;
 		else
-			return false;
-	}
-	
-	public void tariffCheck(Observer ob) {
-		if(this.tariffPrice < ob.unitcost) {
-			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
-			System.out.println(this.name + " agent is losing money. \nStopping simulation.");
-			System.exit(0);
-		}
-	}
-	
-	public void defect(Observer ob) {
-		double change = TariffActions.a[TariffActions.action.DEFECT.ordinal()];//(Configuration.ACT_CHANGE_PERC * this.tariffPrice)/100;
-		double newTariff = this.tariffPrice + change;
-		if(newTariff > ob.unitcost) {
-			this.prevtariffPrice = this.tariffPrice;
-			this.tariffPrice = newTariff;
-			this.myPrevActionId = TariffActions.action.DEFECT.ordinal();
-		}
-//		else
-//			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
-	}
-	
-	public void defect2(Observer ob) {
-		double change = TariffActions.a[TariffActions.action.DEFECT2.ordinal()];//(Configuration.ACT_CHANGE_PERC * this.tariffPrice)/100;
-		double newTariff = this.tariffPrice + change;
-		if(newTariff > ob.unitcost) {
-			this.prevtariffPrice = this.tariffPrice;
-			this.tariffPrice = newTariff;
-			this.myPrevActionId = TariffActions.action.DEFECT2.ordinal();
-		}
-//		else
-//			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
+			this.trend = new_trend;
+		this.cost = new_cost;
 	}
 
-	
-	public void increase(Observer ob) {
-		double change = TariffActions.a[TariffActions.action.INCREASE.ordinal()];//(Configuration.ACT_CHANGE_PERC * this.tariffPrice)/100;
-		double newTariff = this.tariffPrice + change;
-		if(newTariff < Configuration.MAX_TARIFF_PRICE) {
-			this.prevtariffPrice = this.tariffPrice;
-			this.tariffPrice = newTariff;
-			this.myPrevActionId = TariffActions.action.INCREASE.ordinal();
-		}
-//		else
-//			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
+	/*
+	 * Generation random values between -max to +max
+	 * */
+	public double getRandomValInRange(double max) {
+	int divisor = 100;
+	while(max % 1 != 0) {
+		max *= 10;
+		divisor *= 10;
 	}
-	public void increase2(Observer ob) {
-		double change = TariffActions.a[TariffActions.action.INCREASE2.ordinal()];//(Configuration.ACT_CHANGE_PERC * this.tariffPrice)/100;
-		double newTariff = this.tariffPrice + change;
-		if(newTariff < Configuration.MAX_TARIFF_PRICE) {
-			this.prevtariffPrice = this.tariffPrice;
-			this.tariffPrice = newTariff;
-			this.myPrevActionId = TariffActions.action.INCREASE2.ordinal();
-		}
-//		else
-//			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
-	}
-	
-	
-	public void publishTariffByActionId(Observer ob, int actionid) {
-		double change = TariffActions.a[actionid];
-		double newTariff = this.tariffPrice + change;
-		if(newTariff > ob.unitcost) {
-			this.prevtariffPrice = this.tariffPrice;
-			this.tariffPrice = newTariff;
-			this.myPrevActionId = actionid;
-		}
-//		else
-//			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
-	}
-	
-	public void nochange() {
-		this.myPrevActionId = TariffActions.action.NOCHANGE.ordinal();
-	}
-	
-	public void defectOnRivalPrice(Observer ob) {
-		double change = TariffActions.a[TariffActions.action.DEFECT.ordinal()];//(Configuration.ACT_CHANGE_PERC * this.tariffPrice)/100;
-		double newTariff = this.rivalPrevPrice + change;
-		if(newTariff > ob.unitcost) {
-			this.prevtariffPrice = this.tariffPrice;
-			this.tariffPrice = newTariff;
-			this.myPrevActionId = TariffActions.action.DEFECT.ordinal();
-		}
-//		else
-//			System.out.println(Observer.timeslot + " TS: Tariff price becoming unprofitable:NOTPUBLISHING Tariff: " + this.tariffPrice + " Cost " + ob.unitcost + " Prev Tariff " + this.prevtariffPrice);
-	}
-	
-	public abstract void publishTariff(Observer ob);
-	
-	public void grim(Observer ob) {
-		if(booDefect == false) {
-			// Rival Agent hasn't defected yet
-			if(this.rivalPrevPrevPrice > this.rivalPrevPrice ) 	{ 	// other agent is defecting this round
-				booDefect = true;
-				defect(ob);
-			}
-			else { 
-				nochange();
-			} 												// Agent hasn't defected: So cooperate
-		}
-		else 														// Always Defect
-			defect(ob);
-	}
-	
-	public void random(Observer ob) {
-		Random r = new Random();
-		int coin = r.nextInt(3);
-		if(coin == 0)				// Defect
-			defect(ob);
-		else if(coin == 1)
-			increase(ob);
-		else 					// Coop
-			nochange();
-	} 
+	int maxbound = (int) max*100;
+	Random r = new Random();
+	int randInt = r.nextInt(maxbound+1);
+	double val = (double) randInt/divisor;
+	int coin = r.nextInt(2);
+	if(coin == 0)
+		val *= -1;
+	return val;
+}
 
-	public void strategySMNE1(Observer ob) {
-		double prDft = (8/17)*100;
-		int prDftInt = (int) prDft;
-		Random r = new Random();
-		int coin = r.nextInt(100);
-		if(coin < prDftInt)
-			defect(ob);
-		else {
-			random(ob);
-		}
-	}
-	
-	public void naiveProber(Observer ob) {
-		double defectPr = 10;
-		Random r = new Random(100);
-		double coin = r.nextDouble();
-		if(coin < defectPr) // defect
-			defect(ob);
-		else
-			nochange();
-	}
-	
-	public void softMajority(Observer ob) {
-		
-		if(this.rivalPrevPrevPrice > this.rivalPrevPrice) 	// other agent is defecting
-			defectCounter++;
-		else coopCounter++;									// other agent is cooperating 
-		
-		if(Observer.timeslot == 0) {} 						// Coop
-		else if(coopCounter >= defectCounter) {}			// Coop
-		else 	 											// Defect
-			defect(ob);
-		
-	}
-	
-	public void tf2t(Observer ob) {
-		if(Observer.timeslot == 0) {}									// Start with Cooperation
-		else if(defectCounter == 2) {									// Other agent has defected twice, so defect
-			defectCounter = 0;
-			defectOnRivalPrice(ob);
-		}
-		else if(this.rivalPrevPrevPrice > this.rivalPrevPrice )  		// other agent is defecting but not twice, so coop  
-			defectCounter++;
-		else {}															// Else Coop
-	}
-	
-	public void tft(Observer ob) {
-		if(Observer.timeslot == 0) {} 							// Coop in the first move
-		else if(this.rivalPrevPrevPrice > this.rivalPrevPrice ) // other agent is defecting, so defect
-			defect(ob);
-		else if(this.rivalPrevPrevPrice < this.rivalPrevPrice ) // other agent is increasing, so increase
-			increase(ob);
-		else nochange(); 												// other agent is Cooping, So coop
-	}
-	
-	public void ttft(Observer ob) {
-		if(Observer.timeslot == 0) {}									// Start with Cooperation
-		else if(punishCounter > 0) {									// Other agent has defected, so defect twice
-			defectOnRivalPrice(ob);
-			punishCounter--;
-		}
-		else if(this.rivalPrevPrevPrice > this.rivalPrevPrice ) { 		// other agent is defecting with clear history, so count and coop  
-			defectOnRivalPrice(ob);
-			punishCounter++;
-		}
-		else {}															// Else Coop
-
-	}
-	
-	public void tftv2(Observer ob) {
-		if(Observer.timeslot == 0) {} 							// Coop in the first move
-		else if(this.rivalPrevPrevPrice > this.rivalPrevPrice ) // other agent is defecting, so defect
-			defectOnRivalPrice(ob);
-		else {} 												// other agent is Cooping, So coop
-		
-	}
-	
-	public void hardmajority(Observer ob) {
-		if(this.rivalPrevPrevPrice > this.rivalPrevPrice) 	// other agent is defecting
-			defectCounter++;
-		else coopCounter++;									// other agent is cooperating 
-		
-		if(Observer.timeslot == 0)  						// Defect on first timeslot
-			defect(ob);
-		else if(defectCounter >= coopCounter) 				// defect
-			defect(ob);
-		else {
-			nochange();
-		} 											// Coop
-		
-	}
+    
 }

@@ -1,23 +1,30 @@
 package Agents;
 
-import Configuration.Configuration;
 import Observer.Observer;
-import Tariff.TariffActions;
+import Tariff.TariffAction;
 
 /*
  * Cooperates, until the opponent defects, and thereafter always defects. [FRI71]
- * */
+ */
 
-public class Grim extends Agent{
-	
-	public Grim() {
-		// TODO Auto-generated constructor stub
-		this.name = "Grim";
-	}
-	@Override
-	public void publishTariff(Observer ob) {
-		grim(ob);
-		/* Tariff Check */
-		tariffCheck(ob);
-	}
+public class Grim extends Agent {
+    public boolean booDefect = false;
+
+    public Grim() {
+        super("Grim");
+    }
+
+    @Override
+    public TariffAction makeAction(Observer ob) {
+        if (!booDefect) {
+            // Rival Agent hasn't defected yet
+            if (this.rivalPrevPrevPrice > this.rivalPrevPrice) { // other agent is defecting this round
+                booDefect = true;
+                return TariffAction.DEFECT;
+            } else { // Agent hasn't defected: So cooperate
+                return TariffAction.NOCHANGE;
+            }
+        } else // Always Defect
+            return TariffAction.DEFECT;
+    }
 }

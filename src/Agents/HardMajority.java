@@ -1,20 +1,27 @@
 package Agents;
 
-import Configuration.Configuration;
 import Observer.Observer;
-import Tariff.TariffActions;
+import Tariff.TariffAction;
 
-public class HardMajority extends Agent{
-	public HardMajority() {
-		// TODO Auto-generated constructor stub
-		this.name = "HardMj";
-	}
+public class HardMajority extends Agent {
+    public int defectCounter = 0;
+    public int coopCounter = 0;
 
-	@Override
-	public void publishTariff(Observer ob) {
-		
-		hardmajority(ob);
-		/* Tariff Check */
-		tariffCheck(ob);
-	}
+    public HardMajority() {
+        super("HardMJ");
+    }
+
+    @Override
+    public TariffAction makeAction(Observer ob) {
+        if (this.rivalPrevPrevPrice > this.rivalPrevPrice) // other agent is defecting
+            defectCounter++;
+        else
+            coopCounter++; // other agent is cooperating
+
+        if (ob.timeslot == 0 || defectCounter >= coopCounter) // Defect on first timeslot
+            return TariffAction.DEFECT;
+
+        return TariffAction.NOCHANGE;
+
+    }
 }
