@@ -5,9 +5,9 @@ import java.util.Random;
 import Observer.Observer;
 import Tariff.TariffAction;
 
-public class Rand extends Agent {
-    public Rand() {
-        super("Rand");
+public class ZI extends Agent {
+    public ZI() {
+        super("ZI");
     }
 
     @Override

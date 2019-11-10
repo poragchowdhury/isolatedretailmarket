@@ -62,10 +62,7 @@ class DQAgentState implements Encodable {
     }
 
     public double[] one_hot(int i) {
-        double[] d = new double[3];
-        // for (int x = 0; x < d.length; x++)
-        // d[x] = 0;
-
+        double[] d = new double[5-2];
         d[i] = 1;
         return d;
     }

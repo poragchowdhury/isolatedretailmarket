@@ -30,6 +30,7 @@ public class Observer {
      * Error bound and Average Calculation
      */
     public double agentPayoffs[][];
+    public double agentBestResponse[][];
 
     public Observer() {
         // TODO Auto-generated constructor stub
@@ -42,7 +43,7 @@ public class Observer {
         utility = new double[2];
         fcc = new FactoredConsumptionCustomer(this);
         agentPayoffs = new double[2][Configuration.TEST_ROUNDS];
-
+        agentBestResponse = new double[2][Configuration.TEST_ROUNDS];
     }
 
     public void updateAgentUnitCost() {
@@ -59,31 +60,36 @@ public class Observer {
     public void allsampleclear() {
         Arrays.fill(agentPayoffs[0], 0);
         Arrays.fill(agentPayoffs[1], 0);
+        
+        Arrays.fill(agentBestResponse[0], 0);
+        Arrays.fill(agentBestResponse[1], 0);
     }
 
-    public double[] calcAvg(CaseStudy cs) {
+    public double[] calcAvg(CaseStudy cs, double [][] resultArray) {
         double avgagent1 = 0;
         double avgagent2 = 0;
-        for (int i = 0; i < agentPayoffs[0].length; i++) {
-            avgagent1 += agentPayoffs[0][i];
-            avgagent2 += agentPayoffs[1][i];
+        
+        
+        for (int i = 0; i < resultArray[0].length; i++) {
+            avgagent1 += resultArray[0][i];
+            avgagent2 += resultArray[1][i];
         }
-        avgagent1 /= agentPayoffs[0].length;
-        avgagent2 /= agentPayoffs[1].length;
+        avgagent1 /= resultArray[0].length;
+        avgagent2 /= resultArray[1].length;
 
         double stdagent1 = 0.0;
         double stdagent2 = 0.0;
-        for (int i = 0; i < agentPayoffs[0].length; i++) {
-            double absdiff1 = Math.abs(avgagent1 - agentPayoffs[0][i]);
-            double absdiff2 = Math.abs(avgagent2 - agentPayoffs[1][i]);
+        for (int i = 0; i < resultArray[0].length; i++) {
+            double absdiff1 = Math.abs(avgagent1 - resultArray[0][i]);
+            double absdiff2 = Math.abs(avgagent2 - resultArray[1][i]);
             double sqr1 = absdiff1 * absdiff1;
             double sqr2 = absdiff2 * absdiff2;
             stdagent1 += sqr1;
             stdagent2 += sqr2;
         }
 
-        stdagent1 /= agentPayoffs[0].length;
-        stdagent2 /= agentPayoffs[1].length;
+        stdagent1 /= resultArray[0].length;
+        stdagent2 /= resultArray[1].length;
 
         stdagent1 = Math.sqrt(stdagent1);
         stdagent2 = Math.sqrt(stdagent2);

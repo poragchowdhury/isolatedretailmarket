@@ -95,7 +95,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
             .numLayer(3)
             .build();
 
-    public static final int NUM_ACTIONS = 3;
+    public static final int NUM_ACTIONS = 5;
     public static final int NUM_OBSERVATIONS = new DQAgentState().toArray().length;
 
     public static DiscreteSpace ACTION_SPACE = new DiscreteSpace(NUM_ACTIONS);
@@ -193,9 +193,9 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
     public StepReply<DQAgentState> step(Integer actionInt) {
         int t = retailManager.ob.timeslot;
         TariffAction action = TariffAction.valueOf(actionInt);
-        
-        agent.actionHistory = agent.actionHistory + action.name().substring(0,1);
-		if(agent.actionHistory.length() == Configuration.TOTAL_PUBLICATIONS_IN_A_GAME)
+
+        agent.actionHistory = agent.actionHistory + " " + action.name().substring(0,1) + (actionInt > 2 ? (action.name().substring(action.name().length()-1)) : 0);
+		if(agent.actionHistory.length() == Configuration.TOTAL_PUBLICATIONS_IN_A_GAME*3)
 			Logger.getAnonymousLogger().info(agent.actionHistory);
 		
         double before = agent.profit;
@@ -219,9 +219,10 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
             retailManager.customerTariffEvaluation();
             retailManager.updateAgentAccountings();
             retailManager.ob.timeslot++;
+            retailManager.ob.updateAgentUnitCost();
         }
         double after = agent.profit;
-        double reward = (after - before)/(0.5*Configuration.POPULATION*7);
+        double reward = (after - before)/(Configuration.MAX_TARIFF_PRICE*Configuration.POPULATION*retailManager.ob.fcc.maxUsage);
         // double reward = agent.profit - agent.prevprofit;
         // double reward = agent.profit - opponentPool.get(0).profit;
 

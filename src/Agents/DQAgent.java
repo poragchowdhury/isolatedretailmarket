@@ -23,6 +23,8 @@ public class DQAgent extends Agent {
 	public static int DEFECT = 0;
 	public static int NOC = 0;
 	public static int INC = 0;
+	public static int DEFECT2 = 0;
+	public static int INC2 = 0;
 	public DQNPolicy<DQAgentState> pol;
 	public int agentNumber = -1;
 
@@ -87,12 +89,19 @@ public class DQAgent extends Agent {
 			else if (nextAction == TariffAction.NOCHANGE) {
 				NOC++;
 			}
+			else if (nextAction == TariffAction.INCREASE2) {
+				INC2++;
+			}
+			else if (nextAction == TariffAction.DEFECT2) {
+				DEFECT2++;
+			}
 			else {
 				INC++;
 			}
 		}
-		actionHistory = actionHistory + nextAction.name().substring(0,1);
-		if(actionHistory.length() == Configuration.TOTAL_PUBLICATIONS_IN_A_GAME)
+		
+        actionHistory = actionHistory + " " + nextAction.name().substring(0,1) + (nextActionInt > 2 ? (nextAction.name().substring(nextAction.name().length()-1)) : 0);
+		if(actionHistory.length() == Configuration.TOTAL_PUBLICATIONS_IN_A_GAME*3)
 			Logger.getAnonymousLogger().info(actionHistory);
 		
 		return nextAction;
