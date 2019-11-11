@@ -17,7 +17,7 @@ public class NaiveProber extends Agent {
     public TariffAction makeAction(Observer ob) {
         double defectPr = 10;
         Random r = new Random(100);
-        double coin = r.nextDouble();
+        double coin = r.nextInt();
         if (coin < defectPr) // defect
             return TariffAction.DEFECT;
         return TariffAction.NOCHANGE;

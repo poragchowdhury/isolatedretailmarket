@@ -101,6 +101,8 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
     public static DiscreteSpace ACTION_SPACE = new DiscreteSpace(NUM_ACTIONS);
     public static ObservationSpace<DQAgentState> OBSERVATION_SPACE = new ArrayObservationSpace<DQAgentState>(new int[] { NUM_OBSERVATIONS });
 
+    private static Logger log = Logger.getLogger("retailmarketmanager");
+    
     public static void log(String message, Object... args) {
         Logger.getAnonymousLogger().info(String.format(message, args));
     }
@@ -161,7 +163,13 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 
     @Override
     public boolean isDone() {
-        return retailManager.ob.timeslot >= Configuration.TOTAL_TIME_SLOTS;
+    	if(retailManager.ob.timeslot >= Configuration.TOTAL_TIME_SLOTS) {
+    		// simulation is ending
+    		log.info(agent.getAllHistoryActions());
+    		return true;
+    	}
+    	
+        return false;
     }
 
     @Override
@@ -191,12 +199,21 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 
     @Override
     public StepReply<DQAgentState> step(Integer actionInt) {
-        int t = retailManager.ob.timeslot;
+        
+    	// Special case to simulate the 0th timeslot
+    	// Where both of the agent has same tariff
+        if(retailManager.ob.timeslot == 0) {
+        	retailManager.ob.updateAgentUnitCost();
+            retailManager.customerTariffEvaluation();
+            retailManager.updateAgentAccountings();
+            retailManager.ob.timeslot++;
+        }
+        
         TariffAction action = TariffAction.valueOf(actionInt);
 
-        agent.actionHistory = agent.actionHistory + " " + action.name().substring(0,1) + (actionInt > 2 ? (action.name().substring(action.name().length()-1)) : 0);
-		if(agent.actionHistory.length() == Configuration.TOTAL_PUBLICATIONS_IN_A_GAME*3)
-			Logger.getAnonymousLogger().info(agent.actionHistory);
+//        agent.actionHistory = agent.actionHistory + " " + action.name().substring(0,1) + (actionInt > 2 ? (action.name().substring(action.name().length()-1)) : 0);
+//		if(agent.actionHistory.length() == Configuration.TOTAL_PUBLICATIONS_IN_A_GAME*3)
+//			Logger.getAnonymousLogger().info(agent.actionHistory);
 		
         double before = agent.profit;
         agent.playAction(retailManager.ob, action);
@@ -211,15 +228,14 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
                 ex.printStackTrace();
             }
         }
-
         // Run the market evaluation based on the previous action
         // then run the rest of the timeslots so the next call to
         // this function will be a publication cycle
         for (int i = 0; i < Configuration.PUBLICATION_CYCLE; i++) {
+        	retailManager.ob.updateAgentUnitCost();
             retailManager.customerTariffEvaluation();
             retailManager.updateAgentAccountings();
             retailManager.ob.timeslot++;
-            retailManager.ob.updateAgentUnitCost();
         }
         double after = agent.profit;
         double reward = (after - before)/(Configuration.MAX_TARIFF_PRICE*Configuration.POPULATION*retailManager.ob.fcc.maxUsage);

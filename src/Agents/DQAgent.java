@@ -100,9 +100,9 @@ public class DQAgent extends Agent {
 			}
 		}
 		
-        actionHistory = actionHistory + " " + nextAction.name().substring(0,1) + (nextActionInt > 2 ? (nextAction.name().substring(nextAction.name().length()-1)) : 0);
-		if(actionHistory.length() == Configuration.TOTAL_PUBLICATIONS_IN_A_GAME*3)
-			Logger.getAnonymousLogger().info(actionHistory);
+//		actionHistory = actionHistory + " " + nextAction.name().substring(0,1) + (nextActionInt > 2 ? (nextAction.name().substring(nextAction.name().length()-1)) : 0);
+//		if(actionHistory.length() == Configuration.TOTAL_PUBLICATIONS_IN_A_GAME*3)
+//			Logger.getAnonymousLogger().info(actionHistory);
 		
 		return nextAction;
 	}

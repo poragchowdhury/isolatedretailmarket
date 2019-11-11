@@ -2,11 +2,13 @@ package Observer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 import Agents.Agent;
 import Configuration.CaseStudy;
 import Configuration.Configuration;
 import Customers.FactoredConsumptionCustomer;
+import Tariff.TariffAction;
 
 /**
  * Contains the observable information for one game
@@ -25,7 +27,8 @@ public class Observer {
     public double utility[];
 
     public int SEED = 0;
-
+    
+    private static Logger log = Logger.getLogger("retailmarketmanager");
     /*
      * Error bound and Average Calculation
      */
@@ -48,7 +51,7 @@ public class Observer {
 
     public void updateAgentUnitCost() {
         for(Agent a : agentPool)
-        	a.randomWalkCost(timeslot);
+        	a.randomWalkUnitCost(timeslot);
     }
 
     public void clear() {
@@ -97,10 +100,14 @@ public class Observer {
         double error1 = 1.96 * (stdagent1 / Math.sqrt(Configuration.TEST_ROUNDS));
         double error2 = 1.96 * (stdagent2 / Math.sqrt(Configuration.TEST_ROUNDS));
 
-        // print avg payoff with error
-        // if (Configuration.CASE_STUDY_NO > 0)
-        //    System.out.println(cs.pool1.get(0).name + ":" + avgagent1 + " err: " + error1 + cs.pool2.get(0).name + ":" + avgagent2 + " err2: " + error2);
         return new double[] { avgagent1, avgagent2, error1, error2 };
     }
 
+    
+    public void printAgentPath() {
+    	for(Agent a : agentPool) {
+    		log.info(a.getAllHistoryActions());
+    	}
+    }
+    
 }

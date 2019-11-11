@@ -8,9 +8,6 @@ public class TitForTat extends Agent {
     public int numTitsPerTat = 1;
     public int numTatsPerTit = 1;
 
-    private int defectCounter = 0;
-    private int punishCounter = 0;
-
     public TitForTat(int numTitsPerTat, int numTatsPerTit) {
         super("temp");
         String tempName = numTitsPerTat + "TF" + numTatsPerTit + "T";
@@ -24,8 +21,8 @@ public class TitForTat extends Agent {
 
     @Override
     public TariffAction makeAction(Observer ob) {
-        // Coop in the first move
-        if (ob.timeslot == 0) {
+    	// Coop in the first move
+        if (ob.timeslot == 1) {
             return TariffAction.NOCHANGE;
 
         } else if (punishCounter > 0) {
@@ -38,12 +35,12 @@ public class TitForTat extends Agent {
             return TariffAction.DEFECT;
         }
         // other agent is defecting, so defect
-        else if (this.rivalPrevPrevPrice > this.rivalPrevPrice) {
+        else if (rivalActHistory[ob.timeslot-1] == TariffAction.DEFECT.index) {
             defectCounter++;
             return TariffAction.DEFECT;
         }
         // other agent is increasing price
-        else if (this.rivalPrevPrevPrice < this.rivalPrevPrice) {
+        else if (rivalActHistory[ob.timeslot-1] == TariffAction.INCREASE.index) {
             return TariffAction.INCREASE;
         }
         return TariffAction.NOCHANGE;

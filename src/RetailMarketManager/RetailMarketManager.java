@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
@@ -36,6 +38,26 @@ import Agents.TitForTat;
 import Configuration.CaseStudy;
 import Configuration.Configuration;
 import Observer.Observer;
+
+class AgentCompareByProfit implements Comparator{
+	@Override
+	public int compare(Object a, Object b) {
+		// TODO Auto-generated method stub
+		Agent a0 = (Agent) a;
+		Agent a1 = (Agent) b;
+		return ((int)(a0.profit - a1.profit));
+	}
+}
+
+class AgentCompareByBestResponse implements Comparator{
+	@Override
+	public int compare(Object a, Object b) {
+		// TODO Auto-generated method stub
+		Agent a0 = (Agent) a;
+		Agent a1 = (Agent) b;
+		return ((int)(a0.bestResponseCount - a1.bestResponseCount));
+	}
+}
 
 class Payoffs {
     public double value1;
@@ -74,27 +96,47 @@ public class RetailMarketManager {
                 ex.printStackTrace();
             }
         }
-        updateAgentsMemory();
     }
 
     public void updateAgentsMemory() {
-        // updating opponent values
-        ob.agentPool.get(0).rivalPrevPrevPrice = ob.agentPool.get(0).rivalPrevPrice;
-        ob.agentPool.get(1).rivalPrevPrevPrice = ob.agentPool.get(1).rivalPrevPrice;
+    	// updating opponent traiff price in own history
+    	ob.agentPool.get(0).rivalTariffHistory[ob.timeslot] = ob.agentPool.get(1).tariffPrice;
+    	ob.agentPool.get(0).rivalTariffPrice = ob.agentPool.get(1).tariffPrice;
+    	ob.agentPool.get(1).rivalTariffHistory[ob.timeslot] = ob.agentPool.get(0).tariffPrice;
+    	ob.agentPool.get(1).rivalTariffPrice = ob.agentPool.get(0).tariffPrice;
+    	
+    	// updating opponent action in the own history
+    	// compare current tariff price with previous publication price
+    	ob.agentPool.get(0).rivalActHistory[ob.timeslot] = ob.agentPool.get(1).previousAction.index; 
+    	ob.agentPool.get(0).rivalPreviousAction = ob.agentPool.get(1).previousAction; 
+    	ob.agentPool.get(1).rivalActHistory[ob.timeslot] = ob.agentPool.get(0).previousAction.index;
+    	ob.agentPool.get(1).rivalPreviousAction = ob.agentPool.get(0).previousAction;
+    	
+    	// updating own tariff history
+    	ob.agentPool.get(0).tariffHistory[ob.timeslot] = ob.agentPool.get(0).tariffPrice;
+    	ob.agentPool.get(1).tariffHistory[ob.timeslot] = ob.agentPool.get(1).tariffPrice;
 
-        ob.agentPool.get(0).rivalPrevPrice = ob.agentPool.get(1).tariffPrice;
-        ob.agentPool.get(1).rivalPrevPrice = ob.agentPool.get(0).tariffPrice;
+    	/* Need to know who to setup this features? Accumulated or individual?*/
+    	// updating own accumulated profit history
+    	// At the end of the game this profit determines the winner
+    	ob.agentPool.get(0).profitHistory[ob.timeslot] = ob.agentPool.get(0).profit;
+    	ob.agentPool.get(1).profitHistory[ob.timeslot] = ob.agentPool.get(1).profit;
 
-        // updating own values
-        ob.agentPool.get(0).prevmarketShare = ob.agentPool.get(0).marketShare;
-        ob.agentPool.get(1).prevmarketShare = ob.agentPool.get(1).marketShare;
+    	// updating own unitcost history
+    	ob.agentPool.get(0).unitCostHistory[ob.timeslot] = ob.agentPool.get(0).unitcost;
+    	ob.agentPool.get(1).unitCostHistory[ob.timeslot] = ob.agentPool.get(1).unitcost;
 
-        ob.agentPool.get(0).prevrevenue = ob.agentPool.get(0).revenue;
-        ob.agentPool.get(1).prevrevenue = ob.agentPool.get(1).revenue;
+    	// updating own cost history
+    	ob.agentPool.get(0).costHistory[ob.timeslot] = ob.agentPool.get(0).cost;
+    	ob.agentPool.get(1).costHistory[ob.timeslot] = ob.agentPool.get(1).cost;
+    	
+    	// updating own market share history
+    	ob.agentPool.get(0).marketShareHistory[ob.timeslot] = ob.agentPool.get(0).marketShare;
+    	ob.agentPool.get(1).marketShareHistory[ob.timeslot] = ob.agentPool.get(1).marketShare;
 
-        ob.agentPool.get(0).prevprofit = ob.agentPool.get(0).profit;
-        ob.agentPool.get(1).prevprofit = ob.agentPool.get(1).profit;
-
+    	// updating own action in the own history
+    	ob.agentPool.get(0).actHistory[ob.timeslot] = ob.agentPool.get(0).previousAction.index; 
+    	ob.agentPool.get(1).actHistory[ob.timeslot] = ob.agentPool.get(1).previousAction.index;    	
     }
 
     public void customerTariffEvaluation() {
@@ -104,17 +146,19 @@ public class RetailMarketManager {
 
     public void updateAgentAccountings() {
         int hour = ob.timeslot % 24;
+        // Reset this observer variables to calculate values for each timeslot
         Arrays.fill(ob.money, 0);
         Arrays.fill(ob.cost, 0);
         Arrays.fill(ob.custSubs, 0);
 
-        double tariffPrice[] = { ob.agentPool.get(0).prevtariffPrice, ob.agentPool.get(1).prevtariffPrice };
-
+        // Calculating the money(revenue), cost and subscription for this timeslot
         for (int i = 0; i < ob.fcc.population; i++) {
-            ob.money[ob.fcc.custId[i]] += (tariffPrice[ob.fcc.custId[i]] * ob.fcc.usage[hour]);
+            ob.money[ob.fcc.custId[i]] += (ob.agentPool.get(ob.fcc.custId[i]).tariffPrice * ob.fcc.usage[hour]);
             ob.cost[ob.fcc.custId[i]] += (ob.agentPool.get(ob.fcc.custId[i]).unitcost * (ob.fcc.usage[hour]+ob.fcc.noise));
             ob.custSubs[ob.fcc.custId[i]] += 1;
         }
+        
+        // Updating overall revenue, cost, profit, marketShare for this timelsot
         ob.agentPool.get(0).revenue += ob.money[0];
         ob.agentPool.get(1).revenue += ob.money[1];
         ob.agentPool.get(0).cost += ob.cost[0];
@@ -124,7 +168,7 @@ public class RetailMarketManager {
         ob.agentPool.get(0).marketShare = (ob.custSubs[0]);
         ob.agentPool.get(1).marketShare = (ob.custSubs[1]);
         
-        // count best responses
+        // count best responses of the agents
         if((ob.money[0] - ob.cost[0]) > (ob.money[1] - ob.cost[1]))
         	ob.agentPool.get(0).bestResponseCount++;
         else if((ob.money[0] - ob.cost[0]) < (ob.money[1] - ob.cost[1]))
@@ -133,6 +177,9 @@ public class RetailMarketManager {
         	ob.agentPool.get(0).bestResponseCount++;
         	ob.agentPool.get(1).bestResponseCount++;
         }
+        
+        // update Agent's memory
+        updateAgentsMemory();
     }
 
     public void log(PrintWriter pwOutput) {
@@ -239,8 +286,8 @@ public class RetailMarketManager {
                 roundmax = Configuration.TEST_ROUNDS;
             }
 
-            pwOutput.println(Configuration.print());
-            pwOutputAvg.println(Configuration.print());
+            pwOutput.println(Configuration.toStringRepresentation());
+            pwOutputAvg.println(Configuration.toStringRepresentation());
 
             CaseStudy cs = CaseStudy.getFromConfiguration();
 
@@ -274,17 +321,19 @@ public class RetailMarketManager {
                                     if (Configuration.DLOGGING)
                                         log(pwOutput);
                                     // Agents taking Actions
-                                    if (ob.timeslot % Configuration.PUBLICATION_CYCLE == 0) {
+                                    // Publishing tariffs at TS: 1, 7, 13...
+                                    if (ob.timeslot % Configuration.PUBLICATION_CYCLE == 1) {
                                         publishTariffs();
                                         ob.publication_cycle_count++;
                                     }
+                                    // update agent cost
+                                    ob.updateAgentUnitCost();
                                     // Customers evaluating tariffs
                                     customerTariffEvaluation();
-                                    // Update agent bank accountings
+                                    // Update agent accountings
                                     updateAgentAccountings();
                                     // Going to next timeslot and updating the cost
                                     ob.timeslot++;
-                                    ob.updateAgentUnitCost();
                                 }
                                 // Print Revenues
                                 printRevenues(round, pwOutput);
@@ -349,9 +398,18 @@ public class RetailMarketManager {
                 avgValues[i] += gameMatrix[i][k].value1;
                 avgBestResponse[i] += bestRespMatrix[i][k].value1;
             }
-            log.info(cs.pool1.get(i).name + " norm payoffs , " + avgValues[i]/numberofagents);
-            log.info(cs.pool1.get(i).name + " best response , " + avgBestResponse[i]/numberofagents);
+            cs.pool1.get(i).profit = avgValues[i]/numberofagents;
+            cs.pool1.get(i).bestResponseCount = avgBestResponse[i]/numberofagents;
+            log.info(String.format(",%s,normpayoff,%.3f,bestresponse,%.3f", cs.pool1.get(i).name, cs.pool1.get(i).profit, cs.pool1.get(i).bestResponseCount));
         }
+        log.info("****************Sorted by norm profit**********************");
+        Collections.sort(cs.pool1, new AgentCompareByProfit());
+        for(Agent a: cs.pool1)
+        	log.info(String.format(",%s,normpayoff,%.3f,bestresponse,%.3f", a.name, a.profit, a.bestResponseCount));
+        log.info("**********************Sorted by best response**********************");
+        Collections.sort(cs.pool1, new AgentCompareByBestResponse());
+        for(Agent a: cs.pool1)
+        	log.info(String.format(",%s,normpayoff,%.3f,bestresponse,%.3f", a.name, a.profit, a.bestResponseCount));
     }
     
     
@@ -485,7 +543,9 @@ public class RetailMarketManager {
          */
     }
 
-    private Logger log = Logger.getLogger("rmm.experiment");
+    
+    private static Logger log = Logger.getLogger("retailmarketmanager");
+//    private Logger log = Logger.getLogger("rmm.experiment");
 
     /**
      * The last RL agent added to the pools. Required to check if the
@@ -567,7 +627,7 @@ public class RetailMarketManager {
         setupLogging();
         Scanner input = new Scanner(System.in);
         log.info("*************** Experimental Run Log ***************");
-        log.info(Configuration.print());
+        log.info(Configuration.toStringRepresentation());
 
         Stack<Agent> litStrategies = roundrobin ? null : getLiteratureStrategies();
 
@@ -728,8 +788,8 @@ public class RetailMarketManager {
         TitForTat TFT = new TitForTat(1, 1);
         TitForTat TF2T = new TitForTat(1, 2);
         TitForTat _2TFT = new TitForTat(2, 1);
-        
-        literatureStrategies.add(new DQAgent("DQ10", "DQ10_0.461TF2T,0.54DQ9.pol"));
+        //literatureStrategies.add(new DQAgent("DQ0", "DQ0_0.55AlzIncz,0.45Rand.pol"));
+        //literatureStrategies.add(new DQAgent("DQ10", "DQ10_0.461TF2T,0.54DQ9.pol"));
         literatureStrategies.add(new HardMajority());
         literatureStrategies.add(_2TFT);
         literatureStrategies.add(TFT);
@@ -792,12 +852,10 @@ public class RetailMarketManager {
     public void startSimulation(CaseStudy cs) {
         double rationality[] = { Configuration.RATIONALITY };
         double inertia[] = { Configuration.INERTIA };
-        double imax = 1;
-        double rmax = 1;
+        double imax = inertia.length;
+        double rmax = rationality.length;
         double roundmax = Configuration.TEST_ROUNDS;
-        rmax = rationality.length;
-        imax = inertia.length;
-        roundmax = Configuration.TEST_ROUNDS;
+        
         // Round Robin Tournament Set Up
         for (int iagent = 0; iagent < cs.pool1.size(); iagent++) {
             for (int kagent = iagent; kagent < cs.pool2.size(); kagent++) {
@@ -812,23 +870,12 @@ public class RetailMarketManager {
                             ob.agentPool.add(cs.pool2.get(kagent));
 
                             for (ob.timeslot = 0; ob.timeslot < Configuration.TOTAL_TIME_SLOTS;) {
-                                // log() function
-                                ob.utility[0] = (double) Math.round(ob.utility[0] * 1000) / 1000;
-                                ob.utility[1] = (double) Math.round(ob.utility[1] * 1000) / 1000;
-
-                                ob.money[0] = (double) Math.round(ob.money[0] * 100) / 100;
-                                ob.money[1] = (double) Math.round(ob.money[1] * 100) / 100;
-
-                                ob.cost[0] = (double) Math.round(ob.cost[0] * 100) / 100;
-                                ob.cost[1] = (double) Math.round(ob.cost[1] * 100) / 100;
-
-                                ob.agentPool.get(0).revenue = (double) Math.round(ob.agentPool.get(0).revenue * 100) / 100;
-                                ob.agentPool.get(1).revenue = (double) Math.round(ob.agentPool.get(1).revenue * 100) / 100;
-                                ob.agentPool.get(0).profit = (double) Math.round(ob.agentPool.get(0).profit * 100) / 100;
-                                ob.agentPool.get(1).profit = (double) Math.round(ob.agentPool.get(1).profit * 100) / 100;
-
+                            	// update agent cost
+                            	ob.updateAgentUnitCost();
+                                
                                 // Agents taking Actions
-                                if (ob.timeslot % Configuration.PUBLICATION_CYCLE == 0) {
+                            	// Publish tariff at TS: 1, 7, 13, 19 ... if publication cycle is 6
+                                if (ob.timeslot % Configuration.PUBLICATION_CYCLE == 1) {
                                     publishTariffs();
                                     ob.publication_cycle_count++;
                                 }
@@ -838,7 +885,6 @@ public class RetailMarketManager {
                                 updateAgentAccountings();
                                 // Going to next timeslot and updating the cost
                                 ob.timeslot++;
-                                ob.updateAgentUnitCost();
                             }
                             // printRevenues() function
                             int agentid = 0;
@@ -848,12 +894,13 @@ public class RetailMarketManager {
                                 agentid++;
                             }
                             // clear the observer for another simulation set up
+                            ob.printAgentPath();
                             ob.clear();
                         }
                         // printAverageRevenues() function
 
                         double[] vals = ob.calcAvg(cs, ob.agentPayoffs);
-                        log.info(cs.pool1.get(iagent).name + " " + vals[0] + " " + cs.pool2.get(kagent).name + " " + vals[1] + " Error1 " + vals[2] + " Error2 " + vals[3]);
+                        log.info(String.format("%s,%.3f,%.3f,%s,%.3f,%.3f", cs.pool1.get(iagent).name, vals[0], vals[2], cs.pool1.get(kagent).name, vals[1], vals[3]));
                         cs.pool1.get(iagent).profit = vals[0];
                         cs.pool2.get(kagent).profit = vals[1];
 
@@ -1026,31 +1073,31 @@ public class RetailMarketManager {
         //double reward = dqAgent.pol.play(new DQAgentMDP(oppPool));
 
         rm.startSimulation(new CaseStudy().addP1Strats(opponentAgent).addP2Strats(dqAgent));
-        rm.log.info(opponentAgent.name + ": " + opponentAgent.profit + ", DQAgent:" + dqAgent.profit);
+        log.info(opponentAgent.name + ": " + opponentAgent.profit + ", DQAgent:" + dqAgent.profit);
         // rm.log.info("Rand: " + rand.profit + ", TitTat: " + tft.profit);
 //        rm.log.info("REWARD : " + reward);
-        rm.log.info("Feature Size: " + DQAgentMDP.NUM_OBSERVATIONS);
-        rm.log.info("Training Rounds: " + Configuration.TRAINING_ROUNDS);
-        rm.log.info("Test Rounds: " + Configuration.TEST_ROUNDS);
-        rm.log.info(String.format("Def %s, NoC %s, Inc %s Def2 %s Inc2 %s", DQAgent.DEFECT, DQAgent.NOC, DQAgent.INC, DQAgent.DEFECT2, DQAgent.INC2));
+        log.info("Feature Size: " + DQAgentMDP.NUM_OBSERVATIONS);
+        log.info("Training Rounds: " + Configuration.TRAINING_ROUNDS);
+        log.info("Test Rounds: " + Configuration.TEST_ROUNDS);
+        log.info(String.format("Def %s, NoC %s, Inc %s Def2 %s Inc2 %s", DQAgent.DEFECT, DQAgent.NOC, DQAgent.INC, DQAgent.DEFECT2, DQAgent.INC2));
     }
 
     public static void mainExperiment() throws IOException {
         RetailMarketManager rm = new RetailMarketManager();
         rm.startExperiment(false);
-        rm.log.info("Feature Size: " + DQAgentMDP.NUM_OBSERVATIONS);
+        log.info("Feature Size: " + DQAgentMDP.NUM_OBSERVATIONS);
     }
     
     public static void roundRobinExperiment() throws IOException {
         RetailMarketManager rm = new RetailMarketManager();
         rm.startExperiment(true);
-        rm.log.info("Feature Size: " + DQAgentMDP.NUM_OBSERVATIONS);
+        log.info("Feature Size: " + DQAgentMDP.NUM_OBSERVATIONS);
     }
     
     public static void plotExperiment() throws IOException {
         RetailMarketManager rm = new RetailMarketManager();
         rm.setupLogging();
-        rm.log.info("=*****PlotExperiment******=");
+        log.info("=*****PlotExperiment******=");
     }
  
     public static void main(String[] args) throws IOException {

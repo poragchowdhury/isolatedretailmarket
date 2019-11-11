@@ -1,5 +1,6 @@
 package Agents;
 
+import Configuration.Configuration;
 import Observer.Observer;
 import Tariff.TariffAction;
 
@@ -8,8 +9,6 @@ import Tariff.TariffAction;
  */
 
 public class Grim extends Agent {
-    public boolean booDefect = false;
-
     public Grim() {
         super("Grim");
     }
@@ -18,12 +17,17 @@ public class Grim extends Agent {
     public TariffAction makeAction(Observer ob) {
         if (!booDefect) {
             // Rival Agent hasn't defected yet
-            if (this.rivalPrevPrevPrice > this.rivalPrevPrice) { // other agent is defecting this round
-                booDefect = true;
-                return TariffAction.DEFECT;
-            } else { // Agent hasn't defected: So cooperate
-                return TariffAction.NOCHANGE;
-            }
+        	if(ob.timeslot == 1)
+        		return TariffAction.NOCHANGE;
+        	else {
+        		if (this.rivalTariffHistory[ob.timeslot-1-Configuration.PUBLICATION_CYCLE] > this.rivalTariffHistory[ob.timeslot-1]) { 
+        			// other agent is defecting this round
+        	        booDefect = true;
+	                return TariffAction.DEFECT;
+	            } else { // Agent hasn't defected: So cooperate
+	                return TariffAction.NOCHANGE;
+	            }
+        	}
         } else // Always Defect
             return TariffAction.DEFECT;
     }

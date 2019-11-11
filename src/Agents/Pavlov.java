@@ -2,6 +2,7 @@ package Agents;
 
 import java.util.Random;
 
+import Configuration.Configuration;
 import Observer.Observer;
 import Tariff.TariffAction;
 
@@ -12,50 +13,60 @@ import Tariff.TariffAction;
  * otherwise chooses the opposite choice. [KRA89]
  */
 public class Pavlov extends Agent {
-    public double pr = 1; // probability to increase+nochange
-    public double prI = 1;
 
-    public Pavlov() {
-        super("Pavlov");
-    }
+	public Pavlov() {
+		super("Pavlov");
+	}
 
-    @Override
-    public TariffAction makeAction(Observer ob) {
-        /* Tariff Check */
-        if (previousAction == TariffAction.INCREASE || previousAction == TariffAction.NOCHANGE) { // C
-            if (this.rivalPrevPrevPrice == this.rivalPrevPrice) // other agent is C
-            {
-                pr = Math.min((pr + 0.1), 1); // CC state
+	@Override
+	public TariffAction makeAction(Observer ob) {
+		/* Tariff Check */
+		if (previousAction == TariffAction.INCREASE || previousAction == TariffAction.NOCHANGE) { // C
 
-                if (previousAction == TariffAction.INCREASE)
-                    prI = Math.min((prI + 0.1), 1); // CC state: Increase
-                else
-                    prI = Math.max((prI - 0.1), 0); // CC state: Nochage
-            }
+			if((ob.timeslot-1-Configuration.PUBLICATION_CYCLE >= 0)
+					&& (this.rivalTariffHistory[ob.timeslot-1] >= this.rivalTariffHistory[ob.timeslot-1-Configuration.PUBLICATION_CYCLE])) 
+				// other agent is C
+			{
+				pr = Math.min((pr + 0.1), 1); // CC state
 
-        } else if (previousAction == TariffAction.DEFECT) { // D
-            if (this.rivalPrevPrevPrice > this.rivalPrevPrice) // other agent is D
-                pr = Math.min((pr + 0.1), 1); // DD state
-        } else {
-            pr = Math.max((pr - 0.2), 0); // CD or DC state
-        }
+				if (previousAction == TariffAction.INCREASE)
+					prI = Math.min((prI + 0.1), 1); // CC state: Increase
+				else
+					prI = Math.max((prI - 0.1), 0); // CC state: Nochage
+			}
 
-        int prInt = (int) pr * 100;
-        Random r = new Random();
-        int coin = r.nextInt(100);
-        if (coin > prInt) // Defect
-            return TariffAction.DEFECT;
-        else // Coop
-            return TariffAction.NOCHANGE;
-    }
+		} else if (previousAction == TariffAction.DEFECT) { // D
+			if((ob.timeslot-1-Configuration.PUBLICATION_CYCLE >= 0)
+					&& (this.rivalTariffHistory[ob.timeslot-1] < this.rivalTariffHistory[ob.timeslot-1-Configuration.PUBLICATION_CYCLE])) 
+				// other agent is D
+				pr = Math.min((pr + 0.1), 1); // DD state
+		} else {
+			pr = Math.max((pr - 0.2), 0); // CD or DC state
+		}
 
-//    public TariffAction cooperate(Observer ob, double prI) {
-//        int prInt = (int) prI * 100;
-//        Random r = new Random();
-//        int coin = r.nextInt(100);
-//        if (coin > prInt) // No Change
-//            return TariffAction.NOCHANGE;
-//        else // Coop
-//            return TariffAction.INCREASE;
-//    }
+		int prInt = (int) pr * 100;
+		Random r = new Random();
+		int coin = r.nextInt(100);
+		if (coin > prInt) // Defect
+			return TariffAction.DEFECT;
+		else // Coop
+		{
+			//			int prIInt = (int) prI * 100;
+			//			coin = r.nextInt(100);
+			//			if(coin > prIInt)
+			return TariffAction.NOCHANGE;
+			//			else
+			//				return TariffAction.INCREASE;
+		}
+	}
+
+	//    public TariffAction cooperate(Observer ob, double prI) {
+	//        int prInt = (int) prI * 100;
+	//        Random r = new Random();
+	//        int coin = r.nextInt(100);
+	//        if (coin > prInt) // No Change
+	//            return TariffAction.NOCHANGE;
+	//        else // Coop
+	//            return TariffAction.INCREASE;
+	//    }
 }

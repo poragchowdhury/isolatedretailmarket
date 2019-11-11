@@ -3,6 +3,7 @@ package Configuration;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.Properties;
 
 public class Configuration {
@@ -37,10 +38,26 @@ public class Configuration {
     public static int TOTAL_PUBLICATIONS_IN_A_GAME = 1;
     public static boolean RUN_ONE_ITERATION = true;
     
-    public static String print() {
-        return "\n********************Configurations**********************\n" + "TOTAL_TIME_SLOTS : " + TOTAL_TIME_SLOTS + "\n" + "PUBLICATION_CYCLE : " + PUBLICATION_CYCLE + "\n" + "DEFAULT_TARIFF_PRICE : " + DEFAULT_TARIFF_PRICE + "\n" + "CASE_STUDY_NO : " + CASE_STUDY_NO + "\n" + "INERTIA : " + INERTIA + "\n" + "RATIONALITY : " + RATIONALITY + "\n" + "ACT_CHANGE_PERC : " + ACT_CHANGE_PERC + "\n" + "POPULATION : " + POPULATION + "\n" + "LOGFILENAME : " + LOGFILENAME + "\n" + "DAYMULT : "
-                + DAYMULT + "\n" + "DMNDMULT : " + DMNDMULT + "\n" + "INITCOST : " + INITCOST + "\n" + "DLOGGING : " + DLOGGING + "\n" + "TEST_ROUNDS : " + TEST_ROUNDS + "\n" + "TRAINING_ROUNDS : " + TRAINING_ROUNDS + "\n" + "LEARNING_RATE : " + LEARNING_RATE + "\n" + "DISCOUNT_FACTOR : " + DISCOUNT_FACTOR + "\n" + "DB_NAME_TRAINING : " + DB_NAME_TRAINING + "\n" + "MAX_TARIFF_PRICE : " + MAX_TARIFF_PRICE + "\n" + "RL_TRAINING : " + RL_TRAINING + "\n" + "PPTS_DISCRTZD : " + PPTS_DISCRTZD + "\n" + "GET_NASH_EQ : " + GET_NASH_EQ
-                + "MANUAL_NASH_EQ_SELECTION : " + MANUAL_NASH_EQ_SELECTION + "\n" + "MAX_DQ_AGENTS_ALLOWED : " + MAX_DQ_AGENTS_ALLOWED + "\n";
+//    public static String print() {
+//        return "\n********************Configurations**********************\n" + "TOTAL_TIME_SLOTS : " + TOTAL_TIME_SLOTS + "\n" + "PUBLICATION_CYCLE : " + PUBLICATION_CYCLE + "\n" + "DEFAULT_TARIFF_PRICE : " + DEFAULT_TARIFF_PRICE + "\n" + "CASE_STUDY_NO : " + CASE_STUDY_NO + "\n" + "INERTIA : " + INERTIA + "\n" + "RATIONALITY : " + RATIONALITY + "\n" + "ACT_CHANGE_PERC : " + ACT_CHANGE_PERC + "\n" + "POPULATION : " + POPULATION + "\n" + "LOGFILENAME : " + LOGFILENAME + "\n" + "DAYMULT : "
+//                + DAYMULT + "\n" + "DMNDMULT : " + DMNDMULT + "\n" + "INITCOST : " + INITCOST + "\n" + "DLOGGING : " + DLOGGING + "\n" + "TEST_ROUNDS : " + TEST_ROUNDS + "\n" + "TRAINING_ROUNDS : " + TRAINING_ROUNDS + "\n" + "LEARNING_RATE : " + LEARNING_RATE + "\n" + "DISCOUNT_FACTOR : " + DISCOUNT_FACTOR + "\n" + "DB_NAME_TRAINING : " + DB_NAME_TRAINING + "\n" + "MAX_TARIFF_PRICE : " + MAX_TARIFF_PRICE + "\n" + "RL_TRAINING : " + RL_TRAINING + "\n" + "PPTS_DISCRTZD : " + PPTS_DISCRTZD + "\n" + "GET_NASH_EQ : " + GET_NASH_EQ
+//                + "MANUAL_NASH_EQ_SELECTION : " + MANUAL_NASH_EQ_SELECTION + "\n" + "MAX_DQ_AGENTS_ALLOWED : " + MAX_DQ_AGENTS_ALLOWED + "\n";
+//    }
+    
+    public static String toStringRepresentation() {
+        String p = "********************Configurations**********************\n";
+
+        for (Field f : Configuration.class.getDeclaredFields()) {
+            try {
+                p += String.format("[%s = %s]\n", f.getName(), f.get(null));
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+
+            }
+        }
+
+        p += "********************Configurations**********************\n";
+
+        return p;
     }
 
     public Configuration() {
