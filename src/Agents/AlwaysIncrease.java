@@ -11,6 +11,6 @@ public class AlwaysIncrease extends Agent {
 
     @Override
     public TariffAction makeAction(Observer ob) {
-        return TariffAction.INCREASE;
+        return TariffAction.I1;
     }
 }

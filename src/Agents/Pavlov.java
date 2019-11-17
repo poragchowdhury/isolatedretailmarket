@@ -21,7 +21,7 @@ public class Pavlov extends Agent {
 	@Override
 	public TariffAction makeAction(Observer ob) {
 		/* Tariff Check */
-		if (previousAction == TariffAction.INCREASE || previousAction == TariffAction.NOCHANGE) { // C
+		if (previousAction == TariffAction.I1 || previousAction == TariffAction.NC) { // C
 
 			if((ob.timeslot-1-Configuration.PUBLICATION_CYCLE >= 0)
 					&& (this.rivalTariffHistory[ob.timeslot-1] >= this.rivalTariffHistory[ob.timeslot-1-Configuration.PUBLICATION_CYCLE])) 
@@ -29,13 +29,13 @@ public class Pavlov extends Agent {
 			{
 				pr = Math.min((pr + 0.1), 1); // CC state
 
-				if (previousAction == TariffAction.INCREASE)
+				if (previousAction == TariffAction.I1)
 					prI = Math.min((prI + 0.1), 1); // CC state: Increase
 				else
 					prI = Math.max((prI - 0.1), 0); // CC state: Nochage
 			}
 
-		} else if (previousAction == TariffAction.DEFECT) { // D
+		} else if (previousAction == TariffAction.D1) { // D
 			if((ob.timeslot-1-Configuration.PUBLICATION_CYCLE >= 0)
 					&& (this.rivalTariffHistory[ob.timeslot-1] < this.rivalTariffHistory[ob.timeslot-1-Configuration.PUBLICATION_CYCLE])) 
 				// other agent is D
@@ -48,13 +48,13 @@ public class Pavlov extends Agent {
 		Random r = new Random();
 		int coin = r.nextInt(100);
 		if (coin > prInt) // Defect
-			return TariffAction.DEFECT;
+			return TariffAction.D1;
 		else // Coop
 		{
 			//			int prIInt = (int) prI * 100;
 			//			coin = r.nextInt(100);
 			//			if(coin > prIInt)
-			return TariffAction.NOCHANGE;
+			return TariffAction.NC;
 			//			else
 			//				return TariffAction.INCREASE;
 		}

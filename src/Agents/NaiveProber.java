@@ -19,7 +19,7 @@ public class NaiveProber extends Agent {
         Random r = new Random(100);
         double coin = r.nextInt();
         if (coin < defectPr) // defect
-            return TariffAction.DEFECT;
-        return TariffAction.NOCHANGE;
+            return TariffAction.D1;
+        return TariffAction.NC;
     }
 }

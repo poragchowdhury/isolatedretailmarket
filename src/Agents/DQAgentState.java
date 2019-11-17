@@ -13,16 +13,14 @@ import Configuration.Configuration;
  * Encodes the current state of a Deep Q-Learning Agent
  * @author Jose G. Perez
  */
-class DQAgentState implements Encodable {
+public class DQAgentState implements Encodable {
     public Agent agent;
     public Observer ob;
     public int timeSlot;
-    public long ppts;
+    public double ppts;
     public double prevPubCycProfit;
-    public double prevTSProfit;
     public int rivalPrevPubCycAction;
-    public double prevTSMarketShare;
-    public double prevPubCycMarketShare;
+    //public double prevPubCycMarketShare;
     public int prevAction;
     public double prevHourUsage;
     public double curHourUsage;
@@ -37,9 +35,7 @@ class DQAgentState implements Encodable {
         this.ob = ob;
 
         this.timeSlot = ob.timeslot;
-        this.ppts = (long) (agent.profit / (double) (ob.timeslot+1));
-        // previous timeslot's profit
-        this.prevTSProfit = agent.profit;
+        this.ppts = (agent.profit / (double) (ob.timeslot+1));
         // previous publication cycle's profit
         this.prevPubCycProfit = (ob.timeslot-1-Configuration.PUBLICATION_CYCLE >= 0) ? agent.profitHistory[ob.timeslot-1-Configuration.PUBLICATION_CYCLE] : (agent.init_revenue-agent.init_cost); 
         
@@ -47,17 +43,16 @@ class DQAgentState implements Encodable {
         if(ob.timeslot-1-Configuration.PUBLICATION_CYCLE >= 0) {
 	        if (agent.rivalTariffHistory[ob.timeslot-1-Configuration.PUBLICATION_CYCLE] 
 	        		== agent.rivalTariffHistory[ob.timeslot-1])
-	            rivalPrevPubCycAction = TariffAction.NOCHANGE.index;
+	            rivalPrevPubCycAction = TariffAction.NC.index;
 	        else if (agent.rivalTariffHistory[ob.timeslot-1-Configuration.PUBLICATION_CYCLE] 
 	        		> agent.rivalTariffHistory[ob.timeslot-1])
-	        	rivalPrevPubCycAction = TariffAction.DEFECT.index;
+	        	rivalPrevPubCycAction = TariffAction.D1.index;
 	        else
-	        	rivalPrevPubCycAction = TariffAction.INCREASE.index;
+	        	rivalPrevPubCycAction = TariffAction.I1.index;
         }
         
         
-        this.prevTSMarketShare = agent.marketShare;
-        this.prevPubCycMarketShare = (ob.timeslot-1-Configuration.PUBLICATION_CYCLE >= 0) ? agent.profitHistory[ob.timeslot-1-Configuration.PUBLICATION_CYCLE] : agent.init_mkshare;
+//        this.prevPubCycMarketShare = (ob.timeslot-1-Configuration.PUBLICATION_CYCLE >= 0) ? agent.profitHistory[ob.timeslot-1-Configuration.PUBLICATION_CYCLE] : agent.init_mkshare;
         
         this.prevHourUsage = ob.fcc.usage[ob.timeslot == 0? 0:(ob.timeslot-1)%24];
         this.curHourUsage = ob.fcc.usage[ob.timeslot%24];
@@ -72,46 +67,97 @@ class DQAgentState implements Encodable {
 
     @Override
     public double[] toArray() {
-        List<Double> features = new ArrayList<>();
+    	
+    	int prevPubCycTS = ob.timeslot - 1 - Configuration.PUBLICATION_CYCLE;
+    	prevPubCycTS = prevPubCycTS >= 0 ? prevPubCycTS : 0; 
+    	int prev2PubCycTS = ob.timeslot - 1 - (Configuration.PUBLICATION_CYCLE*2);
+    	prev2PubCycTS = prev2PubCycTS >= 0 ? prev2PubCycTS : 0;
+    	
+    	double maxPossProfitPerGame = (Configuration.MAX_TARIFF_PRICE*Configuration.POPULATION*Configuration.TOTAL_TIME_SLOTS*ob.fcc.maxUsage); 
+    	double maxPossProfitPerTS = (Configuration.MAX_TARIFF_PRICE*Configuration.POPULATION*ob.fcc.maxUsage); 
+        
+    	List<Double> features = new ArrayList<>();
         /* ===== NOTE: Add your features here ===== */
-        // feature 1: timeslot
+        /* 2 Time related features */
+    	// feature 1: timeslot
+    	
         features.add((double) timeSlot / Configuration.TOTAL_TIME_SLOTS);
-        // feature 2: current profit
-        features.add(agent.profit/(Configuration.MAX_TARIFF_PRICE*Configuration.POPULATION*Configuration.TOTAL_TIME_SLOTS*ob.fcc.maxUsage));
-        // feature 3: ppts
-        features.add((double) ppts/(Configuration.MAX_TARIFF_PRICE*Configuration.POPULATION*ob.fcc.maxUsage));
-        // feature 4: previous timeslot's profit
-        features.add(prevTSProfit/(Configuration.MAX_TARIFF_PRICE*Configuration.POPULATION*Configuration.TOTAL_TIME_SLOTS*ob.fcc.maxUsage));
-        // feature 5,6,7,8,9: agent's previous action
+        // feature 2: hourOfDay, correlates with the demand profile of customer : maxVal = 24
+//        features.add((double) (timeSlot%24+1) / 24);
+        
+    	
+        /* 11 Price related features */
+        // feature 1: previous timeslot's profit
+        features.add(agent.profit/maxPossProfitPerGame);
+        // feature 2: ppts
+        features.add(ppts/maxPossProfitPerTS);
+        // feature 3: my previous TS tariff price
+        features.add(agent.tariffPrice/Configuration.MAX_TARIFF_PRICE);
+        /*
+        // feature 4: my previous publication cycle's tariff price
+        features.add(agent.tariffHistory[prevPubCycTS]/Configuration.MAX_TARIFF_PRICE);
+        // feature 5: my previous 2 publication cycle's tariff price
+        features.add(agent.tariffHistory[prev2PubCycTS]/Configuration.MAX_TARIFF_PRICE);
+        */
+        
+        /*
+        // feature 6: opponent previous TS tariff price
+        features.add(agent.rivalTariffPrice/Configuration.MAX_TARIFF_PRICE);
+        // feature 7: opponenet's previous publication cycle's tariff price
+        features.add(agent.rivalTariffHistory[prevPubCycTS]/Configuration.MAX_TARIFF_PRICE);
+        // feature 8: opponenet's previous 2 publication cycle's tariff price
+        features.add(agent.rivalTariffHistory[prev2PubCycTS]/Configuration.MAX_TARIFF_PRICE);
+        */
+        
+        /*
+        // feature 9: previous timeslot cost
+        features.add(agent.unitcost/agent.c_max);
+        // feature 10: previous pubCyc cost
+        features.add(agent.unitCostHistory[prevPubCycTS]/agent.c_max);
+        // feature 11: previous 2 pubCyc cost
+        features.add(agent.unitCostHistory[prev2PubCycTS]/agent.c_max);
+		*/
+        
+        /* 10 Action related features */
+        
+        // feature 1~5: agent's previous action
         for (double d : one_hot(agent.previousAction.index))
             features.add(d);
-        // feature 10,11,12,13,14: rival agent's previous action
+        // feature 5~10: rival agent's previous action
         for (double d : one_hot(agent.rivalPreviousAction.index))
             features.add(d);
-        // feature 15: my previous TS market share
-        features.add((double) prevTSMarketShare/Configuration.POPULATION);
-        // feature 16: my previous market share
-        features.add((double) prevPubCycMarketShare/Configuration.POPULATION);
-        // feature 17, 18, 19: my customer demand previous, current and next hour
+        
+        /*
+        for (double d : one_hot(agent.actHistory[prevPubCycTS]))
+            features.add(d);
+        // feature 5~10: rival agent's previous action
+        for (double d : one_hot(agent.rivalActHistory[prevPubCycTS]))
+            features.add(d);
+        for (double d : one_hot(agent.actHistory[prev2PubCycTS]))
+            features.add(d);
+        // feature 5~10: rival agent's previous action
+        for (double d : one_hot(agent.rivalActHistory[prev2PubCycTS]))
+            features.add(d);
+       	*/
+        
+        /* 3 Market share related features */
+        
+        // feature 1: my previous TS market share
+        features.add((double) agent.marketShare/Configuration.POPULATION);
+        /*
+        // feature 2: my previous publication cycle market share
+        features.add((double) agent.marketShareHistory[prevPubCycTS]/Configuration.POPULATION);
+        // feature 3: my previous 2 publication cycle market share
+        features.add((double) agent.marketShareHistory[prev2PubCycTS]/Configuration.POPULATION);
+        */
+        
+        /* 3 Customer demand related features */
+        // feature 1,2,3: customer demand features
+
         features.add(prevHourUsage/ob.fcc.maxUsage);
         features.add(curHourUsage/ob.fcc.maxUsage);
         features.add(nextHourUsage/ob.fcc.maxUsage);
-        // feature 20: my previous TS tariff price
-        features.add(agent.tariffPrice/Configuration.MAX_TARIFF_PRICE);
-        // feature 21: opponent previous TS tariff price
-        features.add(agent.rivalTariffPrice/Configuration.MAX_TARIFF_PRICE);
-        // feature 22: my previous publication cycle's tariff price
-        double myPrevPubCycTariffPrice = (ob.timeslot - 1 - Configuration.PUBLICATION_CYCLE) >= 0 ? agent.tariffHistory[ob.timeslot - 1 - Configuration.PUBLICATION_CYCLE] : Configuration.DEFAULT_TARIFF_PRICE;
-        features.add(myPrevPubCycTariffPrice/Configuration.MAX_TARIFF_PRICE);
-        // feature 23: opponenet's previous publication cycle's tariff price
-        double rivalPrevPubCycPrice = (ob.timeslot - 1 - Configuration.PUBLICATION_CYCLE) >= 0 ? agent.rivalTariffHistory[ob.timeslot - 1 - Configuration.PUBLICATION_CYCLE] : Configuration.DEFAULT_TARIFF_PRICE;
-        features.add(rivalPrevPubCycPrice/Configuration.MAX_TARIFF_PRICE);
 
-        
-        
-        
-        
-        
         
         // Get all the features from the list
         // Convert to a double array for use in the MDP

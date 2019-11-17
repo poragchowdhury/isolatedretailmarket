@@ -7,14 +7,14 @@ import Configuration.Configuration;
 import Observer.Observer;
 import Tariff.TariffAction;
 
-public abstract class Agent {
-	
+public abstract class Agent implements Cloneable {
+
 	// Initial profit, cost, marketshare, unitcost
 	public double init_unitcost = 0.05;
 	public double init_mkshare = 50.0;
-	public double init_cost = 0.05*Configuration.POPULATION/2*8;
-	public double init_revenue = Configuration.DEFAULT_TARIFF_PRICE*Configuration.POPULATION/2*8;
-	
+	public double init_cost = 0.05 * Configuration.POPULATION / 2 * 8;
+	public double init_revenue = Configuration.DEFAULT_TARIFF_PRICE * Configuration.POPULATION / 2 * 8;
+
 	public String name;
 	public double tariffPrice;
 	public double rivalTariffPrice;
@@ -26,28 +26,26 @@ public abstract class Agent {
 	public double tariffUtility;
 	public TariffAction previousAction;
 	public TariffAction rivalPreviousAction;
-	public double [] actGDvalues;
+	public double[] actGDvalues;
 	public double bestResponseCount;
 
-    public int defectCounter = 0;
-    public int coopCounter = 0;
-    public int punishCounter = 0;
-    public boolean booDefect = false;
+	public int defectCounter = 0;
+	public int coopCounter = 0;
+	public int punishCounter = 0;
+	public boolean booDefect = false;
 
-    // pavlov probability to increase+nochange
-	public double pr = 1; 
+	// pavlov probability to increase+nochange
+	public double pr = 1;
 	public double prI = 1;
 
-    
 	// Random walk cost variables
 	public double c_max = 0.12;
 	public double c_min = 0.03;
 	public double tr_min = 0.95;
-	public double tr_max = 1/0.95;
+	public double tr_max = 1 / 0.95;
 	public double unitcost = 0.05;
 	public double trend = 1;
 
-	
 	// agent history by timeslot
 	public double[] tariffHistory;
 	public double[] unitCostHistory;
@@ -55,7 +53,7 @@ public abstract class Agent {
 	public double[] profitHistory;
 	public double[] marketShareHistory;
 	public int[] actHistory;
-	
+
 	public double[] rivalTariffHistory;
 	public int[] rivalActHistory;
 
@@ -63,18 +61,57 @@ public abstract class Agent {
 
 	public Agent(String agentName) {
 		this.name = agentName;
-		
+		this.unitcost = Configuration.INITUNITCOST;
 		this.tariffHistory = new double[Configuration.TOTAL_TIME_SLOTS];
 		this.unitCostHistory = new double[Configuration.TOTAL_TIME_SLOTS];
 		this.costHistory = new double[Configuration.TOTAL_TIME_SLOTS];
 		this.profitHistory = new double[Configuration.TOTAL_TIME_SLOTS];
 		this.marketShareHistory = new double[Configuration.TOTAL_TIME_SLOTS];
 		this.actHistory = new int[Configuration.TOTAL_TIME_SLOTS];
-		
+
 		this.rivalTariffHistory = new double[Configuration.TOTAL_TIME_SLOTS];
 		this.rivalActHistory = new int[Configuration.TOTAL_TIME_SLOTS];
-		
+
 		this.reset();
+	}
+
+	/**
+	 * Copies all of this agent's fields to another agent Note: The name is not
+	 * copied
+	 * 
+	 * @param other
+	 *            Agent to receive field values
+	 */
+	public void copyTo(Agent other, Observer ob) {
+		other.tariffPrice = tariffPrice;
+		other.rivalTariffPrice = rivalTariffPrice;
+		other.revenue = revenue;
+		other.marketShare = marketShare;
+		other.cost = cost;
+		other.profit = profit;
+		other.tariffUtility = tariffUtility;
+		other.previousAction = previousAction;
+		other.rivalPreviousAction = rivalPreviousAction;
+		other.unitcost = unitcost;
+		System.arraycopy(actGDvalues, 0, other.actGDvalues, 0, other.actGDvalues.length);
+
+		other.bestResponseCount = bestResponseCount;
+		other.defectCounter = defectCounter;
+		other.punishCounter = punishCounter;
+		other.coopCounter = coopCounter;
+		other.booDefect = booDefect;
+		other.pr = pr;
+		other.prI = prI;
+
+		other.costHistory[ob.timeslot - 1] = costHistory[ob.timeslot - 1];
+		other.profitHistory[ob.timeslot - 1] = profitHistory[ob.timeslot - 1];
+		other.unitCostHistory[ob.timeslot - 1] = unitCostHistory[ob.timeslot - 1];
+		other.tariffHistory[ob.timeslot - 1] = tariffHistory[ob.timeslot - 1];
+
+		other.actHistory[ob.timeslot - 1] = actHistory[ob.timeslot - 1];
+		other.marketShareHistory[ob.timeslot - 1] = marketShareHistory[ob.timeslot - 1];
+		other.rivalTariffHistory[ob.timeslot - 1] = rivalTariffHistory[ob.timeslot - 1];
+		other.rivalActHistory[ob.timeslot - 1] = rivalActHistory[ob.timeslot - 1];
 	}
 
 	public void reset() {
@@ -85,29 +122,28 @@ public abstract class Agent {
 		cost = 0;
 		profit = 0;
 		tariffUtility = 0;
-		previousAction = TariffAction.NOCHANGE;
-		rivalPreviousAction = TariffAction.NOCHANGE;
+		previousAction = TariffAction.NC;
+		rivalPreviousAction = TariffAction.NC;
 		unitcost = 0.05;
 		actGDvalues = new double[TariffAction.values().length];
 		bestResponseCount = 0;
-	    defectCounter = 0;
-	    punishCounter = 0;
-	    coopCounter = 0;
-	    booDefect = false;
-	    pr = 1;
-	    prI = 1;
-	    
+		defectCounter = 0;
+		punishCounter = 0;
+		coopCounter = 0;
+		booDefect = false;
+		pr = 1;
+		prI = 1;
+
 		Arrays.fill(costHistory, 0.0);
 		Arrays.fill(profitHistory, 0.0);
 		Arrays.fill(unitCostHistory, 0.0);
 		Arrays.fill(tariffHistory, 0.0);
 		Arrays.fill(actHistory, 0);
 		Arrays.fill(marketShareHistory, 0.0);
-		
+
 		Arrays.fill(rivalTariffHistory, 0.0);
 		Arrays.fill(rivalActHistory, 0);
 	}
-
 
 	public final void publishTariff(Observer ob) throws Exception {
 		TariffAction action = makeAction(ob);
@@ -141,9 +177,9 @@ public abstract class Agent {
 	}
 
 	public void randomWalkUnitCost(int ts) {
-		double new_unitcost = Math.min(this.c_max, Math.max(this.c_min, this.trend*this.unitcost));
-		double new_trend = Math.max(this.tr_min, Math.min(this.tr_max, this.trend+getRandomValInRange(0.01)));
-		if((this.trend * this.unitcost) < this.c_min || (this.trend * this.unitcost) > this.c_max)
+		double new_unitcost = Math.min(this.c_max, Math.max(this.c_min, this.trend * this.unitcost));
+		double new_trend = Math.max(this.tr_min, Math.min(this.tr_max, this.trend + getRandomValInRange(0.01)));
+		if ((this.trend * this.unitcost) < this.c_min || (this.trend * this.unitcost) > this.c_max)
 			this.trend = 1;
 		else
 			this.trend = new_trend;
@@ -153,31 +189,51 @@ public abstract class Agent {
 
 	/*
 	 * Generation random values between -max to +max
-	 * */
+	 */
 	public double getRandomValInRange(double max) {
 		int divisor = 100;
-		while(max % 1 != 0) {
+		while (max % 1 != 0) {
 			max *= 10;
 			divisor *= 10;
 		}
-		int maxbound = (int) max*100;
+		int maxbound = (int) max * 100;
 		Random r = new Random();
-		int randInt = r.nextInt(maxbound+1);
-		double val = (double) randInt/divisor;
+		int randInt = r.nextInt(maxbound + 1);
+		double val = (double) randInt / divisor;
 		int coin = r.nextInt(2);
-		if(coin == 0)
+		if (coin == 0)
 			val *= -1;
 		return val;
 	}
 
 	public String getAllHistoryActions() {
-		StringBuilder sb = new StringBuilder(name);
-		for(int ts = 1; ts < Configuration.TOTAL_TIME_SLOTS; ts+=Configuration.PUBLICATION_CYCLE) {
+		StringBuilder sb = new StringBuilder();
+		for (int ts = 1; ts < Configuration.TOTAL_TIME_SLOTS; ts += Configuration.PUBLICATION_CYCLE) {
 			String actName = TariffAction.valueOf(actHistory[ts]).name();
-			actName = actName.substring(0, 1) + (actHistory[ts] > 2 ? (actName.substring(actName.length()-1)) : 0);
-			sb.append(" "+ actName + " ");
+			//actName = actName.substring(0, 1) + (actHistory[ts] > 2 ? (actName.substring(actName.length() - 1)) : 0);
+			sb.append(" " + actName + " ");
 		}
 		return sb.toString();
+	}
+	
+	public String getHistoryByPubCyc(double [] history) {
+		StringBuilder sb = new StringBuilder();
+		for (int ts = 1; ts < Configuration.TOTAL_TIME_SLOTS; ts += Configuration.PUBLICATION_CYCLE)
+			sb.append(" " + Math.round(history[ts]*100)/100f + " ");
+		return sb.toString();
+	}
+
+	@Override
+	public Agent clone() {
+		Agent c = null;
+		try {
+			// Shallow copy
+			c = (Agent) super.clone();
+			// Deep copy
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return c;
 	}
 
 }

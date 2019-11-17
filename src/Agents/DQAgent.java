@@ -45,7 +45,7 @@ public class DQAgent extends Agent {
 
 		this.name = "DQAgent" + this.agentNumber + "_" + policyName.substring(0, policyName.length() - 4);
 	}
-	
+
 	public DQAgent(String name, String policyName) {
 		super(name);
 		try {
@@ -83,16 +83,16 @@ public class DQAgent extends Agent {
 		TariffAction nextAction = TariffAction.valueOf(nextActionInt);
 
 		if (!isTraining()) {
-			if (nextAction == TariffAction.DEFECT) {
+			if (nextAction == TariffAction.D1) {
 				DEFECT++;
 			}
-			else if (nextAction == TariffAction.NOCHANGE) {
+			else if (nextAction == TariffAction.NC) {
 				NOC++;
 			}
-			else if (nextAction == TariffAction.INCREASE2) {
+			else if (nextAction == TariffAction.I2) {
 				INC2++;
 			}
-			else if (nextAction == TariffAction.DEFECT2) {
+			else if (nextAction == TariffAction.D2) {
 				DEFECT2++;
 			}
 			else {

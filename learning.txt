@@ -1,0 +1,198 @@
+{12:38:40} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [AlD, AlzIncz, AlzSame]
+{12:38:40} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [AlD, AlzIncz, AlzSame]
+{12:38:40} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{12:38:43} RetailMarketManager.RetailMarketManager startSimulation AlD,1317.202,24.911,AlD,1284.974,23.408
+{12:38:46} RetailMarketManager.RetailMarketManager startSimulation AlD,2519.655,47.800,AlzIncz,76.673,0.699
+{12:38:48} RetailMarketManager.RetailMarketManager startSimulation AlD,2275.032,45.189,AlzSame,750.123,5.574
+{12:38:51} RetailMarketManager.RetailMarketManager startSimulation AlzIncz,8665.584,33.658,AlzIncz,8672.023,33.193
+{12:38:54} RetailMarketManager.RetailMarketManager startSimulation AlzIncz,344.437,3.904,AlzSame,9245.882,61.665
+{12:38:56} RetailMarketManager.RetailMarketManager startSimulation AlzSame,4799.244,32.331,AlzSame,4764.278,33.225
+{12:38:56} RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
+{12:38:56} RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
+{12:38:56} RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
+{12:38:56} RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
+{12:38:56} RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
+{12:38:56} RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
+{12:38:56} RetailMarketManager.RetailMarketManager computeNashEq AlD, AlzIncz, AlzSame
+{12:38:56} RetailMarketManager.RetailMarketManager computeNashEq 0 [1.000, 0.000, 0.000]
+{12:38:56} RetailMarketManager.RetailMarketManager computeNashEq 1 [0.000, 0.000, 1.000]
+{12:38:56} RetailMarketManager.RetailMarketManager computeNashEq 2 [0.818, 0.000, 0.182]
+{12:38:56} RetailMarketManager.RetailMarketManager startExperiment AlzIncz will be removed next iteration from the pools
+{12:38:56} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Please select the desired strategy for SMNE (idx)
+{12:39:08} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Selected [0.8181818181818182, 0.0, 0.18181818181818182]
+{13:30:06} RetailMarketManager.RetailMarketManager startExperiment Training DQ Agent
+{13:30:06} RetailMarketManager.RetailMarketManager startExperiment Running SMNE vs DQAgent
+{13:30:25} RetailMarketManager.RetailMarketManager startSimulation 0.82AlD,0.18AlzSame,1752.795,32.968,0.82AlD,0.18AlzSame,2877.237,29.652
+{13:30:25} RetailMarketManager.RetailMarketManager startExperiment SMNE Profit: 1752.7945109296882, DQAgent profit: 2877.236727622008
+{13:30:25} RetailMarketManager.RetailMarketManager startExperiment DQAgent profit > SMNE profit, adding DQAgent to the pool
+{13:30:25} RetailMarketManager.RetailMarketManager startExperiment ***************Total Training Rounds: 5000 : End of Experiment ***************
+
+Learned DQ0
+
+{13:38:19} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [AlD, AlzIncz, AlzSame, DQ0]
+{13:38:19} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{13:38:22} RetailMarketManager.RetailMarketManager startSimulation AlD,1280.365,24.429,AlD,1296.322,24.711
+{13:38:25} RetailMarketManager.RetailMarketManager startSimulation AlD,2511.861,50.118,AlzIncz,77.470,0.699
+{13:38:28} RetailMarketManager.RetailMarketManager startSimulation AlD,2295.680,44.912,AlzSame,753.198,5.731
+{13:38:48} RetailMarketManager.RetailMarketManager startSimulation AlD,1320.925,27.637,DQ0,2777.443,29.347
+{13:38:51} RetailMarketManager.RetailMarketManager startSimulation AlzIncz,8694.746,32.064,AlzIncz,8692.021,32.951
+{13:38:53} RetailMarketManager.RetailMarketManager startSimulation AlzIncz,344.478,3.896,AlzSame,9285.831,60.656
+{13:39:12} RetailMarketManager.RetailMarketManager startSimulation AlzIncz,247.569,2.820,DQ0,8695.752,40.553
+{13:39:14} RetailMarketManager.RetailMarketManager startSimulation AlzSame,4752.470,32.760,AlzSame,4759.332,32.790
+{13:39:33} RetailMarketManager.RetailMarketManager startSimulation AlzSame,2092.970,48.202,DQ0,5735.073,54.885
+{13:40:07} RetailMarketManager.RetailMarketManager startSimulation DQ0,3637.548,55.016,DQ0,3655.468,55.815
+{13:40:07} RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
+{13:40:07} RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
+{13:40:07} RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
+{13:40:07} RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
+{13:40:07} RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
+{13:40:07} RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
+{13:40:07} RetailMarketManager.RetailMarketManager computeNashEq AlD, AlzIncz, AlzSame, DQ0
+{13:40:07} RetailMarketManager.RetailMarketManager computeNashEq 0 [0.000, 0.000, 0.000, 1.000]
+{13:40:07} RetailMarketManager.RetailMarketManager startExperiment AlD will be removed next iteration from the pools
+{13:40:07} RetailMarketManager.RetailMarketManager startExperiment AlzIncz will be removed next iteration from the pools
+{13:40:07} RetailMarketManager.RetailMarketManager startExperiment AlzSame will be removed next iteration from the pools
+{13:40:07} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Please select the desired strategy for SMNE (idx) -1
+
+
+{13:44:10} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [Prober, NvPbr, DQ0]
+{13:44:10} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [Prober, NvPbr, DQ0]
+{13:44:10} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{13:44:13} RetailMarketManager.RetailMarketManager startSimulation Prober,1996.505,27.628,Prober,1982.317,27.393
+{13:44:15} RetailMarketManager.RetailMarketManager startSimulation Prober,1466.903,24.885,NvPbr,1467.486,26.593
+{13:44:35} RetailMarketManager.RetailMarketManager startSimulation Prober,1796.750,29.699,DQ0,3013.113,28.566
+{13:44:38} RetailMarketManager.RetailMarketManager startSimulation NvPbr,1274.615,24.954,NvPbr,1266.400,24.354
+{13:44:57} RetailMarketManager.RetailMarketManager startSimulation NvPbr,1333.303,27.125,DQ0,2779.869,28.137
+{13:45:32} RetailMarketManager.RetailMarketManager startSimulation DQ0,3735.098,57.145,DQ0,3560.635,54.954
+{13:45:32} RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
+{13:45:32} RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
+{13:45:32} RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
+{13:45:32} RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
+{13:45:32} RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
+{13:45:32} RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
+{13:45:32} RetailMarketManager.RetailMarketManager computeNashEq Prober, NvPbr, DQ0
+{13:45:32} RetailMarketManager.RetailMarketManager computeNashEq 0 [0.000, 0.000, 1.000]
+{13:45:32} RetailMarketManager.RetailMarketManager startExperiment Prober will be removed next iteration from the pools
+{13:45:32} RetailMarketManager.RetailMarketManager startExperiment NvPbr will be removed next iteration from the pools
+{13:45:32} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Please select the desired strategy for SMNE (idx) -1
+
+
+{13:46:27} RetailMarketManager.RetailMarketManager startExperiment ****************************** Iteration 1 TraningRounds for DQAgent: 5000
+{13:46:27} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [ZI, HardMJ, DQ0]
+{13:46:27} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [ZI, HardMJ, DQ0]
+{13:46:27} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{13:46:29} RetailMarketManager.RetailMarketManager startSimulation ZI,2793.066,38.818,ZI,2744.664,39.015
+{13:46:32} RetailMarketManager.RetailMarketManager startSimulation ZI,2898.060,52.275,HardMJ,2723.154,60.073
+{13:46:52} RetailMarketManager.RetailMarketManager startSimulation ZI,2797.674,45.017,DQ0,3141.867,34.268
+{13:46:55} RetailMarketManager.RetailMarketManager startSimulation HardMJ,1283.607,25.098,HardMJ,1312.706,24.414
+{13:47:13} RetailMarketManager.RetailMarketManager startSimulation HardMJ,2540.295,78.678,DQ0,2872.366,26.338
+{13:47:48} RetailMarketManager.RetailMarketManager startSimulation DQ0,3731.363,59.290,DQ0,3565.433,56.805
+{13:47:48} RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
+{13:47:48} RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
+{13:47:48} RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
+{13:47:48} RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
+{13:47:48} RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
+{13:47:48} RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
+{13:47:48} RetailMarketManager.RetailMarketManager computeNashEq ZI, HardMJ, DQ0
+{13:47:48} RetailMarketManager.RetailMarketManager computeNashEq 0 [0.000, 0.000, 1.000]
+{13:47:48} RetailMarketManager.RetailMarketManager startExperiment ZI will be removed next iteration from the pools
+{13:47:48} RetailMarketManager.RetailMarketManager startExperiment HardMJ will be removed next iteration from the pools
+{13:47:48} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Please select the desired strategy for SMNE (idx) -1
+
+
+
+{13:52:08} RetailMarketManager.RetailMarketManager startExperiment ****************************** Iteration 1 TraningRounds for DQAgent: 5000
+{13:52:08} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [Grim, Pavlov, DQ0]
+{13:52:08} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [Grim, Pavlov, DQ0]
+{13:52:08} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{13:52:11} RetailMarketManager.RetailMarketManager startSimulation Grim,4735.344,32.715,Grim,4785.100,32.109
+{13:52:15} RetailMarketManager.RetailMarketManager startSimulation Grim,4743.665,32.828,Pavlov,4774.560,32.103
+{13:52:56} RetailMarketManager.RetailMarketManager startSimulation Grim,1342.756,27.359,DQ0,3010.901,26.193
+{13:52:59} RetailMarketManager.RetailMarketManager startSimulation Pavlov,4790.572,33.065,Pavlov,4774.922,32.463
+{13:53:20} RetailMarketManager.RetailMarketManager startSimulation Pavlov,2036.882,47.991,DQ0,5785.457,56.076
+{13:53:59} RetailMarketManager.RetailMarketManager startSimulation DQ0,3690.154,54.579,DQ0,3632.087,55.641
+{13:53:59} RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
+{13:53:59} RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
+{13:53:59} RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
+{13:53:59} RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
+{13:53:59} RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
+{13:53:59} RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
+{13:53:59} RetailMarketManager.RetailMarketManager computeNashEq Grim, Pavlov, DQ0
+{13:53:59} RetailMarketManager.RetailMarketManager computeNashEq 0 [0.000, 0.000, 1.000]
+{13:53:59} RetailMarketManager.RetailMarketManager startExperiment Grim will be removed next iteration from the pools
+{13:53:59} RetailMarketManager.RetailMarketManager startExperiment Pavlov will be removed next iteration from the pools
+{13:53:59} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Please select the desired strategy for SMNE (idx) -1
+
+
+
+{13:55:25} RetailMarketManager.RetailMarketManager startExperiment ****************************** Iteration 1 TraningRounds for DQAgent: 5000
+{13:55:25} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [2TF1T, SoftMJ, DQ0]
+{13:55:25} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [2TF1T, SoftMJ, DQ0]
+{13:55:25} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{13:55:28} RetailMarketManager.RetailMarketManager startSimulation 2TF1T,4762.927,32.914,2TF1T,4797.553,32.562
+{13:55:30} RetailMarketManager.RetailMarketManager startSimulation 2TF1T,4773.927,33.051,SoftMJ,4760.860,33.363
+{13:55:56} RetailMarketManager.RetailMarketManager startSimulation 2TF1T,3152.655,55.593,DQ0,3134.888,25.847
+{13:55:59} RetailMarketManager.RetailMarketManager startSimulation SoftMJ,4778.152,32.756,SoftMJ,4778.017,32.819
+{13:56:19} RetailMarketManager.RetailMarketManager startSimulation SoftMJ,2866.201,65.252,DQ0,3458.463,36.461
+{13:56:59} RetailMarketManager.RetailMarketManager startSimulation DQ0,3698.076,57.343,DQ0,3599.209,57.024
+{13:56:59} RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
+{13:56:59} RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
+{13:56:59} RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
+{13:56:59} RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
+{13:56:59} RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
+{13:56:59} RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
+{13:56:59} RetailMarketManager.RetailMarketManager computeNashEq 2TF1T, SoftMJ, DQ0
+{13:56:59} RetailMarketManager.RetailMarketManager computeNashEq 0 [1.000, 0.000, 0.000]
+{13:56:59} RetailMarketManager.RetailMarketManager computeNashEq 1 [0.222, 0.000, 0.778]
+{13:56:59} RetailMarketManager.RetailMarketManager computeNashEq 2 [0.000, 1.000, 0.000]
+{13:56:59} RetailMarketManager.RetailMarketManager computeNashEq 3 [0.000, 0.000, 1.000]
+{13:56:59} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Please select the desired strategy for SMNE (idx)
+{13:57:16} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Selected [0.2222222222222222, 0.0, 0.7777777777777778]
+{14:48:41} RetailMarketManager.RetailMarketManager startExperiment Training DQ Agent
+{14:48:41} RetailMarketManager.RetailMarketManager startExperiment Running SMNE vs DQAgent
+{14:49:12} RetailMarketManager.RetailMarketManager startSimulation 0.222TF1T,0.78DQ0,1762.937,37.921,0.222TF1T,0.78DQ0,7585.856,94.767
+{14:49:12} RetailMarketManager.RetailMarketManager startExperiment SMNE Profit: 1762.9367991408344, DQAgent profit: 7585.85623857935
+{14:49:12} RetailMarketManager.RetailMarketManager startExperiment DQAgent profit > SMNE profit, adding DQAgent to the pool 
+
+Learned DQ1
+
+
+{14:50:18} RetailMarketManager.RetailMarketManager startExperiment ****************************** Iteration 1 TraningRounds for DQAgent: 5000
+{14:50:18} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [2TF1T, SoftMJ, DQ0, DQ1]
+{14:50:18} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [2TF1T, SoftMJ, DQ0, DQ1]
+{14:50:18} RetailMarketManager.RetailMarketManager startExperiment Starting game round
+{14:50:21} RetailMarketManager.RetailMarketManager startSimulation 2TF1T,4761.261,33.525,2TF1T,4775.631,31.722
+{14:50:23} RetailMarketManager.RetailMarketManager startSimulation 2TF1T,4759.439,32.867,SoftMJ,4810.621,31.584
+{14:50:43} RetailMarketManager.RetailMarketManager startSimulation 2TF1T,3171.190,58.468,DQ0,3127.125,25.321
+{14:51:02} RetailMarketManager.RetailMarketManager startSimulation 2TF1T,1534.697,65.780,DQ1,7408.005,76.751
+{14:51:04} RetailMarketManager.RetailMarketManager startSimulation SoftMJ,4802.829,32.653,SoftMJ,4785.214,32.268
+{14:51:22} RetailMarketManager.RetailMarketManager startSimulation SoftMJ,2754.076,63.110,DQ0,3418.812,35.766
+{14:51:41} RetailMarketManager.RetailMarketManager startSimulation SoftMJ,1942.574,59.112,DQ1,6740.518,69.191
+{14:52:15} RetailMarketManager.RetailMarketManager startSimulation DQ0,3748.491,56.818,DQ0,3586.368,55.589
+{14:52:53} RetailMarketManager.RetailMarketManager startSimulation DQ0,2875.107,32.535,DQ1,2755.513,84.608
+{14:53:38} RetailMarketManager.RetailMarketManager startSimulation DQ1,2577.214,63.188,DQ1,2567.210,60.856
+{14:53:38} RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
+{14:53:38} RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
+{14:53:38} RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
+{14:53:38} RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
+{14:53:38} RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
+{14:53:38} RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
+{14:53:38} RetailMarketManager.RetailMarketManager computeNashEq 2TF1T, SoftMJ, DQ0, DQ1
+{14:53:38} RetailMarketManager.RetailMarketManager computeNashEq 0 [0.000, 0.000, 1.000, 0.000]
+{14:53:38} RetailMarketManager.RetailMarketManager startExperiment 2TF1T will be removed next iteration from the pools
+{14:53:38} RetailMarketManager.RetailMarketManager startExperiment SoftMJ will be removed next iteration from the pools
+{14:53:38} RetailMarketManager.RetailMarketManager startExperiment DQ1 will be removed next iteration from the pools
+{14:53:38} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Please select the desired strategy for SMNE (idx)
+{14:56:16} RetailMarketManager.RetailMarketManager startExperiment *************** Experimental Run Log ***************
+{14:56:16} RetailMarketManager.RetailMarketManager startExperiment ********************Configurations**********************
+
+
+
+
+
+
+
+
+
+
+

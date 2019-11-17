@@ -1,0 +1,5 @@
+1. timeslot // progession of the game : maxVal = TOTAL_TIMESLOTS_IN_A_GAME
+2. hourOfDay // corelates with the demand profile of customer : maxVal = 24
+2. ppts // profit per time slot
+
+3. 

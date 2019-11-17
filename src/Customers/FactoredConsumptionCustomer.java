@@ -40,6 +40,9 @@ public class FactoredConsumptionCustomer {
 			inertiaPC[id] = 0;
 			custMem[id] = Configuration.DEFAULT_TARIFF_PRICE;
 		}
+		for(int i = 0; i < 24; i++)
+			usage[i] = usage[i] * 10;
+		
 		this.maxUsage = Collections.max(Arrays.asList(usage))+noise_max; 
 		// Arrays.fill(usage, 1);
 		// printCustomers();

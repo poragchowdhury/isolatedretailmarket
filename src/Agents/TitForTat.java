@@ -23,26 +23,26 @@ public class TitForTat extends Agent {
     public TariffAction makeAction(Observer ob) {
     	// Coop in the first move
         if (ob.timeslot == 1) {
-            return TariffAction.NOCHANGE;
+            return TariffAction.NC;
 
         } else if (punishCounter > 0) {
             punishCounter--;
-            return TariffAction.DEFECT;
+            return TariffAction.D1;
 
         } else if (defectCounter == numTatsPerTit) {
             defectCounter = 0;
             punishCounter = numTitsPerTat;
-            return TariffAction.DEFECT;
+            return TariffAction.D1;
         }
         // other agent is defecting, so defect
-        else if (rivalActHistory[ob.timeslot-1] == TariffAction.DEFECT.index) {
+        else if (rivalActHistory[ob.timeslot-1] == TariffAction.D1.index) {
             defectCounter++;
-            return TariffAction.DEFECT;
+            return TariffAction.D1;
         }
         // other agent is increasing price
-        else if (rivalActHistory[ob.timeslot-1] == TariffAction.INCREASE.index) {
-            return TariffAction.INCREASE;
+        else if (rivalActHistory[ob.timeslot-1] == TariffAction.I1.index) {
+            return TariffAction.I1;
         }
-        return TariffAction.NOCHANGE;
+        return TariffAction.NC;
     }
 }

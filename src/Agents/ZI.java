@@ -13,10 +13,12 @@ public class ZI extends Agent {
     @Override
     public TariffAction makeAction(Observer ob) {
         Random r = new Random();
-        int coin = r.nextInt(2);
+        int coin = r.nextInt(3);
         if (coin == 0) // Defect
-            return TariffAction.DEFECT;
+            return TariffAction.NC;
+        else if(coin == 1)
+        	return TariffAction.I1;
         else // Coop
-            return TariffAction.NOCHANGE;
+            return TariffAction.D1;
     }
 }

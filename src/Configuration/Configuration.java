@@ -14,35 +14,32 @@ public class Configuration {
     public static double INERTIA = 0;
     public static double RATIONALITY = 0;
     public static int POPULATION = 10;
-    public static double ACT_CHANGE_PERC = 0.2;
     public static String LOGFILENAME;
-    public static double DAYMULT = 0;
-    public static double DMNDMULT = 0;
-    public static double INITCOST = 0;
+    public static double INITUNITCOST = 0;
     public static boolean DLOGGING = true;
     public static int TEST_ROUNDS = 1;
     public static int TRAINING_ROUNDS = 1;
-
-    public static double LEARNING_RATE = 0.9;
     public static double DISCOUNT_FACTOR = 1;
-
-    public static String DB_NAME_TRAINING = "RL0";
     public static String DQ_TRAINING = "RL0";
     public static double MAX_TARIFF_PRICE = 0.5;
-    public static boolean RL_TRAINING = false;
-    public static int PPTS_DISCRTZD = 10;
-
     public static boolean GET_NASH_EQ = false;
     public static boolean MANUAL_NASH_EQ_SELECTION = false;
     public static int MAX_DQ_AGENTS_ALLOWED = 3;
     public static int TOTAL_PUBLICATIONS_IN_A_GAME = 1;
     public static boolean RUN_ONE_ITERATION = true;
     
-//    public static String print() {
-//        return "\n********************Configurations**********************\n" + "TOTAL_TIME_SLOTS : " + TOTAL_TIME_SLOTS + "\n" + "PUBLICATION_CYCLE : " + PUBLICATION_CYCLE + "\n" + "DEFAULT_TARIFF_PRICE : " + DEFAULT_TARIFF_PRICE + "\n" + "CASE_STUDY_NO : " + CASE_STUDY_NO + "\n" + "INERTIA : " + INERTIA + "\n" + "RATIONALITY : " + RATIONALITY + "\n" + "ACT_CHANGE_PERC : " + ACT_CHANGE_PERC + "\n" + "POPULATION : " + POPULATION + "\n" + "LOGFILENAME : " + LOGFILENAME + "\n" + "DAYMULT : "
-//                + DAYMULT + "\n" + "DMNDMULT : " + DMNDMULT + "\n" + "INITCOST : " + INITCOST + "\n" + "DLOGGING : " + DLOGGING + "\n" + "TEST_ROUNDS : " + TEST_ROUNDS + "\n" + "TRAINING_ROUNDS : " + TRAINING_ROUNDS + "\n" + "LEARNING_RATE : " + LEARNING_RATE + "\n" + "DISCOUNT_FACTOR : " + DISCOUNT_FACTOR + "\n" + "DB_NAME_TRAINING : " + DB_NAME_TRAINING + "\n" + "MAX_TARIFF_PRICE : " + MAX_TARIFF_PRICE + "\n" + "RL_TRAINING : " + RL_TRAINING + "\n" + "PPTS_DISCRTZD : " + PPTS_DISCRTZD + "\n" + "GET_NASH_EQ : " + GET_NASH_EQ
-//                + "MANUAL_NASH_EQ_SELECTION : " + MANUAL_NASH_EQ_SELECTION + "\n" + "MAX_DQ_AGENTS_ALLOWED : " + MAX_DQ_AGENTS_ALLOWED + "\n";
-//    }
+    /* Q Learning Hyper Parameters */
+    public static int MaxEpochStep;
+    public static int MaxStep;
+    public static int ExpRepMaxSize;
+    public static int BatchSize;
+    public static int TargetDqnUpdateFreq; 
+    public static int RewardFactor;
+    public static float MinEpsilon;
+    public static int EpsilonNbStep;
+    public static double EpsilonNbStepPerc;
+    public static int NUM_OF_HIDDEN_LAYER;
+    public static int NUMBER_OF_NEURONS;
     
     public static String toStringRepresentation() {
         String p = "********************Configurations**********************\n";
@@ -76,28 +73,37 @@ public class Configuration {
             CASE_STUDY_NO = Integer.parseInt(prop.getProperty("case-study"));
             INERTIA = Double.parseDouble(prop.getProperty("inertia"));
             RATIONALITY = Double.parseDouble(prop.getProperty("rationality"));
-            ACT_CHANGE_PERC = Double.parseDouble(prop.getProperty("act-change-percentage"));
             POPULATION = Integer.parseInt(prop.getProperty("population"));
             LOGFILENAME = prop.getProperty("logfilename");
-            DAYMULT = Double.parseDouble(prop.getProperty("daymult"));
-            DMNDMULT = Double.parseDouble(prop.getProperty("demandmult"));
-            INITCOST = Double.parseDouble(prop.getProperty("initcost"));
+            INITUNITCOST = Double.parseDouble(prop.getProperty("initunitcost"));
             DLOGGING = Boolean.parseBoolean(prop.getProperty("detailedlogging"));
             TEST_ROUNDS = Integer.parseInt(prop.getProperty("test-rounds"));
             TRAINING_ROUNDS = Integer.parseInt(prop.getProperty("dq-training-rounds"));
-            LEARNING_RATE = Double.parseDouble(prop.getProperty("learningrate"));
             DISCOUNT_FACTOR = Double.parseDouble(prop.getProperty("discountfactor"));
-            DB_NAME_TRAINING = prop.getProperty("db-name-training");
             MAX_TARIFF_PRICE = Double.parseDouble(prop.getProperty("maxtariff"));
-            RL_TRAINING = Boolean.parseBoolean(prop.getProperty("rl-training"));
-            PPTS_DISCRTZD = Integer.parseInt(prop.getProperty("ppts_dscretzd"));
             GET_NASH_EQ = Boolean.parseBoolean(prop.getProperty("get-nash-eq"));
             MANUAL_NASH_EQ_SELECTION = Boolean.parseBoolean(prop.getProperty("manual-nash-eq-selection"));
             MAX_DQ_AGENTS_ALLOWED = Integer.parseInt(prop.getProperty("max-dq-agents-allowed"));
             RUN_ONE_ITERATION = Boolean.parseBoolean(prop.getProperty("run-one-iteration"));
-            // System.out.println("TOTAL_TIME_SLOTS " + TOTAL_TIME_SLOTS);
-            // System.out.println("PUBLICATION_CYCLE " + PUBLICATION_CYCLE);
+            ExpRepMaxSize = Integer.parseInt(prop.getProperty("experience-reply"));
+            BatchSize = Integer.parseInt(prop.getProperty("batch-size"));
+            TargetDqnUpdateFreq = Integer.parseInt(prop.getProperty("target-dqn-update-freq"));
+            RewardFactor = Integer.parseInt(prop.getProperty("reward-factor"));
+            MinEpsilon = Float.parseFloat(prop.getProperty("min-epsilon"));
+            EpsilonNbStepPerc = Double.parseDouble(prop.getProperty("epsilon-nb-steps-perc"));
+            NUM_OF_HIDDEN_LAYER = Integer.parseInt(prop.getProperty("num-of-hidden-layers"));
+            NUMBER_OF_NEURONS = Integer.parseInt(prop.getProperty("num-of-neurons"));
             TOTAL_PUBLICATIONS_IN_A_GAME = TOTAL_TIME_SLOTS / PUBLICATION_CYCLE;
+            
+            
+            /* Q Learning Hyper Parameters */
+            MaxEpochStep = TOTAL_PUBLICATIONS_IN_A_GAME;
+            MaxStep = TOTAL_PUBLICATIONS_IN_A_GAME * TRAINING_ROUNDS;
+            ExpRepMaxSize = TOTAL_PUBLICATIONS_IN_A_GAME * ExpRepMaxSize;
+            BatchSize = TOTAL_PUBLICATIONS_IN_A_GAME * BatchSize;
+            TargetDqnUpdateFreq = TOTAL_PUBLICATIONS_IN_A_GAME * TargetDqnUpdateFreq; 
+            EpsilonNbStep = (int) (TOTAL_PUBLICATIONS_IN_A_GAME * (TRAINING_ROUNDS * EpsilonNbStepPerc));
+            
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {

@@ -15,9 +15,9 @@ public class Test extends Agent {
     	int pub_cyc_no = ob.timeslot/Configuration.PUBLICATION_CYCLE;
     	if(pub_cyc_no == 10) {
     		//System.out.println("TS " + ob.timeslot + " Test: DEFECT");
-    		return TariffAction.DEFECT;
+    		return TariffAction.D1;
     	}
     	//System.out.println("TS " + ob.timeslot + " Test: NOCHANGE");
-    	return TariffAction.NOCHANGE;
+    	return TariffAction.NC;
     }
 }

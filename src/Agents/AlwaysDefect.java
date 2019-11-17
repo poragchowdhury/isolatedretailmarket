@@ -10,6 +10,6 @@ public class AlwaysDefect extends Agent {
 
     @Override
     public TariffAction makeAction(Observer ob) {
-        return TariffAction.DEFECT;
+        return TariffAction.D1;
     }
 }

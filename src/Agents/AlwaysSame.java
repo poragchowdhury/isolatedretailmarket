@@ -11,6 +11,6 @@ public class AlwaysSame extends Agent {
 
     @Override
     public TariffAction makeAction(Observer ob) {
-        return TariffAction.NOCHANGE;
+        return TariffAction.NC;
     }
 }
