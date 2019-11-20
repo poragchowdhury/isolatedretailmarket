@@ -34,7 +34,7 @@ public class Configuration {
     public static int ExpRepMaxSize;
     public static int BatchSize;
     public static int TargetDqnUpdateFreq; 
-    public static int RewardFactor;
+    public static double RewardFactor;
     public static float MinEpsilon;
     public static int EpsilonNbStep;
     public static double EpsilonNbStepPerc;
@@ -88,7 +88,7 @@ public class Configuration {
             ExpRepMaxSize = Integer.parseInt(prop.getProperty("experience-reply"));
             BatchSize = Integer.parseInt(prop.getProperty("batch-size"));
             TargetDqnUpdateFreq = Integer.parseInt(prop.getProperty("target-dqn-update-freq"));
-            RewardFactor = Integer.parseInt(prop.getProperty("reward-factor"));
+            RewardFactor = Double.parseDouble(prop.getProperty("reward-factor"));
             MinEpsilon = Float.parseFloat(prop.getProperty("min-epsilon"));
             EpsilonNbStepPerc = Double.parseDouble(prop.getProperty("epsilon-nb-steps-perc"));
             NUM_OF_HIDDEN_LAYER = Integer.parseInt(prop.getProperty("num-of-hidden-layers"));

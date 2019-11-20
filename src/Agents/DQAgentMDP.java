@@ -57,7 +57,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 			.updateStart(0)
 			.rewardFactor(Configuration.RewardFactor)
 			.gamma(Configuration.DISCOUNT_FACTOR)
-			.errorClamp(Double.MAX_VALUE)
+			.errorClamp(10) //
 			.minEpsilon(Configuration.MinEpsilon)
 			.epsilonNbStep(Configuration.EpsilonNbStep)
 			.doubleDQN(true).build();
@@ -169,11 +169,13 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 			dql.train();
 			DQNPolicy<DQAgentState> pol = dql.getPolicy();
 
+			/*
 			Map<String, Stat> sorted = sortByValue(mdp.stats);
 			for (String key : sorted.keySet()) {
 				Stat s = sorted.get(key);
 				log.info(key + ": Avg Reward =" + s.V() + ", " + s.N);
 			}
+			*/
 
 			// log("QLCONFIG MAXSTEP" + QLConfig.getMaxStep());
 			// dql_asyn.train();
@@ -281,9 +283,9 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 			retailManager.ob.timeslot++;
 		}
 		double after = agent.profit;
-		double reward = (after - before) / (Configuration.MAX_TARIFF_PRICE
-				* Configuration.POPULATION * retailManager.ob.fcc.maxUsage);
-
+		double reward = (after - before) / (Configuration.MAX_TARIFF_PRICE* Configuration.POPULATION * retailManager.ob.fcc.maxUsage);
+		//System.out.println("Reward " + reward);
+		/*
 		cumReward += reward;
 		H += action.toString().substring(0, 2) + "_";
 		if (H.length() == (Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * 3)) {
@@ -302,7 +304,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 				stats.put(H, s);
 			}
 		}
-
+		*/
 		// log.info("Reward: " + reward);
 		DQAgentState nextState = new DQAgentState(agent, retailManager.ob);
 

@@ -50,7 +50,12 @@ class AgentCompareByProfit implements Comparator {
 		// TODO Auto-generated method stub
 		Agent a0 = (Agent) a;
 		Agent a1 = (Agent) b;
-		return ((int) (a0.profit - a1.profit));
+		if(a0.profit < a1.profit)
+			return -1;
+		else if(a0.profit > a1.profit)
+			return 1;
+		else
+			return 0;
 	}
 }
 
@@ -60,7 +65,12 @@ class AgentCompareByBestResponse implements Comparator {
 		// TODO Auto-generated method stub
 		Agent a0 = (Agent) a;
 		Agent a1 = (Agent) b;
-		return ((int) (a0.bestResponseCount - a1.bestResponseCount));
+		if(a0.bestResponseCount < a1.bestResponseCount)
+			return -1;
+		else if(a0.bestResponseCount > a1.bestResponseCount)
+			return 1;
+		else
+			return 0;
 	}
 }
 
@@ -837,6 +847,7 @@ public class RetailMarketManager {
 		TitForTat TFT = new TitForTat(1, 1);
 		TitForTat TF2T = new TitForTat(1, 2);
 		TitForTat _2TFT = new TitForTat(2, 1);
+		literatureStrategies.add(new DQAgent("DQ0", "DQ0_1Day__1.00Prober.pol"));
 		// literatureStrategies.add(new DQAgent("DQ0", "DQ0_0.55AlzIncz,0.45Rand.pol"));
 		// literatureStrategies.add(new DQAgent("DQ10", "DQ10_0.461TF2T,0.54DQ9.pol"));
 		// literatureStrategies.add(new DQAgent("DQ9", "DQ9_0.40SoftMJ,0.60ZIP.pol"));
@@ -867,9 +878,9 @@ public class RetailMarketManager {
 
 	public CaseStudy setupInitialStrategies() {
 
-		CaseStudy initial = new CaseStudy().addP1Strats(new Prober());//, new DQAgent("DQ0", "DQ0_1.00Prober.pol"));//, new DQAgent("DQ1","DQ1_0.57Prober0.43DQ0.pol"));
-		initial.addP2Strats(new Prober());//, new DQAgent("DQ0", "DQ0_1.00Prober.pol"));//, new DQAgent("DQ1","DQ1_0.57Prober0.43DQ0.pol"));
-		Configuration.DQ_TRAINING = "DQ0";
+		CaseStudy initial = new CaseStudy().addP1Strats(new Grim(), new DQAgent("DQ2", "DQ2_1.00ZI.pol"), new DQAgent("DQ3","DQ3_1.00DQ2.pol"), new DQAgent("DQ4","DQ4_1.00DQ3.pol"));
+									initial.addP2Strats(new Grim(), new DQAgent("DQ2", "DQ2_1.00ZI.pol"), new DQAgent("DQ3","DQ3_1.00DQ2.pol"), new DQAgent("DQ4","DQ4_1.00DQ3.pol"));
+		Configuration.DQ_TRAINING = "DQ2";
 		log.info("Pool1: " + initial.pool1.toString());
 		log.info("Pool2: " + initial.pool2.toString());
 		return initial;
@@ -1110,17 +1121,19 @@ public class RetailMarketManager {
 		log.info(Configuration.toStringRepresentation());
 //		Agent alwaysI = new AlwaysIncrease();
 //		Agent alwaysS = new AlwaysSame();
-		Agent prober = new Prober();
-		//		SMNE smne = new SMNE();
-		//		smne.addStrategy(0.427, dq);
-		//		smne.addStrategy(0.573, prober);
-		Agent opponentAgent = prober;
+//		Agent prober = new Prober();
+//		DQAgent DQ0 = new DQAgent("DQ0", "DQ0_1.00Prober.pol");
+//		DQAgent DQ1 = new DQAgent("DQ1", "DQ1_0.44AlzIncz,0.56DQ0.pol");
+//				SMNE smne = new SMNE();
+//				smne.addStrategy(0.41, DQ0);
+//				smne.addStrategy(0.59, DQ1);
+		Agent opponentAgent = new AlwaysIncrease();
 		List<Agent> oppPool = new ArrayList<>();
 		oppPool.add(opponentAgent);
 
-		String policyToLearn = "DQ0_AlzSame.pol";
-		DQAgentMDP.trainDQAgent(oppPool, policyToLearn, null);
-		DQAgent dqAgent = new DQAgent("DQ0", policyToLearn);
+		String policyToLearn = "DQ0_1.00Prober.pol";
+		//DQAgentMDP.trainDQAgent(oppPool, policyToLearn, null);
+		DQAgent dqAgent = new DQAgent("DQ0", policyToLearn);  // new DQAgent("DQ0", "DQ0_1Day__1.00Prober.pol");//
 
 		rm.startSimulation(new CaseStudy()
 				.addP1Strats(opponentAgent)
@@ -1167,13 +1180,13 @@ public class RetailMarketManager {
 		 * experiment to make sure DQAgent is being trained correctly Or to tweak
 		 * hyperparameters
 		 */
-		sandboxExperiment();
-		// roundRobinExperiment();
+		//sandboxExperiment();
+		//roundRobinExperiment();
 		/*
 		 * The Main Experiment runs the flowchart specified by Porag Basically, the SMNE
 		 * vs DQAgent stuff with Gambit and such
 		 */
-		//mainExperiment();
+		mainExperiment();
 	}
 
 }

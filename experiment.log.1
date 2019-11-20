@@ -1,55 +1,35 @@
-{00:05:02} RetailMarketManager.RetailMarketManager startExperiment *************** Experimental Run Log ***************
-{00:05:02} RetailMarketManager.RetailMarketManager startExperiment ********************Configurations**********************
+{20:42:14} RetailMarketManager.RetailMarketManager startExperiment *************** Experimental Run Log ***************
+{20:42:14} RetailMarketManager.RetailMarketManager startExperiment ********************Configurations**********************
 [TOTAL_TIME_SLOTS = 169]
 [PUBLICATION_CYCLE = 6]
 [DEFAULT_TARIFF_PRICE = 0.25]
 [CASE_STUDY_NO = 91]
-[INERTIA = 0.9]
-[RATIONALITY = 0.9]
+[INERTIA = 0.0]
+[RATIONALITY = 1.0]
 [POPULATION = 100]
-[ACT_CHANGE_PERC = 0.0]
 [LOGFILENAME = RLExistingPopularStrategiesRoundRobin.csv]
-[DAYMULT = 0.0]
-[DMNDMULT = 0.0]
-[INITCOST = 0.0]
+[INITUNITCOST = 0.05]
 [DLOGGING = false]
 [TEST_ROUNDS = 1000]
-[TRAINING_ROUNDS = 2000]
-[LEARNING_RATE = 0.1]
+[TRAINING_ROUNDS = 3000]
 [DISCOUNT_FACTOR = 0.99]
-[DB_NAME_TRAINING = rl1]
 [DQ_TRAINING = RL0]
 [MAX_TARIFF_PRICE = 0.5]
-[RL_TRAINING = false]
-[PPTS_DISCRTZD = 5]
 [GET_NASH_EQ = true]
 [MANUAL_NASH_EQ_SELECTION = true]
 [MAX_DQ_AGENTS_ALLOWED = 2]
 [TOTAL_PUBLICATIONS_IN_A_GAME = 28]
 [RUN_ONE_ITERATION = true]
+[MaxEpochStep = 28]
+[MaxStep = 84000]
+[ExpRepMaxSize = 2800]
+[BatchSize = 280]
+[TargetDqnUpdateFreq = 2800]
+[RewardFactor = 1.0]
+[MinEpsilon = 0.1]
+[EpsilonNbStep = 84000]
+[EpsilonNbStepPerc = 1.0]
+[NUM_OF_HIDDEN_LAYER = 1]
+[NUMBER_OF_NEURONS = 13]
 ********************Configurations**********************
 
-{00:05:05} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool1: [Prober, DQ0, DQ1]
-{00:05:05} RetailMarketManager.RetailMarketManager setupInitialStrategies Pool2: [Prober, DQ0, DQ1]
-{00:05:05} RetailMarketManager.RetailMarketManager startExperiment ****************************** Iteration 1 TraningRounds for DQAgent: 2000
-{00:05:05} RetailMarketManager.RetailMarketManager startExperiment Pool1 Agents: [Prober, DQ0, DQ1]
-{00:05:05} RetailMarketManager.RetailMarketManager startExperiment Pool2 Agents: [Prober, DQ0, DQ1]
-{00:05:05} RetailMarketManager.RetailMarketManager startExperiment Starting game round
-{00:05:07} RetailMarketManager.RetailMarketManager startSimulation Prober,2013.326,28.533,Prober,2002.655,27.495
-{00:05:27} RetailMarketManager.RetailMarketManager startSimulation Prober,3340.607,46.662,DQ0,989.937,7.483
-{00:05:46} RetailMarketManager.RetailMarketManager startSimulation Prober,1480.685,23.893,DQ1,1467.988,25.072
-{00:06:20} RetailMarketManager.RetailMarketManager startSimulation DQ0,4759.190,32.654,DQ0,4759.014,33.616
-{00:06:55} RetailMarketManager.RetailMarketManager startSimulation DQ0,846.383,6.401,DQ1,2263.735,43.961
-{00:07:29} RetailMarketManager.RetailMarketManager startSimulation DQ1,1287.555,24.672,DQ1,1316.799,24.261
-{00:07:29} RetailMarketManager.RetailMarketManager startExperiment Getting nash equilibrium strategies
-{00:07:29} RetailMarketManager.RetailMarketManager computeNashEq Computing game matrix
-{00:07:29} RetailMarketManager.RetailMarketManager computeNashEq Creating Gambit file
-{00:07:29} RetailMarketManager.RetailMarketManager computeNashEq Sending file to command-line tool
-{00:07:29} RetailMarketManager.RetailMarketManager computeNashEq Reading from command-line output
-{00:07:29} RetailMarketManager.RetailMarketManager computeNashEq == Nash Eq Strategies ==
-{00:07:29} RetailMarketManager.RetailMarketManager computeNashEq Prober, DQ0, DQ1
-{00:07:29} RetailMarketManager.RetailMarketManager computeNashEq 0 [1.000, 0.000, 0.000]
-{00:07:29} RetailMarketManager.RetailMarketManager computeNashEq 1 [0.000, 1.000, 0.000]
-{00:07:29} RetailMarketManager.RetailMarketManager computeNashEq 2 [0.582, 0.418, 0.000]
-{00:07:29} RetailMarketManager.RetailMarketManager startExperiment DQ1 will be removed next iteration from the pools
-{00:07:29} RetailMarketManager.RetailMarketManager startExperiment [Manual Selection] Please select the desired strategy for SMNE (idx)

@@ -83,7 +83,7 @@ public class DQAgentState implements Encodable {
     	
         features.add((double) timeSlot / Configuration.TOTAL_TIME_SLOTS);
         // feature 2: hourOfDay, correlates with the demand profile of customer : maxVal = 24
-//        features.add((double) (timeSlot%24+1) / 24);
+        //features.add((double) (timeSlot%24+1) / 24);
         
     	
         /* 11 Price related features */
@@ -109,14 +109,14 @@ public class DQAgentState implements Encodable {
         features.add(agent.rivalTariffHistory[prev2PubCycTS]/Configuration.MAX_TARIFF_PRICE);
         */
         
-        /*
+        
         // feature 9: previous timeslot cost
         features.add(agent.unitcost/agent.c_max);
         // feature 10: previous pubCyc cost
         features.add(agent.unitCostHistory[prevPubCycTS]/agent.c_max);
         // feature 11: previous 2 pubCyc cost
         features.add(agent.unitCostHistory[prev2PubCycTS]/agent.c_max);
-		*/
+		
         
         /* 10 Action related features */
         

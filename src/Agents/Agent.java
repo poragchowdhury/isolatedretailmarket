@@ -153,11 +153,14 @@ public abstract class Agent implements Cloneable {
 	public final void playAction(Observer ob, TariffAction action) {
 		double tariffChange = action.tariff;
 		double newTariff = this.tariffPrice + tariffChange;
-		boolean validTariff = newTariff < Configuration.MAX_TARIFF_PRICE && newTariff > this.unitcost;
-
+		boolean validTariff = newTariff <= Configuration.MAX_TARIFF_PRICE && newTariff >= this.unitcost;
 		if (validTariff) {
 			this.tariffPrice = newTariff;
 			this.previousAction = action;
+			this.tariffHistory[ob.timeslot] = this.tariffPrice;
+		}
+		else {
+			this.previousAction = TariffAction.NC;
 			this.tariffHistory[ob.timeslot] = this.tariffPrice;
 		}
 	}

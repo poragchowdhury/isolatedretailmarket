@@ -76,8 +76,8 @@ public class DQAgent extends Agent {
 		input = input.reshape(Learning.makeShape(1, DQAgentMDP.OBSERVATION_SPACE.getShape()));
 
 		INDArray output = pol.getNeuralNet().output(input);
-//		System.out.println("NN Input: " + input.toString());
-//		System.out.println("NN Output: " + output.toString());
+		//System.out.println("NN Input: " + input.toString());
+		//System.out.println("NN Output: " + output.toString());
 
 		int nextActionInt = pol.nextAction(input);
 		TariffAction nextAction = TariffAction.valueOf(nextActionInt);
