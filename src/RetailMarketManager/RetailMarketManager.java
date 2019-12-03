@@ -878,9 +878,9 @@ public class RetailMarketManager {
 
 	public CaseStudy setupInitialStrategies() {
 
-		CaseStudy initial = new CaseStudy().addP1Strats(new Grim(), new DQAgent("DQ2", "DQ2_1.00ZI.pol"), new DQAgent("DQ3","DQ3_1.00DQ2.pol"), new DQAgent("DQ4","DQ4_1.00DQ3.pol"));
-									initial.addP2Strats(new Grim(), new DQAgent("DQ2", "DQ2_1.00ZI.pol"), new DQAgent("DQ3","DQ3_1.00DQ2.pol"), new DQAgent("DQ4","DQ4_1.00DQ3.pol"));
-		Configuration.DQ_TRAINING = "DQ2";
+		CaseStudy initial = new CaseStudy().addP1Strats(new Prober(), new NaiveProber(), new AlwaysDefect());//, new DQAgent("DQ2", "DQ2_1.00ZI.pol"), new DQAgent("DQ3","DQ3_1.00DQ2.pol"), new DQAgent("DQ4","DQ4_1.00DQ3.pol"));
+									initial.addP2Strats(new Prober(), new NaiveProber(), new AlwaysDefect());//, new DQAgent("DQ2", "DQ2_1.00ZI.pol"), new DQAgent("DQ3","DQ3_1.00DQ2.pol"), new DQAgent("DQ4","DQ4_1.00DQ3.pol"));
+		Configuration.DQ_TRAINING = "DQ0";
 		log.info("Pool1: " + initial.pool1.toString());
 		log.info("Pool2: " + initial.pool2.toString());
 		return initial;
@@ -1131,8 +1131,8 @@ public class RetailMarketManager {
 		List<Agent> oppPool = new ArrayList<>();
 		oppPool.add(opponentAgent);
 
-		String policyToLearn = "DQ0_1.00Prober.pol";
-		//DQAgentMDP.trainDQAgent(oppPool, policyToLearn, null);
+		String policyToLearn = "sandbox.pol";
+		DQAgentMDP.trainDQAgent(oppPool, policyToLearn, null);
 		DQAgent dqAgent = new DQAgent("DQ0", policyToLearn);  // new DQAgent("DQ0", "DQ0_1Day__1.00Prober.pol");//
 
 		rm.startSimulation(new CaseStudy()
@@ -1154,6 +1154,7 @@ public class RetailMarketManager {
 		log.info("Opp [0] Mkt " + opponentAgent.marketShareHistory[0] + " MktHis: " + opponentAgent.getHistoryByPubCyc(opponentAgent.marketShareHistory));
 		log.info("DQ0 [0] Prf " + dqAgent.profitHistory[0] + " PftHis: " + dqAgent.getHistoryByPubCyc(dqAgent.profitHistory));
 		log.info("Opp [0] Prf " + opponentAgent.profitHistory[0] + " PftHis: " + opponentAgent.getHistoryByPubCyc(opponentAgent.profitHistory));
+		
 	}
 
 	public static void mainExperiment() throws IOException {
@@ -1180,13 +1181,13 @@ public class RetailMarketManager {
 		 * experiment to make sure DQAgent is being trained correctly Or to tweak
 		 * hyperparameters
 		 */
-		//sandboxExperiment();
+		sandboxExperiment();
 		//roundRobinExperiment();
 		/*
 		 * The Main Experiment runs the flowchart specified by Porag Basically, the SMNE
 		 * vs DQAgent stuff with Gambit and such
 		 */
-		mainExperiment();
+//		mainExperiment();
 	}
 
 }

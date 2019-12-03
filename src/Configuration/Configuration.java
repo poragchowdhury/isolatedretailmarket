@@ -20,13 +20,15 @@ public class Configuration {
     public static int TEST_ROUNDS = 1;
     public static int TRAINING_ROUNDS = 1;
     public static double DISCOUNT_FACTOR = 1;
-    public static String DQ_TRAINING = "RL0";
+    public static String DQ_TRAINING = "DQ0";
     public static double MAX_TARIFF_PRICE = 0.5;
     public static boolean GET_NASH_EQ = false;
     public static boolean MANUAL_NASH_EQ_SELECTION = false;
     public static int MAX_DQ_AGENTS_ALLOWED = 3;
     public static int TOTAL_PUBLICATIONS_IN_A_GAME = 1;
     public static boolean RUN_ONE_ITERATION = true;
+    public static double MAX_UNIT_COST = 0.15;
+    public static double MIN_UNIT_COST = 0.15;
     
     /* Q Learning Hyper Parameters */
     public static int MaxEpochStep;
@@ -93,6 +95,8 @@ public class Configuration {
             EpsilonNbStepPerc = Double.parseDouble(prop.getProperty("epsilon-nb-steps-perc"));
             NUM_OF_HIDDEN_LAYER = Integer.parseInt(prop.getProperty("num-of-hidden-layers"));
             NUMBER_OF_NEURONS = Integer.parseInt(prop.getProperty("num-of-neurons"));
+            MAX_UNIT_COST = Double.parseDouble(prop.getProperty("maxunitcost"));
+            MIN_UNIT_COST = Double.parseDouble(prop.getProperty("minunitcost"));
             TOTAL_PUBLICATIONS_IN_A_GAME = TOTAL_TIME_SLOTS / PUBLICATION_CYCLE;
             
             

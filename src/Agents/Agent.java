@@ -39,8 +39,8 @@ public abstract class Agent implements Cloneable {
 	public double prI = 1;
 
 	// Random walk cost variables
-	public double c_max = 0.12;
-	public double c_min = 0.03;
+	public double c_max = 0.15;
+	public double c_min = 0.05;
 	public double tr_min = 0.95;
 	public double tr_max = 1 / 0.95;
 	public double unitcost = 0.05;
@@ -62,6 +62,8 @@ public abstract class Agent implements Cloneable {
 	public Agent(String agentName) {
 		this.name = agentName;
 		this.unitcost = Configuration.INITUNITCOST;
+		this.c_max = Configuration.MAX_UNIT_COST;
+		this.c_min = Configuration.MIN_UNIT_COST;
 		this.tariffHistory = new double[Configuration.TOTAL_TIME_SLOTS];
 		this.unitCostHistory = new double[Configuration.TOTAL_TIME_SLOTS];
 		this.costHistory = new double[Configuration.TOTAL_TIME_SLOTS];

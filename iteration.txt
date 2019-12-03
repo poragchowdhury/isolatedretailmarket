@@ -1,0 +1,47 @@
+############################### START ITERATION #######################################
+############################### ITERATION 1 ###########################################
+NE:
+AlD, 	NvPbr, 	Prober
+1.000, 	0.000, 	0.000
+
+[Manual Selection] Selected [1.0, 0.0, 0.0]
+Train 10000 games : Running SMNE (1.00AlD) vs new DQAgent
+Test 1000 games : SMNE Profit: 1862.73 (Error: 160.25),  newDQAgent profit: 7775.83 (Error: 140.25)
+new DQAgent profit > SMNE profit, adding the new DQAgent (DQ0) to the pool
+
+############################### ITERATION 2 ###########################################
+
+NE:
+AlD,	DQ0
+0.000, 	1.000
+AlD will be removed next iteration from the pools
+
+############################### ITERATION 3 ###########################################
+
+NE:
+AlzIncz,	 DQ0
+1.000,		 0.000
+0.300,		 0.700
+0.000,		 1.000
+
+[Manual Selection] Selected [0.0, 1.0]
+Train 10000 games : Running SMNE (1.00DQ0) vs new DQAgent
+Test 1000 games :: SMNE Profit: 2138.63 (Error: 26.57), new DQAgent profit: 2337.32 (Error: 175.57)
+new DQAgent profit > SMNE profit, adding the new DQAgent (DQ1) to the pool
+
+############################### ITERATION 4 ###########################################
+
+NE:
+AlzIncz,	 DQ0, 		DQ1
+1.000,		 0.000, 	0.000
+0.306,		 0.694, 	0.000
+0.000,		 1.000,	 	0.000
+0.000,		 0.079, 	0.921
+0.000,		 0.000, 	1.000
+
+[Manual Selection] Selected [0.0, 0.0, 1.0]
+Train 10000 games : Running SMNE (1.00DQ1) vs new DQAgent
+Test 1000 games : SMNE Profit: 2595.82 (Error: 112.10), new DQAgent profit: 2510.90 (Error: 114.19) 
+New DQAgent could not beat SMNE.
+
+############################### END ITERATION #########################################

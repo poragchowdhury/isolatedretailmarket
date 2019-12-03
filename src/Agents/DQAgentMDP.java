@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
+import org.deeplearning4j.rl4j.network.dqn.DQN;
 import org.deeplearning4j.api.storage.StatsStorage;
 import org.deeplearning4j.gym.StepReply;
 import org.deeplearning4j.nn.api.NeuralNetwork;
@@ -47,20 +48,12 @@ import RetailMarketManager.RetailMarketManager;
 import Tariff.TariffAction;
 
 public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
-	public static QLearning.QLConfiguration QLConfig = QLearning.QLConfiguration.builder()
-			.seed(123)
-			.maxEpochStep(Configuration.MaxEpochStep)
-			.maxStep(Configuration.MaxStep)
-			.expRepMaxSize(Configuration.ExpRepMaxSize)
-			.batchSize(Configuration.BatchSize)
-			.targetDqnUpdateFreq(Configuration.TargetDqnUpdateFreq) 
-			.updateStart(0)
-			.rewardFactor(Configuration.RewardFactor)
-			.gamma(Configuration.DISCOUNT_FACTOR)
-			.errorClamp(10) //
-			.minEpsilon(Configuration.MinEpsilon)
-			.epsilonNbStep(Configuration.EpsilonNbStep)
-			.doubleDQN(true).build();
+	public static QLearning.QLConfiguration QLConfig = QLearning.QLConfiguration.builder().seed(123)
+			.maxEpochStep(Configuration.MaxEpochStep).maxStep(Configuration.MaxStep)
+			.expRepMaxSize(Configuration.ExpRepMaxSize).batchSize(Configuration.BatchSize)
+			.targetDqnUpdateFreq(Configuration.TargetDqnUpdateFreq).updateStart(0)
+			.rewardFactor(Configuration.RewardFactor).gamma(Configuration.DISCOUNT_FACTOR).errorClamp(10.0) //
+			.minEpsilon(Configuration.MinEpsilon).epsilonNbStep(Configuration.EpsilonNbStep).doubleDQN(true).build();
 
 	public static A3CConfiguration QLConfig2 = A3CConfiguration.builder().seed(123).maxEpochStep(168 / 6)
 			.maxStep(168 / 6).build();
@@ -91,12 +84,9 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 																								// anneal
 	);
 
-	public static DQNFactoryStdDense.Configuration QLNet = DQNFactoryStdDense.Configuration.builder()
-			.l2(0.001)
-			.updater(new Adam(0.0005))
-			.numHiddenNodes(Configuration.NUMBER_OF_NEURONS)
-			.numLayer(Configuration.NUM_OF_HIDDEN_LAYER)
-			.build();
+	public static DQNFactoryStdDense.Configuration QLNet = DQNFactoryStdDense.Configuration.builder().l2(0.001)
+			.updater(new Adam(0.0005)).numHiddenNodes(Configuration.NUMBER_OF_NEURONS)
+			.numLayer(Configuration.NUM_OF_HIDDEN_LAYER).build();
 
 	public static ActorCriticFactorySeparateStdDense.Configuration QLNet2 = ActorCriticFactorySeparateStdDense.Configuration
 			.builder().l2(0.0001).updater(new Adam(0.0005)).numHiddenNodes(16).numLayer(3).build();
@@ -130,13 +120,19 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 		try {
 			// record the training data in rl4j-data in a new folder
 			DataManager manager = new DataManager(true);
+			
+			
 			QLearningDiscreteDense<DQAgentState> dql;
-			if(sourcePolicy == null)
-				dql = new QLearningDiscreteDense<DQAgentState>(mdp, QLNet, QLConfig, manager);
+			if(sourcePolicy == null) {
+				DQN model = new DQN(NeuralNet.createMultiLayerNetwork());
+				dql = new QLearningDiscreteDense<DQAgentState>(mdp, model, QLConfig, manager);
+			}
 			else {
 				IDQN sourceQLNet = DQNPolicy.load(sourcePolicy).getNeuralNet();
 				dql = new QLearningDiscreteDense<DQAgentState>(mdp, sourceQLNet, QLConfig, manager);
 			}
+			
+			
 //			try {
 //				
 //				DQNPolicy<DQAgentState> pol = DQNPolicy.load("main.pol");
@@ -146,10 +142,8 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 //				dql = new QLearningDiscreteDense<DQAgentState>(mdp, QLNet, QLConfig, manager);
 //			}
 
-			// A3CDiscreteDense<DQAgentState> dqc = new A3CDiscreteDense<>(mdp, QLNet2, A3C,
-			// manager);
-			// AsyncNStepQLearningDiscreteDense<DQAgentState> dql_asyn = new
-			// AsyncNStepQLearningDiscreteDense<DQAgentState>(mdp, QLNet, ASYNC_QLConfig,
+			//A3CDiscreteDense<DQAgentState> dqc = new A3CDiscreteDense<>(mdp, QLNet2, A3C, manager);
+			//AsyncNStepQLearningDiscreteDense<DQAgentState> dql_asyn = new AsyncNStepQLearningDiscreteDense<DQAgentState>(mdp, QLNet, ASYNC_QLConfig,
 			// manager);
 			// define the training
 			// dql.addListener(new Listener());
@@ -181,10 +175,11 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 			// dql_asyn.train();
 			// DQNPolicy<DQAgentState> pol = (DQNPolicy<DQAgentState>) dql_asyn.getPolicy();
 
-			// dqc.train();
-			// ACPolicy<DQAgentState> pol = dqc.getPolicy();
+			//dqc.train();
+			//ACPolicy<DQAgentState> pol = dqc.getPolicy();
 
 			log("Saving DeepQ policy");
+			//pol.save("pol\\", "pol1");
 			pol.save(policyFilename);
 //			pol.save("main.pol");
 
@@ -283,28 +278,20 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 			retailManager.ob.timeslot++;
 		}
 		double after = agent.profit;
-		double reward = (after - before) / (Configuration.MAX_TARIFF_PRICE* Configuration.POPULATION * retailManager.ob.fcc.maxUsage);
-		//System.out.println("Reward " + reward);
+		double reward = (after - before)
+				/ (Configuration.MAX_TARIFF_PRICE * Configuration.POPULATION * retailManager.ob.fcc.maxUsage);
+		// System.out.println("Reward " + reward);
 		/*
-		cumReward += reward;
-		H += action.toString().substring(0, 2) + "_";
-		if (H.length() == (Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * 3)) {
-			if (stats.containsKey(H)) {
-				Stat s = stats.get(H);
-				s.cummulative += cumReward;
-				s.N++;
-				stats.put(H, s);
-				log.info("ActionHistory" + H + " reward " + s.cummulative);
-				log.info("ActionHistory" + agent.getAllHistoryActions() + " profit " + agent.profit);
-				log.info("MarketHistory" + agent.getHistoryByPubCyc(agent.marketShareHistory) + " profit " + agent.profit);
-			} else {
-				Stat s = new Stat();
-				s.cummulative = cumReward;
-				s.N = 1;
-				stats.put(H, s);
-			}
-		}
-		*/
+		 * cumReward += reward; H += action.toString().substring(0, 2) + "_"; if
+		 * (H.length() == (Configuration.TOTAL_PUBLICATIONS_IN_A_GAME * 3)) { if
+		 * (stats.containsKey(H)) { Stat s = stats.get(H); s.cummulative += cumReward;
+		 * s.N++; stats.put(H, s); log.info("ActionHistory" + H + " reward " +
+		 * s.cummulative); log.info("ActionHistory" + agent.getAllHistoryActions() +
+		 * " profit " + agent.profit); log.info("MarketHistory" +
+		 * agent.getHistoryByPubCyc(agent.marketShareHistory) + " profit " +
+		 * agent.profit); } else { Stat s = new Stat(); s.cummulative = cumReward; s.N =
+		 * 1; stats.put(H, s); } }
+		 */
 		// log.info("Reward: " + reward);
 		DQAgentState nextState = new DQAgentState(agent, retailManager.ob);
 
