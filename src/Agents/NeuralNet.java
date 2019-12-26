@@ -29,27 +29,43 @@ public class NeuralNet {
     private static final int LAYER0_NEURONS = 13;
     private static final int LAYER1_NEURONS = 13;
     private static final int LAYER2_NEURONS = 13;
+//    private static final int LAYER3_NEURONS = 15;
+//    private static final int LAYER4_NEURONS = 15;
+//    private static final int LAYER5_NEURONS = 15;
+    
 
     private static DenseLayer layer0 = new DenseLayer.Builder()
             .nIn(INPUT_NUM)
             .nOut(LAYER0_NEURONS)
-//            .dropOut(0.8)
             .activation(Activation.RELU).build();
 
     private static DenseLayer layer1 = new DenseLayer.Builder()
             .nIn(layer0.getNOut())
             .nOut(LAYER1_NEURONS)
-            .dropOut(0.8)
             .activation(Activation.RELU).build();
     
     private static DenseLayer layer2 = new DenseLayer.Builder()
             .nIn(layer1.getNOut())
             .nOut(LAYER2_NEURONS)
-            .dropOut(0.8)
             .activation(Activation.RELU).build();
-
+    
+//    private static DenseLayer layer3 = new DenseLayer.Builder()
+//            .nIn(layer2.getNOut())
+//            .nOut(LAYER3_NEURONS)
+//            .activation(Activation.RELU).build();
+    
+//    private static DenseLayer layer4 = new DenseLayer.Builder()
+//            .nIn(layer3.getNOut())
+//            .nOut(LAYER4_NEURONS)
+//            .activation(Activation.RELU).build();
+    
+//    private static DenseLayer layer5 = new DenseLayer.Builder()
+//            .nIn(layer4.getNOut())
+//            .nOut(LAYER5_NEURONS)
+//            .activation(Activation.RELU).build();
+    
     private static OutputLayer layerOutput = new OutputLayer.Builder(LossFunctions.LossFunction.MSE)
-            .nIn(layer0.getNOut())
+            .nIn(layer2.getNOut())
             .nOut(OUTPUT_NUM)
             .activation(Activation.IDENTITY)
             .build();
@@ -68,10 +84,13 @@ public class NeuralNet {
              * Can also use LSTM.Builder() or RnnOutputLayer.Builder()
              * More details in ActorCriticFactorySeparateStdDense
              */
-//            .layer(0, layer0)
-//            .layer(1, layer1)
             .layer(0, layer0)
-            .layer(1, layerOutput)
+            .layer(1, layer1)
+            .layer(2, layer2)
+//            .layer(3, layer3)
+//            .layer(4, layer4)
+//            .layer(5, layer5)
+            .layer(3, layerOutput)
             .build();
 
     public static ActorCriticFactorySeparateStdDense.Configuration A3C_NET_FACTORY_CONFIG = ActorCriticFactorySeparateStdDense.Configuration.builder()

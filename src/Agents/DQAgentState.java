@@ -83,7 +83,7 @@ public class DQAgentState implements Encodable {
     	
         features.add((double) timeSlot / Configuration.TOTAL_TIME_SLOTS);
         // feature 2: hourOfDay, correlates with the demand profile of customer : maxVal = 24
-        //features.add((double) (timeSlot%24+1) / 24);
+        features.add((double) (timeSlot%24+1) / 24.0);
         
     	
         /* 11 Price related features */
@@ -93,22 +93,20 @@ public class DQAgentState implements Encodable {
         features.add(ppts/maxPossProfitPerTS);
         // feature 3: my previous TS tariff price
         features.add(agent.tariffPrice/Configuration.MAX_TARIFF_PRICE);
-        /*
+        
         // feature 4: my previous publication cycle's tariff price
         features.add(agent.tariffHistory[prevPubCycTS]/Configuration.MAX_TARIFF_PRICE);
         // feature 5: my previous 2 publication cycle's tariff price
         features.add(agent.tariffHistory[prev2PubCycTS]/Configuration.MAX_TARIFF_PRICE);
-        */
         
-        /*
+        
+        
         // feature 6: opponent previous TS tariff price
         features.add(agent.rivalTariffPrice/Configuration.MAX_TARIFF_PRICE);
         // feature 7: opponenet's previous publication cycle's tariff price
         features.add(agent.rivalTariffHistory[prevPubCycTS]/Configuration.MAX_TARIFF_PRICE);
         // feature 8: opponenet's previous 2 publication cycle's tariff price
         features.add(agent.rivalTariffHistory[prev2PubCycTS]/Configuration.MAX_TARIFF_PRICE);
-        */
-        
         
         // feature 9: previous timeslot cost
         features.add(agent.unitcost/agent.c_max);
@@ -127,7 +125,6 @@ public class DQAgentState implements Encodable {
         for (double d : one_hot(agent.rivalPreviousAction.index))
             features.add(d);
         
-        /*
         for (double d : one_hot(agent.actHistory[prevPubCycTS]))
             features.add(d);
         // feature 5~10: rival agent's previous action
@@ -138,18 +135,18 @@ public class DQAgentState implements Encodable {
         // feature 5~10: rival agent's previous action
         for (double d : one_hot(agent.rivalActHistory[prev2PubCycTS]))
             features.add(d);
-       	*/
+       	
         
         /* 3 Market share related features */
         
         // feature 1: my previous TS market share
         features.add((double) agent.marketShare/Configuration.POPULATION);
-        /*
+        
         // feature 2: my previous publication cycle market share
         features.add((double) agent.marketShareHistory[prevPubCycTS]/Configuration.POPULATION);
         // feature 3: my previous 2 publication cycle market share
         features.add((double) agent.marketShareHistory[prev2PubCycTS]/Configuration.POPULATION);
-        */
+        
         
         /* 3 Customer demand related features */
         // feature 1,2,3: customer demand features

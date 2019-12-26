@@ -131,7 +131,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 				IDQN sourceQLNet = DQNPolicy.load(sourcePolicy).getNeuralNet();
 				dql = new QLearningDiscreteDense<DQAgentState>(mdp, sourceQLNet, QLConfig, manager);
 			}
-			
+		
 			
 //			try {
 //				
@@ -160,6 +160,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 			// }
 
 			log("Training DeepQ");
+			dql.addListener(new NeuralNetListener());
 			dql.train();
 			DQNPolicy<DQAgentState> pol = dql.getPolicy();
 
@@ -278,8 +279,9 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 			retailManager.ob.timeslot++;
 		}
 		double after = agent.profit;
-		double reward = (after - before)
-				/ (Configuration.MAX_TARIFF_PRICE * Configuration.POPULATION * retailManager.ob.fcc.maxUsage);
+		double reward = after;// / (Configuration.MAX_TARIFF_PRICE * Configuration.POPULATION * retailManager.ob.fcc.maxUsage);
+//		double reward = (after - before);
+//				/ (Configuration.MAX_TARIFF_PRICE * Configuration.POPULATION * retailManager.ob.fcc.maxUsage);
 		// System.out.println("Reward " + reward);
 		/*
 		 * cumReward += reward; H += action.toString().substring(0, 2) + "_"; if

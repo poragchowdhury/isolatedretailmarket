@@ -801,6 +801,24 @@ public class RetailMarketManager {
 
 			// ************** Does RL have a higher payoff than SMNE?
 			log.info("SMNE Profit: " + smne.profit + ", DQAgent profit: " + dqAgent.profit);
+			
+			log.info("Feature Size: " + DQAgentMDP.NUM_OBSERVATIONS);
+			log.info("Training Rounds: " + Configuration.TRAINING_ROUNDS);
+			log.info("Test Rounds: " + Configuration.TEST_ROUNDS);
+			log.info(String.format("Def %s, NoC %s, Inc %s Def2 %s Inc2 %s", DQAgent.DEFECT, DQAgent.NOC, DQAgent.INC,
+					DQAgent.DEFECT2, DQAgent.INC2));
+
+
+			log.info("DQ0 [0] Act " + dqAgent.actHistory[0] + " Action: " + dqAgent.getAllHistoryActions());
+			log.info("Opp [0] Act " + smne.actHistory[0] + " Action: " + smne.getAllHistoryActions());
+			log.info("DQ0 [0] Trf " + dqAgent.tariffHistory[0] + " TrfHis: " + dqAgent.getHistoryByPubCyc(dqAgent.tariffHistory));
+			log.info("Opp [0] Trf " + smne.tariffHistory[0] + " TrfHis: " + smne.getHistoryByPubCyc(smne.tariffHistory));
+			log.info("DQ0 [0] Mkt " + dqAgent.marketShareHistory[0] + " MktHis: " + dqAgent.getHistoryByPubCyc(dqAgent.marketShareHistory));
+			log.info("Opp [0] Mkt " + smne.marketShareHistory[0] + " MktHis: " + smne.getHistoryByPubCyc(smne.marketShareHistory));
+			log.info("DQ0 [0] Prf " + dqAgent.profitHistory[0] + " PftHis: " + dqAgent.getHistoryByPubCyc(dqAgent.profitHistory));
+			log.info("Opp [0] Prf " + smne.profitHistory[0] + " PftHis: " + smne.getHistoryByPubCyc(smne.profitHistory));
+		
+			
 			if (dqAgent.profit > smne.profit) {
 				log.info("DQAgent profit > SMNE profit, adding DQAgent to the pool");
 				log.info("New DQAgent Name: " + dqAgent.name);
@@ -878,9 +896,9 @@ public class RetailMarketManager {
 
 	public CaseStudy setupInitialStrategies() {
 
-		CaseStudy initial = new CaseStudy().addP1Strats(new Prober(), new NaiveProber(), new AlwaysDefect());//, new DQAgent("DQ2", "DQ2_1.00ZI.pol"), new DQAgent("DQ3","DQ3_1.00DQ2.pol"), new DQAgent("DQ4","DQ4_1.00DQ3.pol"));
-									initial.addP2Strats(new Prober(), new NaiveProber(), new AlwaysDefect());//, new DQAgent("DQ2", "DQ2_1.00ZI.pol"), new DQAgent("DQ3","DQ3_1.00DQ2.pol"), new DQAgent("DQ4","DQ4_1.00DQ3.pol"));
-		Configuration.DQ_TRAINING = "DQ0";
+		CaseStudy initial = new CaseStudy().addP1Strats(new Grim(), new DQAgent("DQ3", "DQ3_1.00Grim.pol"), new DQAgent("DQ4", "DQ4_1.00DQ3.pol"), new DQAgent("DQ5", "DQ5_0.77Grim,0.23DQ3.pol"));
+									initial.addP2Strats(new Grim(), new DQAgent("DQ3", "DQ3_1.00Grim.pol"), new DQAgent("DQ4", "DQ4_1.00DQ3.pol"), new DQAgent("DQ5", "DQ5_0.77Grim,0.23DQ3.pol"));
+		Configuration.DQ_TRAINING = "DQ7";
 		log.info("Pool1: " + initial.pool1.toString());
 		log.info("Pool2: " + initial.pool2.toString());
 		return initial;
@@ -1127,13 +1145,13 @@ public class RetailMarketManager {
 //				SMNE smne = new SMNE();
 //				smne.addStrategy(0.41, DQ0);
 //				smne.addStrategy(0.59, DQ1);
-		Agent opponentAgent = new AlwaysIncrease();
+		Agent opponentAgent = new AlwaysDefect();
 		List<Agent> oppPool = new ArrayList<>();
 		oppPool.add(opponentAgent);
 
 		String policyToLearn = "sandbox.pol";
 		DQAgentMDP.trainDQAgent(oppPool, policyToLearn, null);
-		DQAgent dqAgent = new DQAgent("DQ0", policyToLearn);  // new DQAgent("DQ0", "DQ0_1Day__1.00Prober.pol");//
+		DQAgent dqAgent = new DQAgent("DQ", policyToLearn);  // new DQAgent("DQ0", "DQ0_1Day__1.00Prober.pol");//
 
 		rm.startSimulation(new CaseStudy()
 				.addP1Strats(opponentAgent)
@@ -1144,7 +1162,6 @@ public class RetailMarketManager {
 		log.info("Test Rounds: " + Configuration.TEST_ROUNDS);
 		log.info(String.format("Def %s, NoC %s, Inc %s Def2 %s Inc2 %s", DQAgent.DEFECT, DQAgent.NOC, DQAgent.INC,
 				DQAgent.DEFECT2, DQAgent.INC2));
-
 
 		log.info("DQ0 [0] Act " + dqAgent.actHistory[0] + " Action: " + dqAgent.getAllHistoryActions());
 		log.info("Opp [0] Act " + opponentAgent.actHistory[0] + " Action: " + opponentAgent.getAllHistoryActions());
@@ -1187,7 +1204,7 @@ public class RetailMarketManager {
 		 * The Main Experiment runs the flowchart specified by Porag Basically, the SMNE
 		 * vs DQAgent stuff with Gambit and such
 		 */
-//		mainExperiment();
+		//mainExperiment();
 	}
 
 }
