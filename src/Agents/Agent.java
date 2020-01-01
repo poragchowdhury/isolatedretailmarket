@@ -8,7 +8,7 @@ import Observer.Observer;
 import Tariff.TariffAction;
 
 public abstract class Agent implements Cloneable {
-
+	
 	// Initial profit, cost, marketshare, unitcost
 	public double init_unitcost = 0.05;
 	public double init_mkshare = 50.0;
@@ -22,12 +22,15 @@ public abstract class Agent implements Cloneable {
 	public double marketShare;
 	public double cost;
 	public double profit;
+	public double profitErr;
 
 	public double tariffUtility;
 	public TariffAction previousAction;
 	public TariffAction rivalPreviousAction;
 	public double[] actGDvalues;
 	public double bestResponseCount;
+	public double bestResponseCountErr;
+	public double wins;
 
 	public int defectCounter = 0;
 	public int coopCounter = 0;
@@ -91,19 +94,24 @@ public abstract class Agent implements Cloneable {
 		other.marketShare = marketShare;
 		other.cost = cost;
 		other.profit = profit;
+		other.profitErr = profitErr;
 		other.tariffUtility = tariffUtility;
 		other.previousAction = previousAction;
 		other.rivalPreviousAction = rivalPreviousAction;
 		other.unitcost = unitcost;
-		System.arraycopy(actGDvalues, 0, other.actGDvalues, 0, other.actGDvalues.length);
-
-		other.bestResponseCount = bestResponseCount;
-		other.defectCounter = defectCounter;
-		other.punishCounter = punishCounter;
-		other.coopCounter = coopCounter;
-		other.booDefect = booDefect;
-		other.pr = pr;
-		other.prI = prI;
+		
+		if(ob.timeslot == 1) {
+			System.arraycopy(actGDvalues, 0, other.actGDvalues, 0, other.actGDvalues.length);
+			other.bestResponseCount = bestResponseCount;
+			other.bestResponseCountErr = bestResponseCountErr;
+			other.wins = wins;
+			other.defectCounter = defectCounter;
+			other.punishCounter = punishCounter;
+			other.coopCounter = coopCounter;
+			other.booDefect = booDefect;
+			other.pr = pr;
+			other.prI = prI;
+		}
 
 		other.costHistory[ob.timeslot - 1] = costHistory[ob.timeslot - 1];
 		other.profitHistory[ob.timeslot - 1] = profitHistory[ob.timeslot - 1];
@@ -123,12 +131,15 @@ public abstract class Agent implements Cloneable {
 		marketShare = 0;
 		cost = 0;
 		profit = 0;
+		profitErr = 0;
 		tariffUtility = 0;
 		previousAction = TariffAction.NC;
 		rivalPreviousAction = TariffAction.NC;
 		unitcost = 0.05;
 		actGDvalues = new double[TariffAction.values().length];
 		bestResponseCount = 0;
+		bestResponseCountErr = 0;
+		wins = 0;
 		defectCounter = 0;
 		punishCounter = 0;
 		coopCounter = 0;
@@ -155,7 +166,7 @@ public abstract class Agent implements Cloneable {
 	public final void playAction(Observer ob, TariffAction action) {
 		double tariffChange = action.tariff;
 		double newTariff = this.tariffPrice + tariffChange;
-		//boolean validTariff = newTariff <= Configuration.MAX_TARIFF_PRICE && newTariff >= this.unitcost;
+		boolean validTariff = newTariff <= Configuration.MAX_TARIFF_PRICE && newTariff >= this.unitcost;
 		//if (validTariff) {
 			this.tariffPrice = newTariff;
 			this.previousAction = action;

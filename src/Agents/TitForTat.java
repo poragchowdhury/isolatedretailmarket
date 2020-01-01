@@ -35,12 +35,14 @@ public class TitForTat extends Agent {
             return TariffAction.D1;
         }
         // other agent is defecting, so defect
-        else if (rivalActHistory[ob.timeslot-1] == TariffAction.D1.index) {
+        else if (rivalActHistory[ob.timeslot-1] == TariffAction.D1.index || 
+        		rivalActHistory[ob.timeslot-1] == TariffAction.D2.index) {
             defectCounter++;
             return TariffAction.D1;
         }
         // other agent is increasing price
-        else if (rivalActHistory[ob.timeslot-1] == TariffAction.I1.index) {
+        else if (rivalActHistory[ob.timeslot-1] == TariffAction.I1.index ||
+        		rivalActHistory[ob.timeslot-1] == TariffAction.I2.index) {
             return TariffAction.I1;
         }
         return TariffAction.NC;

@@ -10,7 +10,8 @@ public class SoftMajority extends Agent {
 
     @Override
     public TariffAction makeAction(Observer ob) {
-        if ((rivalActHistory[ob.timeslot-1] == TariffAction.D1.index)) // other agent is defecting
+        if ((rivalActHistory[ob.timeslot-1] == TariffAction.D1.index) || 
+        		(rivalActHistory[ob.timeslot-1] == TariffAction.D2.index)) // other agent is defecting
             defectCounter++;
         else // other agent is cooperating
             coopCounter++;

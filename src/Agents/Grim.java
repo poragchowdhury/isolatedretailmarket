@@ -15,7 +15,8 @@ public class Grim extends Agent {
 
     @Override
     public TariffAction makeAction(Observer ob) {
-        if (!booDefect) {
+    	
+    	if (!booDefect) {
             // Rival Agent hasn't defected yet
         	if(ob.timeslot == 1)
         		return TariffAction.NC;

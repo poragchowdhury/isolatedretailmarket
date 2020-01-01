@@ -34,6 +34,7 @@ public class Observer {
      */
     public double agentPayoffs[][];
     public double agentBestResponse[][];
+    public double agentWins [];
 
     public Observer() {
         // TODO Auto-generated constructor stub
@@ -47,6 +48,7 @@ public class Observer {
         fcc = new FactoredConsumptionCustomer(this);
         agentPayoffs = new double[2][Configuration.TEST_ROUNDS];
         agentBestResponse = new double[2][Configuration.TEST_ROUNDS];
+        agentWins = new double[2];
     }
 
     public void updateAgentUnitCost() {
@@ -66,6 +68,8 @@ public class Observer {
         
         Arrays.fill(agentBestResponse[0], 0);
         Arrays.fill(agentBestResponse[1], 0);
+        
+        Arrays.fill(agentWins, 0);
     }
 
     public double[] calcAvg(CaseStudy cs, double [][] resultArray) {

@@ -82,7 +82,7 @@ public class DQAgent extends Agent {
 
 		INDArray output = pol.getNeuralNet().output(input);
 		//System.out.println("NN Input: " + input.toString());
-		System.out.println("NN Output: " + output.toString());
+		//System.out.println("NN Output: " + output.toString());
 
 		int nextActionInt = pol.nextAction(input);
 		TariffAction nextAction = TariffAction.valueOf(nextActionInt);

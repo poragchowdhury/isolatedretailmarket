@@ -21,7 +21,8 @@ public class Prober extends Agent {
             return TariffAction.NC;
         else if (coopCounter >= 2) // Other agent cooperated twice, so defect
             return TariffAction.D1;
-        else if (rivalActHistory[ob.timeslot-1] == TariffAction.D1.index) { // other agent is defecting
+        else if (rivalActHistory[ob.timeslot-1] == TariffAction.D1.index ||
+        		rivalActHistory[ob.timeslot-1] == TariffAction.D2.index) { // other agent is defecting
             coopCounter = 0;
             return TariffAction.D1;
         } else {// other agent is cooperating, So coop

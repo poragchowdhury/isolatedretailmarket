@@ -20,6 +20,7 @@ import java.util.logging.SimpleFormatter;
 
 import org.deeplearning4j.rl4j.policy.DQNPolicy;
 import org.deeplearning4j.rl4j.policy.Policy;
+import org.nd4j.autodiff.samediff.transform.OpPredicate;
 
 import Agents.Agent;
 import Agents.AlwaysDefect;
@@ -43,6 +44,22 @@ import Configuration.CaseStudy;
 import Configuration.Configuration;
 import Observer.Observer;
 import Tariff.TariffAction;
+
+class AgentCompareByWins implements Comparator {
+	@Override
+	public int compare(Object a, Object b) {
+		// TODO Auto-generated method stub
+		Agent a0 = (Agent) a;
+		Agent a1 = (Agent) b;
+		if(a0.wins < a1.wins)
+			return -1;
+		else if(a0.wins > a1.wins)
+			return 1;
+		else
+			return 0;
+	}
+}
+
 
 class AgentCompareByProfit implements Comparator {
 	@Override
@@ -96,7 +113,12 @@ public class RetailMarketManager {
 	public double largestValue = -1;
 	public Payoffs[][] gameMatrix = new Payoffs[20][20];
 	public Payoffs[][] bestRespMatrix = new Payoffs[20][20];
+	public Payoffs[][] winMatrix = new Payoffs[20][20];
 
+	public Payoffs[][] gameMatrixErr = new Payoffs[20][20];
+	public Payoffs[][] bestRespMatrixErr = new Payoffs[20][20];
+	public Payoffs[][] winMatrixErr = new Payoffs[20][20];
+	
 	public RetailMarketManager() {
 		// TODO Auto-generated constructor stub
 		ob = new Observer();
@@ -412,8 +434,8 @@ public class RetailMarketManager {
 		System.out.println("\nTotal Payoffs");
 		for (int i = 0; i < numberofagents; i++) {
 			for (int k = 0; k < numberofagents; k++) {
-				gameMatrix[i][k].value1 = Math.round(gameMatrix[i][k].value1 / largestValue * 100);
-				gameMatrix[i][k].value2 = Math.round(gameMatrix[i][k].value2 / largestValue * 100);
+//				gameMatrix[i][k].value1 = Math.round(gameMatrix[i][k].value1 / largestValue * 100);
+//				gameMatrix[i][k].value2 = Math.round(gameMatrix[i][k].value2 / largestValue * 100);
 				pwOutputAvg.print(gameMatrix[i][k].value1 + "," + gameMatrix[i][k].value2 + ",|,");
 				System.out.print(gameMatrix[i][k].value1 + "," + gameMatrix[i][k].value2 + "  ");
 				avgValues[i] += gameMatrix[i][k].value1;
@@ -432,27 +454,40 @@ public class RetailMarketManager {
 		numberofagents = cs.pool1.size();
 		double[] avgValues = new double[numberofagents];
 		double[] avgBestResponse = new double[numberofagents];
+		double[] avgValuesErr = new double[numberofagents];
+		double[] avgBestResponseErr = new double[numberofagents];
+		double[] avgWins = new double[numberofagents];
 		log.info("\nTotal Payoffs");
 		for (int i = 0; i < numberofagents; i++) {
 			for (int k = 0; k < numberofagents; k++) {
-				gameMatrix[i][k].value1 = Math.round(gameMatrix[i][k].value1 / largestValue * 100);
-				gameMatrix[i][k].value2 = Math.round(gameMatrix[i][k].value2 / largestValue * 100);
+				//gameMatrix[i][k].value1 = Math.round(gameMatrix[i][k].value1 / largestValue * 100);
+				//gameMatrix[i][k].value2 = Math.round(gameMatrix[i][k].value2 / largestValue * 100);
 				avgValues[i] += gameMatrix[i][k].value1;
+				avgValuesErr[i] += gameMatrixErr[i][k].value1;
 				avgBestResponse[i] += bestRespMatrix[i][k].value1;
+				avgBestResponseErr[i] += bestRespMatrixErr[i][k].value1;
+				avgWins[i] += winMatrix[i][k].value1;
 			}
 			cs.pool1.get(i).profit = avgValues[i] / numberofagents;
+			cs.pool1.get(i).profitErr = avgValuesErr[i] / numberofagents;
 			cs.pool1.get(i).bestResponseCount = avgBestResponse[i] / numberofagents;
-			log.info(String.format(",%s,normpayoff,%.3f,bestresponse,%.3f", cs.pool1.get(i).name,
-					cs.pool1.get(i).profit, cs.pool1.get(i).bestResponseCount));
+			cs.pool1.get(i).bestResponseCountErr = avgBestResponseErr[i] / numberofagents;
+			cs.pool1.get(i).wins = (avgWins[i] * 100) / (numberofagents * Configuration.TEST_ROUNDS);
+			log.info(String.format(",%s,normpayoff,%.3f,err,%.3f,bestresponse,%.3f,err,%.3f,wins,%.3f", cs.pool1.get(i).name,
+					cs.pool1.get(i).profit, cs.pool1.get(i).profitErr, cs.pool1.get(i).bestResponseCount, cs.pool1.get(i).bestResponseCountErr, avgWins[i]));
 		}
 		log.info("****************Sorted by norm profit**********************");
 		Collections.sort(cs.pool1, new AgentCompareByProfit());
 		for (Agent a : cs.pool1)
-			log.info(String.format(",%s,normpayoff,%.3f,bestresponse,%.3f", a.name, a.profit, a.bestResponseCount));
+			log.info(String.format(",%s,normpayoff,%.3f,err,%.3f,bestresponse,%.3f,err,%.3f,wins,%.3f", a.name, a.profit, a.profitErr, a.bestResponseCount, a.bestResponseCountErr, a.wins));
 		log.info("**********************Sorted by best response**********************");
 		Collections.sort(cs.pool1, new AgentCompareByBestResponse());
 		for (Agent a : cs.pool1)
-			log.info(String.format(",%s,normpayoff,%.3f,bestresponse,%.3f", a.name, a.profit, a.bestResponseCount));
+			log.info(String.format(",%s,normpayoff,%.3f,err,%.3f,bestresponse,%.3f,err,%.3f,wins,%.3f", a.name, a.profit, a.profitErr, a.bestResponseCount, a.bestResponseCountErr, a.wins));
+		log.info("****************Sorted by norm wins**********************");
+		Collections.sort(cs.pool1, new AgentCompareByWins());
+		for (Agent a : cs.pool1)
+			log.info(String.format(",%s,normpayoff,%.3f,err,%.3f,bestresponse,%.3f,err,%.3f,wins,%.3f", a.name, a.profit, a.profitErr, a.bestResponseCount, a.bestResponseCountErr, a.wins));
 	}
 
 	public void createCommandLineGambitFile() {
@@ -865,11 +900,7 @@ public class RetailMarketManager {
 		TitForTat TFT = new TitForTat(1, 1);
 		TitForTat TF2T = new TitForTat(1, 2);
 		TitForTat _2TFT = new TitForTat(2, 1);
-		literatureStrategies.add(new DQAgent("DQ0", "DQ0_1Day__1.00Prober.pol"));
-		// literatureStrategies.add(new DQAgent("DQ0", "DQ0_0.55AlzIncz,0.45Rand.pol"));
-		// literatureStrategies.add(new DQAgent("DQ10", "DQ10_0.461TF2T,0.54DQ9.pol"));
-		// literatureStrategies.add(new DQAgent("DQ9", "DQ9_0.40SoftMJ,0.60ZIP.pol"));
-		// literatureStrategies.add(new DQAgent("DQ7", "DQ7_0.501TF2T,0.50ZIP.pol"));
+//		literatureStrategies.add(new DQAgent("DQ11", "DQ11_1.00DQ10.pol"));
 		literatureStrategies.add(new HardMajority());
 		literatureStrategies.add(_2TFT);
 		literatureStrategies.add(TFT);
@@ -896,9 +927,9 @@ public class RetailMarketManager {
 
 	public CaseStudy setupInitialStrategies() {
 
-		CaseStudy initial = new CaseStudy().addP1Strats(new Grim(), new DQAgent("DQ3", "DQ3_1.00Grim.pol"), new DQAgent("DQ4", "DQ4_1.00DQ3.pol"), new DQAgent("DQ5", "DQ5_0.77Grim,0.23DQ3.pol"));
-									initial.addP2Strats(new Grim(), new DQAgent("DQ3", "DQ3_1.00Grim.pol"), new DQAgent("DQ4", "DQ4_1.00DQ3.pol"), new DQAgent("DQ5", "DQ5_0.77Grim,0.23DQ3.pol"));
-		Configuration.DQ_TRAINING = "DQ7";
+		CaseStudy initial = new CaseStudy().addP1Strats(new Grim(), new DQAgent("DQ9","DQ9_1.00Grim.pol"), new DQAgent("DQ7","DQ7_0.41Grim,0.26DQ5,0.33DQ6.pol"), new DQAgent("DQ11","DQ11_1.00DQ10.pol"), new DQAgent("DQ12","DQ12_1.00DQ11.pol"));
+									initial.addP2Strats(new Grim(), new DQAgent("DQ9","DQ9_1.00Grim.pol"), new DQAgent("DQ7","DQ7_0.41Grim,0.26DQ5,0.33DQ6.pol"), new DQAgent("DQ11","DQ11_1.00DQ10.pol"), new DQAgent("DQ12","DQ12_1.00DQ11.pol"));//, new DQAgent("DQ20","DQ20_0.94GD,0.06DQ19.pol"));     
+		Configuration.DQ_TRAINING = "DQ23";
 		log.info("Pool1: " + initial.pool1.toString());
 		log.info("Pool2: " + initial.pool2.toString());
 		return initial;
@@ -966,11 +997,21 @@ public class RetailMarketManager {
 								ob.timeslot++;
 							}
 							// printRevenues() function
+							/* One Simulation Ended */
 							int agentid = 0;
 							for (Agent a : ob.agentPool) {
 								ob.agentPayoffs[agentid][round] = a.profit;
 								ob.agentBestResponse[agentid][round] = a.bestResponseCount;
 								agentid++;
+							}
+							
+							if(ob.agentPayoffs[0][round] > ob.agentPayoffs[1][round])
+								ob.agentWins[0]++;
+							else if(ob.agentPayoffs[0][round] < ob.agentPayoffs[1][round])
+								ob.agentWins[1]++;
+							else {
+								ob.agentWins[0]++;
+								ob.agentWins[1]++;
 							}
 							// clear the observer for another simulation set up
 							// ob.printAgentPath();
@@ -991,13 +1032,29 @@ public class RetailMarketManager {
 						if (iagent != kagent) {
 							gameMatrix[iagent][kagent] = new Payoffs(vals[0], vals[1]);
 							gameMatrix[kagent][iagent] = new Payoffs(vals[1], vals[0]);
+							gameMatrixErr[iagent][kagent] = new Payoffs(vals[2], vals[3]);
+							gameMatrixErr[kagent][iagent] = new Payoffs(vals[3], vals[2]);
+							
 							bestRespMatrix[iagent][kagent] = new Payoffs(bestRespVals[0], bestRespVals[1]);
 							bestRespMatrix[kagent][iagent] = new Payoffs(bestRespVals[1], bestRespVals[0]);
+							bestRespMatrixErr[iagent][kagent] = new Payoffs(bestRespVals[2], bestRespVals[3]);
+							bestRespMatrixErr[kagent][iagent] = new Payoffs(bestRespVals[3], bestRespVals[2]);
+							
+							winMatrix[iagent][kagent] = new Payoffs(ob.agentWins[0], ob.agentWins[1]);
+							winMatrix[kagent][iagent] = new Payoffs(ob.agentWins[1], ob.agentWins[0]);
 						} else {
-							double avgVal = (vals[0] + vals[1]) / 2;
+							double avgVal = (vals[0] + vals[1]) / 2.0;
 							gameMatrix[iagent][kagent] = new Payoffs(avgVal, avgVal);
-							double avgBestRspVal = (bestRespVals[0] + bestRespVals[1]) / 2;
+							double avgValErr = (vals[2] + vals[3]) / 2.0;
+							gameMatrixErr[iagent][kagent] = new Payoffs(avgValErr, avgValErr);
+							
+							double avgBestRspVal = (bestRespVals[0] + bestRespVals[1]) / 2.0;
 							bestRespMatrix[iagent][kagent] = new Payoffs(avgBestRspVal, avgBestRspVal);
+							double avgBestRspValErr = (bestRespVals[2] + bestRespVals[3]) / 2.0;
+							bestRespMatrixErr[iagent][kagent] = new Payoffs(avgBestRspValErr, avgBestRspValErr);
+							
+							double avgWins = (ob.agentWins[0] + ob.agentWins[1])/2.0;
+							winMatrix[iagent][kagent] = new Payoffs(avgWins, avgWins);
 						}
 
 						if (largestValue < vals[0])
@@ -1142,15 +1199,15 @@ public class RetailMarketManager {
 //		Agent prober = new Prober();
 //		DQAgent DQ0 = new DQAgent("DQ0", "DQ0_1.00Prober.pol");
 //		DQAgent DQ1 = new DQAgent("DQ1", "DQ1_0.44AlzIncz,0.56DQ0.pol");
-//				SMNE smne = new SMNE();
-//				smne.addStrategy(0.41, DQ0);
-//				smne.addStrategy(0.59, DQ1);
-		Agent opponentAgent = new AlwaysDefect();
+//		SMNE smne = new SMNE();
+//		smne.addStrategy(1.0, new HardMajority());
+//		smne.addStrategy(0.0, new AlwaysSame());
+		Agent opponentAgent = new AlwaysSame();//new TitForTat(1,1);
 		List<Agent> oppPool = new ArrayList<>();
 		oppPool.add(opponentAgent);
 
-		String policyToLearn = "sandbox.pol";
-		DQAgentMDP.trainDQAgent(oppPool, policyToLearn, null);
+		String policyToLearn = "DQ11_1.00DQ10.pol";
+//		DQAgentMDP.trainDQAgent(oppPool, policyToLearn, null);
 		DQAgent dqAgent = new DQAgent("DQ", policyToLearn);  // new DQAgent("DQ0", "DQ0_1Day__1.00Prober.pol");//
 
 		rm.startSimulation(new CaseStudy()
@@ -1198,8 +1255,8 @@ public class RetailMarketManager {
 		 * experiment to make sure DQAgent is being trained correctly Or to tweak
 		 * hyperparameters
 		 */
-		sandboxExperiment();
-		//roundRobinExperiment();
+		//sandboxExperiment();
+		roundRobinExperiment();
 		/*
 		 * The Main Experiment runs the flowchart specified by Porag Basically, the SMNE
 		 * vs DQAgent stuff with Gambit and such

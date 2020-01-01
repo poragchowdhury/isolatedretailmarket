@@ -26,9 +26,9 @@ public class NeuralNet {
     public static final int INPUT_NUM = DQAgentMDP.NUM_OBSERVATIONS;
     public static final int OUTPUT_NUM = DQAgentMDP.NUM_ACTIONS;
 
-    private static final int LAYER0_NEURONS = 13;
-    private static final int LAYER1_NEURONS = 13;
-    private static final int LAYER2_NEURONS = 13;
+    private static final int LAYER0_NEURONS = 28;
+    private static final int LAYER1_NEURONS = 14;
+    private static final int LAYER2_NEURONS = 7;
 //    private static final int LAYER3_NEURONS = 15;
 //    private static final int LAYER4_NEURONS = 15;
 //    private static final int LAYER5_NEURONS = 15;

@@ -21,7 +21,7 @@ public class Pavlov extends Agent {
 	@Override
 	public TariffAction makeAction(Observer ob) {
 		/* Tariff Check */
-		if (previousAction == TariffAction.I1 || previousAction == TariffAction.NC) { // C
+		if (previousAction == TariffAction.I1 || previousAction == TariffAction.I2 || previousAction == TariffAction.NC) { // C
 
 			if((ob.timeslot-1-Configuration.PUBLICATION_CYCLE >= 0)
 					&& (this.rivalTariffHistory[ob.timeslot-1] >= this.rivalTariffHistory[ob.timeslot-1-Configuration.PUBLICATION_CYCLE])) 
@@ -29,13 +29,13 @@ public class Pavlov extends Agent {
 			{
 				pr = Math.min((pr + 0.1), 1); // CC state
 
-				if (previousAction == TariffAction.I1)
+				if (previousAction == TariffAction.I1 || previousAction == TariffAction.I2)
 					prI = Math.min((prI + 0.1), 1); // CC state: Increase
 				else
 					prI = Math.max((prI - 0.1), 0); // CC state: Nochage
 			}
 
-		} else if (previousAction == TariffAction.D1) { // D
+		} else if (previousAction == TariffAction.D1 || previousAction == TariffAction.D2) { // D
 			if((ob.timeslot-1-Configuration.PUBLICATION_CYCLE >= 0)
 					&& (this.rivalTariffHistory[ob.timeslot-1] < this.rivalTariffHistory[ob.timeslot-1-Configuration.PUBLICATION_CYCLE])) 
 				// other agent is D
