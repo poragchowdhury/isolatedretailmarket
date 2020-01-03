@@ -9,7 +9,7 @@ public class TitForTat extends Agent {
     public int numTatsPerTit = 1;
 
     public TitForTat(int numTitsPerTat, int numTatsPerTit) {
-        super("temp");
+        super("temp", 12);
         String tempName = numTitsPerTat + "TF" + numTatsPerTit + "T";
         if (isV2)
             tempName += "V2";

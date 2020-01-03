@@ -236,6 +236,10 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 		retailManager.ob.timeslot = 0;
 		H = "";
 		cumReward = 0;
+		
+		Agent opponent = opponentPool.get(0);
+		opponent.opponentID = agent.id;
+		agent.opponentID = opponent.id;
 
 		return new DQAgentState(agent, retailManager.ob);
 	}

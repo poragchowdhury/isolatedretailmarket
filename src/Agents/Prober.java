@@ -10,7 +10,7 @@ import Tariff.TariffAction;
  */
 public class Prober extends Agent {
     public Prober() {
-        super("Prober");
+        super("Prober", 9);
     }
 
     @Override

@@ -15,7 +15,7 @@ import Tariff.TariffAction;
 public class Pavlov extends Agent {
 
 	public Pavlov() {
-		super("Pavlov");
+		super("Pavlov", 8);
 	}
 
 	@Override

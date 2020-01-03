@@ -5,7 +5,7 @@ import Tariff.TariffAction;
 
 public class SoftMajority extends Agent {
     public SoftMajority() {
-        super("SoftMJ");
+        super("SoftMJ", 11);
     }
 
     @Override

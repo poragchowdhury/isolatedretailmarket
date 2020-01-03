@@ -8,7 +8,6 @@ import Observer.Observer;
 import Tariff.TariffAction;
 
 public abstract class Agent implements Cloneable {
-	
 	// Initial profit, cost, marketshare, unitcost
 	public double init_unitcost = 0.05;
 	public double init_mkshare = 50.0;
@@ -16,6 +15,7 @@ public abstract class Agent implements Cloneable {
 	public double init_revenue = Configuration.DEFAULT_TARIFF_PRICE * Configuration.POPULATION / 2 * 8;
 
 	public String name;
+	public int id;
 	public double tariffPrice;
 	public double rivalTariffPrice;
 	public double revenue;
@@ -59,11 +59,14 @@ public abstract class Agent implements Cloneable {
 
 	public double[] rivalTariffHistory;
 	public int[] rivalActHistory;
+	
+	public int opponentID;
 
 	public abstract TariffAction makeAction(Observer ob) throws Exception;
 
-	public Agent(String agentName) {
+	public Agent(String agentName, int id) {
 		this.name = agentName;
+		this.id = id;
 		this.unitcost = Configuration.INITUNITCOST;
 		this.c_max = Configuration.MAX_UNIT_COST;
 		this.c_min = Configuration.MIN_UNIT_COST;
@@ -99,6 +102,7 @@ public abstract class Agent implements Cloneable {
 		other.previousAction = previousAction;
 		other.rivalPreviousAction = rivalPreviousAction;
 		other.unitcost = unitcost;
+		other.opponentID = opponentID;
 		
 		if(ob.timeslot == 1) {
 			System.arraycopy(actGDvalues, 0, other.actGDvalues, 0, other.actGDvalues.length);
@@ -166,16 +170,16 @@ public abstract class Agent implements Cloneable {
 	public final void playAction(Observer ob, TariffAction action) {
 		double tariffChange = action.tariff;
 		double newTariff = this.tariffPrice + tariffChange;
-		boolean validTariff = newTariff <= Configuration.MAX_TARIFF_PRICE && newTariff >= this.unitcost;
-		//if (validTariff) {
+		boolean validTariff = newTariff <= Configuration.MAX_TARIFF_PRICE && newTariff > 0;
+		if (validTariff) {
 			this.tariffPrice = newTariff;
 			this.previousAction = action;
 			this.tariffHistory[ob.timeslot] = this.tariffPrice;
-//		}
-//		else {
-//			this.previousAction = TariffAction.NC;
-//			this.tariffHistory[ob.timeslot] = this.tariffPrice;
-//		}
+		}
+		else {
+			this.previousAction = TariffAction.NC;
+			this.tariffHistory[ob.timeslot] = this.tariffPrice;
+		}
 	}
 
 	@Override

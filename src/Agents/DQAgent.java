@@ -33,12 +33,12 @@ public class DQAgent extends Agent {
 	}
 
 	public DQAgent(DQNPolicy<DQAgentState> pol) {
-		super("DeepQ_Training");
+		super("DeepQ_Training", 3);
 		this.pol = pol;
 	}
 	
 	public DQAgent(String policyName) {
-		super("DeepQ_Default");
+		super("DeepQ_Default", 3);
 		try {
 			this.pol = DQNPolicy.load(policyName);
 		} catch (Exception e) {
@@ -52,7 +52,7 @@ public class DQAgent extends Agent {
 	}
 
 	public DQAgent(String name, String policyName) {
-		super(name);
+		super(name, 3);
 		try {
 			this.pol = DQNPolicy.load(policyName);
 		} catch (Exception e) {
@@ -66,7 +66,7 @@ public class DQAgent extends Agent {
 	}
 
 	public DQAgent() {
-		super("DeepQ_Training");
+		super("DeepQ_Training", 3);
 	}
 
 	public String getSimpleName() {

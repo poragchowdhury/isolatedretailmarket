@@ -19,7 +19,7 @@ public class SMNE extends Agent {
 	private static int selectedAgentId = 0;
 
 	public SMNE() {
-		super("SMNE_NO_STRATEGIES");
+		super("SMNE_NO_STRATEGIES", 10);
 		strategyProbs = new ArrayList<Double>();
 		agents = new ArrayList<Agent>();
 		rand = new Random(System.currentTimeMillis());
