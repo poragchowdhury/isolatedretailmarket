@@ -460,6 +460,8 @@ public class RetailMarketManager {
 		log.info("\nTotal Payoffs");
 		for (int i = 0; i < numberofagents; i++) {
 			for (int k = 0; k < numberofagents; k++) {
+				if(i==k)
+					continue;
 				//gameMatrix[i][k].value1 = Math.round(gameMatrix[i][k].value1 / largestValue * 100);
 				//gameMatrix[i][k].value2 = Math.round(gameMatrix[i][k].value2 / largestValue * 100);
 				avgValues[i] += gameMatrix[i][k].value1;
@@ -468,32 +470,32 @@ public class RetailMarketManager {
 				avgBestResponseErr[i] += bestRespMatrixErr[i][k].value1;
 				avgWins[i] += winMatrix[i][k].value1;
 			}
-			cs.pool1.get(i).profit = avgValues[i] / numberofagents;
-			cs.pool1.get(i).profitErr = avgValuesErr[i] / numberofagents;
-			cs.pool1.get(i).bestResponseCount = avgBestResponse[i] / numberofagents;
-			cs.pool1.get(i).bestResponseCountErr = avgBestResponseErr[i] / numberofagents;
-			cs.pool1.get(i).wins = (avgWins[i] * 100) / (numberofagents * Configuration.TEST_ROUNDS);
-			log.info(String.format(",%s,normpayoff,%.3f,err,%.3f,bestresponse,%.3f,err,%.3f,wins,%.3f", cs.pool1.get(i).name,
+			cs.pool1.get(i).profit = avgValues[i] / (numberofagents-1);
+			cs.pool1.get(i).profitErr = avgValuesErr[i] / (numberofagents-1);
+			cs.pool1.get(i).bestResponseCount = avgBestResponse[i] / (numberofagents-1);
+			cs.pool1.get(i).bestResponseCountErr = avgBestResponseErr[i] / (numberofagents-1);
+			cs.pool1.get(i).wins = (avgWins[i] * 100) / ((numberofagents-1) * Configuration.TEST_ROUNDS);
+			log.info(String.format("%s,normpayoff,%.3f,err,%.3f,bestresponse,%.3f,err,%.3f,wins,%.3f", cs.pool1.get(i).name,
 					cs.pool1.get(i).profit, cs.pool1.get(i).profitErr, cs.pool1.get(i).bestResponseCount, cs.pool1.get(i).bestResponseCountErr, avgWins[i]));
 		}
 		
 		log.info("****************Sorted by norm profit**********************");
 		Collections.sort(cs.pool1, new AgentCompareByProfit());
-		log.info(String.format(",broker,normpayoff,err,bestresponse,err,wins"));
+		log.info(String.format("Broker,normpayoff,normpayoff.err,bestresponse,bestresponse.err,wins"));
 		for (Agent a : cs.pool1)
-			log.info(String.format(",%.3f,%.3f,%.3f,%.3f,%.3f", a.profit, a.profitErr, a.bestResponseCount, a.bestResponseCountErr, a.wins));
+			log.info(String.format("%s,%.3f,%.3f,%.3f,%.3f,%.3f", a.name, a.profit, a.profitErr, a.bestResponseCount, a.bestResponseCountErr, a.wins));
 		
 		log.info("**********************Sorted by best response**********************");
 		Collections.sort(cs.pool1, new AgentCompareByBestResponse());
-		log.info(String.format(",broker,normpayoff,err,bestresponse,err,wins"));
+		log.info(String.format("Broker,normpayoff,normpayoff.err,bestresponse,bestresponse.err,wins"));
 		for (Agent a : cs.pool1)
-			log.info(String.format(",%.3f,%.3f,%.3f,%.3f,%.3f", a.profit, a.profitErr, a.bestResponseCount, a.bestResponseCountErr, a.wins));
+			log.info(String.format("%s,%.3f,%.3f,%.3f,%.3f,%.3f", a.name, a.profit, a.profitErr, a.bestResponseCount, a.bestResponseCountErr, a.wins));
 
 		log.info("****************Sorted by norm wins**********************");
 		Collections.sort(cs.pool1, new AgentCompareByWins());
-		log.info(String.format(",broker,normpayoff,err,bestresponse,err,wins"));
+		log.info(String.format("Broker,normpayoff,normpayoff.err,bestresponse,bestresponse.err,wins"));
 		for (Agent a : cs.pool1)
-			log.info(String.format(",%.3f,%.3f,%.3f,%.3f,%.3f", a.profit, a.profitErr, a.bestResponseCount, a.bestResponseCountErr, a.wins));
+			log.info(String.format("%s,%.3f,%.3f,%.3f,%.3f,%.3f", a.name, a.profit, a.profitErr, a.bestResponseCount, a.bestResponseCountErr, a.wins));
 	}
 
 	public void createCommandLineGambitFile() {
@@ -976,6 +978,10 @@ public class RetailMarketManager {
 		// Round Robin Tournament Set Up
 		for (int iagent = 0; iagent < cs.pool1.size(); iagent++) {
 			for (int kagent = iagent; kagent < cs.pool2.size(); kagent++) {
+				
+				if(iagent == kagent)
+					continue;
+				
 				for (int iindex = 0; iindex < imax; iindex++) {
 					for (int rindex = 0; rindex < rmax; rindex++) {
 						for (int round = 0; round < roundmax; round++) {
@@ -1212,12 +1218,12 @@ public class RetailMarketManager {
 //		SMNE smne = new SMNE();
 //		smne.addStrategy(1.0, new HardMajority());
 //		smne.addStrategy(0.0, new AlwaysSame());
-		Agent opponentAgent = new AlwaysSame();//new TitForTat(1,1);
+		Agent opponentAgent = new AlwaysIncrease();//new TitForTat(1,1);
 		List<Agent> oppPool = new ArrayList<>();
 		oppPool.add(opponentAgent);
 
-		String policyToLearn = "DQSandbox.pol";
-		DQAgentMDP.trainDQAgent(oppPool, policyToLearn, null);
+		String policyToLearn = "DQ11_1.00DQ10.pol";
+		//DQAgentMDP.trainDQAgent(oppPool, policyToLearn, null);
 		DQAgent dqAgent = new DQAgent("DQ", policyToLearn);  // new DQAgent("DQ0", "DQ0_1Day__1.00Prober.pol");//
 
 		rm.startSimulation(new CaseStudy()
@@ -1265,8 +1271,8 @@ public class RetailMarketManager {
 		 * experiment to make sure DQAgent is being trained correctly Or to tweak
 		 * hyperparameters
 		 */
-		sandboxExperiment();
-//		roundRobinExperiment();
+		//sandboxExperiment();
+		roundRobinExperiment();
 		/*
 		 * The Main Experiment runs the flowchart specified by Porag Basically, the SMNE
 		 * vs DQAgent stuff with Gambit and such
