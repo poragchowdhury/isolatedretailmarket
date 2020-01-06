@@ -156,8 +156,8 @@ public class DQAgentState implements Encodable {
 		features.add(curHourUsage / ob.fcc.maxUsage);
 		features.add(nextHourUsage / ob.fcc.maxUsage);
 		
-		for (double d : one_hot(agent.opponentID, AGENT_COUNT))
-			features.add(d);
+//		for (double d : one_hot(agent.opponentID, AGENT_COUNT))
+//			features.add(d);
 
 		// Get all the features from the list
 		// Convert to a double array for use in the MDP

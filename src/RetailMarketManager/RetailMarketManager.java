@@ -449,7 +449,7 @@ public class RetailMarketManager {
 		createCommandLineGambitFile();
 	}
 
-	public void printGameMatrix(CaseStudy cs) {
+	public void printGameMatrix(CaseStudy cs, boolean runVsItself) {
 		// Normalizing the values
 		numberofagents = cs.pool1.size();
 		double[] avgValues = new double[numberofagents];
@@ -460,7 +460,7 @@ public class RetailMarketManager {
 		log.info("\nTotal Payoffs");
 		for (int i = 0; i < numberofagents; i++) {
 			for (int k = 0; k < numberofagents; k++) {
-				if(i==k)
+				if(!runVsItself && i==k)
 					continue;
 				//gameMatrix[i][k].value1 = Math.round(gameMatrix[i][k].value1 / largestValue * 100);
 				//gameMatrix[i][k].value2 = Math.round(gameMatrix[i][k].value2 / largestValue * 100);
@@ -470,11 +470,12 @@ public class RetailMarketManager {
 				avgBestResponseErr[i] += bestRespMatrixErr[i][k].value1;
 				avgWins[i] += winMatrix[i][k].value1;
 			}
-			cs.pool1.get(i).profit = avgValues[i] / (numberofagents-1);
-			cs.pool1.get(i).profitErr = avgValuesErr[i] / (numberofagents-1);
-			cs.pool1.get(i).bestResponseCount = avgBestResponse[i] / (numberofagents-1);
-			cs.pool1.get(i).bestResponseCountErr = avgBestResponseErr[i] / (numberofagents-1);
-			cs.pool1.get(i).wins = (avgWins[i] * 100) / ((numberofagents-1) * Configuration.TEST_ROUNDS);
+			int totnumberofagents = runVsItself ? numberofagents : numberofagents -1;
+			cs.pool1.get(i).profit = avgValues[i] / totnumberofagents;
+			cs.pool1.get(i).profitErr = avgValuesErr[i] / totnumberofagents;
+			cs.pool1.get(i).bestResponseCount = avgBestResponse[i] / totnumberofagents;
+			cs.pool1.get(i).bestResponseCountErr = avgBestResponseErr[i] / totnumberofagents;
+			cs.pool1.get(i).wins = (avgWins[i] * 100) / (totnumberofagents * Configuration.TEST_ROUNDS);
 			log.info(String.format("%s,normpayoff,%.3f,err,%.3f,bestresponse,%.3f,err,%.3f,wins,%.3f", cs.pool1.get(i).name,
 					cs.pool1.get(i).profit, cs.pool1.get(i).profitErr, cs.pool1.get(i).bestResponseCount, cs.pool1.get(i).bestResponseCountErr, avgWins[i]));
 		}
@@ -759,7 +760,7 @@ public class RetailMarketManager {
 
 			// ************** Print the round robin results
 			if (roundrobin) {
-				printGameMatrix(currentCase);
+				printGameMatrix(currentCase, true);
 				break;
 			}
 
@@ -978,9 +979,6 @@ public class RetailMarketManager {
 		// Round Robin Tournament Set Up
 		for (int iagent = 0; iagent < cs.pool1.size(); iagent++) {
 			for (int kagent = iagent; kagent < cs.pool2.size(); kagent++) {
-				
-				if(iagent == kagent)
-					continue;
 				
 				for (int iindex = 0; iindex < imax; iindex++) {
 					for (int rindex = 0; rindex < rmax; rindex++) {

@@ -6,7 +6,7 @@ import Tariff.TariffAction;
 public class AlwaysIncrease extends Agent {
     public AlwaysIncrease() {
         // TODO Auto-generated constructor stub
-        super("AlzIncz", 1);
+        super("AlI", 1);
     }
 
     @Override
