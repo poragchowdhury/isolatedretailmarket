@@ -15,7 +15,7 @@ import edu.utep.poragchowdhury.simulation.Observer;
 import edu.utep.poragchowdhury.simulation.TariffAction;
 
 /**
- * Deep Q-Learning Agent for use in simulations
+ * // * Deep Q-Learning Agent for use in simulations
  * @author Jose G. Perez
  */
 public class DQAgent extends Agent {
@@ -68,6 +68,7 @@ public class DQAgent extends Agent {
                 log.info("DQAgent couldn't load DQN policy from file: " + policyFilename);
                 ex.printStackTrace();
             }
+            log.info("DQAgent couldn't load DQN policy from file: " + policyFilename);
             e.printStackTrace();
         }
     }

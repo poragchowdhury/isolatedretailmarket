@@ -1,7 +1,7 @@
 package edu.utep.poragchowdhury.simulation;
 
 public enum TariffAction {
-    NOCHANGE(0, 0), DEFECT(1, -0.1), INCREASE(2, 0.1);
+    NOCHANGE(0, 0), DEFECT(1, -0.01), INCREASE(2, 0.01);
 
     public int index;
     public double tariff;

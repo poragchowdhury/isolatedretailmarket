@@ -58,11 +58,9 @@ public class Configuration {
         return p;
     }
 
-    public Configuration() {
+    public static void loadConfiguration() {
         Properties prop = new Properties();
-
         InputStream input = null;
-
         try {
             input = new FileInputStream("config.properties");
             // load a properties file
@@ -109,5 +107,8 @@ public class Configuration {
                 }
             }
         }
+    }
+
+    private Configuration() {
     }
 }

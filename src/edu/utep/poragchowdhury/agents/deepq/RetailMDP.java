@@ -4,7 +4,9 @@
  */
 package edu.utep.poragchowdhury.agents.deepq;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.deeplearning4j.gym.StepReply;
@@ -20,6 +22,19 @@ import edu.utep.poragchowdhury.core.Configuration;
 import edu.utep.poragchowdhury.simulation.RetailMarketManager;
 import edu.utep.poragchowdhury.simulation.TariffAction;
 
+class Stat implements Comparable<Stat> {
+    double N = 0;
+    double COM = 0;
+
+    public double calculateV() {
+        return COM / N;
+    }
+
+    public int compareTo(Stat other) {
+        return Double.compare(calculateV(), other.calculateV());
+    }
+}
+
 public class RetailMDP implements MDP<MDPState, Integer, DiscreteSpace> {
     private static Logger log = Logger.getLogger("retailmarketmanager");
     public static final int NUM_ACTIONS = 3;
@@ -32,6 +47,10 @@ public class RetailMDP implements MDP<MDPState, Integer, DiscreteSpace> {
     private DQAgent agent;
     private List<Agent> opponentPool;
 
+    private String actionHistory = "";
+    private double cummulativeReward = 0;
+    public Map<String, Stat> statisticsMap = new HashMap<String, Stat>();
+
     public RetailMDP(List<Agent> opponentPool) {
         this.opponentPool = opponentPool;
         this.reset();
@@ -39,16 +58,14 @@ public class RetailMDP implements MDP<MDPState, Integer, DiscreteSpace> {
 
     @Override
     public boolean isDone() {
+        if (retailManager.ob.timeslot > 1 && agent.marketShare <= 30)
+            return true;
         return retailManager.ob.timeslot >= Configuration.TOTAL_TIME_SLOTS;
     }
-
-    private String H = "";
-    private String D = "";
 
     @Override
     public StepReply<MDPState> step(Integer actionInt) {
         TariffAction action = TariffAction.valueOf(actionInt);
-
         double before = agent.profit;
         agent.playAction(retailManager.ob, action);
 
@@ -72,24 +89,25 @@ public class RetailMDP implements MDP<MDPState, Integer, DiscreteSpace> {
             retailManager.ob.updateAgentUnitCost();
         }
         double after = agent.profit;
-        double d1 = (after - before) / (0.5f * Configuration.POPULATION * 7f);
-        d1 -= 0.3;
-        double d2 = (agent.marketShare / 100f);
-        double reward = ((0.3 * d1) + (0.7 * d2));
+        double reward = (after - before) / (0.5 * Configuration.POPULATION * 7);
+        // double reward = after - before;
 
-        // double reward = after;
-        // double reward = (after - before) / (0.5f * Configuration.POPULATION * 7f);
+        actionHistory += agent.previousAction.toString().charAt(0);
+        cummulativeReward += reward;
 
-        // double reward = agent.profit - agent.prevprofit;
-
-        // double reward = agent.profit - opponentPool.get(0).profit;
-
-        H += agent.previousAction.toString().charAt(0);
-        D += reward + ",";
-        if (H.length() == 4)
-            log.info(H);
-        if (H.equals("NIII") || H.equals("DDDD"))
-            log.info(H + " - " + D.substring(0, D.length() - 2));
+        if (actionHistory.length() == Configuration.TOTAL_PUBLICATIONS_IN_A_GAME) {
+            // log.info("Action: " + actionHistory + " CR: " + cummulativeReward);
+            if (statisticsMap.containsKey(actionHistory)) {
+                Stat s = statisticsMap.get(actionHistory);
+                s.N += 1;
+                s.COM += cummulativeReward;
+            } else {
+                Stat s = new Stat();
+                s.N = 1;
+                s.COM = cummulativeReward;
+                statisticsMap.put(actionHistory, s);
+            }
+        }
 
         MDPState nextState = new MDPState(agent, retailManager.ob);
 
@@ -110,8 +128,8 @@ public class RetailMDP implements MDP<MDPState, Integer, DiscreteSpace> {
         retailManager.ob.agentPool.addAll(opponentPool);
         retailManager.ob.timeslot = 0;
 
-        H = "";
-        D = "";
+        actionHistory = "";
+        cummulativeReward = 0;
 
         return new MDPState(agent, retailManager.ob);
     }

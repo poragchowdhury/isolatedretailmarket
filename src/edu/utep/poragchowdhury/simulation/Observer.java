@@ -16,7 +16,6 @@ public class Observer {
     public int payoffcount = 0;
     public ArrayList<Agent> agentPool;
     public FactoredConsumptionCustomer fcc;
-    public Configuration config;
     public double money[];
     public double cost[];
     public double custSubs[];
@@ -34,8 +33,6 @@ public class Observer {
     public double agentPayoffs[][];
 
     public Observer() {
-        // TODO Auto-generated constructor stub
-        config = new Configuration();
         agentPool = new ArrayList<Agent>();
         payoffs = new double[8];
         custSubs = new double[2];

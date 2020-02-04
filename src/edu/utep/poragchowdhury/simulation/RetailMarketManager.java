@@ -1,11 +1,6 @@
 package edu.utep.poragchowdhury.simulation;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,32 +22,16 @@ import edu.utep.poragchowdhury.agents.TitForTat;
 import edu.utep.poragchowdhury.agents.base.Agent;
 import edu.utep.poragchowdhury.agents.base.SMNE;
 import edu.utep.poragchowdhury.agents.deepq.DQAgent;
-import edu.utep.poragchowdhury.agents.deepq.RetailMDP;
 import edu.utep.poragchowdhury.agents.deepq.Trainer;
 import edu.utep.poragchowdhury.core.Configuration;
-import edu.utep.poragchowdhury.core.Logging;
-
-class Payoffs {
-    public double value1;
-    public double value2;
-
-    public Payoffs(double val1, double val2) {
-        value1 = val1;
-        value2 = val2;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("[%.3f, %.3f]", value1, value2);
-    }
-}
+import edu.utep.poragchowdhury.core.Gambit;
+import edu.utep.poragchowdhury.core.Utilities;
 
 public class RetailMarketManager {
     private static Logger log = Logger.getLogger("retailmarketmanager");
 
     public Observer ob;
     public double[] lamdaTracker;
-    public static int numberofagents = 3;
     public double largestValue = -1;
     public Payoffs[][] gameMatrix = new Payoffs[15][15];
 
@@ -82,7 +61,7 @@ public class RetailMarketManager {
             try {
                 a.publishTariff(ob);
             } catch (Exception ex) {
-                System.out.printf("[Agent:%s raised an exception while publishing a tariff]\n", a.name);
+                log.info("[Agent:" + a.name + " raised an exception while publishing a tariff]\n");
                 ex.printStackTrace();
             }
         }
@@ -90,23 +69,13 @@ public class RetailMarketManager {
     }
 
     public void updateAgentsMemory() {
-        // updating opponent values
-        ob.agentPool.get(0).rivalPrevPrevPrice = ob.agentPool.get(0).rivalPrevPrice;
-        ob.agentPool.get(1).rivalPrevPrevPrice = ob.agentPool.get(1).rivalPrevPrice;
-
-        ob.agentPool.get(0).rivalPrevPrice = ob.agentPool.get(1).tariffPrice;
-        ob.agentPool.get(1).rivalPrevPrice = ob.agentPool.get(0).tariffPrice;
-
-        // updating own values
-        ob.agentPool.get(0).prevmarketShare = ob.agentPool.get(0).marketShare;
-        ob.agentPool.get(1).prevmarketShare = ob.agentPool.get(1).marketShare;
-
-        ob.agentPool.get(0).prevrevenue = ob.agentPool.get(0).revenue;
-        ob.agentPool.get(1).prevrevenue = ob.agentPool.get(1).revenue;
-
-        ob.agentPool.get(0).prevprofit = ob.agentPool.get(0).profit;
-        ob.agentPool.get(1).prevprofit = ob.agentPool.get(1).profit;
-
+        for (Agent ag : ob.agentPool) {
+            ag.rivalPrevPrevPrice = ag.rivalPrevPrice;
+            ag.rivalPrevPrice = ag.tariffPrice;
+            ag.prevmarketShare = ag.marketShare;
+            ag.prevrevenue = ag.revenue;
+            ag.prevprofit = ag.profit;
+        }
     }
 
     public void customerTariffEvaluation() {
@@ -126,24 +95,24 @@ public class RetailMarketManager {
             ob.cost[ob.fcc.custId[i]] += (ob.agentPool.get(ob.fcc.custId[i]).unitcost * ob.fcc.usage[hour]);
             ob.custSubs[ob.fcc.custId[i]] += 1;
         }
-        ob.agentPool.get(0).revenue += ob.money[0];
-        ob.agentPool.get(1).revenue += ob.money[1];
-        ob.agentPool.get(0).cost += ob.cost[0];
-        ob.agentPool.get(1).cost += ob.cost[1];
-        ob.agentPool.get(0).profit += (ob.money[0] - ob.cost[0]);
-        ob.agentPool.get(1).profit += (ob.money[1] - ob.cost[1]);
-        ob.agentPool.get(0).marketShare = (ob.custSubs[0]);
-        ob.agentPool.get(1).marketShare = (ob.custSubs[1]);
+
+        for (int idx = 0; idx < ob.agentPool.size(); idx++) {
+            Agent ag = ob.agentPool.get(idx);
+            ag.revenue += ob.money[idx];
+            ag.cost += ob.cost[idx];
+            ag.profit += (ag.revenue - ag.cost);
+            ag.marketShare = ob.custSubs[idx];
+        }
     }
 
     public void printGameMatrix(CaseStudy cs) {
         // Normalizing the values
-        numberofagents = cs.pool1.size();
-        double[] avgValues = new double[numberofagents];
+        int numberOfAgents = cs.pool1.size();
+        double[] avgValues = new double[numberOfAgents];
 
         log.info("\nTotal Payoffs");
-        for (int i = 0; i < numberofagents; i++) {
-            for (int k = 0; k < numberofagents; k++) {
+        for (int i = 0; i < numberOfAgents; i++) {
+            for (int k = 0; k < numberOfAgents; k++) {
                 gameMatrix[i][k].value1 = Math.round(gameMatrix[i][k].value1 / largestValue * 100);
                 gameMatrix[i][k].value2 = Math.round(gameMatrix[i][k].value2 / largestValue * 100);
                 avgValues[i] += gameMatrix[i][k].value1;
@@ -152,40 +121,7 @@ public class RetailMarketManager {
         }
     }
 
-    public double distance(double[] eq1, double[] eq2) {
-        double dist = 0;
-        int commonLength = Math.min(eq1.length, eq2.length);
-        for (int i = 0; i < commonLength; i++)
-            dist += (eq1[i] - eq2[i]) * (eq1[i] - eq2[i]);
-
-        dist = Math.sqrt(dist);
-        return dist;
-    }
-
-    public int countZeros(double[] arr) {
-        int zeroCount = 0;
-        for (double d : arr) {
-            if (d == 0.0d)
-                zeroCount++;
-        }
-        return zeroCount;
-    }
-
-    public int argMinZeros(List<double[]> lst) {
-        int resultIDX = 0;
-        int lowestCount = countZeros(lst.get(0));
-        for (int i = 1; i < lst.size(); i++) {
-            double[] arr = lst.get(i);
-            int zeroCount = countZeros(arr);
-            if (zeroCount < lowestCount) {
-                lowestCount = zeroCount;
-                resultIDX = i;
-            }
-        }
-        return resultIDX;
-    }
-
-    public void startExperiment(boolean roundRobin) throws IOException {
+    public void startExperiment(boolean roundRobin) throws IOException, InterruptedException {
         Scanner input = new Scanner(System.in);
         log.info("*************** Experimental Run Log ***************");
 
@@ -225,11 +161,24 @@ public class RetailMarketManager {
                 break;
             }
 
+            // Update Game Matrix before performing Gambit operations
+            for (int i = 0; i < currentCase.pool1.size(); i++) {
+                for (int k = 0; k < currentCase.pool2.size(); k++) {
+                    gameMatrix[i][k].value1 = Math.round(gameMatrix[i][k].value1 / largestValue * 100);
+                    gameMatrix[i][k].value2 = Math.round(gameMatrix[i][k].value2 / largestValue * 100);
+                }
+            }
+
             // ************** Compute nash equilibrium strategies
             log.info("Getting nash equilibrium strategies");
-            List<double[]> nashEqInitial = computeNashEq(currentCase);
-            List<double[]> nashEqPure = getPureStrategies(nashEqInitial);
-            List<double[]> nashEqMixed = getMixedStrategies(nashEqInitial);
+
+            List<double[]> nashEqInitial = Gambit.getNashEqStrategies(this, currentCase);
+            List<double[]> nashEqPure = Gambit.getPureStrategies(nashEqInitial);
+            List<double[]> nashEqMixed = Gambit.getMixedStrategies(nashEqInitial);
+
+            String nashString = Gambit.nashEqToString(currentCase, nashEqInitial);
+            log.info("== Nash Eq Strategies ==");
+            log.info(nashString);
 
             // ************** Strategies with zeros on columns from both pools will be removed in the next iteration
             for (int col = 0; col < nashEqInitial.get(0).length; col++) {
@@ -258,7 +207,7 @@ public class RetailMarketManager {
                 log.info("[Manual Selection] Selected: " + Arrays.toString(smneProbs));
             } else {
                 if (nashEqMixed.size() > 0) {
-                    int idx = argMinZeros(nashEqMixed);
+                    int idx = Utilities.argMinZeros(nashEqMixed);
                     smneProbs = nashEqMixed.get(idx);
                     log.info("SMNE is picking mixed strategy:" + Arrays.toString(smneProbs));
                 } else {
@@ -499,42 +448,6 @@ public class RetailMarketManager {
         }
     }
 
-    public List<double[]> getPureStrategies(List<double[]> nashStrats) {
-        List<double[]> result = new ArrayList<>();
-        for (double[] strat : nashStrats) {
-            boolean isPure = true;
-            // If all the numbers are integers, then it's a pure strategy
-            for (double n : strat) {
-                boolean isInteger = (n % 1 == 0);
-                if (!isInteger) {
-                    isPure = false;
-                    break;
-                }
-            }
-            if (isPure)
-                result.add(strat);
-        }
-        return result;
-    }
-
-    public List<double[]> getMixedStrategies(List<double[]> nashStrats) {
-        List<double[]> result = new ArrayList<>();
-        for (double[] strat : nashStrats) {
-            boolean isPure = true;
-            // If all the numbers are integers, then it's a pure strategy
-            for (double n : strat) {
-                boolean isInteger = (n % 1 == 0);
-                if (!isInteger) {
-                    isPure = false;
-                    break;
-                }
-            }
-            if (!isPure)
-                result.add(strat);
-        }
-        return result;
-    }
-
     /**
      * Determines if there is a pure strategy where the RL agent is dominating
      * (zero in all other columns)
@@ -548,152 +461,4 @@ public class RetailMarketManager {
         }
         return false;
     }
-
-    public List<double[]> computeNashEq(CaseStudy cs) {
-        List<double[]> nashEqStrategies = new ArrayList<>();
-        try {
-            log.info("Computing game matrix");
-            for (int i = 0; i < cs.pool1.size(); i++) {
-                for (int k = 0; k < cs.pool2.size(); k++) {
-                    gameMatrix[i][k].value1 = Math.round(gameMatrix[i][k].value1 / largestValue * 100);
-                    gameMatrix[i][k].value2 = Math.round(gameMatrix[i][k].value2 / largestValue * 100);
-                }
-            }
-
-            // Create gambit file
-            log.info("Creating Gambit file");
-            FileWriter fw = new FileWriter("Gambit.nfg");
-            PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
-            pw.println("NFG 1 R \"IPD NFG\" { \"Player 1\" \"Player 2\" } " + "{ " + cs.pool1.size() + " " + cs.pool2.size() + " }");
-            for (int k = 0; k < cs.pool1.size(); k++)
-                for (int i = 0; i < cs.pool2.size(); i++)
-                    pw.print(gameMatrix[i][k].value1 + " " + gameMatrix[i][k].value2 + " ");
-            pw.close();
-            fw.close();
-
-            log.info("Sending file to command-line tool");
-            ProcessBuilder pb = new ProcessBuilder("gambit-enummixed", "Gambit.nfg", "-q");
-            pb.redirectErrorStream(true);
-            Process process = pb.start();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line;
-
-            log.info("Reading from command-line output");
-            while ((line = reader.readLine()) != null) {
-                String[] nashEqRaw = line.split(",");
-                // String nashEqName = nashEqRaw[0];
-
-                double[] nashEqStrategy = new double[cs.pool1.size()];
-                for (int i = 1; i <= cs.pool1.size(); i++) {
-                    double n = parseFractionString(nashEqRaw[i]);
-                    nashEqStrategy[i - 1] = n;
-                }
-
-                nashEqStrategies.add(nashEqStrategy);
-            }
-            process.waitFor();
-            log.info("== Nash Eq Strategies ==");
-            String header = "";
-            for (Agent agent : cs.pool1) {
-                if (agent instanceof DQAgent)
-                    header += ((DQAgent) agent).getSimpleName() + ", ";
-                else
-                    header += agent.name + ", ";
-            }
-            header = header.substring(0, header.length() - 2);
-
-            log.info(header);
-            int strategyIDX = 0;
-            for (double[] nashEq : nashEqStrategies) {
-                String output = strategyIDX + " [";
-                for (double d : nashEq)
-                    output += String.format("%.3f, ", d);
-                output = output.substring(0, output.length() - 2) + "]";
-                log.info(output);
-                strategyIDX++;
-            }
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return nashEqStrategies;
-    }
-
-    /**
-     * Converts a string of the form a/b (fraction) into a double
-     * @param fString String to convert
-     * @return double representing a/b
-     */
-    public double parseFractionString(String fString) {
-        try {
-            // Try to parse it regularly first, it might not be a fraction after all
-            return Double.parseDouble(fString);
-        } catch (NumberFormatException ex) {
-            String[] split = fString.split("/");
-            double numerator = Double.parseDouble(split[0]);
-            double denominator = Double.parseDouble(split[1]);
-            return numerator / denominator;
-        }
-    }
-
-    public static void sandboxExperiment() throws IOException {
-        RetailMarketManager rm = new RetailMarketManager();
-
-        // Opponent
-        Agent opponentAgent = new AlwaysIncrease();
-
-        // Training opponents
-        List<Agent> oppPool = new ArrayList<>();
-        oppPool.add(opponentAgent);
-
-        // DQAgent Training
-        DQAgent dqAgent = Trainer.train(oppPool, "sandbox.pol");
-
-        // Testing
-        opponentAgent.reset();
-        CaseStudy testingStudy = new CaseStudy();
-        testingStudy.addP1Strats(opponentAgent);
-        testingStudy.addP2Strats(dqAgent);
-
-        rm.startSimulation(testingStudy);
-        log.info(String.format("[Opponent: %s -> Profit: %.3f] | [DQAgent -> Profit %.3f]", opponentAgent.name, opponentAgent.profit, dqAgent.profit));
-        log.info(String.format("Feature Size: %s, Training Rounds %s, Test Rounds %s", RetailMDP.NUM_OBSERVATIONS, Configuration.TRAINING_ROUNDS, Configuration.TEST_ROUNDS));
-        log.info(String.format("Defect %s, NoChange %s, Increase %s", DQAgent.DEFECT, DQAgent.NOC, DQAgent.INC));
-    }
-
-    public static void roundRobinExperiment() throws IOException {
-        RetailMarketManager rm = new RetailMarketManager();
-        rm.startExperiment(true);
-    }
-
-    public static void mainExperiment() throws IOException {
-        RetailMarketManager rm = new RetailMarketManager();
-        rm.startExperiment(false);
-    }
-
-    public static void main(String[] args) throws IOException {
-        Logging.setupFormat();
-        Logging.attachLoggerToFile(log, "experiment.log");
-        log.info(Configuration.toStringRepresentation());
-        log.info("Feature Size: " + RetailMDP.NUM_OBSERVATIONS);
-        /*
-         * The Sandbox Experiment tests DQAgent against a few others
-         * We can use this experiment to make sure DQAgent is being trained correctly
-         * Or to tweak hyperparameters
-         */
-        sandboxExperiment();
-
-        /*
-         * The round robin experiment
-         * 
-         */
-        // roundRobinExperiment();
-
-        /*
-         * The Main Experiment runs the flowchart specified by Porag
-         * Basically, the SMNE vs DQAgent stuff with Gambit and such
-         */
-        // mainExperiment();
-    }
-
 }
