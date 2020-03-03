@@ -14,8 +14,8 @@ public class GD extends Agent {
     }
 
     public void updatePrevActionBelief(Observer ob) {
-    	double myPrevTSRevenue = (tariffPrice*(marketShare/100));
-    	double opPrevTSRevenue = (rivalTariffPrice*(1-(marketShare/100)));
+    	double myPrevTSRevenue = ((tariffPrice-ob.unitcost_pred)*(marketShare/100));
+    	double opPrevTSRevenue = ((rivalTariffPrice-ob.unitcost_pred)*(1-(marketShare/100)));
     	double totalRevenue = (myPrevTSRevenue+opPrevTSRevenue);
     	actGDvalues[previousAction.index]=myPrevTSRevenue / totalRevenue;
     	actGDvalues[rivalPreviousAction.index]=opPrevTSRevenue / totalRevenue;

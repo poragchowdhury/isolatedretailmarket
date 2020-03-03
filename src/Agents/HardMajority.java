@@ -20,8 +20,13 @@ public class HardMajority extends Agent {
         else
             coopCounter++; // other agent is cooperating
 
-        if (ob.timeslot == 1 || defectCounter >= coopCounter) // Defect on first timeslot
-            return TariffAction.D1;
+        if (ob.timeslot == 1 || defectCounter >= coopCounter) // Defect on first timeslot or if defect counter is higher than coop
+        {
+        	if((tariffPrice + TariffAction.D1.tariff) > ob.unitcost_pred)
+        		return TariffAction.D1;
+        	else
+        		return TariffAction.NC;
+        }
 
         return TariffAction.NC;
 

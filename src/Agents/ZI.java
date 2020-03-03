@@ -15,10 +15,16 @@ public class ZI extends Agent {
         Random r = new Random();
         int coin = r.nextInt(3);
         if (coin == 0) // Defect
-            return TariffAction.NC;
-        else if(coin == 1)
-        	return TariffAction.I1;
+        {
+        	if((tariffPrice + TariffAction.D1.tariff) > ob.unitcost_pred)
+        		return TariffAction.D1;
+        	else
+        		return TariffAction.NC;
+        }
+        else if(coin == 1) {
+        	return TariffAction.NC;
+        }
         else // Coop
-            return TariffAction.D1;
+            return TariffAction.I1;
     }
 }

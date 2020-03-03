@@ -8,11 +8,6 @@ import Observer.Observer;
 import Tariff.TariffAction;
 
 public abstract class Agent implements Cloneable {
-	// Initial profit, cost, marketshare, unitcost
-	public double init_unitcost = 0.05;
-	public double init_mkshare = 50.0;
-	public double init_cost = 0.05 * Configuration.POPULATION / 2 * 8;
-	public double init_revenue = Configuration.DEFAULT_TARIFF_PRICE * Configuration.POPULATION / 2 * 8;
 
 	public String name;
 	public int id;
@@ -41,14 +36,6 @@ public abstract class Agent implements Cloneable {
 	public double pr = 1;
 	public double prI = 1;
 
-	// Random walk cost variables
-	public double c_max = 0.15;
-	public double c_min = 0.05;
-	public double tr_min = 0.95;
-	public double tr_max = 1 / 0.95;
-	public double unitcost = 0.05;
-	public double trend = 1;
-
 	// agent history by timeslot
 	public double[] tariffHistory;
 	public double[] unitCostHistory;
@@ -67,9 +54,7 @@ public abstract class Agent implements Cloneable {
 	public Agent(String agentName, int id) {
 		this.name = agentName;
 		this.id = id;
-		this.unitcost = Configuration.INITUNITCOST;
-		this.c_max = Configuration.MAX_UNIT_COST;
-		this.c_min = Configuration.MIN_UNIT_COST;
+		
 		this.tariffHistory = new double[Configuration.TOTAL_TIME_SLOTS];
 		this.unitCostHistory = new double[Configuration.TOTAL_TIME_SLOTS];
 		this.costHistory = new double[Configuration.TOTAL_TIME_SLOTS];
@@ -101,7 +86,6 @@ public abstract class Agent implements Cloneable {
 		other.tariffUtility = tariffUtility;
 		other.previousAction = previousAction;
 		other.rivalPreviousAction = rivalPreviousAction;
-		other.unitcost = unitcost;
 		other.opponentID = opponentID;
 		
 		if(ob.timeslot == 1) {
@@ -139,7 +123,7 @@ public abstract class Agent implements Cloneable {
 		tariffUtility = 0;
 		previousAction = TariffAction.NC;
 		rivalPreviousAction = TariffAction.NC;
-		unitcost = 0.05;
+		
 		actGDvalues = new double[TariffAction.values().length];
 		bestResponseCount = 0;
 		bestResponseCountErr = 0;
@@ -196,35 +180,6 @@ public abstract class Agent implements Cloneable {
 		return super.equals(obj);
 	}
 
-	public void randomWalkUnitCost(int ts) {
-		double new_unitcost = Math.min(this.c_max, Math.max(this.c_min, this.trend * this.unitcost));
-		double new_trend = Math.max(this.tr_min, Math.min(this.tr_max, this.trend + getRandomValInRange(0.01)));
-		if ((this.trend * this.unitcost) < this.c_min || (this.trend * this.unitcost) > this.c_max)
-			this.trend = 1;
-		else
-			this.trend = new_trend;
-		this.unitcost = new_unitcost;
-		this.costHistory[ts] = this.unitcost;
-	}
-
-	/*
-	 * Generation random values between -max to +max
-	 */
-	public double getRandomValInRange(double max) {
-		int divisor = 100;
-		while (max % 1 != 0) {
-			max *= 10;
-			divisor *= 10;
-		}
-		int maxbound = (int) max * 100;
-		Random r = new Random();
-		int randInt = r.nextInt(maxbound + 1);
-		double val = (double) randInt / divisor;
-		int coin = r.nextInt(2);
-		if (coin == 0)
-			val *= -1;
-		return val;
-	}
 
 	public String getAllHistoryActions() {
 		StringBuilder sb = new StringBuilder();

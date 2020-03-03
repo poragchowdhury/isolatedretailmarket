@@ -24,12 +24,21 @@ public class Grim extends Agent {
         		if (this.rivalTariffHistory[ob.timeslot-1-Configuration.PUBLICATION_CYCLE] > this.rivalTariffHistory[ob.timeslot-1]) { 
         			// other agent is defecting this round
         	        booDefect = true;
-	                return TariffAction.D1;
+                    return TariffAction.D1;
 	            } else { // Agent hasn't defected: So cooperate
 	                return TariffAction.NC;
 	            }
         	}
-        } else // Always Defect
-            return TariffAction.D1;
+        } 
+    	else // Always Defect
+    	{
+    		if((tariffPrice + TariffAction.D1.tariff) > ob.unitcost_pred)
+        		return TariffAction.D1;
+        	else
+        		return TariffAction.NC;
+    	}
     }
+    
+    
+    
 }

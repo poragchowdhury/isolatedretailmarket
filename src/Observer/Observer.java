@@ -2,6 +2,7 @@ package Observer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.logging.Logger;
 
 import Agents.Agent;
@@ -14,6 +15,21 @@ import Tariff.TariffAction;
  * Contains the observable information for one game
  */
 public class Observer {
+	
+	// Random walk cost variables
+	public double c_max = 0.15;
+	public double c_min = 0.05;
+	public double tr_min = 0.95;
+	public double tr_max = 1 / 0.95;
+	public double unitcost = 0.05;
+	public double unitcost_pred = 0.06;
+	public double trend = 1;
+	// Initial profit, cost, marketshare, unitcost
+	public double init_unitcost = 0.05;
+	public double init_mkshare = 50.0;
+	public double init_cost = 0.05 * Configuration.POPULATION / 2 * 8;
+	public double init_revenue = Configuration.DEFAULT_TARIFF_PRICE * Configuration.POPULATION / 2 * 8;
+
     public int publication_cycle_count = 0; // The amount of publication cycles that this game has had
     public int timeslot = 0; // The current timeslot of the game
     public double[] payoffs;
@@ -49,16 +65,54 @@ public class Observer {
         agentPayoffs = new double[2][Configuration.TEST_ROUNDS];
         agentBestResponse = new double[2][Configuration.TEST_ROUNDS];
         agentWins = new double[2];
+        
+        this.unitcost = Configuration.INITUNITCOST;
+		this.c_max = Configuration.MAX_UNIT_COST;
+		this.c_min = Configuration.MIN_UNIT_COST;
     }
 
+	public void randomWalkUnitCost(int ts) {
+		double new_unitcost = Math.min(this.c_max, Math.max(this.c_min, this.trend * this.unitcost));
+		double new_trend = Math.max(this.tr_min, Math.min(this.tr_max, this.trend + getRandomValInRange(0.01)));
+		if ((this.trend * this.unitcost) < this.c_min || (this.trend * this.unitcost) > this.c_max)
+			this.trend = 1;
+		else
+			this.trend = new_trend;
+		this.unitcost = new_unitcost;
+		
+		double error = getRandomValInRange(0.01);
+		this.unitcost_pred = this.unitcost + error;
+	}
+
+	/*
+	 * Generation random values between -max to +max
+	 */
+	public double getRandomValInRange(double max) {
+		int divisor = 100;
+		while (max % 1 != 0) {
+			max *= 10;
+			divisor *= 10;
+		}
+		int maxbound = (int) max * 100;
+		Random r = new Random();
+		int randInt = r.nextInt(maxbound + 1);
+		double val = (double) randInt / divisor;
+		int coin = r.nextInt(2);
+		if (coin == 0)
+			val *= -1;
+		return val;
+	}
+    
     public void updateAgentUnitCost() {
+    	randomWalkUnitCost(timeslot);
         for(Agent a : agentPool)
-        	a.randomWalkUnitCost(timeslot);
+        	a.costHistory[timeslot] = this.unitcost;
     }
 
     public void clear() {
         this.agentPool.clear();
         publication_cycle_count = 0;
+        unitcost = 0.05;
         this.fcc = new FactoredConsumptionCustomer(this);
     }
 

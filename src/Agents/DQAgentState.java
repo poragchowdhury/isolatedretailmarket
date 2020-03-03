@@ -41,7 +41,7 @@ public class DQAgentState implements Encodable {
 		// previous publication cycle's profit
 		this.prevPubCycProfit = (ob.timeslot - 1 - Configuration.PUBLICATION_CYCLE >= 0)
 				? agent.profitHistory[ob.timeslot - 1 - Configuration.PUBLICATION_CYCLE]
-				: (agent.init_revenue - agent.init_cost);
+				: (ob.init_revenue - ob.init_cost);
 
 		// Rival's previous publication cycle action
 		if (ob.timeslot - 1 - Configuration.PUBLICATION_CYCLE >= 0) {
@@ -113,11 +113,11 @@ public class DQAgentState implements Encodable {
 		features.add(agent.rivalTariffHistory[prev2PubCycTS] / Configuration.MAX_TARIFF_PRICE);
 
 		// feature 9: previous timeslot cost
-		features.add(agent.unitcost / agent.c_max);
+		features.add(ob.unitcost / ob.c_max);
 		// feature 10: previous pubCyc cost
-		features.add(agent.unitCostHistory[prevPubCycTS] / agent.c_max);
+		features.add(agent.unitCostHistory[prevPubCycTS] / ob.c_max);
 		// feature 11: previous 2 pubCyc cost
-		features.add(agent.unitCostHistory[prev2PubCycTS] / agent.c_max);
+		features.add(agent.unitCostHistory[prev2PubCycTS] / ob.c_max);
 
 		/* 10 Action related features */
 
@@ -127,15 +127,16 @@ public class DQAgentState implements Encodable {
 		// feature 5~10: rival agent's previous action
 		for (double d : one_hot(agent.rivalPreviousAction.index, TariffAction.values().length))
 			features.add(d);
-
+		// feature 5~10: agent's previous publication cycle's action
 		for (double d : one_hot(agent.actHistory[prevPubCycTS], TariffAction.values().length))
 			features.add(d);
-		// feature 5~10: rival agent's previous action
+		// feature 5~10: rival agent's previous publication cycle's action
 		for (double d : one_hot(agent.rivalActHistory[prevPubCycTS], TariffAction.values().length))
 			features.add(d);
+		// feature 5~10: agent's previous 2 publication cycle's action
 		for (double d : one_hot(agent.actHistory[prev2PubCycTS], TariffAction.values().length))
 			features.add(d);
-		// feature 5~10: rival agent's previous action
+		// feature 5~10: rival agent's previous 2 publication cycle's action
 		for (double d : one_hot(agent.rivalActHistory[prev2PubCycTS], TariffAction.values().length))
 			features.add(d);
 

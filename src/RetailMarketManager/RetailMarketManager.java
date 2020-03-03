@@ -24,6 +24,7 @@ import org.nd4j.autodiff.samediff.transform.OpPredicate;
 
 import Agents.Agent;
 import Agents.AlwaysDefect;
+import Agents.AlwaysDefect2;
 import Agents.AlwaysIncrease;
 import Agents.AlwaysSame;
 import Agents.DQAgent;
@@ -161,8 +162,8 @@ public class RetailMarketManager {
 		ob.agentPool.get(1).profitHistory[ob.timeslot] = ob.agentPool.get(1).profit;
 
 		// updating own unitcost history
-		ob.agentPool.get(0).unitCostHistory[ob.timeslot] = ob.agentPool.get(0).unitcost;
-		ob.agentPool.get(1).unitCostHistory[ob.timeslot] = ob.agentPool.get(1).unitcost;
+		ob.agentPool.get(0).unitCostHistory[ob.timeslot] = ob.unitcost;
+		ob.agentPool.get(1).unitCostHistory[ob.timeslot] = ob.unitcost;
 
 		// updating own cost history
 		ob.agentPool.get(0).costHistory[ob.timeslot] = ob.agentPool.get(0).cost;
@@ -192,7 +193,7 @@ public class RetailMarketManager {
 		// Calculating the money(revenue), cost and subscription for this timeslot
 		for (int i = 0; i < ob.fcc.population; i++) {
 			ob.money[ob.fcc.custId[i]] += (ob.agentPool.get(ob.fcc.custId[i]).tariffPrice * ob.fcc.usage[hour]);
-			ob.cost[ob.fcc.custId[i]] += (ob.agentPool.get(ob.fcc.custId[i]).unitcost
+			ob.cost[ob.fcc.custId[i]] += (ob.unitcost
 					* (ob.fcc.usage[hour] + ob.fcc.noise));
 			ob.custSubs[ob.fcc.custId[i]] += 1;
 		}
@@ -220,44 +221,6 @@ public class RetailMarketManager {
 
 		// update Agent's memory
 		updateAgentsMemory();
-	}
-
-	public void log(PrintWriter pwOutput) {
-
-		double tariff0 = (double) Math.round(ob.agentPool.get(0).tariffPrice * 10000) / 10000;
-		double tariff1 = (double) Math.round(ob.agentPool.get(1).tariffPrice * 10000) / 10000;
-
-		ob.utility[0] = (double) Math.round(ob.utility[0] * 1000) / 1000;
-		ob.utility[1] = (double) Math.round(ob.utility[1] * 1000) / 1000;
-
-		ob.money[0] = (double) Math.round(ob.money[0] * 100) / 100;
-		ob.money[1] = (double) Math.round(ob.money[1] * 100) / 100;
-
-		ob.cost[0] = (double) Math.round(ob.cost[0] * 100) / 100;
-		ob.cost[1] = (double) Math.round(ob.cost[1] * 100) / 100;
-
-		// ob.unitcost = (double) Math.round(ob.unitcost * 100) / 100;
-
-		ob.agentPool.get(0).revenue = (double) Math.round(ob.agentPool.get(0).revenue * 100) / 100;
-		ob.agentPool.get(1).revenue = (double) Math.round(ob.agentPool.get(1).revenue * 100) / 100;
-		ob.agentPool.get(0).profit = (double) Math.round(ob.agentPool.get(0).profit * 100) / 100;
-		ob.agentPool.get(1).profit = (double) Math.round(ob.agentPool.get(1).profit * 100) / 100;
-
-		System.out.println("TS-" + ob.timeslot + "\t\tCust" + "\tUtlty" + "\tUntCst" + "\tCost" + "\tTariff" + "\tMony"
-				+ "\tPrft");
-		System.out.println(ob.agentPool.get(0).name + ob.timeslot + "\t\t" + ob.custSubs[0] + "\t" + ob.utility[0]
-				+ "\t" + ob.agentPool.get(0).unitcost + "\t" + ob.cost[0] + "\t" + tariff0 + "\t" + ob.money[0] + "\t"
-				+ ob.agentPool.get(0).profit);
-		pwOutput.print(ob.timeslot + "," + ob.custSubs[0] + "," + ob.utility[0] + "," + ob.money[0] + "," + ob.cost[0]
-				+ "," + ob.agentPool.get(0).profit + "," + ob.agentPool.get(0).tariffPrice + ",");
-		// System.out.println(ob.agentPool.get(1).name + ob.timeslot + "\t\t" +
-		// ob.custSubs[1] + "\t" + ob.utility[1] + "\t" + ob.unitcost + "\t" +
-		// ob.cost[1] + "\t" + tariff1 + "\t" + ob.money[1] + "\t" +
-		// ob.agentPool.get(1).profit);
-		System.out.println();
-		// pwOutput.println(ob.custSubs[1] + "," + ob.utility[1] + "," + ob.money[1] +
-		// "," + ob.cost[1] + "," + ob.agentPool.get(1).profit + "," +
-		// ob.agentPool.get(1).tariffPrice + "," + ob.unitcost);
 	}
 
 	public void printRevenues(int round, PrintWriter pwOutput) {
@@ -317,116 +280,6 @@ public class RetailMarketManager {
 		Configuration.INERTIA = inertia;
 	}
 
-	public void startSimulationV2() {
-
-		String filename = Configuration.LOGFILENAME;
-
-		try {
-			FileWriter fwOutput = new FileWriter(filename, true);
-			PrintWriter pwOutput = new PrintWriter(new BufferedWriter(fwOutput));
-			FileWriter fwOutputAvg = new FileWriter(filename + "-Avg.csv", true);
-			PrintWriter pwOutputAvg = new PrintWriter(new BufferedWriter(fwOutputAvg));
-
-			double rationality[] = { 0.8 };
-			double inertia[] = { 0.8 };
-			double imax = 1;
-			double rmax = 1;
-			double roundmax = Configuration.TEST_ROUNDS;
-			if (!Configuration.DLOGGING) {
-				// Detailed logging disabled
-				rmax = rationality.length;
-				imax = inertia.length;
-				roundmax = Configuration.TEST_ROUNDS;
-			}
-
-			pwOutput.println(Configuration.toStringRepresentation());
-			pwOutputAvg.println(Configuration.toStringRepresentation());
-
-			CaseStudy cs = CaseStudy.getFromConfiguration();
-
-			// Round Robin Tournament Set Up
-			for (int iagent = 0; iagent < cs.pool1.size(); iagent++) {
-				for (int kagent = iagent; kagent < cs.pool2.size(); kagent++) {
-					for (int iindex = 0; iindex < imax; iindex++) {
-						for (int rindex = 0; rindex < rmax; rindex++) {
-							for (int round = 0; round < roundmax; round++) {
-
-								cs.pool1.get(iagent).reset();
-								cs.pool2.get(kagent).reset();
-
-								ob.agentPool.add(cs.pool1.get(iagent));
-								ob.agentPool.add(cs.pool2.get(kagent));
-
-								// update the configuration in observer
-								// if(!Configuration.DLOGGING)
-								// updateObserver(round, inertia[iindex], rationality[rindex]);
-
-								// System.out.println("TS,"+ob.agentPool.get(0).name+
-								// "-Cust,"+ob.agentPool.get(0).name+ "-Utility,"+ob.agentPool.get(0).name+
-								// "-Money,"+ob.agentPool.get(0).name+ "-Revn,"+ob.agentPool.get(1).name+
-								// "-Cust,"+ob.agentPool.get(1).name+ "-Utility,"+ob.agentPool.get(1).name+
-								// "-Money,"+ob.agentPool.get(1).name+ "-Reven");
-								if (Configuration.DLOGGING)
-									pwOutput.println("TS," + ob.agentPool.get(0).name + "-Cust,"
-											+ ob.agentPool.get(0).name + "-Utility," + ob.agentPool.get(0).name
-											+ "-Money," + ob.agentPool.get(0).name + "-Cost," + ob.agentPool.get(0).name
-											+ "-Profit," + ob.agentPool.get(0).name + "-Tariff,"
-											+ ob.agentPool.get(1).name + "-Cust," + ob.agentPool.get(1).name
-											+ "-Utility," + ob.agentPool.get(1).name + "-Money,"
-											+ ob.agentPool.get(1).name + "-Cost," + ob.agentPool.get(1).name
-											+ "-Profit," + ob.agentPool.get(1).name + "-Tariff," + "Unitcost");
-
-								// This loop will run for a specific number of publication cycles based on the
-								// total timeslots
-
-								for (ob.timeslot = 0; ob.timeslot < Configuration.TOTAL_TIME_SLOTS;) {
-									// System.out.println("Timeslot: " + timeslot);
-									// log values
-									if (Configuration.DLOGGING)
-										log(pwOutput);
-									// Agents taking Actions
-									// Publishing tariffs at TS: 1, 7, 13...
-									if (ob.timeslot % Configuration.PUBLICATION_CYCLE == 1) {
-										publishTariffs();
-										ob.publication_cycle_count++;
-									}
-									// update agent cost
-									ob.updateAgentUnitCost();
-									// Customers evaluating tariffs
-									customerTariffEvaluation();
-									// Update agent accountings
-									updateAgentAccountings();
-									// Going to next timeslot and updating the cost
-									ob.timeslot++;
-								}
-								// Print Revenues
-								printRevenues(round, pwOutput);
-								// clear the observer for another simulation round set up
-								ob.clear();
-							}
-							// Print avg result for all the round
-							printAvgRevenues(cs, iagent, kagent, pwOutputAvg);
-							// clear the observer for another simulation set up with another pair of agents
-							ob.allsampleclear();
-						}
-					}
-				}
-			}
-			printGameMatrix(cs, pwOutputAvg);
-			if (Configuration.GET_NASH_EQ)
-				nashEqCalc(cs, pwOutputAvg);
-			pwOutput.close();
-			fwOutput.close();
-			pwOutputAvg.close();
-			fwOutputAvg.close();
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println("Error: " + e.getMessage());
-			e.printStackTrace();
-			System.exit(0);
-		}
-	}
-
 	public void printGameMatrix(CaseStudy cs, PrintWriter pwOutputAvg) {
 		// Normalizing the values
 		double[] avgValues = new double[numberofagents];
@@ -449,6 +302,24 @@ public class RetailMarketManager {
 		createCommandLineGambitFile();
 	}
 
+	public void printClusterValues(CaseStudy cs, boolean runVsItself) {
+		numberofagents = cs.pool1.size();
+		StringBuilder sb_names = new StringBuilder();
+		StringBuilder sb_scores = new StringBuilder();
+		log.info(String.format("Print Clustering values\n"));
+		for (int i = 1; i < numberofagents; i++) {
+				double selfplayScore = gameMatrix[i][i].value1; // selfplay value
+				double randplayScore = gameMatrix[i][0].value1; // against random agent
+				sb_scores.append(String.format("[%.3f,%.3f],", selfplayScore, randplayScore));
+				sb_names.append("'" + cs.pool1.get(i).name + "',");
+		}
+		String scoreFeatures = sb_scores.toString();
+		String agentNames = sb_names.toString();
+		
+		log.info(String.format("X = np.array([%s])", scoreFeatures.substring(0, scoreFeatures.length()-1)));
+		log.info(String.format("words = [%s]", agentNames.substring(0, agentNames.length()-1)));
+	}
+	
 	public void printGameMatrix(CaseStudy cs, boolean runVsItself) {
 		// Normalizing the values
 		numberofagents = cs.pool1.size();
@@ -602,43 +473,6 @@ public class RetailMarketManager {
 
 	}
 
-	public void printPayoffMatrix() {
-		// find the largest value in the payoff matrix
-		double maxValue = ob.payoffs[0];
-		for (int i = 1; i < 8; i++)
-			if (ob.payoffs[i] > maxValue)
-				maxValue = ob.payoffs[i];
-
-		// now normalize the payoff matrix and print the maxtrix
-
-		for (int i = 0; i < 8; i++)
-			ob.payoffs[i] /= maxValue;
-
-		double T = ob.payoffs[3];
-		double R = ob.payoffs[1];
-		double P = ob.payoffs[7];
-		double S = ob.payoffs[5];
-
-		System.out.println("lamda " + Configuration.RATIONALITY);
-		System.out.println("T-R " + (T - R));
-		System.out.println("T-P " + (T - P));
-		System.out.println("T-S " + (T - S));
-		System.out.println("R-P " + (R - P));
-		System.out.println("R-S " + (P - S));
-		System.out.println("P-S " + (P - S));
-		System.out.println("2R-T-S " + (2 * R - T - S));
-
-		/*
-		 * System.out.println("========================");
-		 * System.out.printf("|%.2f,%.2f |%.2f,%.2f |\n", ob.payoffs[0], ob.payoffs[1],
-		 * ob.payoffs[2], ob.payoffs[3]);
-		 * System.out.println("========================");
-		 * System.out.printf("|%.2f,%.2f |%.2f,%.2f |\n", ob.payoffs[4], ob.payoffs[5],
-		 * ob.payoffs[6], ob.payoffs[7]);
-		 * System.out.println("========================");
-		 */
-	}
-
 	private static Logger log = Logger.getLogger("retailmarketmanager");
 	// private Logger log = Logger.getLogger("rmm.experiment");
 
@@ -760,6 +594,7 @@ public class RetailMarketManager {
 
 			// ************** Print the round robin results
 			if (roundrobin) {
+				printClusterValues(currentCase, true);
 				printGameMatrix(currentCase, true);
 				break;
 			}
@@ -906,11 +741,13 @@ public class RetailMarketManager {
 
 	public CaseStudy setupRoundRobin() {
 		log.info("=== Setting up initial pools ===");
+		/*
 		ArrayList<Agent> literatureStrategies = new ArrayList<>();
 		TitForTat TFT = new TitForTat(1, 1);
 		TitForTat TF2T = new TitForTat(1, 2);
 		TitForTat _2TFT = new TitForTat(2, 1);
 		literatureStrategies.add(new DQAgent("DQ11", "DQ11_1.00DQ10.pol"));
+//		literatureStrategies.add(new DQAgent("BR_TFT", "BR_TFT.pol"));
 		literatureStrategies.add(new HardMajority());
 		literatureStrategies.add(_2TFT);
 		literatureStrategies.add(TFT);
@@ -927,19 +764,26 @@ public class RetailMarketManager {
 		literatureStrategies.add(new ZIP());
 		literatureStrategies.add(new GD());
 
-		ArrayList<Agent> literatureStrategiesClone = (ArrayList<Agent>) literatureStrategies.clone();
+		ArrayList<Agent> literatureStrategiesClone = new ArrayList<>();//(ArrayList<Agent>) literatureStrategies.clone();
+		for(Agent a : literatureStrategies)
+			literatureStrategiesClone.add(a.clone());
+		
 		CaseStudy initial = new CaseStudy();
 		initial.pool1.addAll(literatureStrategies);
 		initial.pool2.addAll(literatureStrategiesClone);
-
+		*/
+		//new DQAgent("DQ11", "DQ11_1.00DQ10.pol"),
+		CaseStudy initial = new CaseStudy().addP1Strats(new ZI(), new AlwaysDefect2(),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame());
+									initial.addP2Strats(new ZI(), new AlwaysDefect2(),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame());
 		return initial;
 	}
 
 	public CaseStudy setupInitialStrategies() {
-
-		CaseStudy initial = new CaseStudy().addP1Strats(new Grim(), new DQAgent("DQ9","DQ9_1.00Grim.pol"), new DQAgent("DQ7","DQ7_0.41Grim,0.26DQ5,0.33DQ6.pol"), new DQAgent("DQ11","DQ11_1.00DQ10.pol"), new DQAgent("DQ12","DQ12_1.00DQ11.pol"));
-									initial.addP2Strats(new Grim(), new DQAgent("DQ9","DQ9_1.00Grim.pol"), new DQAgent("DQ7","DQ7_0.41Grim,0.26DQ5,0.33DQ6.pol"), new DQAgent("DQ11","DQ11_1.00DQ10.pol"), new DQAgent("DQ12","DQ12_1.00DQ11.pol"));//, new DQAgent("DQ20","DQ20_0.94GD,0.06DQ19.pol"));     
-		Configuration.DQ_TRAINING = "DQ23";
+		//new DQAgent("DQ0", "DQ0_1.00AlD.pol"), new DQAgent("R.DQ0", "BR_TFT.pol"),
+		// new Prober(), new NaiveProber(), new AlwaysDefect(), 
+		CaseStudy initial = new CaseStudy().addP1Strats(new DQAgent("DQ11", "DQ11_1.00DQ10.pol"),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame(), new ZI());// new DQAgent("DQ0", "DQ0_1.00AlD.pol"), new DQAgent("DQ3", "DQ3_1.00DQ2.pol"), new DQAgent("DQ4", "DQ4_1.00DQ3.pol"));
+									initial.addP2Strats(new DQAgent("DQ11", "DQ11_1.00DQ10.pol"),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame(), new ZI());// new DQAgent("DQ0", "DQ0_1.00AlD.pol"), new DQAgent("DQ3", "DQ3_1.00DQ2.pol"), new DQAgent("DQ4", "DQ4_1.00DQ3.pol"));     
+		Configuration.DQ_TRAINING = "R.DQ1";
 		log.info("Pool1: " + initial.pool1.toString());
 		log.info("Pool2: " + initial.pool2.toString());
 		return initial;
@@ -1155,7 +999,47 @@ public class RetailMarketManager {
 					pw.print(gameMatrix[i][k].value1 + " " + gameMatrix[i][k].value2 + " ");
 			pw.close();
 			fw.close();
+			
+			// Printing the gambit file
+			fw = new FileWriter("Gambit.gbt");
+			pw = new PrintWriter(new BufferedWriter(fw));
 
+			pw.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n"
+					+ "<gambit:document xmlns:gambit=\"http://gambit.sourceforge.net/\" version=\"0.1\">\r\n"
+					+ "<colors>\r\n");
+			for(int i=0; i< cs.pool1.size(); i++)
+				pw.println("<player id=\"" + i + "\" red=\"0\" green=\"0\" blue=\"0\" />\r");
+//					+ "<player id=\"0\" red=\"154\" green=\"205\" blue=\"50\" />\r\n"
+//					+ "<player id=\"1\" red=\"255\" green=\"0\" blue=\"0\" />\r\n"
+//					+ "<player id=\"2\" red=\"0\" green=\"0\" blue=\"255\" />\r\n" 
+			pw.println("</colors>\r\n"
+					+ "<font size=\"10\" family=\"74\" face=\"Arial\" style=\"90\" weight=\"92\" />\r\n"
+					+ "<numbers decimals=\"4\"/>\r\n" + "<game>\r\n" + "<nfgfile>\r\n"
+					+ "NFG 1 R \"Retail Strategic Game\" { \"Player 1\" \"Player 2\" }\n");
+			pw.print("{ ");
+			for (int pl = 0; pl < cs.pool1.size(); pl++) {
+				pw.print("{");
+				for (int i = 0; i < cs.pool2.size(); i++)
+					pw.print(" \"" + cs.pool1.get(i).name + "\" ");
+				pw.println("}");
+			}
+			pw.println("}");
+			pw.println("\"\"\n");
+			// Printing gambit martix
+			pw.println("{");
+			for (int k = 0; k < cs.pool1.size(); k++)
+				for (int i = 0; i < cs.pool2.size(); i++)
+					pw.printf("{ \"\" %.2f, %.2f }, ", gameMatrix[i][k].value1,gameMatrix[i][k].value2);
+
+			pw.println("}");
+			for (int i = 1; i <= cs.pool1.size() * cs.pool1.size(); i++)
+				pw.print(i + " ");
+			pw.println("</nfgfile>\r\n" + "</game>\r\n" + "</gambit:document>");
+			
+			pw.close();
+			fw.close();
+			
+			
 			log.info("Sending file to command-line tool");
 			ProcessBuilder pb = new ProcessBuilder("gambit-enummixed", "Gambit.nfg", "-q");
 			pb.redirectErrorStream(true);
@@ -1216,11 +1100,11 @@ public class RetailMarketManager {
 //		SMNE smne = new SMNE();
 //		smne.addStrategy(1.0, new HardMajority());
 //		smne.addStrategy(0.0, new AlwaysSame());
-		Agent opponentAgent = new AlwaysIncrease();//new TitForTat(1,1);
+		Agent opponentAgent = new AlwaysDefect();
 		List<Agent> oppPool = new ArrayList<>();
 		oppPool.add(opponentAgent);
 
-		String policyToLearn = "DQ11_1.00DQ10.pol";
+		String policyToLearn = "BR_AlD_3action.pol";
 		//DQAgentMDP.trainDQAgent(oppPool, policyToLearn, null);
 		DQAgent dqAgent = new DQAgent("DQ", policyToLearn);  // new DQAgent("DQ0", "DQ0_1Day__1.00Prober.pol");//
 
@@ -1238,6 +1122,8 @@ public class RetailMarketManager {
 		log.info("Opp [0] Act " + opponentAgent.actHistory[0] + " Action: " + opponentAgent.getAllHistoryActions());
 		log.info("DQ0 [0] Trf " + dqAgent.tariffHistory[0] + " TrfHis: " + dqAgent.getHistoryByPubCyc(dqAgent.tariffHistory));
 		log.info("Opp [0] Trf " + opponentAgent.tariffHistory[0] + " TrfHis: " + opponentAgent.getHistoryByPubCyc(opponentAgent.tariffHistory));
+		log.info("DQ0 [0] UCt " + dqAgent.unitCostHistory[0] + " PftHis: " + dqAgent.getHistoryByPubCyc(dqAgent.unitCostHistory));
+		log.info("Opp [0] UCt " + opponentAgent.unitCostHistory[0] + " PftHis: " + opponentAgent.getHistoryByPubCyc(opponentAgent.unitCostHistory));
 		log.info("DQ0 [0] Mkt " + dqAgent.marketShareHistory[0] + " MktHis: " + dqAgent.getHistoryByPubCyc(dqAgent.marketShareHistory));
 		log.info("Opp [0] Mkt " + opponentAgent.marketShareHistory[0] + " MktHis: " + opponentAgent.getHistoryByPubCyc(opponentAgent.marketShareHistory));
 		log.info("DQ0 [0] Prf " + dqAgent.profitHistory[0] + " PftHis: " + dqAgent.getHistoryByPubCyc(dqAgent.profitHistory));
@@ -1275,7 +1161,7 @@ public class RetailMarketManager {
 		 * The Main Experiment runs the flowchart specified by Porag Basically, the SMNE
 		 * vs DQAgent stuff with Gambit and such
 		 */
-//		mainExperiment();
+		//mainExperiment();
 	}
 
 }

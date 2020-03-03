@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gambit:document xmlns:gambit="http://gambit.sourceforge.net/" version="0.1">
 <colors>
-<player id="-1" red="0" green="0" blue="0" />
-<player id="0" red="154" green="205" blue="50" />
-<player id="1" red="255" green="0" blue="0" />
-<player id="2" red="0" green="0" blue="255" />
+
+<player id="0" red="0" green="0" blue="0" />
+<player id="1" red="0" green="0" blue="0" />
+<player id="2" red="0" green="0" blue="0" />
+<player id="3" red="0" green="0" blue="0" />
 </colors>
 <font size="10" family="74" face="Arial" style="90" weight="92" />
 <numbers decimals="4"/>
@@ -12,14 +13,15 @@
 <nfgfile>
 NFG 1 R "Retail Strategic Game" { "Player 1" "Player 2" }
 
-{ { "SMNE1" }
-{ "SMNE1" }
+{ { "Pavlov"  "1TF2T"  "2TF1T"  "R.DQ0" }
+{ "Pavlov"  "1TF2T"  "2TF1T"  "R.DQ0" }
+{ "Pavlov"  "1TF2T"  "2TF1T"  "R.DQ0" }
+{ "Pavlov"  "1TF2T"  "2TF1T"  "R.DQ0" }
 }
 ""
 
 {
-{ "" 51.0, 51.0 }
-}
-1 </nfgfile>
+{ "" 16658.48, 16658.48 }, { "" 16772.56, 16691.71 }, { "" 16649.74, 16741.95 }, { "" 17238.88, 356.01 }, { "" 16691.71, 16772.56 }, { "" 16728.82, 16728.82 }, { "" 16649.91, 16650.12 }, { "" 17122.58, 2538.58 }, { "" 16741.95, 16649.74 }, { "" 16650.12, 16649.91 }, { "" 16796.95, 16796.95 }, { "" 17124.67, 2526.37 }, { "" 356.01, 17238.88 }, { "" 2538.58, 17122.58 }, { "" 2526.37, 17124.67 }, { "" 7936.29, 7936.29 }, }
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 </nfgfile>
 </game>
 </gambit:document>

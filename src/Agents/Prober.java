@@ -1,5 +1,7 @@
 package Agents;
 
+import java.util.Random;
+
 import Observer.Observer;
 import Tariff.TariffAction;
 
@@ -15,9 +17,11 @@ public class Prober extends Agent {
 
     @Override
     public TariffAction makeAction(Observer ob) {
+    	Random rand = new Random();
+    	int noise = rand.nextInt(2);
         if (ob.timeslot == 1) // Start with defection
             return TariffAction.D1;
-        else if (ob.timeslot == 7 || ob.timeslot == 13) // Coop
+        else if (ob.timeslot == (7+noise) || ob.timeslot == (13+noise)) // Coop
             return TariffAction.NC;
         else if (coopCounter >= 2) // Other agent cooperated twice, so defect
             return TariffAction.D1;

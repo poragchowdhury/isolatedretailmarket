@@ -91,7 +91,7 @@ public class DQAgentMDP implements MDP<DQAgentState, Integer, DiscreteSpace> {
 	public static ActorCriticFactorySeparateStdDense.Configuration QLNet2 = ActorCriticFactorySeparateStdDense.Configuration
 			.builder().l2(0.0001).updater(new Adam(0.0005)).numHiddenNodes(16).numLayer(3).build();
 
-	public static final int NUM_ACTIONS = 5;
+	public static final int NUM_ACTIONS = 3;
 	public static final int NUM_OBSERVATIONS = new DQAgentState().toArray().length;
 
 	public static DiscreteSpace ACTION_SPACE = new DiscreteSpace(NUM_ACTIONS);
