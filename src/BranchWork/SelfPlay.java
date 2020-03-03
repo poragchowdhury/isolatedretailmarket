@@ -59,7 +59,7 @@ public class SelfPlay {
 
         plot.series("SelfPlaySeries", data, Plot.seriesOpts());
         plot.save("selfplay", "png");
-        Drawing.displayImage("selfplay.png");
+        // Drawing.displayImage("selfplay.png");
     }
 
     @SuppressWarnings("rawtypes")
@@ -101,7 +101,7 @@ public class SelfPlay {
         print(results);
         plot.series("SelfPlaySeries", data, Plot.seriesOpts());
         plot.save("selfplay", "png");
-        Drawing.displayImage("selfplay.png");
+        // Drawing.displayImage("selfplay.png");
 
         boolean stopEarly = false;
         double diff = Math.abs(selfPlayPrevious.profit - selfPlayNext.profit);
