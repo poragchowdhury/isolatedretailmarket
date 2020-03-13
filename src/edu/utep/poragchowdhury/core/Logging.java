@@ -1,5 +1,7 @@
 package edu.utep.poragchowdhury.core;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
@@ -18,7 +20,7 @@ public class Logging {
         System.setProperty("java.util.logging.SimpleFormatter.format", "{%1$tT} %2$s %5$s%6$s" + "\n");
     }
 
-    public static void attachLoggerToFile(Logger l, String logFilename) {
+    public static void attachLoggerToFile(@NotNull Logger l, @NotNull String logFilename) {
         // Connect to file for saving
         FileHandler fh;
         try {
@@ -26,7 +28,7 @@ public class Logging {
             SimpleFormatter formatter = new SimpleFormatter();
             fh.setFormatter(formatter);
             l.addHandler(fh);
-        } catch (SecurityException | IOException e) {
+        } catch (@NotNull SecurityException | IOException e) {
             e.printStackTrace();
         }
     }

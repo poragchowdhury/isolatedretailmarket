@@ -4,12 +4,14 @@ import org.deeplearning4j.rl4j.learning.async.a3c.discrete.A3CDiscrete.A3CConfig
 import org.deeplearning4j.rl4j.learning.sync.qlearning.QLearning;
 
 import edu.utep.poragchowdhury.core.Configuration;
+import org.jetbrains.annotations.NotNull;
 
 public class QLearningConfig {
 
     /**
      * The configuration of the QLearning algorithm
      */
+    @NotNull
     public static QLearning.QLConfiguration REGULAR = QLearning.QLConfiguration.builder()
             .seed(123)
             .maxEpochStep(Configuration.MaxEpochStep)

@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import edu.utep.poragchowdhury.agents.base.Agent;
 import edu.utep.poragchowdhury.core.Configuration;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Contains the observable information for one game
@@ -32,7 +33,7 @@ public class Observer {
     public double[] agentWins;
 
     public Observer() {
-        agentPool = new ArrayList<Agent>();
+        agentPool = new ArrayList<>();
         payoffs = new double[8];
         custSubs = new double[2];
         money = new double[2];
@@ -45,7 +46,7 @@ public class Observer {
     }
 
     public void updateAgentUnitCost() {
-        agentPool.stream().forEach(agent -> agent.randomWalkUnitCost(timeslot));
+        agentPool.forEach(agent -> agent.randomWalkUnitCost(timeslot));
     }
 
     public void clear() {
@@ -63,6 +64,7 @@ public class Observer {
         Arrays.fill(agentWins, 0);
     }
 
+    @NotNull
     public double[] calcAvg(CaseStudy cs, double[][] resultArray) {
         double avgagent1 = 0;
         double avgagent2 = 0;

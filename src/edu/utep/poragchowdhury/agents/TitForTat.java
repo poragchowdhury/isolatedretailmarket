@@ -4,6 +4,7 @@ import edu.utep.poragchowdhury.agents.base.Agent;
 import edu.utep.poragchowdhury.agents.base.AgentID;
 import edu.utep.poragchowdhury.simulation.Observer;
 import edu.utep.poragchowdhury.simulation.TariffAction;
+import org.jetbrains.annotations.NotNull;
 
 public class TitForTat extends Agent {
     public int numTitsPerTat = 1;
@@ -14,15 +15,15 @@ public class TitForTat extends Agent {
 
     public TitForTat(int numTitsPerTat, int numTatsPerTit) {
         super("TFT_Temp", AgentID.TitForTat);
-        String tempName = numTitsPerTat + "TF" + numTatsPerTit + "T";
 
-        this.name = tempName;
+        this.name = numTitsPerTat + "TF" + numTatsPerTit + "T";
         this.numTitsPerTat = numTitsPerTat;
         this.numTatsPerTit = numTatsPerTit;
     }
 
+    @NotNull
     @Override
-    public TariffAction makeAction(Observer ob) {
+    public TariffAction makeAction(@NotNull Observer ob) {
         // Coop in the first move
         if (ob.timeslot == 1) {
             return TariffAction.NC;

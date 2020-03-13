@@ -7,6 +7,7 @@ import edu.utep.poragchowdhury.agents.base.AgentID;
 import edu.utep.poragchowdhury.core.Configuration;
 import edu.utep.poragchowdhury.simulation.Observer;
 import edu.utep.poragchowdhury.simulation.TariffAction;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Cooperates on the first move.
@@ -22,8 +23,9 @@ public class Pavlov extends Agent {
         super("Pavlov", AgentID.Pavlov);
     }
 
+    @NotNull
     @Override
-    public TariffAction makeAction(Observer ob) {
+    public TariffAction makeAction(@NotNull Observer ob) {
         /* Tariff Check */
         if (previousAction == TariffAction.I1 || previousAction == TariffAction.I2 || previousAction == TariffAction.NC) { // C
 

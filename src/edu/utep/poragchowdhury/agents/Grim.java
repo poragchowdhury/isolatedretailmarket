@@ -5,6 +5,7 @@ import edu.utep.poragchowdhury.agents.base.AgentID;
 import edu.utep.poragchowdhury.core.Configuration;
 import edu.utep.poragchowdhury.simulation.Observer;
 import edu.utep.poragchowdhury.simulation.TariffAction;
+import org.jetbrains.annotations.NotNull;
 
 /*
  * Cooperates, until the opponent defects, and thereafter always defects. [FRI71]
@@ -17,8 +18,9 @@ public class Grim extends Agent {
         super("Grim", AgentID.Grim);
     }
 
+    @NotNull
     @Override
-    public TariffAction makeAction(Observer ob) {
+    public TariffAction makeAction(@NotNull Observer ob) {
         if (!booDefect) {
             // Rival Agent hasn't defected yet
             if (ob.timeslot == 1)

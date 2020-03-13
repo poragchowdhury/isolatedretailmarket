@@ -4,6 +4,7 @@ import edu.utep.poragchowdhury.agents.base.Agent;
 import edu.utep.poragchowdhury.agents.base.AgentID;
 import edu.utep.poragchowdhury.simulation.Observer;
 import edu.utep.poragchowdhury.simulation.TariffAction;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Prober: Starts with D,C,C and
@@ -17,8 +18,9 @@ public class Prober extends Agent {
         super("Prober", AgentID.Prober);
     }
 
+    @NotNull
     @Override
-    public TariffAction makeAction(Observer ob) {
+    public TariffAction makeAction(@NotNull Observer ob) {
         if (ob.timeslot == 1) // Start with defection
             return TariffAction.D1;
         else if (ob.timeslot == 7 || ob.timeslot == 13) // Coop

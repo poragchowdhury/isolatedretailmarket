@@ -34,9 +34,8 @@ public class Main {
     /**
      * The Sandbox Experiment tests DQAgent against a few others
      * We can use this experiment to make sure DQAgent is being trained correctly or to tweak hyperparameters
-     * @throws IOException
      */
-    public static void sandboxExperiment() throws IOException {
+    public static void sandboxExperiment() {
         RetailMarketManager rm = new RetailMarketManager();
 
         // Opponent

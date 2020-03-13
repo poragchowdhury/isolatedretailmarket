@@ -1,5 +1,7 @@
 package edu.utep.poragchowdhury.core;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -14,7 +16,7 @@ public class Drawing {
     private static JFrame window;
     private static JLabel imageFrame;
 
-    private static void initWindow(BufferedImage im) {
+    private static void initWindow(@NotNull BufferedImage im) {
         if (window != null)
             return;
         
@@ -29,7 +31,7 @@ public class Drawing {
 
     }
 
-    public static void displayImage(String filename) {
+    public static void displayImage(@NotNull String filename) {
         BufferedImage im = null;
         try {
             im = ImageIO.read(new File(filename));

@@ -3,41 +3,27 @@ package edu.utep.poragchowdhury.simulation;
 import java.util.Comparator;
 
 import edu.utep.poragchowdhury.agents.base.Agent;
+import org.jetbrains.annotations.NotNull;
 
 public class AgentComparators {
     public class CompareByWins implements Comparator<Agent> {
         @Override
-        public int compare(Agent a0, Agent a1) {
-            if (a0.wins < a1.wins)
-                return -1;
-            else if (a0.wins > a1.wins)
-                return 1;
-            else
-                return 0;
+        public int compare(@NotNull Agent a0, @NotNull Agent a1) {
+            return Double.compare(a0.wins, a1.wins);
         }
     }
 
     public class CompareByProfit implements Comparator<Agent> {
         @Override
-        public int compare(Agent a0, Agent a1) {
-            if (a0.profit < a1.profit)
-                return -1;
-            else if (a0.profit > a1.profit)
-                return 1;
-            else
-                return 0;
+        public int compare(@NotNull Agent a0, @NotNull Agent a1) {
+            return Double.compare(a0.profit, a1.profit);
         }
     }
 
     public class CompareByBestResponse implements Comparator<Agent> {
         @Override
-        public int compare(Agent a0, Agent a1) {
-            if (a0.bestResponseCount < a1.bestResponseCount)
-                return -1;
-            else if (a0.bestResponseCount > a1.bestResponseCount)
-                return 1;
-            else
-                return 0;
+        public int compare(@NotNull Agent a0, @NotNull Agent a1) {
+            return Double.compare(a0.bestResponseCount, a1.bestResponseCount);
         }
     }
 }

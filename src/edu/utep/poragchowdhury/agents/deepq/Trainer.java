@@ -22,17 +22,19 @@ import org.deeplearning4j.ui.storage.InMemoryStatsStorage;
 import edu.utep.poragchowdhury.agents.base.Agent;
 import edu.utep.poragchowdhury.core.Configuration;
 import edu.utep.poragchowdhury.core.Utilities;
+import org.jetbrains.annotations.Nullable;
 
 public class Trainer {
     private static Logger log = Logger.getLogger("retailmarketmanager");
     public static boolean isTraining = false;
 
+    @Nullable
     public static DQAgent train(List<Agent> opponentPool, String policyFilename) {
         return train(opponentPool, policyFilename, null);
     }
 
-    @SuppressWarnings("rawtypes")
-    public static DQAgent train(List<Agent> opponentPool, String policyFilename, String sourcePolicy) {
+    @Nullable
+    public static DQAgent train(List<Agent> opponentPool, String policyFilename, @Nullable String sourcePolicy) {
         // Set-up mdp and network
         RetailMDP mdp = new RetailMDP(opponentPool);
 

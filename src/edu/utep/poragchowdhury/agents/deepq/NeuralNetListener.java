@@ -15,6 +15,7 @@ import edu.utep.poragchowdhury.core.Plot;
 import edu.utep.poragchowdhury.core.Plot.Data;
 import edu.utep.poragchowdhury.simulation.CaseStudy;
 import edu.utep.poragchowdhury.simulation.RetailMarketManager;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Listener for MultiLayerNetwork training
@@ -37,6 +38,7 @@ public class NeuralNetListener implements SyncTrainingListener {
         data.xy(0, 0);
     }
 
+    @NotNull
     @Override
     public ListenerResponse onTrainingStart(SyncTrainingEvent event) {
         return ListenerResponse.CONTINUE;
@@ -47,9 +49,9 @@ public class NeuralNetListener implements SyncTrainingListener {
 
     }
 
-    @SuppressWarnings("unchecked")
+    @NotNull
     @Override
-    public ListenerResponse onEpochStart(SyncTrainingEvent event) {
+    public ListenerResponse onEpochStart(@NotNull SyncTrainingEvent event) {
         int epoch = event.getLearning().getEpochCounter();
         if (epoch % 10 == 0) {
             log.info(" *** Evaluating model *** ");
@@ -83,6 +85,7 @@ public class NeuralNetListener implements SyncTrainingListener {
         return ListenerResponse.CONTINUE;
     }
 
+    @NotNull
     @Override
     public ListenerResponse onEpochEnd(SyncTrainingEpochEndEvent event) {
         return ListenerResponse.CONTINUE;

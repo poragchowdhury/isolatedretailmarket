@@ -5,16 +5,24 @@ import java.util.Collections;
 import java.util.Random;
 
 import edu.utep.poragchowdhury.core.Configuration;
+import org.jetbrains.annotations.NotNull;
+
+import static edu.utep.poragchowdhury.core.Utilities.getRandomValInRange;
 
 public class FactoredConsumptionCustomer {
     // algorithm parameters - needed for numerical stablity
+    @NotNull
     public Double[] usage = { 4.0, 3.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 4.0, 5.0, 7.0, 3.0, 2.0, 4.0, 3.0, 2.0, 1.0, 1.0, 4.0, 5.0, 6.0, 7.0, 5.0, 4.0 }; // new double[24];// =
     public double lambdaMax = 50.0;
     public double maxLinearUtility = 7.0;
+    @NotNull
     public Double maxUsage = 1.0;
     public int population = Configuration.POPULATION;
+    @NotNull
     public int[] custId = new int[population];
+    @NotNull
     public int[] inertiaPC = new int[population];
+    @NotNull
     public double[] custMem = new double[population];
     public int lamda = Integer.MAX_VALUE; // Perfectly rational
     public Observer ob;
@@ -27,7 +35,7 @@ public class FactoredConsumptionCustomer {
     public double noise = 0.5;
     public double trend = 1;
 
-    public FactoredConsumptionCustomer(Observer ob) {
+    public FactoredConsumptionCustomer(@NotNull Observer ob) {
         custId = new int[population];
         this.ob = ob;
 
@@ -142,9 +150,8 @@ public class FactoredConsumptionCustomer {
         // we have the utility
         // double ui = (Configuration.DEFAULT_TARIFF_PRICE-tariffPrice)/Configuration.DEFAULT_TARIFF_PRICE;
         double lambda = Math.pow(lambdaMax, Configuration.RATIONALITY) - 1.0;
-        double u = Math.exp(utilityPerc * lambda);
         // System.out.print("utility " + u + " ");
-        return u;
+        return Math.exp(utilityPerc * lambda);
     }
 
     // Ensures numeric stability by constraining range of utility values.
@@ -167,24 +174,4 @@ public class FactoredConsumptionCustomer {
             this.trend = new_trend;
         this.noise = new_noise;
     }
-
-    /*
-     * Generation random values between -max to +max
-     */
-    public double getRandomValInRange(double max) {
-        int divisor = 100;
-        while (max % 1 != 0) {
-            max *= 10;
-            divisor *= 10;
-        }
-        int maxbound = (int) max * 100;
-        Random r = new Random();
-        int randInt = r.nextInt(maxbound + 1);
-        double val = (double) randInt / divisor;
-        int coin = r.nextInt(2);
-        if (coin == 0)
-            val *= -1;
-        return val;
-    }
-
 }

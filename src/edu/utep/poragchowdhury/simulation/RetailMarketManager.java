@@ -26,6 +26,8 @@ import edu.utep.poragchowdhury.agents.deepq.Trainer;
 import edu.utep.poragchowdhury.core.Configuration;
 import edu.utep.poragchowdhury.core.Gambit;
 import edu.utep.poragchowdhury.core.Utilities;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class RetailMarketManager {
     private static Logger log = Logger.getLogger("retailmarketmanager");
@@ -34,18 +36,25 @@ public class RetailMarketManager {
     public double[] lamdaTracker;
     public static int numberofagents = 3;
     public double largestValue = -1;
+    @NotNull
     public Payoffs[][] gameMatrix = new Payoffs[20][20];
+    @NotNull
     public Payoffs[][] bestRespMatrix = new Payoffs[20][20];
+    @NotNull
     public Payoffs[][] winMatrix = new Payoffs[20][20];
 
+    @NotNull
     public Payoffs[][] gameMatrixErr = new Payoffs[20][20];
+    @NotNull
     public Payoffs[][] bestRespMatrixErr = new Payoffs[20][20];
+    @NotNull
     public Payoffs[][] winMatrixErr = new Payoffs[20][20];
 
     /**
      * The last RL agent added to the pools. Required to check if the
      * current pure strategy is just playing the last RL agent created
      */
+    @Nullable
     private Agent lastRLAgent;
 
     public RetailMarketManager() {
@@ -149,7 +158,7 @@ public class RetailMarketManager {
         updateAgentsMemory();
     }
 
-    public void printGameMatrix(CaseStudy cs) {
+    public void printGameMatrix(@NotNull CaseStudy cs) {
         // Normalizing the values
         int numberOfAgents = cs.pool1.size();
         double[] avgValues = new double[numberOfAgents];
@@ -229,8 +238,10 @@ public class RetailMarketManager {
                 boolean allZero = true;
                 for (double[] nashEq : nashEqInitial) {
                     double currNumber = nashEq[col];
-                    if (currNumber != 0.0)
+                    if (currNumber != 0.0) {
                         allZero = false;
+                        break;
+                    }
                 }
 
                 if (allZero) {
@@ -343,6 +354,7 @@ public class RetailMarketManager {
         input.close();
     }
 
+    @NotNull
     private CaseStudy setupRoundRobinStrategies() {
         log.info("=== Setting up round robin pools ===");
         ArrayList<Agent> strats = new ArrayList<>();
@@ -371,6 +383,7 @@ public class RetailMarketManager {
         return initial;
     }
 
+    @NotNull
     public CaseStudy setupInitialStrategies() {
         log.info("=== Setting up initial pools ===");
 
@@ -382,6 +395,7 @@ public class RetailMarketManager {
         return initialStudy;
     }
 
+    @NotNull
     public Stack<Agent> getLiteratureStrategies() {
         Stack<Agent> literatureStrategies = new Stack<>();
         TitForTat TF2T = new TitForTat(1, 2);
@@ -403,7 +417,7 @@ public class RetailMarketManager {
         return literatureStrategies;
     }
 
-    public void startSimulation(CaseStudy cs) {
+    public void startSimulation(@NotNull CaseStudy cs) {
         double[] rationality = { Configuration.RATIONALITY };
         double[] inertia = { Configuration.INERTIA };
         double imax = 1;
@@ -514,7 +528,7 @@ public class RetailMarketManager {
      * Determines if there is a pure strategy where the RL agent is dominating
      * (zero in all other columns)
      */
-    public boolean isRLPureStrat(CaseStudy cs, List<double[]> pureStrats) {
+    public boolean isRLPureStrat(@NotNull CaseStudy cs, @NotNull List<double[]> pureStrats) {
         int lastRLIndex = cs.pool1.indexOf(lastRLAgent);
         for (double[] pureStrat : pureStrats) {
             if (pureStrat[lastRLIndex] == 1.0d) {

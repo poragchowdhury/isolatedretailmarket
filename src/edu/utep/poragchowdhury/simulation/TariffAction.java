@@ -1,5 +1,7 @@
 package edu.utep.poragchowdhury.simulation;
 
+import org.jetbrains.annotations.NotNull;
+
 public enum TariffAction {
     NC(0, 0), 
     D1(1, -0.01), 
@@ -15,6 +17,7 @@ public enum TariffAction {
         this.tariff = tariff;
     }
 
+    @NotNull
     public static TariffAction valueOf(int value) {
         if (value == NC.index)
             return TariffAction.NC;

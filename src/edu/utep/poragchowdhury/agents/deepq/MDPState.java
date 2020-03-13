@@ -9,6 +9,7 @@ import edu.utep.poragchowdhury.agents.base.Agent;
 import edu.utep.poragchowdhury.core.Configuration;
 import edu.utep.poragchowdhury.simulation.Observer;
 import edu.utep.poragchowdhury.simulation.TariffAction;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Encodes the current state of a Deep Q-Learning Agent
@@ -28,7 +29,7 @@ public class MDPState implements Encodable {
     public double curHourUsage;
     public double nextHourUsage;
 
-    public MDPState(Agent agent, Observer ob) {
+    public MDPState(@NotNull Agent agent, @NotNull Observer ob) {
         this.agent = agent;
         this.ob = ob;
 
@@ -60,12 +61,14 @@ public class MDPState implements Encodable {
         this.nextHourUsage = ob.fcc.usage[(ob.timeslot + 1) % 24];
     }
 
+    @NotNull
     public double[] one_hot(int i, int size) {
         double[] d = new double[size];
         d[i] = 1;
         return d;
     }
 
+    @NotNull
     @Override
     public double[] toArray() {
 

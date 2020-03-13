@@ -1,5 +1,7 @@
 package edu.utep.poragchowdhury.core;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +22,7 @@ public class Configuration {
     public static int TEST_ROUNDS = 1;
     public static int TRAINING_ROUNDS = 1;
     public static double DISCOUNT_FACTOR = 1;
+    @NotNull
     public static String DQ_TRAINING = "DQ0";
     public static double MAX_TARIFF_PRICE = 0.5;
     public static boolean GET_NASH_EQ = false;
@@ -58,20 +61,21 @@ public class Configuration {
     public static boolean VISUALIZE_MODEL_UI = false;
     public static boolean USE_ACTOR_CRITIC = false;
 
+    @NotNull
     public static String toStringRepresentation() {
-        String p = "********************Configurations**********************\n";
+        StringBuilder p = new StringBuilder("********************Configurations**********************\n");
 
         for (Field f : Configuration.class.getDeclaredFields()) {
             try {
-                p += String.format("[%s = %s]\n", f.getName(), f.get(null));
-            } catch (IllegalArgumentException | IllegalAccessException e) {
+                p.append(String.format("[%s = %s]\n", f.getName(), f.get(null)));
+            } catch (@NotNull IllegalArgumentException | IllegalAccessException ignored) {
 
             }
         }
 
-        p += "********************Configurations**********************\n";
+        p.append("********************Configurations**********************\n");
 
-        return p;
+        return p.toString();
     }
 
     public static void loadConfiguration() {

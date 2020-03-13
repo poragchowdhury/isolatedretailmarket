@@ -9,6 +9,8 @@ import edu.utep.poragchowdhury.agents.NaiveProber;
 import edu.utep.poragchowdhury.agents.Rand;
 import edu.utep.poragchowdhury.agents.base.Agent;
 import edu.utep.poragchowdhury.core.Configuration;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class CaseStudy {
     /**
@@ -35,7 +37,7 @@ public class CaseStudy {
         addP1Strats(Arrays.asList(strats));
     }
 
-    public void addP1Strats(List<Agent> strats) {
+    public void addP1Strats(@NotNull List<Agent> strats) {
         pool1.addAll(strats);
     }
 
@@ -43,11 +45,11 @@ public class CaseStudy {
         addP2Strats(Arrays.asList(strats));
     }
 
-    public void addP2Strats(List<Agent> strats) {
+    public void addP2Strats(@NotNull List<Agent> strats) {
         pool2.addAll(strats);
     }
 
-    public void addToBothStrats(ArrayList<Agent> strats) {
+    public void addToBothStrats(@NotNull ArrayList<Agent> strats) {
         List<Agent> stratsCopy = new ArrayList<>();
         for (Agent ag : strats) {
             stratsCopy.add(ag.clone());
@@ -56,8 +58,10 @@ public class CaseStudy {
         pool2.addAll(stratsCopy);
     }
 
+    @Nullable
     private static List<CaseStudy> caseStudies = null;
 
+    @Nullable
     public static CaseStudy getFromIndex(int idx) {
         if (caseStudies == null)
             initCaseStudies();
@@ -70,6 +74,7 @@ public class CaseStudy {
         return caseStudies.get(idx);
     }
 
+    @Nullable
     public static CaseStudy getFromConfiguration() {
         int idx = Configuration.CASE_STUDY_NO;
         return getFromIndex(idx);

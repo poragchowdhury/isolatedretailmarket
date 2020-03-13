@@ -7,6 +7,7 @@ import org.deeplearning4j.rl4j.learning.Learning;
 import org.deeplearning4j.rl4j.policy.ACPolicy;
 import org.deeplearning4j.rl4j.policy.DQNPolicy;
 import org.deeplearning4j.rl4j.policy.Policy;
+import org.jetbrains.annotations.NotNull;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 
@@ -36,7 +37,7 @@ public class DQAgent extends Agent {
         this.pol = pol;
     }
 
-    public DQAgent(String policyFilename) {
+    public DQAgent(@NotNull String policyFilename) {
         super("DeepQ_Default", AgentID.DQAgent);
         this.loadPolicy(policyFilename);
 
@@ -51,7 +52,7 @@ public class DQAgent extends Agent {
         super("DeepQ_Training", AgentID.DQAgent);
     }
 
-    public DQAgent(String name, String policyFilename) {
+    public DQAgent(String name, @NotNull String policyFilename) {
         this(policyFilename);
         this.name = name;
     }
@@ -60,7 +61,7 @@ public class DQAgent extends Agent {
         return this.name;
     }
 
-    private void loadPolicy(String policyFilename) {
+    private void loadPolicy(@NotNull String policyFilename) {
         try {
             this.pol = DQNPolicy.load(policyFilename);
         } catch (IOException e) {
@@ -75,8 +76,9 @@ public class DQAgent extends Agent {
         }
     }
 
+    @NotNull
     @Override
-    public TariffAction makeAction(Observer ob) throws Exception {
+    public TariffAction makeAction(@NotNull Observer ob) throws Exception {
         if (pol == null)
             throw new Exception("Calling makeAction() on DQAgent without a Policy");
 

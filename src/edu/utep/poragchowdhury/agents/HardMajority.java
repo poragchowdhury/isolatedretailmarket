@@ -4,6 +4,7 @@ import edu.utep.poragchowdhury.agents.base.Agent;
 import edu.utep.poragchowdhury.agents.base.AgentID;
 import edu.utep.poragchowdhury.simulation.Observer;
 import edu.utep.poragchowdhury.simulation.TariffAction;
+import org.jetbrains.annotations.NotNull;
 
 public class HardMajority extends Agent {
     public int defectCounter = 0;
@@ -13,8 +14,9 @@ public class HardMajority extends Agent {
         super("HardMJ", AgentID.HardMajority);
     }
 
+    @NotNull
     @Override
-    public TariffAction makeAction(Observer ob) {
+    public TariffAction makeAction(@NotNull Observer ob) {
         if (rivalActHistory[ob.timeslot - 1] == TariffAction.D1.index || rivalActHistory[ob.timeslot - 1] == TariffAction.D2.index) // other agent is defecting
             defectCounter++;
         else

@@ -1,11 +1,14 @@
 package edu.utep.poragchowdhury.agents.base;
 
-import java.util.Arrays;
-import java.util.Random;
-
 import edu.utep.poragchowdhury.core.Configuration;
 import edu.utep.poragchowdhury.simulation.Observer;
 import edu.utep.poragchowdhury.simulation.TariffAction;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Arrays;
+
+import static edu.utep.poragchowdhury.core.Utilities.getRandomValInRange;
 
 public abstract class Agent implements Cloneable {
     public abstract TariffAction makeAction(Observer ob) throws Exception;
@@ -114,7 +117,7 @@ public abstract class Agent implements Cloneable {
      * Queries the agent to create its next action and then performs it
      * @param ob Current observer of the retail market
      */
-    public final void publishTariff(Observer ob) throws Exception {
+    public final void publishTariff(@NotNull Observer ob) throws Exception {
         TariffAction action = makeAction(ob);
         playAction(ob, action);
     }
@@ -124,11 +127,10 @@ public abstract class Agent implements Cloneable {
      * @param ob Current observer of the retail market
      * @param action Action to perform
      */
-    public final void playAction(Observer ob, TariffAction action) {
+    public final void playAction(@NotNull Observer ob, @NotNull TariffAction action) {
         double tariffChange = action.tariff;
-        double newTariff = this.tariffPrice + tariffChange;
 
-        this.tariffPrice = newTariff;
+        this.tariffPrice = this.tariffPrice + tariffChange;
         this.previousAction = action;
         this.tariffHistory[ob.timeslot] = this.tariffPrice;
     }
@@ -138,7 +140,7 @@ public abstract class Agent implements Cloneable {
      * Note: The name is not copied
      * @param other Agent to receive field values
      */
-    public void copyTo(Agent other, Observer ob) {
+    public void copyTo(@NotNull Agent other, @NotNull Observer ob) {
         other.tariffPrice = tariffPrice;
         other.rivalTariffPrice = rivalTariffPrice;
         other.revenue = revenue;
@@ -181,39 +183,22 @@ public abstract class Agent implements Cloneable {
         this.costHistory[ts] = this.unitcost;
     }
 
-    /*
-     * Generation random values between -max to +max
-     */
-    public double getRandomValInRange(double max) {
-        int divisor = 100;
-        while (max % 1 != 0) {
-            max *= 10;
-            divisor *= 10;
-        }
-        int maxbound = (int) max * 100;
-        Random r = new Random();
-        int randInt = r.nextInt(maxbound + 1);
-        double val = (double) randInt / divisor;
-        int coin = r.nextInt(2);
-        if (coin == 0)
-            val *= -1;
-        return val;
-    }
-
+    @NotNull
     public String getAllHistoryActions() {
         StringBuilder sb = new StringBuilder();
         for (int ts = 1; ts < Configuration.TOTAL_TIME_SLOTS; ts += Configuration.PUBLICATION_CYCLE) {
             String actName = TariffAction.valueOf(actHistory[ts]).name();
             // actName = actName.substring(0, 1) + (actHistory[ts] > 2 ? (actName.substring(actName.length() - 1)) : 0);
-            sb.append(" " + actName + " ");
+            sb.append(" ").append(actName).append(" ");
         }
         return sb.toString();
     }
 
+    @NotNull
     public String getHistoryByPubCyc(double[] history) {
         StringBuilder sb = new StringBuilder();
         for (int ts = 1; ts < Configuration.TOTAL_TIME_SLOTS; ts += Configuration.PUBLICATION_CYCLE)
-            sb.append(" " + Math.round(history[ts] * 100) / 100f + " ");
+            sb.append(" ").append(Math.round(history[ts] * 100) / 100f).append(" ");
         return sb.toString();
     }
 
@@ -235,6 +220,7 @@ public abstract class Agent implements Cloneable {
         return this.name;
     }
 
+    @Nullable
     @Override
     public Agent clone() {
         Agent c = null;

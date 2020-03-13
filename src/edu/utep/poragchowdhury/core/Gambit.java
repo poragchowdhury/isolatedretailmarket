@@ -15,6 +15,7 @@ import edu.utep.poragchowdhury.agents.base.Agent;
 import edu.utep.poragchowdhury.agents.deepq.DQAgent;
 import edu.utep.poragchowdhury.simulation.CaseStudy;
 import edu.utep.poragchowdhury.simulation.RetailMarketManager;
+import org.jetbrains.annotations.NotNull;
 
 public class Gambit {
     private static final String TEMP_FILENAME = "Gambit.nfg";
@@ -28,29 +29,30 @@ public class Gambit {
      * @param nashEqStrategies The strategies which will be printed
      * @return A string representation of the nash equilibrium table
      */
-    public static String nashEqToString(CaseStudy cs, List<double[]> nashEqStrategies) {
-        String result = "";
+    @NotNull
+    public static String nashEqToString(@NotNull CaseStudy cs, @NotNull List<double[]> nashEqStrategies) {
+        StringBuilder result = new StringBuilder();
 
         // Table header
-        String header = "";
+        StringBuilder header = new StringBuilder();
         for (Agent agent : cs.pool1) {
             if (agent instanceof DQAgent)
-                header += ((DQAgent) agent).getSimpleName() + ", ";
+                header.append(((DQAgent) agent).getSimpleName()).append(", ");
             else
-                header += agent.name + ", ";
+                header.append(agent.name).append(", ");
         }
-        result += header.substring(0, header.length() - 2);
+        result.append(header.substring(0, header.length() - 2));
 
         // Table
         for (int strategyIDX = 0; strategyIDX < nashEqStrategies.size(); strategyIDX++) {
             double[] nashEq = nashEqStrategies.get(strategyIDX);
-            String output = strategyIDX + " [";
+            StringBuilder output = new StringBuilder(strategyIDX + " [");
             for (double d : nashEq)
-                output += String.format("%.3f, ", d);
-            result += output.substring(0, output.length() - 2) + "]";
+                output.append(String.format("%.3f, ", d));
+            result.append(output.substring(0, output.length() - 2)).append("]");
         }
 
-        return result;
+        return result.toString();
     }
 
     /**
@@ -62,14 +64,16 @@ public class Gambit {
      * @throws IOException
      * @throws InterruptedException
      */
-    public static List<double[]> getNashEqStrategies(RetailMarketManager rm, CaseStudy cs) throws IOException, InterruptedException {
+    @NotNull
+    public static List<double[]> getNashEqStrategies(@NotNull RetailMarketManager rm, @NotNull CaseStudy cs) throws IOException, InterruptedException {
         createGambitFile(rm, cs);
         List<double[]> nashEq = callGambit(cs);
         removeGambitFile();
         return nashEq;
     }
 
-    private static List<double[]> callGambit(CaseStudy cs) throws IOException, InterruptedException {
+    @NotNull
+    private static List<double[]> callGambit(@NotNull CaseStudy cs) throws IOException, InterruptedException {
         List<double[]> nashEqStrategies = new ArrayList<>();
         log.info("Sending file to command-line tool");
 
@@ -98,7 +102,7 @@ public class Gambit {
         return nashEqStrategies;
     }
 
-    private static void createGambitFile(RetailMarketManager rm, CaseStudy cs) throws IOException {
+    private static void createGambitFile(@NotNull RetailMarketManager rm, @NotNull CaseStudy cs) throws IOException {
         log.info("Creating Gambit file");
         FileWriter fw = new FileWriter(TEMP_FILENAME);
         PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
@@ -114,7 +118,8 @@ public class Gambit {
         new File(TEMP_FILENAME).delete();
     }
 
-    public static List<double[]> getPureStrategies(List<double[]> nashStrats) {
+    @NotNull
+    public static List<double[]> getPureStrategies(@NotNull List<double[]> nashStrats) {
         List<double[]> result = new ArrayList<>();
         for (double[] strat : nashStrats) {
             boolean isPure = true;
@@ -132,7 +137,8 @@ public class Gambit {
         return result;
     }
 
-    public static List<double[]> getMixedStrategies(List<double[]> nashStrats) {
+    @NotNull
+    public static List<double[]> getMixedStrategies(@NotNull List<double[]> nashStrats) {
         List<double[]> result = new ArrayList<>();
         for (double[] strat : nashStrats) {
             boolean isPure = true;

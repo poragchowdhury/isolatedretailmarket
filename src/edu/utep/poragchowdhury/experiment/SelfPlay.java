@@ -16,12 +16,15 @@ import edu.utep.poragchowdhury.agents.deepq.Trainer;
 import edu.utep.poragchowdhury.core.Plot;
 import edu.utep.poragchowdhury.simulation.CaseStudy;
 import edu.utep.poragchowdhury.simulation.RetailMarketManager;
+import org.jetbrains.annotations.NotNull;
 
 public class SelfPlay {
     private static final String AGENT_FILENAME = "dq_selfplay.pol";
 
     private static int improvementCount = 0;
+    @NotNull
     private static RetailMarketManager rm = new RetailMarketManager();
+    @NotNull
     private static List<Agent> trainingOpponentPool = new ArrayList<>();
 
     private static Plot plot;
@@ -64,8 +67,7 @@ public class SelfPlay {
         // Drawing.displayImage("selfplay.png");
     }
 
-    @SuppressWarnings("rawtypes")
-    public static void createInitialModel() throws IOException {
+    public static void createInitialModel() {
         // Prepare random weight network agent
         MultiLayerNetwork mdp = NeuralNet.createMultiLayerNetwork();
         DQN model = new DQN(mdp);
@@ -86,7 +88,7 @@ public class SelfPlay {
         return evaluate(selfPlayPrevious, selfPlayNext);
     }
 
-    public static boolean evaluate(DQAgent selfPlayPrevious, DQAgent selfPlayNext) throws IOException {
+    public static boolean evaluate(@NotNull DQAgent selfPlayPrevious, @NotNull DQAgent selfPlayNext) throws IOException {
         selfPlayPrevious.reset();
         selfPlayNext.reset();
         CaseStudy cs = new CaseStudy();

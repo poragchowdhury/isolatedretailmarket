@@ -12,6 +12,7 @@ import org.deeplearning4j.rl4j.mdp.MDP;
 import org.deeplearning4j.rl4j.space.ArrayObservationSpace;
 import org.deeplearning4j.rl4j.space.DiscreteSpace;
 import org.deeplearning4j.rl4j.space.ObservationSpace;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import edu.utep.poragchowdhury.agents.base.Agent;
@@ -28,7 +29,7 @@ class Stat implements Comparable<Stat> {
         return COM / N;
     }
 
-    public int compareTo(Stat other) {
+    public int compareTo(@NotNull Stat other) {
         return Double.compare(calculateV(), other.calculateV());
     }
 }
@@ -38,7 +39,9 @@ public class RetailMDP implements MDP<MDPState, Integer, DiscreteSpace> {
     public static final int NUM_ACTIONS = 3;
     public static final int NUM_OBSERVATIONS = new MDPState(new DQAgent(), new Observer()).toArray().length;
 
+    @NotNull
     public static DiscreteSpace ACTION_SPACE = new DiscreteSpace(NUM_ACTIONS);
+    @NotNull
     public static ObservationSpace<MDPState> OBSERVATION_SPACE = new ArrayObservationSpace<MDPState>(new int[] { NUM_OBSERVATIONS });
 
     private RetailMarketManager retailManager;
@@ -47,7 +50,8 @@ public class RetailMDP implements MDP<MDPState, Integer, DiscreteSpace> {
 
     private String actionHistory = "";
     private double cummulativeReward = 0;
-    public Map<String, Stat> statisticsMap = new HashMap<String, Stat>();
+    @NotNull
+    public Map<String, Stat> statisticsMap = new HashMap<>();
 
     public RetailMDP(List<Agent> opponentPool) {
         this.opponentPool = opponentPool;
@@ -61,6 +65,7 @@ public class RetailMDP implements MDP<MDPState, Integer, DiscreteSpace> {
         return retailManager.ob.timeslot >= Configuration.TOTAL_TIME_SLOTS;
     }
 
+    @NotNull
     @Override
     public StepReply<MDPState> step(Integer actionInt) {
         // Special case to simulate the 0th time-slot
@@ -95,11 +100,9 @@ public class RetailMDP implements MDP<MDPState, Integer, DiscreteSpace> {
             retailManager.updateAgentAccountings();
             retailManager.ob.timeslot++;
         }
-        double after = agent.profit;
-        double reward = after;
 
         actionHistory += agent.previousAction.toString().charAt(0);
-        cummulativeReward += reward;
+        cummulativeReward += agent.profit;
 
         if (actionHistory.length() == Configuration.TOTAL_PUBLICATIONS_IN_A_GAME) {
             // log.info("Action: " + actionHistory + " CR: " + cummulativeReward);
@@ -118,9 +121,10 @@ public class RetailMDP implements MDP<MDPState, Integer, DiscreteSpace> {
         MDPState nextState = new MDPState(agent, retailManager.ob);
 
         JSONObject info = new JSONObject("{}");
-        return new StepReply<MDPState>(nextState, reward, this.isDone(), info);
+        return new StepReply<MDPState>(nextState, agent.profit, this.isDone(), info);
     }
 
+    @NotNull
     @Override
     public MDPState reset() {
         // Properly reset agent variables between training epochs.
@@ -140,10 +144,10 @@ public class RetailMDP implements MDP<MDPState, Integer, DiscreteSpace> {
         return new MDPState(agent, retailManager.ob);
     }
 
+    @NotNull
     @Override
     public MDP<MDPState, Integer, DiscreteSpace> newInstance() {
-        RetailMDP mdp = new RetailMDP(this.opponentPool);
-        return mdp;
+        return new RetailMDP(this.opponentPool);
     }
 
     @Override
@@ -151,11 +155,13 @@ public class RetailMDP implements MDP<MDPState, Integer, DiscreteSpace> {
 
     }
 
+    @NotNull
     @Override
     public DiscreteSpace getActionSpace() {
         return ACTION_SPACE;
     }
 
+    @NotNull
     @Override
     public ObservationSpace<MDPState> getObservationSpace() {
         return OBSERVATION_SPACE;

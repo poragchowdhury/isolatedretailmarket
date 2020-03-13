@@ -20,6 +20,7 @@ import org.deeplearning4j.rl4j.util.Constants;
 import org.deeplearning4j.ui.api.UIServer;
 import org.deeplearning4j.ui.stats.StatsListener;
 import org.deeplearning4j.ui.storage.InMemoryStatsStorage;
+import org.jetbrains.annotations.NotNull;
 import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.learning.config.Adam;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
@@ -107,6 +108,7 @@ public class NeuralNet {
             .numLayer(3)
             .build();
 
+    @NotNull
     public static MultiLayerNetwork createMultiLayerNetwork() {
         MultiLayerNetwork model = new MultiLayerNetwork(NEURAL_NET_CONFIG);
         model.init();
