@@ -1,22 +1,31 @@
 package edu.utep.poragchowdhury.simulation;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 import edu.utep.poragchowdhury.core.Configuration;
 
 public class FactoredConsumptionCustomer {
     // algorithm parameters - needed for numerical stablity
-    public double[] usage = new double[24];//{ 4, 3, 2, 1, 1, 1, 1, 1, 4, 5, 7, 3, 2, 4, 3, 2, 1, 1, 4, 5, 6, 7, 5, 4 }; //
+    public Double[] usage = { 4.0, 3.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 4.0, 5.0, 7.0, 3.0, 2.0, 4.0, 3.0, 2.0, 1.0, 1.0, 4.0, 5.0, 6.0, 7.0, 5.0, 4.0 }; // new double[24];// =
     public double lambdaMax = 50.0;
     public double maxLinearUtility = 7.0;
-
+    public Double maxUsage = 1.0;
     public int population = Configuration.POPULATION;
     public int custId[] = new int[population];
     public int[] inertiaPC = new int[population];
     public double[] custMem = new double[population];
     public int lamda = Integer.MAX_VALUE; // Perfectly rational
     public Observer ob;
+
+    // demand noise
+    public double noise_max = 1.00;
+    public double noise_min = 0.01;
+    public double tr_min = 0.95;
+    public double tr_max = 1 / 0.95;
+    public double noise = 0.5;
+    public double trend = 1;
 
     public FactoredConsumptionCustomer(Observer ob) {
         custId = new int[population];
@@ -29,7 +38,11 @@ public class FactoredConsumptionCustomer {
             inertiaPC[id] = 0;
             custMem[id] = Configuration.DEFAULT_TARIFF_PRICE;
         }
-        Arrays.fill(usage, 1);
+        for (int i = 0; i < 24; i++)
+            usage[i] = usage[i] * 10;
+
+        this.maxUsage = Collections.max(Arrays.asList(usage)) + noise_max;
+        // Arrays.fill(usage, 1);
         // printCustomers();
     }
 
@@ -146,4 +159,34 @@ public class FactoredConsumptionCustomer {
         } else
             return utility;
     }
+
+    public void randomWalkNoise(int ts) {
+        double new_noise = Math.min(this.noise_max, Math.max(this.noise_min, this.trend * this.noise));
+        double new_trend = Math.max(this.tr_min, Math.min(this.tr_max, this.trend + getRandomValInRange(0.01)));
+        if ((this.trend * this.noise) < this.noise_min || (this.trend * this.noise) > this.noise_max)
+            this.trend = 1;
+        else
+            this.trend = new_trend;
+        this.noise = new_noise;
+    }
+
+    /*
+     * Generation random values between -max to +max
+     */
+    public double getRandomValInRange(double max) {
+        int divisor = 100;
+        while (max % 1 != 0) {
+            max *= 10;
+            divisor *= 10;
+        }
+        int maxbound = (int) max * 100;
+        Random r = new Random();
+        int randInt = r.nextInt(maxbound + 1);
+        double val = (double) randInt / divisor;
+        int coin = r.nextInt(2);
+        if (coin == 0)
+            val *= -1;
+        return val;
+    }
+
 }
