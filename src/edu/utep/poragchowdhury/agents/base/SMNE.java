@@ -18,9 +18,10 @@ public class SMNE extends Agent {
     private List<Agent> agents;
     private Random rand;
     private double sumOfProbabilities = 0;
+    private int selectedAgentId = 0;
 
     public SMNE() {
-        super("SMNE_NO_STRATEGIES");
+        super("SMNE_NO_STRATEGIES", AgentID.SMNE);
         strategyProbs = new ArrayList<Double>();
         agents = new ArrayList<Agent>();
         rand = new Random(System.currentTimeMillis());
@@ -42,9 +43,9 @@ public class SMNE extends Agent {
             // If prob is greater than 0, add the agent in the name
             if (prob > 0) {
                 if (strategy instanceof DQAgent)
-                    tempName += String.format("%.2f%s,", prob, ((DQAgent) strategy).getSimpleName()); // Keeping the name upto 2 decimal
+                    tempName += String.format("%.2f%s,", prob, ((DQAgent) strategy).getSimpleName()); // Keeping the name up to 2 decimal
                 else
-                    tempName += String.format("%.2f%s,", prob, strategy.name); // Keeping the name upto 2 decimal
+                    tempName += String.format("%.2f%s,", prob, strategy.name); // Keeping the name up to 2 decimal
             }
         }
         if (tempName.isEmpty())
@@ -55,25 +56,22 @@ public class SMNE extends Agent {
 
     @Override
     public TariffAction makeAction(Observer ob) throws Exception {
-        // https://stackoverflow.com/questions/9330394/how-to-pick-an-item-by-its-probability
-        double p = rand.nextDouble();
-        double cumulativeProbability = 0;
+        if (ob.timeslot == 1) {
+            double p = rand.nextDouble();
+            double cumulativeProbability = 0;
 
-        for (int i = 0; i < agents.size(); i++) {
-            double prob = strategyProbs.get(i);
-            double normalizedProb = prob / sumOfProbabilities;
-            Agent strategy = agents.get(i);
-
-            cumulativeProbability += normalizedProb;
-            if (p <= cumulativeProbability) {
-                // If sharing variables, then copy all of SMNEs to the given strategy
-                if (SHARE_VARIABLES)
-                    this.copyTo(strategy);
-
-                return strategy.makeAction(ob);
+            for (int i = 0; i < agents.size(); i++) {
+                double prob = strategyProbs.get(i);
+                double normalizedProb = prob / sumOfProbabilities;
+                cumulativeProbability += normalizedProb;
+                if (p <= cumulativeProbability) {
+                    selectedAgentId = i;
+                    break;
+                }
             }
         }
 
-        throw new Exception("SMNE did not run one of its strategies.");
+        this.copyTo(agents.get(selectedAgentId), ob);
+        return agents.get(selectedAgentId).makeAction(ob);
     }
 }

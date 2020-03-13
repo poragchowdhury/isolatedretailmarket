@@ -3,12 +3,13 @@ package edu.utep.poragchowdhury.agents;
 import java.util.Random;
 
 import edu.utep.poragchowdhury.agents.base.Agent;
+import edu.utep.poragchowdhury.agents.base.AgentID;
 import edu.utep.poragchowdhury.simulation.Observer;
 import edu.utep.poragchowdhury.simulation.TariffAction;
 
 public class Rand extends Agent {
     public Rand() {
-        super("Rand");
+        super("Rand", AgentID.Rand);
     }
 
     @Override
@@ -16,8 +17,8 @@ public class Rand extends Agent {
         Random r = new Random();
         int coin = r.nextInt(2);
         if (coin == 0) // Defect
-            return TariffAction.DEFECT;
+            return TariffAction.D1;
         else // Coop
-            return TariffAction.NOCHANGE;
+            return TariffAction.NC;
     }
 }

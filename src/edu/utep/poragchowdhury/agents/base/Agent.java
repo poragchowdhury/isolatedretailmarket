@@ -59,9 +59,11 @@ public abstract class Agent implements Cloneable {
      * Constructs a new agent
      * @param agentName Name of the agent
      */
-    public Agent(String agentName) {
+    public Agent(String agentName, int id) {
         this.name = agentName;
+        this.id = id;
         this.reset();
+        
         this.unitcost = Configuration.INITUNITCOST;
         this.c_max = Configuration.MAX_UNIT_COST;
         this.c_min = Configuration.MIN_UNIT_COST;
@@ -89,8 +91,8 @@ public abstract class Agent implements Cloneable {
         profit = 0;
         profitErr = 0;
         tariffUtility = 0;
-        previousAction = TariffAction.NOCHANGE;
-        rivalPreviousAction = TariffAction.NOCHANGE;
+        previousAction = TariffAction.NC;
+        rivalPreviousAction = TariffAction.NC;
         unitcost = 0.05;
         actGDvalues = new double[TariffAction.values().length];
         bestResponseCount = 0;

@@ -34,27 +34,13 @@ public class NeuralNet {
     public static final int INPUT_NUM = RetailMDP.NUM_OBSERVATIONS;
     public static final int OUTPUT_NUM = RetailMDP.NUM_ACTIONS;
 
-    private static final int LAYER0_NEURONS = 128; // Conv
-    private static final int LAYER1_NEURONS = 64; // Dense
-    private static final int LAYER2_NEURONS = 32; // Dense
-    private static final int LAYER3_NEURONS = 256; // LSTM
-
-    // private static DenseLayer layer0 = new DenseLayer.Builder()
-    // .nIn(INPUT_NUM)
-    // .nOut(LAYER0_NEURONS)
-    // .activation(Activation.RELU).build();
-
-    private static Convolution1DLayer layer0 = new Convolution1D.Builder()
-            .kernelSize(4)
-            .stride(1)
+    private static final int LAYER0_NEURONS = 28;
+    private static final int LAYER1_NEURONS = 14;
+    private static final int LAYER2_NEURONS = 7;
+    private static DenseLayer layer0 = new DenseLayer.Builder()
             .nIn(INPUT_NUM)
             .nOut(LAYER0_NEURONS)
             .activation(Activation.RELU).build();
-
-    // private static DenseLayer layer1 = new DenseLayer.Builder()
-    // .nIn(layer0Conv.getNOut())
-    // .nOut(LAYER1_NEURONS)
-    // .activation(Activation.RELU).build();
 
     private static DenseLayer layer1 = new DenseLayer.Builder()
             .nIn(layer0.getNOut())
@@ -66,20 +52,26 @@ public class NeuralNet {
             .nOut(LAYER2_NEURONS)
             .activation(Activation.RELU).build();
 
-    private static LSTM layer3 = new LSTM.Builder()
-            .nIn(layer2.getNOut())
-            .nOut(LAYER3_NEURONS)
-            .activation(Activation.TANH).build();
-
-    private static RnnOutputLayer layerOutput = new RnnOutputLayer.Builder(LossFunctions.LossFunction.MSE)
-            .nIn(layer3.getNOut())
-            .nOut(OUTPUT_NUM)
-            .activation(Activation.IDENTITY).build();
-
-    // private static OutputLayer layerOutput = new OutputLayer.Builder(LossFunctions.LossFunction.MSE)
+    // private static DenseLayer layer3 = new DenseLayer.Builder()
     // .nIn(layer2.getNOut())
-    // .nOut(OUTPUT_NUM)
-    // .activation(Activation.IDENTITY).build();
+    // .nOut(LAYER3_NEURONS)
+    // .activation(Activation.RELU).build();
+
+    // private static DenseLayer layer4 = new DenseLayer.Builder()
+    // .nIn(layer3.getNOut())
+    // .nOut(LAYER4_NEURONS)
+    // .activation(Activation.RELU).build();
+
+    // private static DenseLayer layer5 = new DenseLayer.Builder()
+    // .nIn(layer4.getNOut())
+    // .nOut(LAYER5_NEURONS)
+    // .activation(Activation.RELU).build();
+
+    private static OutputLayer layerOutput = new OutputLayer.Builder(LossFunctions.LossFunction.MSE)
+            .nIn(layer2.getNOut())
+            .nOut(OUTPUT_NUM)
+            .activation(Activation.IDENTITY)
+            .build();
 
     public static final MultiLayerConfiguration NEURAL_NET_CONFIG = new NeuralNetConfiguration.Builder()
             .seed(Constants.NEURAL_NET_SEED)
@@ -95,18 +87,10 @@ public class NeuralNet {
              * Can also use LSTM.Builder() or RnnOutputLayer.Builder()
              * More details in ActorCriticFactorySeparateStdDense
              */
-//            .layer(0, new DenseLayer.Builder()
-//                    .nIn(INPUT_NUM)
-//                    .nOut(25)
-//                    .activation(Activation.RELU).build())
-            .layer(0, new LSTM.Builder()
-                    .activation(Activation.RELU)
-                    .nIn(INPUT_NUM)
-                    .nOut(25).build())
-            .layer(1, new RnnOutputLayer.Builder(LossFunctions.LossFunction.MSE)
-                    .nIn(25)
-                    .nOut(OUTPUT_NUM)
-                    .activation(Activation.IDENTITY).build())
+            .layer(0, layer0)
+            .layer(1, layer1)
+            .layer(2, layer2)
+            .layer(3, layerOutput)
             .build();
 
     public static DQNFactoryStdDense.Configuration REGULAR_NET_FACTORY_CONFIG = DQNFactoryStdDense.Configuration.builder()

@@ -3,6 +3,7 @@ package edu.utep.poragchowdhury.agents;
 import java.util.Random;
 
 import edu.utep.poragchowdhury.agents.base.Agent;
+import edu.utep.poragchowdhury.agents.base.AgentID;
 import edu.utep.poragchowdhury.simulation.Observer;
 import edu.utep.poragchowdhury.simulation.TariffAction;
 
@@ -11,7 +12,7 @@ import edu.utep.poragchowdhury.simulation.TariffAction;
  */
 public class NaiveProber extends Agent {
     public NaiveProber() {
-        super("NvPbr");
+        super("NvPbr", AgentID.NaiveProber);
     }
 
     @Override
@@ -20,7 +21,7 @@ public class NaiveProber extends Agent {
         Random r = new Random(100);
         double coin = r.nextDouble();
         if (coin < defectPr) // defect
-            return TariffAction.DEFECT;
-        return TariffAction.NOCHANGE;
+            return TariffAction.D1;
+        return TariffAction.NC;
     }
 }

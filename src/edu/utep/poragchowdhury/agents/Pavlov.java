@@ -3,6 +3,8 @@ package edu.utep.poragchowdhury.agents;
 import java.util.Random;
 
 import edu.utep.poragchowdhury.agents.base.Agent;
+import edu.utep.poragchowdhury.agents.base.AgentID;
+import edu.utep.poragchowdhury.core.Configuration;
 import edu.utep.poragchowdhury.simulation.Observer;
 import edu.utep.poragchowdhury.simulation.TariffAction;
 
@@ -17,25 +19,30 @@ public class Pavlov extends Agent {
     public double prI = 1;
 
     public Pavlov() {
-        super("Pavlov");
+        super("Pavlov", AgentID.Pavlov);
     }
 
     @Override
     public TariffAction makeAction(Observer ob) {
         /* Tariff Check */
-        if (previousAction == TariffAction.INCREASE || previousAction == TariffAction.NOCHANGE) { // C
-            if (this.rivalPrevPrevPrice == this.rivalPrevPrice) // other agent is C
+        if (previousAction == TariffAction.I1 || previousAction == TariffAction.I2 || previousAction == TariffAction.NC) { // C
+
+            if ((ob.timeslot - 1 - Configuration.PUBLICATION_CYCLE >= 0)
+                    && (this.rivalTariffHistory[ob.timeslot - 1] >= this.rivalTariffHistory[ob.timeslot - 1 - Configuration.PUBLICATION_CYCLE]))
+            // other agent is C
             {
                 pr = Math.min((pr + 0.1), 1); // CC state
 
-                if (previousAction == TariffAction.INCREASE)
+                if (previousAction == TariffAction.I1 || previousAction == TariffAction.I2)
                     prI = Math.min((prI + 0.1), 1); // CC state: Increase
                 else
-                    prI = Math.max((prI - 0.1), 0); // CC state: Nochage
+                    prI = Math.max((prI - 0.1), 0); // CC state: Nochange
             }
 
-        } else if (previousAction == TariffAction.DEFECT) { // D
-            if (this.rivalPrevPrevPrice > this.rivalPrevPrice) // other agent is D
+        } else if (previousAction == TariffAction.D1 || previousAction == TariffAction.D2) { // D
+            if ((ob.timeslot - 1 - Configuration.PUBLICATION_CYCLE >= 0)
+                    && (this.rivalTariffHistory[ob.timeslot - 1] < this.rivalTariffHistory[ob.timeslot - 1 - Configuration.PUBLICATION_CYCLE]))
+                // other agent is D
                 pr = Math.min((pr + 0.1), 1); // DD state
         } else {
             pr = Math.max((pr - 0.2), 0); // CD or DC state
@@ -45,18 +52,15 @@ public class Pavlov extends Agent {
         Random r = new Random();
         int coin = r.nextInt(100);
         if (coin > prInt) // Defect
-            return TariffAction.DEFECT;
+            return TariffAction.D1;
         else // Coop
-            return TariffAction.NOCHANGE;
+        {
+            // int prIInt = (int) prI * 100;
+            // coin = r.nextInt(100);
+            // if(coin > prIInt)
+            return TariffAction.NC;
+            // else
+            // return TariffAction.INCREASE;
+        }
     }
-
-    // public TariffAction cooperate(Observer ob, double prI) {
-    // int prInt = (int) prI * 100;
-    // Random r = new Random();
-    // int coin = r.nextInt(100);
-    // if (coin > prInt) // No Change
-    // return TariffAction.NOCHANGE;
-    // else // Coop
-    // return TariffAction.INCREASE;
-    // }
 }

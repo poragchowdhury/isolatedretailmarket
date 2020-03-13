@@ -11,6 +11,7 @@ import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 
 import edu.utep.poragchowdhury.agents.base.Agent;
+import edu.utep.poragchowdhury.agents.base.AgentID;
 import edu.utep.poragchowdhury.simulation.Observer;
 import edu.utep.poragchowdhury.simulation.TariffAction;
 
@@ -22,19 +23,21 @@ public class DQAgent extends Agent {
     private static Logger log = Logger.getLogger("retailmarketmanager");
     public static int CURRENT_AGENT_COUNT = 0;
     public static int DEFECT = 0;
+    public static int DEFECT2 = 0;
     public static int NOC = 0;
     public static int INC = 0;
+    public static int INC2 = 0;
 
     public Policy<MDPState, Integer> pol;
     public int agentNumber = -1;
 
     public DQAgent(Policy<MDPState, Integer> pol) {
-        super("DeepQ_POL");
+        super("DeepQ_POL", AgentID.DQAgent);
         this.pol = pol;
     }
 
     public DQAgent(String policyFilename) {
-        super("DeepQ_Default");
+        super("DeepQ_Default", AgentID.DQAgent);
         this.loadPolicy(policyFilename);
 
         // Only number testing agents, not the ones used for training
@@ -45,7 +48,7 @@ public class DQAgent extends Agent {
     }
 
     public DQAgent() {
-        super("DeepQ_Training");
+        super("DeepQ_Training", AgentID.DQAgent);
     }
 
     public DQAgent(String name, String policyFilename) {
@@ -55,7 +58,6 @@ public class DQAgent extends Agent {
 
     public String getSimpleName() {
         return this.name;
-        // return "DQAgent" + this.agentNumber;
     }
 
     private void loadPolicy(String policyFilename) {
@@ -91,12 +93,16 @@ public class DQAgent extends Agent {
             log.info(nextAction.name() + " = " + ind.toString());
 
         if (!Trainer.isTraining) {
-            if (nextAction == TariffAction.DEFECT)
+            if (nextAction == TariffAction.D1)
                 DEFECT++;
-            else if (nextAction == TariffAction.NOCHANGE)
+            else if (nextAction == TariffAction.NC)
                 NOC++;
-            else
+            else if (nextAction == TariffAction.I1)
                 INC++;
+            else if (nextAction == TariffAction.D2)
+                DEFECT2++;
+            else if (nextAction == TariffAction.I2)
+                INC2++;
         }
         return nextAction;
     }
