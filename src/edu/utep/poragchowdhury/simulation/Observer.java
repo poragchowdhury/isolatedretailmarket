@@ -102,5 +102,4 @@ public class Observer {
             log.info(a.getAllHistoryActions());
         }
     }
-
 }
