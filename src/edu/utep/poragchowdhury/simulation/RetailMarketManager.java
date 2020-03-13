@@ -32,8 +32,15 @@ public class RetailMarketManager {
 
     public Observer ob;
     public double[] lamdaTracker;
+    public static int numberofagents = 3;
     public double largestValue = -1;
-    public Payoffs[][] gameMatrix = new Payoffs[15][15];
+    public Payoffs[][] gameMatrix = new Payoffs[20][20];
+    public Payoffs[][] bestRespMatrix = new Payoffs[20][20];
+    public Payoffs[][] winMatrix = new Payoffs[20][20];
+
+    public Payoffs[][] gameMatrixErr = new Payoffs[20][20];
+    public Payoffs[][] bestRespMatrixErr = new Payoffs[20][20];
+    public Payoffs[][] winMatrixErr = new Payoffs[20][20];
 
     /**
      * The last RL agent added to the pools. Required to check if the
@@ -43,16 +50,6 @@ public class RetailMarketManager {
 
     public RetailMarketManager() {
         ob = new Observer();
-        /*
-         * Tracking the highest lamda score for 1 payoffs
-         * 0 : (T-R)
-         * 1 : (T-P)
-         * 2 : (T-S)
-         * 3 : (R-P)
-         * 4 : (R-S)
-         * 5 : (P-S)
-         * 6 : (2R-T-S)
-         */
         lamdaTracker = new double[7];
     }
 
@@ -61,48 +58,95 @@ public class RetailMarketManager {
             try {
                 a.publishTariff(ob);
             } catch (Exception ex) {
-                log.info("[Agent:" + a.name + " raised an exception while publishing a tariff]\n");
-                ex.printStackTrace();
+                log.info("[Agent:" + a.name + " raised an exception while publishing a tariff] " + ex.getMessage() + "\n");
             }
         }
-        updateAgentsMemory();
     }
 
     public void updateAgentsMemory() {
-        for (Agent ag : ob.agentPool) {
-            ag.rivalPrevPrevPrice = ag.rivalPrevPrice;
-            ag.rivalPrevPrice = ag.tariffPrice;
-            ag.prevmarketShare = ag.marketShare;
-            ag.prevrevenue = ag.revenue;
-            ag.prevprofit = ag.profit;
-        }
+        // updating opponent tariff price in own history
+        ob.agentPool.get(0).rivalTariffHistory[ob.timeslot] = ob.agentPool.get(1).tariffPrice;
+        ob.agentPool.get(0).rivalTariffPrice = ob.agentPool.get(1).tariffPrice;
+        ob.agentPool.get(1).rivalTariffHistory[ob.timeslot] = ob.agentPool.get(0).tariffPrice;
+        ob.agentPool.get(1).rivalTariffPrice = ob.agentPool.get(0).tariffPrice;
+
+        // updating opponent action in the own history
+        // compare current tariff price with previous publication price
+        ob.agentPool.get(0).rivalActHistory[ob.timeslot] = ob.agentPool.get(1).previousAction.index;
+        ob.agentPool.get(0).rivalPreviousAction = ob.agentPool.get(1).previousAction;
+        ob.agentPool.get(1).rivalActHistory[ob.timeslot] = ob.agentPool.get(0).previousAction.index;
+        ob.agentPool.get(1).rivalPreviousAction = ob.agentPool.get(0).previousAction;
+
+        // updating own tariff history
+        ob.agentPool.get(0).tariffHistory[ob.timeslot] = ob.agentPool.get(0).tariffPrice;
+        ob.agentPool.get(1).tariffHistory[ob.timeslot] = ob.agentPool.get(1).tariffPrice;
+
+        /* Need to know who to setup this features? Accumulated or individual? */
+        // updating own accumulated profit history
+        // At the end of the game this profit determines the winner
+        ob.agentPool.get(0).profitHistory[ob.timeslot] = ob.agentPool.get(0).profit;
+        ob.agentPool.get(1).profitHistory[ob.timeslot] = ob.agentPool.get(1).profit;
+
+        // updating own unitcost history
+        ob.agentPool.get(0).unitCostHistory[ob.timeslot] = ob.agentPool.get(0).unitcost;
+        ob.agentPool.get(1).unitCostHistory[ob.timeslot] = ob.agentPool.get(1).unitcost;
+
+        // updating own cost history
+        ob.agentPool.get(0).costHistory[ob.timeslot] = ob.agentPool.get(0).cost;
+        ob.agentPool.get(1).costHistory[ob.timeslot] = ob.agentPool.get(1).cost;
+
+        // updating own market share history
+        ob.agentPool.get(0).marketShareHistory[ob.timeslot] = ob.agentPool.get(0).marketShare;
+        ob.agentPool.get(1).marketShareHistory[ob.timeslot] = ob.agentPool.get(1).marketShare;
+
+        // updating own action in the own history
+        ob.agentPool.get(0).actHistory[ob.timeslot] = ob.agentPool.get(0).previousAction.index;
+        ob.agentPool.get(1).actHistory[ob.timeslot] = ob.agentPool.get(1).previousAction.index;
     }
 
     public void customerTariffEvaluation() {
         ob.fcc.evaluateTariffs();
+        ob.fcc.randomWalkNoise(ob.timeslot);
     }
 
     public void updateAgentAccountings() {
         int hour = ob.timeslot % 24;
+        // Reset this observer variables to calculate values for each timeslot
         Arrays.fill(ob.money, 0);
         Arrays.fill(ob.cost, 0);
         Arrays.fill(ob.custSubs, 0);
 
-        double tariffPrice[] = { ob.agentPool.get(0).prevtariffPrice, ob.agentPool.get(1).prevtariffPrice };
-
+        // Calculating the money(revenue), cost and subscription for this timeslot
         for (int i = 0; i < ob.fcc.population; i++) {
-            ob.money[ob.fcc.custId[i]] += (tariffPrice[ob.fcc.custId[i]] * ob.fcc.usage[hour]);
-            ob.cost[ob.fcc.custId[i]] += (ob.agentPool.get(ob.fcc.custId[i]).unitcost * ob.fcc.usage[hour]);
+            ob.money[ob.fcc.custId[i]] += (ob.agentPool.get(ob.fcc.custId[i]).tariffPrice * ob.fcc.usage[hour]);
+            ob.cost[ob.fcc.custId[i]] += (ob.agentPool.get(ob.fcc.custId[i]).unitcost
+                    * (ob.fcc.usage[hour] + ob.fcc.noise));
             ob.custSubs[ob.fcc.custId[i]] += 1;
         }
 
-        for (int idx = 0; idx < ob.agentPool.size(); idx++) {
-            Agent ag = ob.agentPool.get(idx);
-            ag.revenue += ob.money[idx];
-            ag.cost += ob.cost[idx];
-            ag.profit += (ag.revenue - ag.cost);
-            ag.marketShare = ob.custSubs[idx];
+        // Updating overall revenue, cost, profit, marketShare for this timelsot
+        ob.agentPool.get(0).revenue += ob.money[0];
+        ob.agentPool.get(1).revenue += ob.money[1];
+        ob.agentPool.get(0).cost += ob.cost[0];
+        ob.agentPool.get(1).cost += ob.cost[1];
+        ob.agentPool.get(0).profit += (ob.money[0] - ob.cost[0]);
+        ob.agentPool.get(1).profit += (ob.money[1] - ob.cost[1]);
+        // subscriber count is the market share
+        ob.agentPool.get(0).marketShare = (ob.custSubs[0]);
+        ob.agentPool.get(1).marketShare = (ob.custSubs[1]);
+
+        // count best responses of the agents
+        if ((ob.money[0] - ob.cost[0]) > (ob.money[1] - ob.cost[1]))
+            ob.agentPool.get(0).bestResponseCount++;
+        else if ((ob.money[0] - ob.cost[0]) < (ob.money[1] - ob.cost[1]))
+            ob.agentPool.get(1).bestResponseCount++;
+        else {
+            ob.agentPool.get(0).bestResponseCount++;
+            ob.agentPool.get(1).bestResponseCount++;
         }
+
+        // update Agent's memory
+        updateAgentsMemory();
     }
 
     public void printGameMatrix(CaseStudy cs) {
@@ -380,24 +424,11 @@ public class RetailMarketManager {
                             ob.agentPool.add(cs.pool1.get(iagent));
                             ob.agentPool.add(cs.pool2.get(kagent));
 
+                            cs.pool1.get(iagent).opponentID = cs.pool2.get(kagent).id;
+                            cs.pool2.get(kagent).opponentID = cs.pool1.get(iagent).id;
+
                             for (ob.timeslot = 0; ob.timeslot < Configuration.TOTAL_TIME_SLOTS;) {
-                                // log() function
-                                ob.utility[0] = (double) Math.round(ob.utility[0] * 1000) / 1000;
-                                ob.utility[1] = (double) Math.round(ob.utility[1] * 1000) / 1000;
-
-                                ob.money[0] = (double) Math.round(ob.money[0] * 100) / 100;
-                                ob.money[1] = (double) Math.round(ob.money[1] * 100) / 100;
-
-                                ob.cost[0] = (double) Math.round(ob.cost[0] * 100) / 100;
-                                ob.cost[1] = (double) Math.round(ob.cost[1] * 100) / 100;
-
-                                // ob.unitcost = (double) Math.round(ob.unitcost * 100) / 100;
-
-                                ob.agentPool.get(0).revenue = (double) Math.round(ob.agentPool.get(0).revenue * 100) / 100;
-                                ob.agentPool.get(1).revenue = (double) Math.round(ob.agentPool.get(1).revenue * 100) / 100;
-                                ob.agentPool.get(0).profit = (double) Math.round(ob.agentPool.get(0).profit * 100) / 100;
-                                ob.agentPool.get(1).profit = (double) Math.round(ob.agentPool.get(1).profit * 100) / 100;
-
+                                ob.updateAgentUnitCost();
                                 // Agents taking Actions
                                 if (ob.timeslot % Configuration.PUBLICATION_CYCLE == 0) {
                                     publishTariffs();
@@ -409,32 +440,63 @@ public class RetailMarketManager {
                                 updateAgentAccountings();
                                 // Going to next timeslot and updating the cost
                                 ob.timeslot++;
-                                ob.updateAgentUnitCost();
                             }
-                            // printRevenues() function
+                            /* One Simulation Ended */
                             int agentid = 0;
                             for (Agent a : ob.agentPool) {
                                 ob.agentPayoffs[agentid][round] = a.profit;
+                                ob.agentBestResponse[agentid][round] = a.bestResponseCount;
                                 agentid++;
                             }
+
+                            if (ob.agentPayoffs[0][round] > ob.agentPayoffs[1][round])
+                                ob.agentWins[0]++;
+                            else if (ob.agentPayoffs[0][round] < ob.agentPayoffs[1][round])
+                                ob.agentWins[1]++;
+                            else {
+                                ob.agentWins[0]++;
+                                ob.agentWins[1]++;
+                            }
                             // clear the observer for another simulation set up
+                            // ob.printAgentPath();
                             ob.clear();
                         }
-                        // printAverageRevenues() function
-
-                        double[] vals = ob.calcAvg(cs);
-
-                        // Porag added this to his branch
+                        double[] vals = ob.calcAvg(cs, ob.agentPayoffs);
+                        log.info(String.format("%s,%.3f,%.3f,%s,%.3f,%.3f", cs.pool1.get(iagent).name, vals[0], vals[2],
+                                cs.pool2.get(kagent).name, vals[1], vals[3]));
                         cs.pool1.get(iagent).profit = vals[0];
                         cs.pool2.get(kagent).profit = vals[1];
 
-                        // log.info(cs.pool1.get(iagent).name + " " + vals[0] + " " + cs.pool2.get(kagent).name + " " + vals[1] + " Error1 " + vals[2] + " Error2 " + vals[3]);
+                        double[] bestRespVals = ob.calcAvg(cs, ob.agentBestResponse);
+                        cs.pool1.get(iagent).bestResponseCount = bestRespVals[0];
+                        cs.pool2.get(kagent).bestResponseCount = bestRespVals[1];
+
                         if (iagent != kagent) {
                             gameMatrix[iagent][kagent] = new Payoffs(vals[0], vals[1]);
                             gameMatrix[kagent][iagent] = new Payoffs(vals[1], vals[0]);
+                            gameMatrixErr[iagent][kagent] = new Payoffs(vals[2], vals[3]);
+                            gameMatrixErr[kagent][iagent] = new Payoffs(vals[3], vals[2]);
+
+                            bestRespMatrix[iagent][kagent] = new Payoffs(bestRespVals[0], bestRespVals[1]);
+                            bestRespMatrix[kagent][iagent] = new Payoffs(bestRespVals[1], bestRespVals[0]);
+                            bestRespMatrixErr[iagent][kagent] = new Payoffs(bestRespVals[2], bestRespVals[3]);
+                            bestRespMatrixErr[kagent][iagent] = new Payoffs(bestRespVals[3], bestRespVals[2]);
+
+                            winMatrix[iagent][kagent] = new Payoffs(ob.agentWins[0], ob.agentWins[1]);
+                            winMatrix[kagent][iagent] = new Payoffs(ob.agentWins[1], ob.agentWins[0]);
                         } else {
-                            double avgVal = (vals[0] + vals[1]) / 2;
+                            double avgVal = (vals[0] + vals[1]) / 2.0;
                             gameMatrix[iagent][kagent] = new Payoffs(avgVal, avgVal);
+                            double avgValErr = (vals[2] + vals[3]) / 2.0;
+                            gameMatrixErr[iagent][kagent] = new Payoffs(avgValErr, avgValErr);
+
+                            double avgBestRspVal = (bestRespVals[0] + bestRespVals[1]) / 2.0;
+                            bestRespMatrix[iagent][kagent] = new Payoffs(avgBestRspVal, avgBestRspVal);
+                            double avgBestRspValErr = (bestRespVals[2] + bestRespVals[3]) / 2.0;
+                            bestRespMatrixErr[iagent][kagent] = new Payoffs(avgBestRspValErr, avgBestRspValErr);
+
+                            double avgWins = (ob.agentWins[0] + ob.agentWins[1]) / 2.0;
+                            winMatrix[iagent][kagent] = new Payoffs(avgWins, avgWins);
                         }
 
                         if (largestValue < vals[0])
