@@ -67,7 +67,7 @@ public class SelfPlay {
         // Drawing.displayImage("selfplay.png");
     }
 
-    public static void createInitialModel() {
+    public static void createInitialModel() throws IOException {
         // Prepare random weight network agent
         MultiLayerNetwork mdp = NeuralNet.createMultiLayerNetwork();
         DQN model = new DQN(mdp);

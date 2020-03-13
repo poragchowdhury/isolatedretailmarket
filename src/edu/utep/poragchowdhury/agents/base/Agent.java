@@ -66,7 +66,12 @@ public abstract class Agent implements Cloneable {
         this.name = agentName;
         this.id = id;
         this.reset();
-        
+    }
+
+    /**
+     * Resets all of the agent variables to their default values
+     */
+    public void reset() {
         this.unitcost = Configuration.INITUNITCOST;
         this.c_max = Configuration.MAX_UNIT_COST;
         this.c_min = Configuration.MIN_UNIT_COST;
@@ -80,12 +85,6 @@ public abstract class Agent implements Cloneable {
         this.rivalTariffHistory = new double[Configuration.TOTAL_TIME_SLOTS];
         this.rivalActHistory = new int[Configuration.TOTAL_TIME_SLOTS];
 
-    }
-
-    /**
-     * Resets all of the agent variables to their default values
-     */
-    public void reset() {
         tariffPrice = Configuration.DEFAULT_TARIFF_PRICE;
         rivalTariffPrice = Configuration.DEFAULT_TARIFF_PRICE;
         revenue = 0;
