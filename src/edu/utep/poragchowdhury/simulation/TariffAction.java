@@ -10,7 +10,7 @@ public enum TariffAction {
     public int index;
     public double tariff;
 
-    private TariffAction(int index, double tariff) {
+    TariffAction(int index, double tariff) {
         this.index = index;
         this.tariff = tariff;
     }

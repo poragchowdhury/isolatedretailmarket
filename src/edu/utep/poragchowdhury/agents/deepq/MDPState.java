@@ -138,12 +138,12 @@ public class MDPState implements Encodable {
         /* 3 Market share related features */
 
         // feature 1: my previous TS market share
-        features.add((double) agent.marketShare / Configuration.POPULATION);
+        features.add(agent.marketShare / Configuration.POPULATION);
 
         // feature 2: my previous publication cycle market share
-        features.add((double) agent.marketShareHistory[prevPubCycTS] / Configuration.POPULATION);
+        features.add(agent.marketShareHistory[prevPubCycTS] / Configuration.POPULATION);
         // feature 3: my previous 2 publication cycle market share
-        features.add((double) agent.marketShareHistory[prev2PubCycTS] / Configuration.POPULATION);
+        features.add(agent.marketShareHistory[prev2PubCycTS] / Configuration.POPULATION);
 
         /* 3 Customer demand related features */
         // feature 1,2,3: customer demand features

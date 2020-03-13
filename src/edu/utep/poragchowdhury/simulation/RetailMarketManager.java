@@ -404,8 +404,8 @@ public class RetailMarketManager {
     }
 
     public void startSimulation(CaseStudy cs) {
-        double rationality[] = { Configuration.RATIONALITY };
-        double inertia[] = { Configuration.INERTIA };
+        double[] rationality = { Configuration.RATIONALITY };
+        double[] inertia = { Configuration.INERTIA };
         double imax = 1;
         double rmax = 1;
         double roundmax = Configuration.TEST_ROUNDS;

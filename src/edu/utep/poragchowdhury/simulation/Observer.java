@@ -19,17 +19,17 @@ public class Observer {
     public int payoffcount = 0;
     public ArrayList<Agent> agentPool;
     public FactoredConsumptionCustomer fcc;
-    public double money[];
-    public double cost[];
-    public double custSubs[];
-    public double utility[];
+    public double[] money;
+    public double[] cost;
+    public double[] custSubs;
+    public double[] utility;
 
     /*
      * Error bound and Average Calculation
      */
-    public double agentPayoffs[][];
-    public double agentBestResponse[][];
-    public double agentWins[];
+    public double[][] agentPayoffs;
+    public double[][] agentBestResponse;
+    public double[] agentWins;
 
     public Observer() {
         agentPool = new ArrayList<Agent>();

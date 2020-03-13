@@ -13,7 +13,7 @@ public class FactoredConsumptionCustomer {
     public double maxLinearUtility = 7.0;
     public Double maxUsage = 1.0;
     public int population = Configuration.POPULATION;
-    public int custId[] = new int[population];
+    public int[] custId = new int[population];
     public int[] inertiaPC = new int[population];
     public double[] custMem = new double[population];
     public int lamda = Integer.MAX_VALUE; // Perfectly rational
@@ -64,9 +64,7 @@ public class FactoredConsumptionCustomer {
         Random r = new Random();
         pr *= 100;
         int toss = r.nextInt(100);
-        if (toss <= pr)
-            return true;
-        return false;
+        return toss <= pr;
     }
 
     public double getUtilityPerc(double tariffPrice) {

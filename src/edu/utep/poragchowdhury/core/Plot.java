@@ -32,11 +32,11 @@ public class Plot {
 
     public enum Line {
         NONE, SOLID, DASHED
-    };
+    }
 
     public enum Marker {
         NONE, CIRCLE, SQUARE, DIAMOND, COLUMN, BAR
-    };
+    }
 
     public enum AxisFormat {
         NUMBER, NUMBER_KGM, NUMBER_INT, TIME_HM, TIME_HMS, DATE, DATETIME_HM, DATETIME_HMS
