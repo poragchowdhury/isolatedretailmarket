@@ -2,6 +2,7 @@ package edu.utep.poragchowdhury.simulation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 import edu.utep.poragchowdhury.agents.base.Agent;
 import edu.utep.poragchowdhury.core.Configuration;
@@ -10,6 +11,8 @@ import edu.utep.poragchowdhury.core.Configuration;
  * Contains the observable information for one game
  */
 public class Observer {
+    private static final Logger log = Logger.getLogger("retailmarketmanager");
+
     public int publication_cycle_count = 0; // The amount of publication cycles that this game has had
     public int timeslot = 0; // The current timeslot of the game
     public double[] payoffs;
@@ -21,16 +24,12 @@ public class Observer {
     public double custSubs[];
     public double utility[];
 
-    //public double unitcost;
-    //public double daymult;
-    //public double demandmult;
-    //public double initcost;
-    public int SEED = 0;
-
     /*
      * Error bound and Average Calculation
      */
     public double agentPayoffs[][];
+    public double agentBestResponse[][];
+    public double agentWins[];
 
     public Observer() {
         agentPool = new ArrayList<Agent>();
@@ -40,17 +39,13 @@ public class Observer {
         cost = new double[2];
         utility = new double[2];
         fcc = new FactoredConsumptionCustomer(this);
-//        daymult = Configuration.DAYMULT;
-//        demandmult = Configuration.DMNDMULT;
-//        initcost = Configuration.INITCOST;
-        //unitcost = daymult * 0 + demandmult * fcc.usage[0] + initcost;
         agentPayoffs = new double[2][Configuration.TEST_ROUNDS];
-
+        agentBestResponse = new double[2][Configuration.TEST_ROUNDS];
+        agentWins = new double[2];
     }
 
     public void updateAgentUnitCost() {
-        for(Agent a : agentPool)
-        	a.randomWalkCost(timeslot);
+        agentPool.stream().forEach(agent -> agent.randomWalkUnitCost(timeslot));
     }
 
     public void clear() {
@@ -62,31 +57,36 @@ public class Observer {
     public void allsampleclear() {
         Arrays.fill(agentPayoffs[0], 0);
         Arrays.fill(agentPayoffs[1], 0);
+        Arrays.fill(agentBestResponse[0], 0);
+        Arrays.fill(agentBestResponse[1], 0);
+
+        Arrays.fill(agentWins, 0);
     }
 
-    public double[] calcAvg(CaseStudy cs) {
+    public double[] calcAvg(CaseStudy cs, double[][] resultArray) {
         double avgagent1 = 0;
         double avgagent2 = 0;
-        for (int i = 0; i < agentPayoffs[0].length; i++) {
-            avgagent1 += agentPayoffs[0][i];
-            avgagent2 += agentPayoffs[1][i];
+
+        for (int i = 0; i < resultArray[0].length; i++) {
+            avgagent1 += resultArray[0][i];
+            avgagent2 += resultArray[1][i];
         }
-        avgagent1 /= agentPayoffs[0].length;
-        avgagent2 /= agentPayoffs[1].length;
+        avgagent1 /= resultArray[0].length;
+        avgagent2 /= resultArray[1].length;
 
         double stdagent1 = 0.0;
         double stdagent2 = 0.0;
-        for (int i = 0; i < agentPayoffs[0].length; i++) {
-            double absdiff1 = Math.abs(avgagent1 - agentPayoffs[0][i]);
-            double absdiff2 = Math.abs(avgagent2 - agentPayoffs[1][i]);
+        for (int i = 0; i < resultArray[0].length; i++) {
+            double absdiff1 = Math.abs(avgagent1 - resultArray[0][i]);
+            double absdiff2 = Math.abs(avgagent2 - resultArray[1][i]);
             double sqr1 = absdiff1 * absdiff1;
             double sqr2 = absdiff2 * absdiff2;
             stdagent1 += sqr1;
             stdagent2 += sqr2;
         }
 
-        stdagent1 /= agentPayoffs[0].length;
-        stdagent2 /= agentPayoffs[1].length;
+        stdagent1 /= resultArray[0].length;
+        stdagent2 /= resultArray[1].length;
 
         stdagent1 = Math.sqrt(stdagent1);
         stdagent2 = Math.sqrt(stdagent2);
@@ -94,10 +94,13 @@ public class Observer {
         double error1 = 1.96 * (stdagent1 / Math.sqrt(Configuration.TEST_ROUNDS));
         double error2 = 1.96 * (stdagent2 / Math.sqrt(Configuration.TEST_ROUNDS));
 
-        // print avg payoff with error
-        // if (Configuration.CASE_STUDY_NO > 0)
-        // System.out.println(cs.pool1.get(0).name + ":" + avgagent1 + " err: " + error1 + cs.pool2.get(0).name + ":" + avgagent2 + " err2: " + error2);
         return new double[] { avgagent1, avgagent2, error1, error2 };
+    }
+
+    public void printAgentPath() {
+        for (Agent a : agentPool) {
+            log.info(a.getAllHistoryActions());
+        }
     }
 
 }
