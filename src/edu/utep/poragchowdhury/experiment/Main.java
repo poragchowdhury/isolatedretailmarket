@@ -1,4 +1,4 @@
-package edu.utep.poragchowdhury.simulation;
+package edu.utep.poragchowdhury.experiment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +14,8 @@ import edu.utep.poragchowdhury.agents.deepq.RetailMDP;
 import edu.utep.poragchowdhury.agents.deepq.Trainer;
 import edu.utep.poragchowdhury.core.Configuration;
 import edu.utep.poragchowdhury.core.Logging;
+import edu.utep.poragchowdhury.simulation.CaseStudy;
+import edu.utep.poragchowdhury.simulation.RetailMarketManager;
 
 public class Main {
     private static Logger log = Logger.getLogger("retailmarketmanager");
@@ -24,26 +26,16 @@ public class Main {
         Logging.attachLoggerToFile(log, "experiment.log");
         log.info(Configuration.toStringRepresentation());
         log.info("Feature Size: " + RetailMDP.NUM_OBSERVATIONS);
-        /*
-         * The Sandbox Experiment tests DQAgent against a few others
-         * We can use this experiment to make sure DQAgent is being trained correctly
-         * Or to tweak hyperparameters
-         */
+
+        // Experiment that will be performed by this run
         sandboxExperiment();
-
-        /*
-         * The round robin experiment
-         * 
-         */
-        // roundRobinExperiment();
-
-        /*
-         * The Main Experiment runs the flowchart specified by Porag
-         * Basically, the SMNE vs DQAgent stuff with Gambit and such
-         */
-        // mainExperiment();
     }
 
+    /**
+     * The Sandbox Experiment tests DQAgent against a few others
+     * We can use this experiment to make sure DQAgent is being trained correctly or to tweak hyperparameters
+     * @throws IOException
+     */
     public static void sandboxExperiment() throws IOException {
         RetailMarketManager rm = new RetailMarketManager();
 
@@ -74,8 +66,23 @@ public class Main {
         rm.startExperiment(true);
     }
 
+    /**
+     * The Main Experiment runs the flowchart specified by Porag
+     * Basically, the SMNE vs DQAgent stuff with Gambit and such
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public static void mainExperiment() throws IOException, InterruptedException {
         RetailMarketManager rm = new RetailMarketManager();
         rm.startExperiment(false);
+    }
+
+    /**
+     * The SelfPlay experiment trains a DQAgent named "selfplay.pol" by having it
+     * play against itself
+     * @throws IOException
+     */
+    public static void selfPlayExperiment() throws IOException {
+        SelfPlay.main(null);
     }
 }
