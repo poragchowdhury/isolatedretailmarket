@@ -351,6 +351,10 @@ public class RetailMarketManager {
 					cs.pool1.get(i).profit, cs.pool1.get(i).profitErr, cs.pool1.get(i).bestResponseCount, cs.pool1.get(i).bestResponseCountErr, avgWins[i]));
 		}
 		
+		log.info("****************Minimax Regret Strategy**********************");
+		int minimaxRegretStrategy = getMinimaxRegretStrategy();
+		log.info(String.format("%s", cs.pool1.get(minimaxRegretStrategy).name));
+		
 		log.info("****************Sorted by norm profit**********************");
 		Collections.sort(cs.pool1, new AgentCompareByProfit());
 		log.info(String.format("Broker,normpayoff,normpayoff.err,bestresponse,bestresponse.err,wins"));
@@ -553,6 +557,46 @@ public class RetailMarketManager {
 
 		fh.setFormatter(formatter);
 		log.addHandler(fh);
+	}
+	
+	public int getMinimaxRegretStrategy() {
+		// calculating regret for colom player
+		
+		double [][] regretTable = new double[numberofagents+1][numberofagents+1];
+		
+		// Create the regret table
+		for(int row = 0; row < numberofagents; row++) {
+			double maxPayoff = gameMatrix[row][0].value2;
+			for(int col = 0; col < numberofagents; col++) {
+				regretTable[row][col] = gameMatrix[row][col].value2;
+				if(gameMatrix[row][col].value2 > maxPayoff)
+					maxPayoff = gameMatrix[row][col].value2;
+			}
+			// got the maxPayoff now del from every value from the regrettable
+			for(int col = 0; col < numberofagents; col++)
+				regretTable[row][col] = maxPayoff - regretTable[row][col];
+		}
+		
+		// now find maximum regret for each strategy for the column palyer
+		for(int col = 0; col < numberofagents; col++) {
+			double maxregret = regretTable[0][col];
+			for(int row = 0; row < numberofagents; row++)
+				if(maxregret < regretTable[row][col])
+					maxregret = regretTable[row][col];
+			regretTable[regretTable.length-1][col] = maxregret;	
+		}
+		
+		// scan the last coloum to get the minimun of maximum regret
+		double minRegret = regretTable[regretTable.length-1][0];
+		int minimaxRegretStrategy = 0;
+		for(int col = 0; col < numberofagents; col++) {
+			if(minRegret > regretTable[regretTable.length-1][col]) {
+				minRegret = regretTable[regretTable.length-1][col];
+				minimaxRegretStrategy = col;
+			}
+		}
+		
+		return minimaxRegretStrategy;
 	}
 
 	public void startExperiment(boolean roundrobin, String polToLearnFrom) throws IOException {
@@ -1100,11 +1144,11 @@ public class RetailMarketManager {
 //		SMNE smne = new SMNE();
 //		smne.addStrategy(1.0, new HardMajority());
 //		smne.addStrategy(0.0, new AlwaysSame());
-		Agent opponentAgent = new AlwaysDefect();
+		Agent opponentAgent = new AlwaysSame();
 		List<Agent> oppPool = new ArrayList<>();
 		oppPool.add(opponentAgent);
 
-		String policyToLearn = "BR_AlD_3action.pol";
+		String policyToLearn = "dq_selfplay_10_iterations.pol";
 		//DQAgentMDP.trainDQAgent(oppPool, policyToLearn, null);
 		DQAgent dqAgent = new DQAgent("DQ", policyToLearn);  // new DQAgent("DQ0", "DQ0_1Day__1.00Prober.pol");//
 

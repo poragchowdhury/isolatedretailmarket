@@ -11,6 +11,7 @@ log/*
 /target/
 *.nfg
 *.gbt
+*.png
 
 # Policy files
 *.pol
