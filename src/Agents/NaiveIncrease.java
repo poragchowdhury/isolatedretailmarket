@@ -9,7 +9,7 @@ import Tariff.TariffAction;
 public class NaiveIncrease extends Agent {
     public NaiveIncrease() {
         // TODO Auto-generated constructor stub
-        super("NvI", 1);
+        super("NvI", 15);
     }
 
     @Override
