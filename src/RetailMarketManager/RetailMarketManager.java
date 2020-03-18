@@ -33,6 +33,7 @@ import Agents.DQAgentState;
 import Agents.GD;
 import Agents.Grim;
 import Agents.HardMajority;
+import Agents.NaiveIncrease;
 import Agents.NaiveProber;
 import Agents.Pavlov;
 import Agents.Prober;
@@ -192,7 +193,9 @@ public class RetailMarketManager {
 
 		// Calculating the money(revenue), cost and subscription for this timeslot
 		for (int i = 0; i < ob.fcc.population; i++) {
-			ob.money[ob.fcc.custId[i]] += (ob.agentPool.get(ob.fcc.custId[i]).tariffPrice * ob.fcc.usage[hour]);
+			double tariffPrice = ob.agentPool.get(ob.fcc.custId[i]).tariffPrice;
+			tariffPrice = tariffPrice > Configuration.MAX_TARIFF_PRICE ? Configuration.MAX_TARIFF_PRICE : tariffPrice; 
+			ob.money[ob.fcc.custId[i]] += (tariffPrice * ob.fcc.usage[hour]);
 			ob.cost[ob.fcc.custId[i]] += (ob.unitcost
 					* (ob.fcc.usage[hour] + ob.fcc.noise));
 			ob.custSubs[ob.fcc.custId[i]] += 1;
@@ -318,6 +321,22 @@ public class RetailMarketManager {
 		
 		log.info(String.format("X = np.array([%s])", scoreFeatures.substring(0, scoreFeatures.length()-1)));
 		log.info(String.format("words = [%s]", agentNames.substring(0, agentNames.length()-1)));
+	}
+	
+	public void logGameMatrix(CaseStudy cs) {
+		log.info("\n*********CSV Start: game matrix**********");
+		StringBuilder sb = new StringBuilder(",,");
+		for (int i = 0; i < numberofagents; i++)
+			sb.append(String.format("%s,,",cs.pool1.get(i).name));
+		log.info(sb.toString());
+		
+		for (int i = 0; i < numberofagents; i++) {
+			sb = new StringBuilder(cs.pool1.get(i).name+",");
+			for (int k = 0; k < numberofagents; k++)
+				sb.append(String.format("%.3f,%.3f,",gameMatrix[i][k].value1, gameMatrix[i][k].value2));				 
+			log.info(sb.toString());
+		}
+		log.info("*********CSV End: game matrix**********");
 	}
 	
 	public void printGameMatrix(CaseStudy cs, boolean runVsItself) {
@@ -640,6 +659,7 @@ public class RetailMarketManager {
 			if (roundrobin) {
 				printClusterValues(currentCase, true);
 				printGameMatrix(currentCase, true);
+				logGameMatrix(currentCase);
 				break;
 			}
 
@@ -817,8 +837,8 @@ public class RetailMarketManager {
 		initial.pool2.addAll(literatureStrategiesClone);
 		*/
 		//new DQAgent("DQ11", "DQ11_1.00DQ10.pol"),
-		CaseStudy initial = new CaseStudy().addP1Strats(new ZI(), new AlwaysDefect2(),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame());
-									initial.addP2Strats(new ZI(), new AlwaysDefect2(),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame());
+		CaseStudy initial = new CaseStudy().addP1Strats(new ZI(),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame(), new NaiveIncrease());
+									initial.addP2Strats(new ZI(),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame(), new NaiveIncrease());
 		return initial;
 	}
 
