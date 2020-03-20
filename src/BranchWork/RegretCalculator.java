@@ -31,49 +31,55 @@ public class RegretCalculator {
     
     public static void main(String[] args) throws FileNotFoundException, IOException{
     	RegretCalculator rc = new RegretCalculator();
+    	int NUM_CANDIDATE_STRATEGY = 16; 
     	rc.setupLogging();
     	try(BufferedReader br = new BufferedReader(new FileReader("game.csv"))) {
 		    
 		    String line = br.readLine();
-		    String[] arrStrategies = line.split(",,");
-		    int n = arrStrategies.length - 1;
-		    System.out.println(n + " number of strategies");
-		    double [][] regretTable = new double[n+1][n]; // for column player
+		    String[] arrStrategies = line.split(",");
+		    int n = arrStrategies.length;
+		    System.out.println(n + " rows");
+		    double [][] payoffs = new double[n][NUM_CANDIDATE_STRATEGY];
+		    double [][] regretTable = new double[n+1][NUM_CANDIDATE_STRATEGY+1]; // for row player
 			
-		    double [][][] payoffs = new double[n][n][2]; 
 		    line = br.readLine();
 		    int row = 0;
+		    
+		    // load the values from the file
 		    while (line != null) {
 		    	String [] values = line.split(",");
-		    	double maxPayoff = Double.parseDouble(values[1]);
 		    	for(int col = 0, item = 0; col < n; col++) {
-		    		payoffs[row][col][0] = Double.parseDouble(values[++item]);
-		    		payoffs[row][col][1] = Double.parseDouble(values[++item]);
-		    		regretTable[row][col] = payoffs[row][col][1];
-		    		if(payoffs[row][col][1] > maxPayoff)
-						maxPayoff = payoffs[row][col][1];
+		    		payoffs[row][col] = Double.parseDouble(values[++item]);
+		    		regretTable[row][col] = payoffs[row][col];
 		    	}
-		    	
-				// got the maxPayoff now del from every value from the regrettable
-				for(int col = 0; col < n; col++)
-					regretTable[row][col] = maxPayoff - regretTable[row][col];
-
 		    	line = br.readLine();
 		    	row++;
 		    }
 		    
-		    // Created the regret table! Now compute the total regret for each strategies
-
-		    for(int c = 0; c < n; c++) {
-		    	int totalRegret = 0;
+		    // Created the regret table! 
+		    for(int c = 0; c < NUM_CANDIDATE_STRATEGY; c++) {
+		    	double maxPayoff = payoffs[0][c];
 		    	for(int r = 0; r < n; r++) {
-		    		totalRegret += regretTable[r][c];
+		    		if(payoffs[r][c] > maxPayoff)
+		    			maxPayoff = payoffs[r][c];
 		    	}
-		    	regretTable[n][c] = totalRegret;
-		    	log.info(String.format("%s, %.3f,", arrStrategies[c+1],regretTable[n][c]));
+		    	regretTable[n][c] = maxPayoff;
+		    	
+		    	// Compute the total regret for each strategies
+		    	// got the maxPayoff now del from every value from the regrettable
+		    	for(int r = 0; r < n; r++)
+		    		regretTable[r][c] = maxPayoff - regretTable[r][c];
+
 		    }
 		    
-		    
+		    for(int r = 0; r < n; r++) {
+		    	int totalRegret = 0;
+		    	for(int c = 0; c < NUM_CANDIDATE_STRATEGY; c++) {
+		    		totalRegret += regretTable[r][c];
+		    	}
+		    	regretTable[r][NUM_CANDIDATE_STRATEGY] = totalRegret;
+		    	log.info(String.format("%s, %.3f,", arrStrategies[r],regretTable[r][NUM_CANDIDATE_STRATEGY]));
+		    }
 		    
 		    System.out.println();
 		}

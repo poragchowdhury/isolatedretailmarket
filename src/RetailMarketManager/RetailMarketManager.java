@@ -310,7 +310,7 @@ public class RetailMarketManager {
 		StringBuilder sb_names = new StringBuilder();
 		StringBuilder sb_scores = new StringBuilder();
 		log.info(String.format("Print Clustering values\n"));
-		for (int i = 1; i < numberofagents; i++) {
+		for (int i = 0; i < numberofagents; i++) {
 				double selfplayScore = gameMatrix[i][i].value1; // selfplay value
 				double randplayScore = gameMatrix[i][0].value1; // against random agent
 				sb_scores.append(String.format("[%.3f,%.3f],", selfplayScore, randplayScore));
@@ -325,15 +325,15 @@ public class RetailMarketManager {
 	
 	public void logGameMatrix(CaseStudy cs) {
 		log.info("\n*********CSV Start: game matrix**********");
-		StringBuilder sb = new StringBuilder(",,");
-		for (int i = 0; i < numberofagents; i++)
-			sb.append(String.format("%s,,",cs.pool1.get(i).name));
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < cs.pool2.size(); i++)
+			sb.append(String.format("%s,",cs.pool2.get(i).name));
 		log.info(sb.toString());
 		
-		for (int i = 0; i < numberofagents; i++) {
+		for (int i = 0; i < cs.pool1.size(); i++) {
 			sb = new StringBuilder(cs.pool1.get(i).name+",");
-			for (int k = 0; k < numberofagents; k++)
-				sb.append(String.format("%.3f,%.3f,",gameMatrix[i][k].value1, gameMatrix[i][k].value2));				 
+			for (int k = 0; k < cs.pool2.size(); k++)
+				sb.append(String.format("%.3f,",gameMatrix[i][k].value1));				 
 			log.info(sb.toString());
 		}
 		log.info("*********CSV End: game matrix**********");
@@ -837,8 +837,18 @@ public class RetailMarketManager {
 		initial.pool2.addAll(literatureStrategiesClone);
 		*/
 		//new DQAgent("DQ11", "DQ11_1.00DQ10.pol"),
+		
+		/*
+		 * Roundrobin strategies: The order of the agent is important here
+		 * */
 		CaseStudy initial = new CaseStudy().addP1Strats(new ZI(),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame(), new NaiveIncrease());
 									initial.addP2Strats(new ZI(),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame(), new NaiveIncrease());
+		
+		/*
+		 * Running one single strategy to generate payoffs for the regret table 
+		 * */
+//		CaseStudy initial = new CaseStudy().addP1Strats(new GD());
+//									initial.addP2Strats(new GD(), new ZI(),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame(), new NaiveIncrease());
 		return initial;
 	}
 
