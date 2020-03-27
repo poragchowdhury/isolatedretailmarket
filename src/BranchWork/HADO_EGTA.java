@@ -152,8 +152,8 @@ public class HADO_EGTA {
             }
 
             // Pick best DQAgent out of the deltas
-            DQAgent dqAgent = null;
-            double argmaxUtility = Double.MIN_VALUE;
+            DQAgent bestDQAgent = null;
+            double bestUtility = Double.MIN_VALUE;
             for (DQAgent dq : deltas) {
                 // Play against current equilibrium to find utility
                 rm.startSimulation(new CaseStudy().addP1Strats(dq).addP2Strats(sigma_0));
@@ -167,27 +167,31 @@ public class HADO_EGTA {
                 double utility = (alpha * uSigma0) + ((1 - alpha) * uSigmaBar);
 
                 // arg-max logic
-                if (utility > argmaxUtility) {
-                    argmaxUtility = utility;
-                    dqAgent = dq;
+                if (utility > bestUtility) {
+                    bestUtility = utility;
+                    bestDQAgent = dq;
                 }
             }
+
+            // Save best DQAgent
+            String dqFilename = Configuration.DQ_TRAINING + "_" + sigma_0.name + ".pol";
+            bestDQAgent.pol.save(dqFilename);
 
             // Add SMNE to list of previous for future use
             smneList.add(sigma_0);
 
             // ************** Run test games of SMNE vs RL
-            evaluateDQAgent(sigma_0, dqAgent);
+            evaluateDQAgent(sigma_0, bestDQAgent);
 
             // ************** Does RL have a higher payoff than SMNE?
-            if (dqAgent.profit > sigma_0.profit) {
+            if (bestDQAgent.profit > sigma_0.profit) {
                 log.info("DQAgent profit > SMNE profit, adding DQAgent to the pool");
-                log.info("New DQAgent Name: " + dqAgent.name);
+                log.info("New DQAgent Name: " + bestDQAgent.name);
                 if (Configuration.RUN_ONE_ITERATION)
                     break;
 
-                currentCase.addP1Strats(dqAgent).addP2Strats(dqAgent);
-                lastRLAgent = dqAgent;
+                currentCase.addP1Strats(bestDQAgent).addP2Strats(bestDQAgent);
+                lastRLAgent = bestDQAgent;
 
                 // Check if we have too many DQAgents, if so, add an agent from the literature
                 int dqAgentCount = 0;
