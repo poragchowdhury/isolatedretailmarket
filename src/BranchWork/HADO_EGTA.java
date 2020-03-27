@@ -66,26 +66,16 @@ public class HADO_EGTA {
         long startTime = System.currentTimeMillis();
         CaseStudy currentCase = initializeStrategySets();
 
-        int iterations = 0;
+        int t = 0;
         while (true) {
-            iterations++;
-            log.info("****** Iteration: " + iterations + " *****");
+            t++;
+            log.info("****** Iteration: " + t + " *****");
 
             // ************** Check if we need to remove strategies from last round
-            if (!strategiesToRemove.isEmpty()) {
-                for (Agent stratToRemove : strategiesToRemove) {
-                    log.info("Removing " + stratToRemove + " as determined by the last iteration");
-                    currentCase.pool1.remove(stratToRemove);
-                    currentCase.pool2.remove(stratToRemove);
-                }
-                strategiesToRemove.clear();
-            }
+            removeStrategies(strategiesToRemove, currentCase);
 
             // ************** Simulate Payoffs
-            log.info("Pool1 Agents: " + currentCase.pool1.toString());
-            log.info("Pool2 Agents: " + currentCase.pool2.toString());
-            log.info("Starting game round");
-            rm.startSimulation(currentCase);
+            simulatePayoffs(currentCase);
 
             // ************** Find Nash Equilibrium
             log.info("Getting nash equilibrium strategies");
@@ -94,20 +84,7 @@ public class HADO_EGTA {
             List<double[]> nashEqMixed = Gambit.getMixedStrategies(nashEqInitial);
 
             // ************** Strategies with zeros on columns from both pools will be removed in the next iteration
-            for (int col = 0; col < nashEqInitial.get(0).length; col++) {
-                boolean allZero = true;
-                for (double[] nashEq : nashEqInitial) {
-                    double currNumber = nashEq[col];
-                    if (currNumber != 0.0)
-                        allZero = false;
-                }
-
-                if (allZero) {
-                    Agent agentToRemove = currentCase.pool1.get(col);
-                    log.info(agentToRemove + " will be removed next iteration from the pools");
-                    strategiesToRemove.add(agentToRemove);
-                }
-            }
+            findStrategiesToRemove(strategiesToRemove, currentCase, nashEqInitial);
 
             // ************** Select the strategy for SMNE (either mixed or pure)
             double[] smneProbs;
@@ -134,42 +111,76 @@ public class HADO_EGTA {
                 smneProbs = nashEqPure.get(0);
                 log.info("SMNE is picking a pure strategy, specifically, the first one.");
             }
+            // ************************************************************************************
             // ************** (Pre-Train) Learn best response against SMNE using DeepQ Agent
-            SMNE smne = new SMNE();
+            // ************************************************************************************
+            // Sigma: σ (SMNEs)
+            // Delta: δ (DQAgents)
+            // For time t = current iteration
+            SMNE sigma_0 = new SMNE();
             for (int idx = 0; idx < currentCase.pool1.size(); idx++) {
                 double prob = smneProbs[idx];
                 Agent strat = currentCase.pool1.get(idx);
-                smne.addStrategy(prob, strat);
+                sigma_0.addStrategy(prob, strat);
             }
-            log.info("SMNE: " + smne.name);
+            log.info("SMNE: " + sigma_0.name);
 
-            List<Agent> opponentPool = new ArrayList<>();
-            opponentPool.add(smne);
-            String dqFilename = Configuration.DQ_TRAINING + "_" + smne.name + ".pol";
-            DQAgentMDP.trainDQAgent(opponentPool, dqFilename, null);
-
-            log.info("Training DQ Agent");
-            DQAgent dqAgent = new DQAgent(dqFilename);
-
+            // ************************************************************************************
             // ************** (Fine-Tune)
+            // ************************************************************************************
+            List<DQAgent> deltas = new ArrayList<>();
+
+            // ** Prepare delta0_t (Pre-Trained against current equilibrium SMNE)
+            DQAgent delta_0 = DQAgentMDP.trainDQAgentNoSaving(null, sigma_0);
+            deltas.add(delta_0);
+
+            // ** Prepare σ-bar (Using gamma)
+            SMNE sigma_bar = new SMNE();
+
+            for (int psi = 0; psi < (t - 1); psi++) {
+                SMNE sigma_psi = smneList.get(psi);
+                double g = Math.pow(gamma, t - 1 - psi);
+                sigma_bar.addStrategy(g, sigma_psi);
+            }
+
+            DQAgent delta_kminus1 = delta_0;
+            for (int z = 0; z < K; z++) {
+                // Pre-Train with delta(k-1, t)
+                DQAgent delta_k = DQAgentMDP.trainDQAgentNoSaving(delta_kminus1, sigma_bar);
+                deltas.add(delta_k);
+                delta_kminus1 = delta_k;
+            }
+
+            // Pick best DQAgent out of the deltas
+            DQAgent dqAgent = null;
+            double argmaxUtility = Double.MIN_VALUE;
+            for (DQAgent dq : deltas) {
+                // Play against current equilibrium to find utility
+                rm.startSimulation(new CaseStudy().addP1Strats(dq).addP2Strats(sigma_0));
+                double uSigma0 = dq.profit;
+
+                // Play against sigma-bar?
+                rm.startSimulation(new CaseStudy().addP1Strats(dq).addP2Strats(sigma_bar));
+                double uSigmaBar = dq.profit;
+
+                // Compute utility using formula in algorithm 6
+                double utility = (alpha * uSigma0) + ((1 - alpha) * uSigmaBar);
+
+                // arg-max logic
+                if (utility > argmaxUtility) {
+                    argmaxUtility = utility;
+                    dqAgent = dq;
+                }
+            }
+
+            // Add SMNE to list of previous for future use
+            smneList.add(sigma_0);
 
             // ************** Run test games of SMNE vs RL
-            log.info("Running SMNE vs DQAgent");
-            CaseStudy testGame = new CaseStudy().addP1Strats(smne).addP2Strats(dqAgent);
-            rm.startSimulation(testGame);
+            evaluateDQAgent(sigma_0, dqAgent);
 
             // ************** Does RL have a higher payoff than SMNE?
-            log.info("SMNE Profit: " + smne.profit + ", DQAgent profit: " + dqAgent.profit);
-            log.info("DQ0 [0] Act " + dqAgent.actHistory[0] + " Action: " + dqAgent.getAllHistoryActions());
-            log.info("Opp [0] Act " + smne.actHistory[0] + " Action: " + smne.getAllHistoryActions());
-            log.info("DQ0 [0] Trf " + dqAgent.tariffHistory[0] + " TrfHis: " + dqAgent.getHistoryByPubCyc(dqAgent.tariffHistory));
-            log.info("Opp [0] Trf " + smne.tariffHistory[0] + " TrfHis: " + smne.getHistoryByPubCyc(smne.tariffHistory));
-            log.info("DQ0 [0] Mkt " + dqAgent.marketShareHistory[0] + " MktHis: " + dqAgent.getHistoryByPubCyc(dqAgent.marketShareHistory));
-            log.info("Opp [0] Mkt " + smne.marketShareHistory[0] + " MktHis: " + smne.getHistoryByPubCyc(smne.marketShareHistory));
-            log.info("DQ0 [0] Prf " + dqAgent.profitHistory[0] + " PftHis: " + dqAgent.getHistoryByPubCyc(dqAgent.profitHistory));
-            log.info("Opp [0] Prf " + smne.profitHistory[0] + " PftHis: " + smne.getHistoryByPubCyc(smne.profitHistory));
-
-            if (dqAgent.profit > smne.profit) {
+            if (dqAgent.profit > sigma_0.profit) {
                 log.info("DQAgent profit > SMNE profit, adding DQAgent to the pool");
                 log.info("New DQAgent Name: " + dqAgent.name);
                 if (Configuration.RUN_ONE_ITERATION)
@@ -208,6 +219,57 @@ public class HADO_EGTA {
         long durationMillis = endTime - startTime;
         double durationSec = durationMillis / 1000;
         log.info(String.format("Finished! Took %.2f ", durationSec));
+    }
+
+    private static void evaluateDQAgent(SMNE sigma_0, DQAgent dqAgent) {
+        log.info("Running SMNE vs DQAgent");
+        CaseStudy testGame = new CaseStudy().addP1Strats(sigma_0).addP2Strats(dqAgent);
+        rm.startSimulation(testGame);
+
+        log.info("SMNE Profit: " + sigma_0.profit + ", DQAgent profit: " + dqAgent.profit);
+        log.info("DQ0 [0] Act " + dqAgent.actHistory[0] + " Action: " + dqAgent.getAllHistoryActions());
+        log.info("Opp [0] Act " + sigma_0.actHistory[0] + " Action: " + sigma_0.getAllHistoryActions());
+        log.info("DQ0 [0] Trf " + dqAgent.tariffHistory[0] + " TrfHis: " + dqAgent.getHistoryByPubCyc(dqAgent.tariffHistory));
+        log.info("Opp [0] Trf " + sigma_0.tariffHistory[0] + " TrfHis: " + sigma_0.getHistoryByPubCyc(sigma_0.tariffHistory));
+        log.info("DQ0 [0] Mkt " + dqAgent.marketShareHistory[0] + " MktHis: " + dqAgent.getHistoryByPubCyc(dqAgent.marketShareHistory));
+        log.info("Opp [0] Mkt " + sigma_0.marketShareHistory[0] + " MktHis: " + sigma_0.getHistoryByPubCyc(sigma_0.marketShareHistory));
+        log.info("DQ0 [0] Prf " + dqAgent.profitHistory[0] + " PftHis: " + dqAgent.getHistoryByPubCyc(dqAgent.profitHistory));
+        log.info("Opp [0] Prf " + sigma_0.profitHistory[0] + " PftHis: " + sigma_0.getHistoryByPubCyc(sigma_0.profitHistory));
+    }
+
+    private static void findStrategiesToRemove(List<Agent> strategiesToRemove, CaseStudy currentCase, List<double[]> nashEqInitial) {
+        for (int col = 0; col < nashEqInitial.get(0).length; col++) {
+            boolean allZero = true;
+            for (double[] nashEq : nashEqInitial) {
+                double currNumber = nashEq[col];
+                if (currNumber != 0.0)
+                    allZero = false;
+            }
+
+            if (allZero) {
+                Agent agentToRemove = currentCase.pool1.get(col);
+                log.info(agentToRemove + " will be removed next iteration from the pools");
+                strategiesToRemove.add(agentToRemove);
+            }
+        }
+    }
+
+    private static void simulatePayoffs(CaseStudy currentCase) {
+        log.info("Pool1 Agents: " + currentCase.pool1.toString());
+        log.info("Pool2 Agents: " + currentCase.pool2.toString());
+        log.info("Starting game round");
+        rm.startSimulation(currentCase);
+    }
+
+    private static void removeStrategies(List<Agent> strategiesToRemove, CaseStudy currentCase) {
+        if (!strategiesToRemove.isEmpty()) {
+            for (Agent stratToRemove : strategiesToRemove) {
+                log.info("Removing " + stratToRemove + " as determined by the last iteration");
+                currentCase.pool1.remove(stratToRemove);
+                currentCase.pool2.remove(stratToRemove);
+            }
+            strategiesToRemove.clear();
+        }
     }
 
     public static Stack<Agent> getLiteratureStrategies() {
