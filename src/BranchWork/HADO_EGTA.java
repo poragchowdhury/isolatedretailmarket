@@ -53,9 +53,10 @@ public class HADO_EGTA {
     public static void main(String[] args) throws Exception {
         // Preparation
         String dateString = DATE_FORMAT.format(new Date());
+        setupLogging("hado_egta_" + dateString + ".log");
+
         log.info("Beginning experiment on " + dateString);
         log.info(Configuration.toStringRepresentation());
-        setupLogging("hado_egta_" + dateString + ".log");
 
         Stack<Agent> litStrategies = getLiteratureStrategies();
         List<Agent> strategiesToRemove = new ArrayList<>();
@@ -131,7 +132,7 @@ public class HADO_EGTA {
                     }
                 }
                 smneProbs = nashEqPure.get(0);
-                log.info("SMNE is picking a pure strategy, specifically, the first one");
+                log.info("SMNE is picking a pure strategy, specifically, the first one.");
             }
             // ************** (Pre-Train) Learn best response against SMNE using DeepQ Agent
             SMNE smne = new SMNE();
@@ -140,6 +141,7 @@ public class HADO_EGTA {
                 Agent strat = currentCase.pool1.get(idx);
                 smne.addStrategy(prob, strat);
             }
+            log.info("SMNE: " + smne.name);
 
             List<Agent> opponentPool = new ArrayList<>();
             opponentPool.add(smne);
@@ -158,6 +160,15 @@ public class HADO_EGTA {
 
             // ************** Does RL have a higher payoff than SMNE?
             log.info("SMNE Profit: " + smne.profit + ", DQAgent profit: " + dqAgent.profit);
+            log.info("DQ0 [0] Act " + dqAgent.actHistory[0] + " Action: " + dqAgent.getAllHistoryActions());
+            log.info("Opp [0] Act " + smne.actHistory[0] + " Action: " + smne.getAllHistoryActions());
+            log.info("DQ0 [0] Trf " + dqAgent.tariffHistory[0] + " TrfHis: " + dqAgent.getHistoryByPubCyc(dqAgent.tariffHistory));
+            log.info("Opp [0] Trf " + smne.tariffHistory[0] + " TrfHis: " + smne.getHistoryByPubCyc(smne.tariffHistory));
+            log.info("DQ0 [0] Mkt " + dqAgent.marketShareHistory[0] + " MktHis: " + dqAgent.getHistoryByPubCyc(dqAgent.marketShareHistory));
+            log.info("Opp [0] Mkt " + smne.marketShareHistory[0] + " MktHis: " + smne.getHistoryByPubCyc(smne.marketShareHistory));
+            log.info("DQ0 [0] Prf " + dqAgent.profitHistory[0] + " PftHis: " + dqAgent.getHistoryByPubCyc(dqAgent.profitHistory));
+            log.info("Opp [0] Prf " + smne.profitHistory[0] + " PftHis: " + smne.getHistoryByPubCyc(smne.profitHistory));
+
             if (dqAgent.profit > smne.profit) {
                 log.info("DQAgent profit > SMNE profit, adding DQAgent to the pool");
                 log.info("New DQAgent Name: " + dqAgent.name);
@@ -225,8 +236,8 @@ public class HADO_EGTA {
 
     private static CaseStudy initializeStrategySets() {
         CaseStudy cs = new CaseStudy();
-        cs.addP1Strats();
-        cs.addP2Strats();
+        cs.addP1Strats(new AlwaysDefect(), new AlwaysIncrease());
+        cs.addP2Strats(new AlwaysDefect(), new AlwaysIncrease());
 
         return cs;
     }
@@ -236,6 +247,9 @@ public class HADO_EGTA {
      * in all other columns)
      */
     public static boolean isRLPureStrat(CaseStudy cs, List<double[]> pureStrats) {
+        if (lastRLAgent == null)
+            return false;
+
         int lastRLIndex = cs.pool1.indexOf(lastRLAgent);
         for (double[] pureStrat : pureStrats) {
             if (pureStrat[lastRLIndex] == 1.0d) {
