@@ -66,7 +66,7 @@ public class HADO_EGTA {
         long startTime = System.currentTimeMillis();
         CaseStudy currentCase = initializeStrategySets();
 
-        int t = 0;
+        int t = -1;
         while (true) {
             t++;
             log.info("****** Iteration: " + t + " *****");
