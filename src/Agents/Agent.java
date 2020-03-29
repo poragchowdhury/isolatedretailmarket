@@ -18,7 +18,7 @@ public abstract class Agent implements Cloneable {
 	public double cost;
 	public double profit;
 	public double profitErr;
-
+	public boolean hitLow = false;
 	public double tariffUtility;
 	public TariffAction previousAction;
 	public TariffAction rivalPreviousAction;
@@ -134,7 +134,7 @@ public abstract class Agent implements Cloneable {
 		booDefect = false;
 		pr = 1;
 		prI = 1;
-
+		hitLow = false;
 		Arrays.fill(costHistory, 0.0);
 		Arrays.fill(profitHistory, 0.0);
 		Arrays.fill(unitCostHistory, 0.0);

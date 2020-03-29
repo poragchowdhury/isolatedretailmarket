@@ -15,6 +15,10 @@ public class Prober extends Agent {
         super("Pbr", 9);
     }
 
+    
+    /*
+     * Includes D2 action
+     */ 
     @Override
     public TariffAction makeAction(Observer ob) {
     	Random rand = new Random();

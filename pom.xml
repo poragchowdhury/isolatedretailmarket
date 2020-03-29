@@ -24,8 +24,7 @@
     	<mainClass>RetailMarketManager.RetailMarketManager</mainClass>
   		</configuration>
 	  </plugin>
-      
-      
+	  
     </plugins>
   </build>
   

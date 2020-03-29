@@ -18,9 +18,9 @@ public enum TariffAction {
             return TariffAction.D1;
         else if (value == D2.index)
             return TariffAction.D2;
-        else if (value == I1.index)
-            return TariffAction.I1;
+        else if (value == I2.index)
+           return TariffAction.I2;
         else
-            return TariffAction.I2;
+            return TariffAction.I1;
     }
 }

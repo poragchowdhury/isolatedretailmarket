@@ -19,6 +19,9 @@ public class TitForTat extends Agent {
         this.numTatsPerTit = numTatsPerTit;
     }
 
+   
+    /*
+     * Inlcuding D2, I2 actions */
     @Override
     public TariffAction makeAction(Observer ob) {
     	// Coop in the first move

@@ -48,8 +48,8 @@ public class RegretCalculator {
 		    // load the values from the file
 		    while (line != null) {
 		    	String [] values = line.split(",");
-		    	for(int col = 0, item = 0; col < n; col++) {
-		    		payoffs[row][col] = Double.parseDouble(values[++item]);
+		    	for(int col = 0, item = 1; col < NUM_CANDIDATE_STRATEGY; col++) {
+		    		payoffs[row][col] = Double.parseDouble(values[item++]);
 		    		regretTable[row][col] = payoffs[row][col];
 		    	}
 		    	line = br.readLine();

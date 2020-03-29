@@ -1,0 +1,6 @@
+		0: ['NvPbr', 'AlD'], 
+		1: ['AlI', 'NvI'], 
+		2: ['GD', '1TF2T', '1TF1T', '2TF1T', 'Grim'], 
+		3: ['HardMJ'], 
+		4: ['ZI', 'ZIP', 'SoftMJ', 'Pavlov', 'AlS'], 
+		5: ['Pbr']} 

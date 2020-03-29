@@ -8,6 +8,10 @@ public class SoftMajority extends Agent {
         super("SoftMJ", 11);
     }
 
+
+    
+    /*
+     * Including D2, I2 actions */
     @Override
     public TariffAction makeAction(Observer ob) {
         if ((rivalActHistory[ob.timeslot-1] == TariffAction.D1.index) || 

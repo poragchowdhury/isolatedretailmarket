@@ -24,7 +24,6 @@ import org.nd4j.autodiff.samediff.transform.OpPredicate;
 
 import Agents.Agent;
 import Agents.AlwaysDefect;
-import Agents.AlwaysDefect2;
 import Agents.AlwaysIncrease;
 import Agents.AlwaysSame;
 import Agents.DQAgent;
@@ -657,9 +656,9 @@ public class RetailMarketManager {
 
 			// ************** Print the round robin results
 			if (roundrobin) {
+				logGameMatrix(currentCase);
 				printClusterValues(currentCase, true);
 				printGameMatrix(currentCase, true);
-				logGameMatrix(currentCase);
 				break;
 			}
 
@@ -805,59 +804,53 @@ public class RetailMarketManager {
 
 	public CaseStudy setupRoundRobin() {
 		log.info("=== Setting up initial pools ===");
-		/*
-		ArrayList<Agent> literatureStrategies = new ArrayList<>();
-		TitForTat TFT = new TitForTat(1, 1);
-		TitForTat TF2T = new TitForTat(1, 2);
-		TitForTat _2TFT = new TitForTat(2, 1);
-		literatureStrategies.add(new DQAgent("DQ11", "DQ11_1.00DQ10.pol"));
-//		literatureStrategies.add(new DQAgent("BR_TFT", "BR_TFT.pol"));
-		literatureStrategies.add(new HardMajority());
-		literatureStrategies.add(_2TFT);
-		literatureStrategies.add(TFT);
-		literatureStrategies.add(TF2T);
-		literatureStrategies.add(new ZI());
-		literatureStrategies.add(new Grim());
-		literatureStrategies.add(new SoftMajority());
-		literatureStrategies.add(new AlwaysSame());
-		literatureStrategies.add(new Pavlov());
-		literatureStrategies.add(new Prober());
-		literatureStrategies.add(new NaiveProber());
-		literatureStrategies.add(new AlwaysIncrease());
-		literatureStrategies.add(new AlwaysDefect());
-		literatureStrategies.add(new ZIP());
-		literatureStrategies.add(new GD());
-
-		ArrayList<Agent> literatureStrategiesClone = new ArrayList<>();//(ArrayList<Agent>) literatureStrategies.clone();
-		for(Agent a : literatureStrategies)
-			literatureStrategiesClone.add(a.clone());
-		
-		CaseStudy initial = new CaseStudy();
-		initial.pool1.addAll(literatureStrategies);
-		initial.pool2.addAll(literatureStrategiesClone);
-		*/
-		//new DQAgent("DQ11", "DQ11_1.00DQ10.pol"),
-		
+				
 		/*
 		 * Roundrobin strategies: The order of the agent is important here
 		 * */
-		CaseStudy initial = new CaseStudy().addP1Strats(new ZI(),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame(), new NaiveIncrease());
-									initial.addP2Strats(new ZI(),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame(), new NaiveIncrease());
+		//CaseStudy initial = new CaseStudy().addP1Strats(new ZI(),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame(), new NaiveIncrease());
+		//							initial.addP2Strats(new ZI(),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame(), new NaiveIncrease());
 		
 		/*
 		 * Running one single strategy to generate payoffs for the regret table 
 		 * */
-//		CaseStudy initial = new CaseStudy().addP1Strats(new GD());
-//									initial.addP2Strats(new GD(), new ZI(),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame(), new NaiveIncrease());
+		CaseStudy initial = new CaseStudy().addP1Strats(new DQAgent("D12","temp11_1.00D11.pol"));
+									initial.addP2Strats(new DQAgent("D12","temp11_1.00D11.pol"), new ZI(),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame(), new NaiveIncrease());
 		return initial;
 	}
 
 	public CaseStudy setupInitialStrategies() {
-		//new DQAgent("DQ0", "DQ0_1.00AlD.pol"), new DQAgent("R.DQ0", "BR_TFT.pol"),
-		// new Prober(), new NaiveProber(), new AlwaysDefect(), 
-		CaseStudy initial = new CaseStudy().addP1Strats(new DQAgent("DQ11", "DQ11_1.00DQ10.pol"),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame(), new ZI());// new DQAgent("DQ0", "DQ0_1.00AlD.pol"), new DQAgent("DQ3", "DQ3_1.00DQ2.pol"), new DQAgent("DQ4", "DQ4_1.00DQ3.pol"));
-									initial.addP2Strats(new DQAgent("DQ11", "DQ11_1.00DQ10.pol"),  new ZIP(), new GD(), new TitForTat(1, 2), new TitForTat(1, 1), new TitForTat(2, 1), new SoftMajority(), new Grim(), new Pavlov(), new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect(),new AlwaysIncrease(), new AlwaysSame(), new ZI());// new DQAgent("DQ0", "DQ0_1.00AlD.pol"), new DQAgent("DQ3", "DQ3_1.00DQ2.pol"), new DQAgent("DQ4", "DQ4_1.00DQ3.pol"));     
-		Configuration.DQ_TRAINING = "R.DQ1";
+		
+		/* CDO-EGTA 6 Groups
+		0: ['NvPbr', 'AlD'], 
+		1: ['AlI', 'NvI'], 
+		2: ['GD', '1TF2T', '1TF1T', '2TF1T', 'Grim'], 
+		3: ['HardMJ'], 
+		4: ['ZI', 'ZIP', 'SoftMJ', 'Pavlov', 'AlS'], 
+		5: ['Pbr']} 
+		 * */
+		
+		
+		/* CDO-EGTA 4 Groups
+		0: ['NvPbr', 'AlD', 'HardMJ', 'Pbr'], 
+		1: ['AlI', 'NvI'], 
+		2: ['GD', '1TF2T', '1TF1T', '2TF1T', 'Grim'], 
+		3: ['ZI', 'ZIP', 'SoftMJ', 'Pavlov', 'AlS'], 
+		
+		 * */
+		
+		// DO-EGTA
+		// 1st sub game
+		//, new DQAgent("DQ4","temp_0.43DQ3,0.24DQ2,0.32NvPbr.pol"), new DQAgent("DQ3", "DQ3_1.00DQ2.pol"), new DQAgent("DQ2", "DQ2_1.00DQ1.pol"), new DQAgent("DQ1", "DQ1_1.00DQ0.pol"), new AlwaysIncrease(), new DQAgent("DQ0", "DQ0_1.00AlD.pol"), new AlwaysDefect(),new NaiveProber(), new Prober()
+		// new DQAgent("D10","temp9_1.00DQ9.pol"), new DQAgent("DQ9","temp8_0.10D8,0.36D7,0.13D6,0.201TF1T,0.21ZIP.pol"), new DQAgent("D8","temp3_0.00D7,0.411TF2T,0.58ZIP.pol"), new DQAgent("D7", "temp3_1.00D6.pol"), new DQAgent("D6", "temp2_0.55DQ5,0.451TF1T.pol"), 
+		CaseStudy initial = new CaseStudy().addP1Strats(new DQAgent("D14","temp14_0.28D13,0.24D12,0.48D11.pol"), new DQAgent("D13","temp13_0.70D12,0.30DQ5.pol"), new DQAgent("D12","temp11_1.00D11.pol"), new DQAgent("D11","temp10_0.78D10,0.22D7.pol"), new DQAgent("DQ9","temp8_0.10D8,0.36D7,0.13D6,0.201TF1T,0.21ZIP.pol"), new DQAgent("D8","temp3_0.00D7,0.411TF2T,0.58ZIP.pol"),new DQAgent("DQ5", "temp1_1.00DQ4.pol"), new TitForTat(1, 1), new TitForTat(2, 1), new ZIP());
+									initial.addP2Strats(new DQAgent("D14","temp14_0.28D13,0.24D12,0.48D11.pol"), new DQAgent("D13","temp13_0.70D12,0.30DQ5.pol"), new DQAgent("D12","temp11_1.00D11.pol"), new DQAgent("D11","temp10_0.78D10,0.22D7.pol"), new DQAgent("DQ9","temp8_0.10D8,0.36D7,0.13D6,0.201TF1T,0.21ZIP.pol"), new DQAgent("D8","temp3_0.00D7,0.411TF2T,0.58ZIP.pol"),new DQAgent("DQ5", "temp1_1.00DQ4.pol"), new TitForTat(1, 1), new TitForTat(2, 1), new ZIP());     
+		
+		//CaseStudy initial = new CaseStudy().addP1Strats(new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect());
+		//							initial.addP2Strats(new HardMajority(), new Prober(), new NaiveProber(), new AlwaysDefect());     
+				
+		//Configuration.DQ_TRAINING = "BR_G0_5acts_4Clst_I0";
+		Configuration.DQ_TRAINING = "temp15";									
 		log.info("Pool1: " + initial.pool1.toString());
 		log.info("Pool2: " + initial.pool2.toString());
 		return initial;
@@ -1174,13 +1167,13 @@ public class RetailMarketManager {
 //		SMNE smne = new SMNE();
 //		smne.addStrategy(1.0, new HardMajority());
 //		smne.addStrategy(0.0, new AlwaysSame());
-		Agent opponentAgent = new AlwaysSame();
+		Agent opponentAgent = new AlwaysIncrease();
 		List<Agent> oppPool = new ArrayList<>();
 		oppPool.add(opponentAgent);
-
-		String policyToLearn = "dq_selfplay_10_iterations.pol";
-		//DQAgentMDP.trainDQAgent(oppPool, policyToLearn, null);
-		DQAgent dqAgent = new DQAgent("DQ", policyToLearn);  // new DQAgent("DQ0", "DQ0_1Day__1.00Prober.pol");//
+		
+		String policyToLearn = "temp10_0.78D10,0.22D7.pol";
+//		DQAgentMDP.trainDQAgent(oppPool, policyToLearn, null);
+		DQAgent dqAgent = new DQAgent("Selfplay", policyToLearn);  // new DQAgent("DQ0", "DQ0_1Day__1.00Prober.pol");//
 
 		rm.startSimulation(new CaseStudy()
 				.addP1Strats(opponentAgent)
@@ -1230,12 +1223,12 @@ public class RetailMarketManager {
 		 * hyperparameters
 		 */
 		//sandboxExperiment();
-		roundRobinExperiment();
+		//roundRobinExperiment();
 		/*
 		 * The Main Experiment runs the flowchart specified by Porag Basically, the SMNE
 		 * vs DQAgent stuff with Gambit and such
 		 */
-		//mainExperiment();
+		mainExperiment();
 	}
 
 }

@@ -9,6 +9,10 @@ public class HardMajority extends Agent {
         super("HardMJ", 6);
     }
 
+    
+    /*
+     * Including D2 , I2 actions
+     */
     @Override
     public TariffAction makeAction(Observer ob) {
     	
@@ -31,4 +35,5 @@ public class HardMajority extends Agent {
         return TariffAction.NC;
 
     }
+    
 }
