@@ -6,6 +6,7 @@ log/*
 *.arff
 *.csv
 *.log
+*.lck
 *.others
 *.xlsx
 /target/

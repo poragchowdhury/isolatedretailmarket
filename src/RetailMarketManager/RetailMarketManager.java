@@ -7,105 +7,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Stack;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 import org.deeplearning4j.rl4j.policy.DQNPolicy;
 import org.deeplearning4j.rl4j.policy.Policy;
 import org.nd4j.autodiff.samediff.transform.OpPredicate;
 
-import Agents.Agent;
-import Agents.AlwaysDefect;
-import Agents.AlwaysIncrease;
-import Agents.AlwaysSame;
-import Agents.DQAgent;
-import Agents.DQAgentMDP;
-import Agents.DQAgentState;
-import Agents.GD;
-import Agents.Grim;
-import Agents.HardMajority;
-import Agents.NaiveIncrease;
-import Agents.NaiveProber;
-import Agents.Pavlov;
-import Agents.Prober;
-import Agents.ZI;
-import Agents.ZIP;
-import Agents.SMNE;
-import Agents.SoftMajority;
-import Agents.TitForTat;
+import Agents.*;
+import BranchWork.AgentComparators;
+import BranchWork.Gambit;
+import BranchWork.Utilities;
 import Configuration.CaseStudy;
 import Configuration.Configuration;
 import Observer.Observer;
-import Tariff.TariffAction;
 
-class AgentCompareByWins implements Comparator {
-	@Override
-	public int compare(Object a, Object b) {
-		// TODO Auto-generated method stub
-		Agent a0 = (Agent) a;
-		Agent a1 = (Agent) b;
-		if(a0.wins < a1.wins)
-			return -1;
-		else if(a0.wins > a1.wins)
-			return 1;
-		else
-			return 0;
-	}
-}
-
-
-class AgentCompareByProfit implements Comparator {
-	@Override
-	public int compare(Object a, Object b) {
-		// TODO Auto-generated method stub
-		Agent a0 = (Agent) a;
-		Agent a1 = (Agent) b;
-		if(a0.profit < a1.profit)
-			return -1;
-		else if(a0.profit > a1.profit)
-			return 1;
-		else
-			return 0;
-	}
-}
-
-class AgentCompareByBestResponse implements Comparator {
-	@Override
-	public int compare(Object a, Object b) {
-		// TODO Auto-generated method stub
-		Agent a0 = (Agent) a;
-		Agent a1 = (Agent) b;
-		if(a0.bestResponseCount < a1.bestResponseCount)
-			return -1;
-		else if(a0.bestResponseCount > a1.bestResponseCount)
-			return 1;
-		else
-			return 0;
-	}
-}
-
-class Payoffs {
-	public double value1;
-	public double value2;
-
-	public Payoffs(double val1, double val2) {
-		value1 = val1;
-		value2 = val2;
-	}
-
-	@Override
-	public String toString() {
-		return String.format("[%.3f, %.3f]", value1, value2);
-	}
-}
+import java.io.IOException;
+import java.util.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class RetailMarketManager {
 	public Observer ob;
@@ -374,19 +293,19 @@ public class RetailMarketManager {
 		log.info(String.format("%s", cs.pool1.get(minimaxRegretStrategy).name));
 		
 		log.info("****************Sorted by norm profit**********************");
-		Collections.sort(cs.pool1, new AgentCompareByProfit());
+		Collections.sort(cs.pool1, new AgentComparators.CompareByProfit());
 		log.info(String.format("Broker,normpayoff,normpayoff.err,bestresponse,bestresponse.err,wins"));
 		for (Agent a : cs.pool1)
 			log.info(String.format("%s,%.3f,%.3f,%.3f,%.3f,%.3f", a.name, a.profit, a.profitErr, a.bestResponseCount, a.bestResponseCountErr, a.wins));
 		
 		log.info("**********************Sorted by best response**********************");
-		Collections.sort(cs.pool1, new AgentCompareByBestResponse());
+		Collections.sort(cs.pool1, new AgentComparators.CompareByBestResponse());
 		log.info(String.format("Broker,normpayoff,normpayoff.err,bestresponse,bestresponse.err,wins"));
 		for (Agent a : cs.pool1)
 			log.info(String.format("%s,%.3f,%.3f,%.3f,%.3f,%.3f", a.name, a.profit, a.profitErr, a.bestResponseCount, a.bestResponseCountErr, a.wins));
 
 		log.info("****************Sorted by norm wins**********************");
-		Collections.sort(cs.pool1, new AgentCompareByWins());
+		Collections.sort(cs.pool1, new AgentComparators.CompareByWins());
 		log.info(String.format("Broker,normpayoff,normpayoff.err,bestresponse,bestresponse.err,wins"));
 		for (Agent a : cs.pool1)
 			log.info(String.format("%s,%.3f,%.3f,%.3f,%.3f,%.3f", a.name, a.profit, a.profitErr, a.bestResponseCount, a.bestResponseCountErr, a.wins));
@@ -617,7 +536,7 @@ public class RetailMarketManager {
 		return minimaxRegretStrategy;
 	}
 
-	public void startExperiment(boolean roundrobin, String polToLearnFrom) throws IOException {
+	public void startExperiment(boolean roundrobin, String polToLearnFrom) throws Exception {
 		setupLogging();
 		Scanner input = new Scanner(System.in);
 		log.info("*************** Experimental Run Log ***************");
@@ -664,9 +583,10 @@ public class RetailMarketManager {
 
 			// ************** Compute nash equilibrium strategies
 			log.info("Getting nash equilibrium strategies");
-			List<double[]> nashEqInitial = computeNashEq(currentCase);
-			List<double[]> nashEqPure = getPureStrategies(nashEqInitial);
-			List<double[]> nashEqMixed = getMixedStrategies(nashEqInitial);
+			List<double[]> nashEqInitial = Gambit.getNashEqStrategies(this, currentCase);
+            List<double[]> nashEqPure = Gambit.getPureStrategies(nashEqInitial);
+            List<double[]> nashEqMixed = Gambit.getMixedStrategies(nashEqInitial);
+
 
 			// ************** Strategies with zeros on columns from both pools will be
 			// removed in the next iteration
@@ -856,309 +776,161 @@ public class RetailMarketManager {
 		return initial;
 	}
 
-	public Stack<Agent> getLiteratureStrategies() {
-		Stack<Agent> literatureStrategies = new Stack<>();
-		TitForTat TFT = new TitForTat(1, 1);
-		TitForTat TF2T = new TitForTat(1, 2);
-		TitForTat _2TFT = new TitForTat(2, 1);
+    public Stack<Agent> getLiteratureStrategies() {
+        Stack<Agent> literatureStrategies = new Stack<>();
+        TitForTat TFT = new TitForTat(1, 1);
+        TitForTat TF2T = new TitForTat(1, 2);
+        TitForTat _2TFT = new TitForTat(2, 1);
 
-		literatureStrategies.add(TF2T);
-		literatureStrategies.add(_2TFT);
-		literatureStrategies.add(TFT);
-		literatureStrategies.add(new Prober());
-		literatureStrategies.add(new Grim());
-		literatureStrategies.add(new NaiveProber());
-		literatureStrategies.add(new HardMajority());
-		literatureStrategies.add(new Pavlov());
-		literatureStrategies.add(new AlwaysSame());
-		literatureStrategies.add(new SoftMajority());
-		literatureStrategies.add(new ZI());
-		literatureStrategies.add(new AlwaysIncrease());
-		literatureStrategies.add(new ZIP());
-		literatureStrategies.add(new GD());
+        literatureStrategies.add(TF2T);
+        literatureStrategies.add(_2TFT);
+        literatureStrategies.add(TFT);
+        literatureStrategies.add(new Prober());
+        literatureStrategies.add(new Grim());
+        literatureStrategies.add(new NaiveProber());
+        literatureStrategies.add(new HardMajority());
+        literatureStrategies.add(new Pavlov());
+        literatureStrategies.add(new AlwaysSame());
+        literatureStrategies.add(new SoftMajority());
+        literatureStrategies.add(new ZI());
+        literatureStrategies.add(new AlwaysIncrease());
+        literatureStrategies.add(new ZIP());
+        literatureStrategies.add(new GD());
 
-		return literatureStrategies;
-	}
+        return literatureStrategies;
+    }
 
-	public void startSimulation(CaseStudy cs) {
-		double rationality[] = { Configuration.RATIONALITY };
-		double inertia[] = { Configuration.INERTIA };
-		double imax = inertia.length;
-		double rmax = rationality.length;
-		double roundmax = Configuration.TEST_ROUNDS;
-		
-		// Round Robin Tournament Set Up
-		for (int iagent = 0; iagent < cs.pool1.size(); iagent++) {
-			for (int kagent = iagent; kagent < cs.pool2.size(); kagent++) {
-				
-				for (int iindex = 0; iindex < imax; iindex++) {
-					for (int rindex = 0; rindex < rmax; rindex++) {
-						for (int round = 0; round < roundmax; round++) {
-							// System.out.println("=== Round " + round);
-							cs.pool1.get(iagent).reset();
-							cs.pool2.get(kagent).reset();
+    public void startSimulation(CaseStudy cs) {
+        double rationality[] = {Configuration.RATIONALITY};
+        double inertia[] = {Configuration.INERTIA};
+        double imax = inertia.length;
+        double rmax = rationality.length;
+        double roundmax = Configuration.TEST_ROUNDS;
 
-							ob.agentPool.add(cs.pool1.get(iagent));
-							ob.agentPool.add(cs.pool2.get(kagent));
-							
-							cs.pool1.get(iagent).opponentID = cs.pool2.get(kagent).id;
-							cs.pool2.get(kagent).opponentID = cs.pool1.get(iagent).id;
+        // Round Robin Tournament Set Up
+        for (int iagent = 0; iagent < cs.pool1.size(); iagent++) {
+            for (int kagent = iagent; kagent < cs.pool2.size(); kagent++) {
 
-							for (ob.timeslot = 0; ob.timeslot < Configuration.TOTAL_TIME_SLOTS;) {
-								// update agent cost
-								ob.updateAgentUnitCost();
+                for (int iindex = 0; iindex < imax; iindex++) {
+                    for (int rindex = 0; rindex < rmax; rindex++) {
+                        for (int round = 0; round < roundmax; round++) {
+                            // System.out.println("=== Round " + round);
+                            cs.pool1.get(iagent).reset();
+                            cs.pool2.get(kagent).reset();
 
-								// Agents taking Actions
-								// Publish tariff at TS: 1, 7, 13, 19 ... if publication cycle is 6
-								if (ob.timeslot % Configuration.PUBLICATION_CYCLE == 1) {
-									publishTariffs();
-									ob.publication_cycle_count++;
-								}
-								// Customers evaluating tariffs
-								customerTariffEvaluation();
-								// Update agent bank accountings
-								updateAgentAccountings();
-								// Going to next timeslot and updating the cost
-								ob.timeslot++;
-							}
-							// printRevenues() function
-							/* One Simulation Ended */
-							int agentid = 0;
-							for (Agent a : ob.agentPool) {
-								ob.agentPayoffs[agentid][round] = a.profit;
-								ob.agentBestResponse[agentid][round] = a.bestResponseCount;
-								agentid++;
-							}
-							
-							if(ob.agentPayoffs[0][round] > ob.agentPayoffs[1][round])
-								ob.agentWins[0]++;
-							else if(ob.agentPayoffs[0][round] < ob.agentPayoffs[1][round])
-								ob.agentWins[1]++;
-							else {
-								ob.agentWins[0]++;
-								ob.agentWins[1]++;
-							}
-							// clear the observer for another simulation set up
-							// ob.printAgentPath();
-							ob.clear();
-						}
-						// printAverageRevenues() function
+                            ob.agentPool.add(cs.pool1.get(iagent));
+                            ob.agentPool.add(cs.pool2.get(kagent));
 
-						double[] vals = ob.calcAvg(cs, ob.agentPayoffs);
-						log.info(String.format("%s,%.3f,%.3f,%s,%.3f,%.3f", cs.pool1.get(iagent).name, vals[0], vals[2],
-								cs.pool2.get(kagent).name, vals[1], vals[3]));
-						cs.pool1.get(iagent).profit = vals[0];
-						cs.pool2.get(kagent).profit = vals[1];
+                            cs.pool1.get(iagent).opponentID = cs.pool2.get(kagent).id;
+                            cs.pool2.get(kagent).opponentID = cs.pool1.get(iagent).id;
 
-						double[] bestRespVals = ob.calcAvg(cs, ob.agentBestResponse);
-						cs.pool1.get(iagent).bestResponseCount = bestRespVals[0];
-						cs.pool2.get(kagent).bestResponseCount = bestRespVals[1];
+                            for (ob.timeslot = 0; ob.timeslot < Configuration.TOTAL_TIME_SLOTS; ) {
+                                // update agent cost
+                                ob.updateAgentUnitCost();
 
-						if (iagent != kagent) {
-							gameMatrix[iagent][kagent] = new Payoffs(vals[0], vals[1]);
-							gameMatrix[kagent][iagent] = new Payoffs(vals[1], vals[0]);
-							gameMatrixErr[iagent][kagent] = new Payoffs(vals[2], vals[3]);
-							gameMatrixErr[kagent][iagent] = new Payoffs(vals[3], vals[2]);
-							
-							bestRespMatrix[iagent][kagent] = new Payoffs(bestRespVals[0], bestRespVals[1]);
-							bestRespMatrix[kagent][iagent] = new Payoffs(bestRespVals[1], bestRespVals[0]);
-							bestRespMatrixErr[iagent][kagent] = new Payoffs(bestRespVals[2], bestRespVals[3]);
-							bestRespMatrixErr[kagent][iagent] = new Payoffs(bestRespVals[3], bestRespVals[2]);
-							
-							winMatrix[iagent][kagent] = new Payoffs(ob.agentWins[0], ob.agentWins[1]);
-							winMatrix[kagent][iagent] = new Payoffs(ob.agentWins[1], ob.agentWins[0]);
-						} else {
-							double avgVal = (vals[0] + vals[1]) / 2.0;
-							gameMatrix[iagent][kagent] = new Payoffs(avgVal, avgVal);
-							double avgValErr = (vals[2] + vals[3]) / 2.0;
-							gameMatrixErr[iagent][kagent] = new Payoffs(avgValErr, avgValErr);
-							
-							double avgBestRspVal = (bestRespVals[0] + bestRespVals[1]) / 2.0;
-							bestRespMatrix[iagent][kagent] = new Payoffs(avgBestRspVal, avgBestRspVal);
-							double avgBestRspValErr = (bestRespVals[2] + bestRespVals[3]) / 2.0;
-							bestRespMatrixErr[iagent][kagent] = new Payoffs(avgBestRspValErr, avgBestRspValErr);
-							
-							double avgWins = (ob.agentWins[0] + ob.agentWins[1])/2.0;
-							winMatrix[iagent][kagent] = new Payoffs(avgWins, avgWins);
-						}
+                                // Agents taking Actions
+                                // Publish tariff at TS: 1, 7, 13, 19 ... if publication cycle is 6
+                                if (ob.timeslot % Configuration.PUBLICATION_CYCLE == 1) {
+                                    publishTariffs();
+                                    ob.publication_cycle_count++;
+                                }
+                                // Customers evaluating tariffs
+                                customerTariffEvaluation();
+                                // Update agent bank accountings
+                                updateAgentAccountings();
+                                // Going to next timeslot and updating the cost
+                                ob.timeslot++;
+                            }
+                            // printRevenues() function
+                            /* One Simulation Ended */
+                            int agentid = 0;
+                            for (Agent a : ob.agentPool) {
+                                ob.agentPayoffs[agentid][round] = a.profit;
+                                ob.agentBestResponse[agentid][round] = a.bestResponseCount;
+                                agentid++;
+                            }
 
-						if (largestValue < vals[0])
-							largestValue = vals[0];
-						if (largestValue < vals[1])
-							largestValue = vals[1];
-						ob.allsampleclear();
-					}
-				}
-			}
-		}
-	}
+                            if (ob.agentPayoffs[0][round] > ob.agentPayoffs[1][round])
+                                ob.agentWins[0]++;
+                            else if (ob.agentPayoffs[0][round] < ob.agentPayoffs[1][round])
+                                ob.agentWins[1]++;
+                            else {
+                                ob.agentWins[0]++;
+                                ob.agentWins[1]++;
+                            }
+                            // clear the observer for another simulation set up
+                            // ob.printAgentPath();
+                            ob.clear();
+                        }
+                        // printAverageRevenues() function
 
-	public List<double[]> getPureStrategies(List<double[]> nashStrats) {
-		List<double[]> result = new ArrayList<>();
-		for (double[] strat : nashStrats) {
-			boolean isPure = true;
-			// If all the numbers are integers, then it's a pure strategy
-			for (double n : strat) {
-				boolean isInteger = (n % 1 == 0);
-				if (!isInteger) {
-					isPure = false;
-					break;
-				}
-			}
-			if (isPure)
-				result.add(strat);
-		}
-		return result;
-	}
+                        double[] vals = ob.calcAvg(cs, ob.agentPayoffs);
+                        log.info(String.format("%s,%.3f,%.3f,%s,%.3f,%.3f", cs.pool1.get(iagent).name, vals[0], vals[2],
+                                cs.pool2.get(kagent).name, vals[1], vals[3]));
+                        cs.pool1.get(iagent).profit = vals[0];
+                        cs.pool2.get(kagent).profit = vals[1];
 
-	public List<double[]> getMixedStrategies(List<double[]> nashStrats) {
-		List<double[]> result = new ArrayList<>();
-		for (double[] strat : nashStrats) {
-			boolean isPure = true;
-			// If all the numbers are integers, then it's a pure strategy
-			for (double n : strat) {
-				boolean isInteger = (n % 1 == 0);
-				if (!isInteger) {
-					isPure = false;
-					break;
-				}
-			}
-			if (!isPure)
-				result.add(strat);
-		}
-		return result;
-	}
+                        double[] bestRespVals = ob.calcAvg(cs, ob.agentBestResponse);
+                        cs.pool1.get(iagent).bestResponseCount = bestRespVals[0];
+                        cs.pool2.get(kagent).bestResponseCount = bestRespVals[1];
 
-	/**
-	 * Determines if there is a pure strategy where the RL agent is dominating (zero
-	 * in all other columns)
-	 */
-	public boolean isRLPureStrat(CaseStudy cs, List<double[]> pureStrats) {
-		int lastRLIndex = cs.pool1.indexOf(lastRLAgent);
-		for (double[] pureStrat : pureStrats) {
-			if (pureStrat[lastRLIndex] == 1.0d) {
-				return true;
-			}
-		}
-		return false;
-	}
+                        if (iagent != kagent) {
+                            gameMatrix[iagent][kagent] = new Payoffs(vals[0], vals[1]);
+                            gameMatrix[kagent][iagent] = new Payoffs(vals[1], vals[0]);
+                            gameMatrixErr[iagent][kagent] = new Payoffs(vals[2], vals[3]);
+                            gameMatrixErr[kagent][iagent] = new Payoffs(vals[3], vals[2]);
 
-	public List<double[]> computeNashEq(CaseStudy cs) {
-		List<double[]> nashEqStrategies = new ArrayList<>();
-		try {
-			log.info("Computing game matrix");
+                            bestRespMatrix[iagent][kagent] = new Payoffs(bestRespVals[0], bestRespVals[1]);
+                            bestRespMatrix[kagent][iagent] = new Payoffs(bestRespVals[1], bestRespVals[0]);
+                            bestRespMatrixErr[iagent][kagent] = new Payoffs(bestRespVals[2], bestRespVals[3]);
+                            bestRespMatrixErr[kagent][iagent] = new Payoffs(bestRespVals[3], bestRespVals[2]);
 
-			//			for (int i = 0; i < cs.pool1.size(); i++) {
-			//				for (int k = 0; k < cs.pool2.size(); k++) {
-			//					gameMatrix[i][k].value1 = Math.round(gameMatrix[i][k].value1 / largestValue * 100);
-			//					gameMatrix[i][k].value2 = Math.round(gameMatrix[i][k].value2 / largestValue * 100);
-			//				}
-			//			}
+                            winMatrix[iagent][kagent] = new Payoffs(ob.agentWins[0], ob.agentWins[1]);
+                            winMatrix[kagent][iagent] = new Payoffs(ob.agentWins[1], ob.agentWins[0]);
+                        } else {
+                            double avgVal = (vals[0] + vals[1]) / 2.0;
+                            gameMatrix[iagent][kagent] = new Payoffs(avgVal, avgVal);
+                            double avgValErr = (vals[2] + vals[3]) / 2.0;
+                            gameMatrixErr[iagent][kagent] = new Payoffs(avgValErr, avgValErr);
 
-			// Create gambit file
-			log.info("Creating Gambit file");
-			FileWriter fw = new FileWriter("Gambit.nfg");
-			PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
-			pw.println("NFG 1 R \"IPD NFG\" { \"Player 1\" \"Player 2\" } " + "{ " + cs.pool1.size() + " "
-					+ cs.pool2.size() + " }");
-			for (int k = 0; k < cs.pool1.size(); k++)
-				for (int i = 0; i < cs.pool2.size(); i++)
-					pw.print(gameMatrix[i][k].value1 + " " + gameMatrix[i][k].value2 + " ");
-			pw.close();
-			fw.close();
-			
-			// Printing the gambit file
-			fw = new FileWriter("Gambit.gbt");
-			pw = new PrintWriter(new BufferedWriter(fw));
+                            double avgBestRspVal = (bestRespVals[0] + bestRespVals[1]) / 2.0;
+                            bestRespMatrix[iagent][kagent] = new Payoffs(avgBestRspVal, avgBestRspVal);
+                            double avgBestRspValErr = (bestRespVals[2] + bestRespVals[3]) / 2.0;
+                            bestRespMatrixErr[iagent][kagent] = new Payoffs(avgBestRspValErr, avgBestRspValErr);
 
-			pw.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n"
-					+ "<gambit:document xmlns:gambit=\"http://gambit.sourceforge.net/\" version=\"0.1\">\r\n"
-					+ "<colors>\r\n");
-			for(int i=0; i< cs.pool1.size(); i++)
-				pw.println("<player id=\"" + i + "\" red=\"0\" green=\"0\" blue=\"0\" />\r");
-//					+ "<player id=\"0\" red=\"154\" green=\"205\" blue=\"50\" />\r\n"
-//					+ "<player id=\"1\" red=\"255\" green=\"0\" blue=\"0\" />\r\n"
-//					+ "<player id=\"2\" red=\"0\" green=\"0\" blue=\"255\" />\r\n" 
-			pw.println("</colors>\r\n"
-					+ "<font size=\"10\" family=\"74\" face=\"Arial\" style=\"90\" weight=\"92\" />\r\n"
-					+ "<numbers decimals=\"4\"/>\r\n" + "<game>\r\n" + "<nfgfile>\r\n"
-					+ "NFG 1 R \"Retail Strategic Game\" { \"Player 1\" \"Player 2\" }\n");
-			pw.print("{ ");
-			for (int pl = 0; pl < cs.pool1.size(); pl++) {
-				pw.print("{");
-				for (int i = 0; i < cs.pool2.size(); i++)
-					pw.print(" \"" + cs.pool1.get(i).name + "\" ");
-				pw.println("}");
-			}
-			pw.println("}");
-			pw.println("\"\"\n");
-			// Printing gambit martix
-			pw.println("{");
-			for (int k = 0; k < cs.pool1.size(); k++)
-				for (int i = 0; i < cs.pool2.size(); i++)
-					pw.printf("{ \"\" %.2f, %.2f }, ", gameMatrix[i][k].value1,gameMatrix[i][k].value2);
+                            double avgWins = (ob.agentWins[0] + ob.agentWins[1]) / 2.0;
+                            winMatrix[iagent][kagent] = new Payoffs(avgWins, avgWins);
+                        }
 
-			pw.println("}");
-			for (int i = 1; i <= cs.pool1.size() * cs.pool1.size(); i++)
-				pw.print(i + " ");
-			pw.println("</nfgfile>\r\n" + "</game>\r\n" + "</gambit:document>");
-			
-			pw.close();
-			fw.close();
-			
-			
-			log.info("Sending file to command-line tool");
-			ProcessBuilder pb = new ProcessBuilder("gambit-enummixed", "Gambit.nfg", "-q");
-			pb.redirectErrorStream(true);
-			Process process = pb.start();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			String line;
+                        if (largestValue < vals[0])
+                            largestValue = vals[0];
+                        if (largestValue < vals[1])
+                            largestValue = vals[1];
+                        ob.allsampleclear();
+                    }
+                }
+            }
+        }
+    }
 
-			log.info("Reading from command-line output");
-			while ((line = reader.readLine()) != null) {
-				String[] nashEqRaw = line.split(",");
-				// String nashEqName = nashEqRaw[0];
+    /**
+     * Determines if there is a pure strategy where the RL agent is dominating (zero
+     * in all other columns)
+     */
+    public boolean isRLPureStrat(CaseStudy cs, List<double[]> pureStrats) {
+        int lastRLIndex = cs.pool1.indexOf(lastRLAgent);
+        for (double[] pureStrat : pureStrats) {
+            if (pureStrat[lastRLIndex] == 1.0d) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-				double[] nashEqStrategy = new double[cs.pool1.size()];
-				for (int i = 1; i <= cs.pool1.size(); i++) {
-					double n = parseFractionString(nashEqRaw[i]);
-					nashEqStrategy[i - 1] = n;
-				}
-
-				nashEqStrategies.add(nashEqStrategy);
-			}
-			process.waitFor();
-			log.info("== Nash Eq Strategies ==");
-			String header = "";
-			for (Agent agent : cs.pool1) {
-				if (agent instanceof DQAgent)
-					header += ((DQAgent) agent).getSimpleName() + ", ";
-				else
-					header += agent.name + ", ";
-			}
-			header = header.substring(0, header.length() - 2);
-
-			log.info(header);
-			int strategyIDX = 0;
-			for (double[] nashEq : nashEqStrategies) {
-				String output = strategyIDX + " [";
-				for (double d : nashEq)
-					output += String.format("%.3f, ", d);
-				output = output.substring(0, output.length() - 2) + "]";
-				log.info(output);
-				strategyIDX++;
-			}
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return nashEqStrategies;
-	}
-
-	public static void sandboxExperiment() throws IOException, CloneNotSupportedException {
-		RetailMarketManager rm = new RetailMarketManager();
-		rm.setupLogging();
-		log.info(Configuration.toStringRepresentation());
+    public static void sandboxExperiment() throws IOException, CloneNotSupportedException {
+        RetailMarketManager rm = new RetailMarketManager();
+        rm.setupLogging();
+        log.info(Configuration.toStringRepresentation());
 //		Agent alwaysI = new AlwaysIncrease();
 //		Agent alwaysS = new AlwaysSame();
 //		Agent prober = new Prober();
@@ -1198,13 +970,13 @@ public class RetailMarketManager {
 		
 	}
 
-	public static void mainExperiment() throws IOException {
+	public static void mainExperiment() throws Exception {
 		RetailMarketManager rm = new RetailMarketManager();
 		rm.startExperiment(false, null);
 		log.info("Feature Size: " + DQAgentMDP.NUM_OBSERVATIONS);
 	}
 
-	public static void roundRobinExperiment() throws IOException {
+	public static void roundRobinExperiment() throws Exception {
 		RetailMarketManager rm = new RetailMarketManager();
 		rm.startExperiment(true, null);
 		log.info("Feature Size: " + DQAgentMDP.NUM_OBSERVATIONS);
@@ -1216,7 +988,7 @@ public class RetailMarketManager {
 		log.info("=*****PlotExperiment******=");
 	}
 
-	public static void main(String[] args) throws IOException, CloneNotSupportedException {
+	public static void main(String[] args) throws Exception{
 		/*
 		 * The Sandbox Experiment tests DQAgent against a few others We can use this
 		 * experiment to make sure DQAgent is being trained correctly Or to tweak
@@ -1230,5 +1002,4 @@ public class RetailMarketManager {
 		 */
 		mainExperiment();
 	}
-
 }
