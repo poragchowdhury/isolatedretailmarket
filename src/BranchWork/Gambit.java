@@ -3,6 +3,7 @@ package BranchWork;
 import Agents.Agent;
 import Agents.DQAgent;
 import Configuration.CaseStudy;
+import Configuration.Configuration;
 import RetailMarketManager.RetailMarketManager;
 
 import java.io.*;
@@ -75,10 +76,12 @@ public class Gambit {
         Process process = pb.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line;
-
+        int ne_counter = 0;
         // Gambit output parsing
         log.info("Reading from command-line output");
         while ((line = reader.readLine()) != null) {
+        	if(Configuration.MANUAL_NASH_EQ_SELECTION)
+        		log.info(ne_counter + " " + line);
             String[] nashEqRaw = line.split(",");
             // String nashEqName = nashEqRaw[0];
 
@@ -89,11 +92,12 @@ public class Gambit {
             }
 
             nashEqStrategies.add(nashEqStrategy);
+            
         }
         process.waitFor();
         return nashEqStrategies;
     }
-
+    
     private static void createGambitFile(RetailMarketManager rm, CaseStudy cs) throws IOException {
         log.info("Creating Gambit file");
         FileWriter fw = new FileWriter(TEMP_FILENAME);

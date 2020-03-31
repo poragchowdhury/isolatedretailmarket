@@ -10,7 +10,7 @@ import Tariff.TariffAction;
 
 public class Grim extends Agent {
     public Grim() {
-        super("Grim", 5);
+        super("Grim", 7);
     }
 
     @Override

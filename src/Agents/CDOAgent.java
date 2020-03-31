@@ -56,46 +56,120 @@ public class CDOAgent extends Agent {
 	}
 	
 	public CDOAgent(String name, int clusterSize) {
-		super(name + clusterSize, 3);
+		super(name, 3);
 		this.clusterSize = clusterSize;
-		if(clusterSize == 4) {
+		
+		if(clusterSize == 2) {
+			// Group 1
 			brMap = new HashMap<String, String>();
-			brMap.put("CDO-EGTA", "BR_G0_5acts_4Clst_I0_0.33HardMJ,0.67NvPbr.pol");
+			brMap.put(name, "temp11_1.00D11.pol"); // DO-EGTA DQ12
+			brMap.put("AlD", "temp11_1.00D11.pol");
+			brMap.put("NvPbr", "temp11_1.00D11.pol");
+			brMap.put("Pbr", "temp11_1.00D11.pol");
+			brMap.put("HardMJ", "temp11_1.00D11.pol");
+			brMap.put("GD", "temp11_1.00D11.pol");
+			brMap.put("1TF1T", "temp11_1.00D11.pol");
+			brMap.put("1TF2T", "temp11_1.00D11.pol");
+			brMap.put("2TF1T", "temp11_1.00D11.pol");
+			brMap.put("Grim", "temp11_1.00D11.pol");
+			brMap.put("ZI", "temp11_1.00D11.pol");
+			brMap.put("ZIP", "temp11_1.00D11.pol");
+			brMap.put("SoftMJ", "temp11_1.00D11.pol");
+			brMap.put("Pavlov", "temp11_1.00D11.pol");
+			brMap.put("AlS", "temp11_1.00D11.pol");
+
+			// Group 2			
+			brMap.put("AlI", "BR_G1_I0_5acts_0.93AlI,0.07NvI.pol");
+			brMap.put("NvI", "BR_G1_I0_5acts_0.93AlI,0.07NvI.pol");
+		}
+		else if(clusterSize == 4) {
+			// Group 1
+			brMap = new HashMap<String, String>();
+			brMap.put(name, "BR_G0_5acts_4Clst_I0_0.33HardMJ,0.67NvPbr.pol");
 			brMap.put("AlD", "BR_G0_5acts_4Clst_I0_0.33HardMJ,0.67NvPbr.pol");
 			brMap.put("NvPbr", "BR_G0_5acts_4Clst_I0_0.33HardMJ,0.67NvPbr.pol");
+			brMap.put("Pbr", "BR_G0_5acts_4Clst_I0_0.33HardMJ,0.67NvPbr.pol");
+			brMap.put("HardMJ", "BR_G0_5acts_4Clst_I0_0.33HardMJ,0.67NvPbr.pol");
+			
+			// Group 2
 			brMap.put("AlI", "BR_G1_I0_5acts_0.93AlI,0.07NvI.pol");
 			brMap.put("NvI", "BR_G1_I0_5acts_0.93AlI,0.07NvI.pol");
 			brMap.put("GD", "BR_G2_I0_5acts_0.73GD,0.271TF1T.pol");
+			
+			// Group 3
 			brMap.put("1TF1T", "BR_G2_I0_5acts_0.73GD,0.271TF1T.pol");
 			brMap.put("1TF2T", "BR_G2_I0_5acts_0.73GD,0.271TF1T.pol");
 			brMap.put("2TF1T", "BR_G2_I0_5acts_0.73GD,0.271TF1T.pol");
 			brMap.put("Grim", "BR_G2_I0_5acts_0.73GD,0.271TF1T.pol");
-			brMap.put("HardMJ", "BR_G0_5acts_4Clst_I0_0.33HardMJ,0.67NvPbr.pol");
+			
+			// Group 4
 			brMap.put("ZI", "BR_G4_I0_5acts_0.91ZI,0.09Pavlov.pol");
 			brMap.put("ZIP", "BR_G4_I0_5acts_0.91ZI,0.09Pavlov.pol");
 			brMap.put("SoftMJ", "BR_G4_I0_5acts_0.91ZI,0.09Pavlov.pol");
 			brMap.put("Pavlov", "BR_G4_I0_5acts_0.91ZI,0.09Pavlov.pol");
 			brMap.put("AlS", "BR_G4_I0_5acts_0.91ZI,0.09Pavlov.pol");
-			brMap.put("Pbr", "BR_G0_5acts_4Clst_I0_0.33HardMJ,0.67NvPbr.pol");
+
+		}
+		else if(clusterSize == 5) {
+			// Group 1
+			brMap = new HashMap<String, String>();
+			brMap.put(name, "BR_G0_5acts_4Clst_I0_0.33HardMJ,0.67NvPbr.pol");
+			brMap.put("AlD", "BR_G0_5acts_4Clst_I0_0.33HardMJ,0.67NvPbr.pol");
+			brMap.put("NvPbr", "BR_G0_5acts_4Clst_I0_0.33HardMJ,0.67NvPbr.pol");
+			
+			// Group 2
+			brMap.put("Pbr", "BR_G3_I0_5acts_1.00HardMj.pol");
+			brMap.put("HardMJ", "BR_G3_I0_5acts_1.00HardMj.pol");
+			
+			// Group 3
+			brMap.put("AlI", "BR_G1_I0_5acts_0.93AlI,0.07NvI.pol");
+			brMap.put("NvI", "BR_G1_I0_5acts_0.93AlI,0.07NvI.pol");
+			brMap.put("GD", "BR_G2_I0_5acts_0.73GD,0.271TF1T.pol");
+			
+			// Group 4
+			brMap.put("1TF1T", "BR_G2_I0_5acts_0.73GD,0.271TF1T.pol");
+			brMap.put("1TF2T", "BR_G2_I0_5acts_0.73GD,0.271TF1T.pol");
+			brMap.put("2TF1T", "BR_G2_I0_5acts_0.73GD,0.271TF1T.pol");
+			brMap.put("Grim", "BR_G2_I0_5acts_0.73GD,0.271TF1T.pol");
+			
+			// Group 5
+			brMap.put("ZI", "BR_G4_I0_5acts_0.91ZI,0.09Pavlov.pol");
+			brMap.put("ZIP", "BR_G4_I0_5acts_0.91ZI,0.09Pavlov.pol");
+			brMap.put("SoftMJ", "BR_G4_I0_5acts_0.91ZI,0.09Pavlov.pol");
+			brMap.put("Pavlov", "BR_G4_I0_5acts_0.91ZI,0.09Pavlov.pol");
+			brMap.put("AlS", "BR_G4_I0_5acts_0.91ZI,0.09Pavlov.pol");
+
 		}
 		else {
+			// number of clusters 6
+			// Group 1
 			brMap = new HashMap<String, String>();
-			brMap.put("CDO-EGTA", "BR_G0_I0_5acts_1.00NvPbr.pol");
+			brMap.put(name, "BR_G0_I0_5acts_1.00NvPbr.pol");
 			brMap.put("AlD", "BR_G0_I0_5acts_1.00NvPbr.pol");
 			brMap.put("NvPbr", "BR_G0_I0_5acts_1.00NvPbr.pol");
+			
+			// Group 2
 			brMap.put("AlI", "BR_G1_I0_5acts_0.93AlI,0.07NvI.pol");
 			brMap.put("NvI", "BR_G1_I0_5acts_0.93AlI,0.07NvI.pol");
+			
+			// Group 3
 			brMap.put("GD", "BR_G2_I0_5acts_0.73GD,0.271TF1T.pol");
 			brMap.put("1TF1T", "BR_G2_I0_5acts_0.73GD,0.271TF1T.pol");
 			brMap.put("1TF2T", "BR_G2_I0_5acts_0.73GD,0.271TF1T.pol");
 			brMap.put("2TF1T", "BR_G2_I0_5acts_0.73GD,0.271TF1T.pol");
 			brMap.put("Grim", "BR_G2_I0_5acts_0.73GD,0.271TF1T.pol");
+			
+			// Group 4
 			brMap.put("HardMJ", "BR_G3_I0_5acts_1.00HardMj.pol");
+			
+			// Group 5
 			brMap.put("ZI", "BR_G4_I0_5acts_0.91ZI,0.09Pavlov.pol");
 			brMap.put("ZIP", "BR_G4_I0_5acts_0.91ZI,0.09Pavlov.pol");
 			brMap.put("SoftMJ", "BR_G4_I0_5acts_0.91ZI,0.09Pavlov.pol");
 			brMap.put("Pavlov", "BR_G4_I0_5acts_0.91ZI,0.09Pavlov.pol");
 			brMap.put("AlS", "BR_G4_I0_5acts_0.91ZI,0.09Pavlov.pol");
+			
+			// Group 6
 			brMap.put("Pbr", "BR_G5_I0_5acts_1.00Pbr.pol");			
 		}
 			

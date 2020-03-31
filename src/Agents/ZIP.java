@@ -10,7 +10,7 @@ import Tariff.TariffAction;
 public class ZIP extends Agent {
 
     public ZIP() {
-        super("ZIP", 14);
+        super("ZIP", 1);
     }
 
     @Override

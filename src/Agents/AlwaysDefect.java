@@ -5,7 +5,7 @@ import Tariff.TariffAction;
 
 public class AlwaysDefect extends Agent {
 	public AlwaysDefect() {
-        super("AlD", 0);
+        super("AlD", 12);
     }
 
     @Override

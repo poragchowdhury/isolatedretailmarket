@@ -10,7 +10,7 @@ public class GD extends Agent {
 	private static Logger log = Logger.getLogger("retailmarketmanager");
 	
 	public GD() {
-        super("GD", 4);
+        super("GD", 2);
     }
 
     public void updatePrevActionBelief(Observer ob) {

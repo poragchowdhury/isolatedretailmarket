@@ -9,11 +9,15 @@ public class TitForTat extends Agent {
     public int numTatsPerTit = 1;
 
     public TitForTat(int numTitsPerTat, int numTatsPerTit) {
-        super("temp", 12);
+        super("temp", 3);
         String tempName = numTitsPerTat + "TF" + numTatsPerTit + "T";
         if (isV2)
             tempName += "V2";
-
+        if(numTatsPerTit == 1 && numTitsPerTat == 1)
+        	this.id = 4;
+        else if(numTitsPerTat == 2 && numTatsPerTit == 1)
+        	this.id = 5;
+        
         this.name = tempName;
         this.numTitsPerTat = numTitsPerTat;
         this.numTatsPerTit = numTatsPerTit;

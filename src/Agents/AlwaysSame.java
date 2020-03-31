@@ -6,7 +6,7 @@ import Tariff.TariffAction;
 public class AlwaysSame extends Agent {
 
     public AlwaysSame() {
-        super("AlS", 2);
+        super("AlS", 14);
     }
 
     @Override

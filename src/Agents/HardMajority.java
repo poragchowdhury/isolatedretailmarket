@@ -6,7 +6,7 @@ import Tariff.TariffAction;
 public class HardMajority extends Agent {
 
     public HardMajority() {
-        super("HardMJ", 6);
+        super("HardMJ", 9);
     }
 
     

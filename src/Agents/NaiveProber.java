@@ -10,7 +10,7 @@ import Tariff.TariffAction;
  */
 public class NaiveProber extends Agent {
     public NaiveProber() {
-        super("NvPbr", 7);
+        super("NvPbr", 11);
     }
 
     @Override

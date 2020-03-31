@@ -7,7 +7,7 @@ import Tariff.TariffAction;
 
 public class ZI extends Agent {
     public ZI() {
-        super("ZI", 13);
+        super("ZI", 0);
     }
 
     @Override
